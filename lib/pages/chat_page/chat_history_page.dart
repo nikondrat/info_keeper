@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:info_keeper/pages/chat_page/widgets/type/chat_message.dart';
+import 'package:info_keeper/theme.dart';
 
 class ChatHistoryPage extends StatelessWidget {
   final List history;
@@ -19,11 +19,17 @@ class ChatHistoryPage extends StatelessWidget {
         ),
       ),
       body: ListView.builder(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
           itemCount: history.length,
           physics: const BouncingScrollPhysics(),
           itemBuilder: (context, index) {
-            return MessageWidgetBody(
-              message: history[index],
+            return Container(
+              margin: const EdgeInsets.symmetric(vertical: 2),
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(6),
+                  color: messageColors[5]),
+              child: Text(history[index]),
             );
           }),
     );

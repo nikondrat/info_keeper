@@ -11,6 +11,7 @@ class Message {
   bool isSelected;
   bool isPinned;
   bool isLocked;
+  bool isUnlocked;
   List? history;
 
   Message(
@@ -23,6 +24,7 @@ class Message {
       this.isSelected = false,
       this.isPinned = false,
       this.isLocked = false,
+      this.isUnlocked = false,
       this.history,
       required this.dateTime});
 
@@ -34,11 +36,10 @@ class Message {
         isSelected = json['isSelected'],
         isPinned = json['isPinned'],
         isLocked = json['isLocked'],
+        isUnlocked = json['isUnlocked'],
         selectedColorIndex = json['selectedColorIndex'],
         isFavorite = json['isFavorite'],
-        history = (json['history'] as List<dynamic>)
-            .map((e) => Message.fromJson(e))
-            .toList(),
+        history = json['history'],
         dateTime = json['dateTime'];
 
   Map<String, dynamic> toJson() => {
@@ -49,9 +50,10 @@ class Message {
         'selectedColorIndex': selectedColorIndex,
         'isFavorite': isFavorite,
         'isSelected': isSelected,
+        'isUnlocked': isUnlocked,
         'isPinned': isPinned,
         'isLocked': isLocked,
-        'history': history!.map((e) => e.toJson()).toList(),
+        'history': history,
         'dateTime': dateTime
       };
 }

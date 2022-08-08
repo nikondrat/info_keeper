@@ -185,8 +185,18 @@ class ChatPageBottomTextField extends StatelessWidget {
                                             .to.selectedElementIndex.value]
                                         .messages!;
 
-                                    // List history =
-                                    //     messages[selectedMessage.value].history;
+                                    final List history = [];
+
+                                    for (int i = 0;
+                                        i <
+                                            messages[selectedMessage.value]
+                                                .history
+                                                .length;
+                                        i++) {
+                                      history.add(
+                                          messages[selectedMessage.value]
+                                              .history[i]);
+                                    }
 
                                     messages[selectedMessage.value].title =
                                         titleController.value.text;
@@ -195,13 +205,13 @@ class ChatPageBottomTextField extends StatelessWidget {
                                         contentController.value.text;
                                     // print(messages[selectedMessage.value]
                                     //     .messageText);
-                                    // history
-                                    //     .add(messages[selectedMessage.value]);
+                                    history.add(messages[selectedMessage.value]
+                                        .messageText);
                                     // for (int i = 0; i < history.length; i++) {
                                     //   print(history[i].messageText);
                                     // }
-                                    // messages[selectedMessage.value].history =
-                                    //     history;
+                                    messages[selectedMessage.value].history =
+                                        history;
 
                                     Controller.to
                                         .change(Chat(messages: messages.obs));

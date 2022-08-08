@@ -22,7 +22,6 @@ class Controller extends GetxController {
   final isShowMenu = false.obs;
 
   var password = ''.obs;
-  final isUnblocked = false.obs;
 
   RxList all = [
     Folder(directoryName: 'Main screen', directoryChildrens: [].obs),
@@ -181,6 +180,9 @@ class Controller extends GetxController {
       audioNote.pinned = all[selectedFolder.value]
           .directoryChildrens[selectedElementIndex.value]
           .pinned;
+      audioNote.link = all[selectedFolder.value]
+          .directoryChildrens[selectedElementIndex.value]
+          .link;
 
       all[selectedFolder.value].directoryChildrens[selectedElementIndex.value] =
           audioNote;
@@ -233,10 +235,9 @@ class Controller extends GetxController {
               .directoryChildrens[selectedElementIndex.value]
               .pathToImage;
       chat.link = true;
-      chat.pinnedMessages = value.pinnedMessages ??
-          all[selectedFolder.value]
-              .directoryChildrens[selectedElementIndex.value]
-              .pinnedMessages;
+      chat.isLocked = all[selectedFolder.value]
+          .directoryChildrens[selectedElementIndex.value]
+          .isLocked;
       chat.pinnedMessages = value.pinnedMessages ??
           all[selectedFolder.value]
               .directoryChildrens[selectedElementIndex.value]
@@ -259,11 +260,22 @@ class Controller extends GetxController {
           all[selectedFolder.value]
               .directoryChildrens[selectedElementIndex.value]
               .history;
-      storageFile.animate = value.animate;
-      storageFile.pinned = value.pinned;
-      storageFile.dublicated = value.dublicated;
-      storageFile.pathToImage = value.pathToImage;
+      storageFile.animate = all[selectedFolder.value]
+          .directoryChildrens[selectedElementIndex.value]
+          .animate;
+      storageFile.pinned = all[selectedFolder.value]
+          .directoryChildrens[selectedElementIndex.value]
+          .pinned;
+      storageFile.dublicated = all[selectedFolder.value]
+          .directoryChildrens[selectedElementIndex.value]
+          .dublicated;
+      storageFile.pathToImage = all[selectedFolder.value]
+          .directoryChildrens[selectedElementIndex.value]
+          .pathToImage;
       storageFile.link = true;
+      storageFile.isLocked = all[selectedFolder.value]
+          .directoryChildrens[selectedElementIndex.value]
+          .isLocked;
 
       all[folderIndex].directoryChildrens.add(storageFile);
     }
@@ -278,9 +290,18 @@ class Controller extends GetxController {
           all[selectedFolder.value]
               .directoryChildrens[selectedElementIndex.value]
               .tasks;
-      todo.animate = value.animate;
-      todo.dublicated = value.dublicated;
-      todo.pinned = value.pinned;
+      todo.animate = all[selectedFolder.value]
+          .directoryChildrens[selectedElementIndex.value]
+          .animate;
+      todo.dublicated = all[selectedFolder.value]
+          .directoryChildrens[selectedElementIndex.value]
+          .dublicated;
+      todo.pinned = all[selectedFolder.value]
+          .directoryChildrens[selectedElementIndex.value]
+          .pinned;
+      todo.isLocked = all[selectedFolder.value]
+          .directoryChildrens[selectedElementIndex.value]
+          .isLocked;
       todo.link = true;
       all[folderIndex].directoryChildrens.add(todo);
     }
@@ -295,9 +316,18 @@ class Controller extends GetxController {
           all[selectedFolder.value]
               .directoryChildrens[selectedElementIndex.value]
               .path;
-      audioNote.dublicated = value.dublicated;
-      audioNote.animate = value.animate;
-      audioNote.pinned = value.pinned;
+      audioNote.dublicated = all[selectedFolder.value]
+          .directoryChildrens[selectedElementIndex.value]
+          .dublicated;
+      audioNote.animate = all[selectedFolder.value]
+          .directoryChildrens[selectedElementIndex.value]
+          .animate;
+      audioNote.isLocked = all[selectedFolder.value]
+          .directoryChildrens[selectedElementIndex.value]
+          .isLocked;
+      audioNote.pinned = all[selectedFolder.value]
+          .directoryChildrens[selectedElementIndex.value]
+          .pinned;
       audioNote.link = true;
 
       all[folderIndex].directoryChildrens.add(audioNote);

@@ -24,11 +24,12 @@ class VaultPage extends StatelessWidget {
     TextEditingController passwordController = TextEditingController();
     TextEditingController repeatPasswordController = TextEditingController();
     final isGridView = true.obs;
+    final isUnblocked = false.obs;
 
     return Obx(() => Scaffold(
         appBar: AppBar(
           centerTitle: false,
-          actions: Controller.to.isUnblocked.value
+          actions: isUnblocked.value
               ? [
                   IconButton(
                     onPressed: () {
@@ -46,7 +47,7 @@ class VaultPage extends StatelessWidget {
               icon: const Icon(Icons.arrow_back)),
           title: const Text('vault'),
         ),
-        body: Controller.to.isUnblocked.value && childrens != null
+        body: isUnblocked.value && childrens != null
             ? MasonryGridView.count(
                 physics: const BouncingScrollPhysics(),
                 padding:
@@ -69,40 +70,42 @@ class VaultPage extends StatelessWidget {
                 passwordController: passwordController,
                 repeatPasswordController: repeatPasswordController),
         bottomNavigationBar: const HomePageBottomNavigationBar(isVault: true),
-        floatingActionButton: Controller.to.isUnblocked.value
+        floatingActionButton: isUnblocked.value
             ? null
             : FloatingActionButton(
                 onPressed: () {
                   messageFunc() {
+                    List messages = Controller
+                        .to
+                        .all[Controller.to.selectedFolder.value]
+                        .directoryChildrens[
+                            Controller.to.selectedElementIndex.value]
+                        .messages;
                     if (passwordController.text ==
                         repeatPasswordController.text) {
-                      List messages = Controller
-                          .to
-                          .all[Controller.to.selectedFolder.value]
-                          .directoryChildrens[
-                              Controller.to.selectedElementIndex.value]
-                          .messages;
-
                       messages[selectedElement.value].isLocked =
                           !messages[selectedElement.value].isLocked;
 
-                      Controller.to.password = passwordController.text.obs;
+                      messages[selectedElement.value].isUnlocked = true;
 
+                      Controller.to.password = passwordController.text.obs;
                       Controller.to.change(Chat(messages: messages.obs));
                     }
                     if (passwordController.text ==
                         Controller.to.password.value) {
-                      List messages = Controller
-                          .to
-                          .all[Controller.to.selectedFolder.value]
-                          .directoryChildrens[
-                              Controller.to.selectedElementIndex.value]
-                          .messages;
+                      messages[selectedElement.value].isUnlocked = true;
 
                       messages[selectedElement.value].isLocked =
                           !messages[selectedElement.value].isLocked;
+                      isUnblocked.value = true;
                       Controller.to.change(Chat(messages: messages.obs));
-                      Controller.to.isUnblocked.value = true;
+                    }
+                    if (messages[selectedElement.value].isUnlocked) {
+                      const Duration(minutes: 2).delay().then((value) {
+                        messages[selectedElement.value].isLocked = true;
+                        messages[selectedElement.value].isUnlocked = false;
+                        Controller.to.change(Chat(messages: messages.obs));
+                      });
                     }
                     Get.back();
                   }
@@ -112,10 +115,10 @@ class VaultPage extends StatelessWidget {
                         repeatPasswordController.text) {
                       Controller.to.password = passwordController.text.obs;
                       Controller.to.setData();
-                      Controller.to.isUnblocked.value = true;
+                      isUnblocked.value = true;
                     } else if (passwordController.text ==
                         Controller.to.password.value) {
-                      Controller.to.isUnblocked.value = true;
+                      isUnblocked.value = true;
                     }
                   }
 

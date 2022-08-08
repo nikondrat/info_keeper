@@ -229,26 +229,17 @@ class ChatPageMenu extends StatelessWidget {
                 function: () {
                   Navigator.pop(context);
 
-                  isLocked() {
-                    List messages = Controller
-                        .to
-                        .all[Controller.to.selectedFolder.value]
-                        .directoryChildrens[
-                            Controller.to.selectedElementIndex.value]
-                        .messages;
+                  List messages = Controller
+                      .to
+                      .all[Controller.to.selectedFolder.value]
+                      .directoryChildrens[
+                          Controller.to.selectedElementIndex.value]
+                      .messages;
 
-                    messages[selectedMessage.value].isLocked =
-                        !messages[selectedMessage.value].isLocked;
+                  messages[selectedMessage.value].isLocked = true;
+                  messages[selectedMessage.value].isUnlocked = false;
 
-                    Controller.to.change(Chat(messages: messages.obs));
-                  }
-
-                  Controller.to.isUnblocked.value
-                      ? isLocked()
-                      : Get.to(() => VaultPage(
-                            isChat: true,
-                            selectedElement: selectedMessage,
-                          ));
+                  Controller.to.change(Chat(messages: messages.obs));
                 },
                 icon: const Icon(Icons.lock_outline),
                 text: 'Lock message'),

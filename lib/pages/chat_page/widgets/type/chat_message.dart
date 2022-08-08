@@ -58,34 +58,24 @@ class MessageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() => Controller
-            .to
-            .all[Controller.to.selectedFolder.value]
-            .directoryChildrens[Controller.to.selectedElementIndex.value]
-            .messages![index]
-            .isLocked
+                .to
+                .all[Controller.to.selectedFolder.value]
+                .directoryChildrens[Controller.to.selectedElementIndex.value]
+                .messages![index]
+                .isLocked &&
+            !Controller
+                .to
+                .all[Controller.to.selectedFolder.value]
+                .directoryChildrens[Controller.to.selectedElementIndex.value]
+                .messages![index]
+                .isUnlocked
         ? GestureDetector(
             onTap: () {
               selected.value = index;
-              isLocked() {
-                List messages = Controller
-                    .to
-                    .all[Controller.to.selectedFolder.value]
-                    .directoryChildrens[
-                        Controller.to.selectedElementIndex.value]
-                    .messages;
-
-                messages[selectedMessage!.value].isLocked =
-                    !messages[selectedMessage!.value].isLocked;
-
-                Controller.to.change(Chat(messages: messages.obs));
-              }
-
-              Controller.to.isUnblocked.value
-                  ? isLocked()
-                  : Get.to(() => VaultPage(
-                        isChat: true,
-                        selectedElement: selectedMessage!,
-                      ));
+              Get.to(() => VaultPage(
+                    isChat: true,
+                    selectedElement: selectedMessage!,
+                  ));
             },
             child: Container(
               margin: const EdgeInsets.symmetric(vertical: 2),
@@ -93,7 +83,28 @@ class MessageWidget extends StatelessWidget {
               decoration: BoxDecoration(
                   color: Colors.grey.shade300,
                   borderRadius: BorderRadius.circular(6)),
-              child: const Icon(Icons.lock_outline),
+              child: Row(
+                mainAxisAlignment: Controller
+                        .to
+                        .all[Controller.to.selectedFolder.value]
+                        .directoryChildrens[
+                            Controller.to.selectedElementIndex.value]
+                        .messages[index]
+                        .title
+                        .isNotEmpty
+                    ? MainAxisAlignment.start
+                    : MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.lock_outline),
+                  Text(Controller
+                      .to
+                      .all[Controller.to.selectedFolder.value]
+                      .directoryChildrens[
+                          Controller.to.selectedElementIndex.value]
+                      .messages[index]
+                      .title),
+                ],
+              ),
             ),
           )
         : fullScreen
@@ -312,7 +323,8 @@ class MessageWidgetBody extends StatelessWidget {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(6),
                     border: splitMessages != null
-                        ? splitMessages!.value && message.isSelected
+                        ? splitMessages!.value && message.isSelected ||
+                                message.isUnlocked
                             ? Border.all()
                             : null
                         : null,
@@ -333,12 +345,19 @@ class MessageWidgetBody extends StatelessWidget {
                             term: term,
                           ),
                         ),
-                        message.isFavorite
-                            ? const Icon(
-                                Icons.star,
-                                color: Colors.amber,
-                              )
-                            : Container(),
+                        Column(
+                          children: [
+                            message.isUnlocked
+                                ? const Icon(Icons.lock_open_outlined)
+                                : const SizedBox.shrink(),
+                            message.isFavorite
+                                ? const Icon(
+                                    Icons.star,
+                                    color: Colors.amber,
+                                  )
+                                : Container(),
+                          ],
+                        ),
                       ],
                     ),
                     showDate != null

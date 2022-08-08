@@ -14,6 +14,7 @@ class ChatPageVault extends StatelessWidget {
 
     TextEditingController passwordController = TextEditingController();
     TextEditingController repeatPasswordController = TextEditingController();
+    final isUnblocked = false.obs;
 
     for (int i = 0;
         i <
@@ -54,7 +55,7 @@ class ChatPageVault extends StatelessWidget {
               icon: const Icon(Icons.arrow_back)),
           title: const Text('vault'),
         ),
-        body: Controller.to.isUnblocked.value
+        body: isUnblocked.value
             ? ListView.builder(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
@@ -72,7 +73,7 @@ class ChatPageVault extends StatelessWidget {
             : VaultPagePasswordWidget(
                 passwordController: passwordController,
                 repeatPasswordController: repeatPasswordController),
-        floatingActionButton: Controller.to.isUnblocked.value
+        floatingActionButton: isUnblocked.value
             ? null
             : FloatingActionButton(
                 onPressed: () {
@@ -85,10 +86,10 @@ class ChatPageVault extends StatelessWidget {
                             Controller.to.selectedElementIndex.value]
                         .password = passwordController.text;
                     Controller.to.setData();
-                    Controller.to.isUnblocked.value = true;
+                    isUnblocked.value = true;
                   } else if (passwordController.text ==
                       Controller.to.password.value) {
-                    Controller.to.isUnblocked.value = true;
+                    isUnblocked.value = true;
                   }
                 },
                 backgroundColor: Colors.blue,
