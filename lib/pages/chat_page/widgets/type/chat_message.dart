@@ -1,0 +1,381 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:info_keeper/model/controller.dart';
+import 'package:info_keeper/model/types/chat/chat.dart';
+import 'package:info_keeper/model/types/chat/message.dart';
+import 'package:info_keeper/pages/chat_page/widgets/message_menu/chat_menu.dart';
+import 'package:info_keeper/pages/vault_page/vault_page.dart';
+import 'package:info_keeper/theme.dart';
+import 'package:intl/intl.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
+import 'package:substring_highlight/substring_highlight.dart';
+import 'package:swipe_to/swipe_to.dart';
+
+class MessageWidget extends StatelessWidget {
+  final AutoScrollController? scrollController;
+  final int index;
+  final GlobalKey? messageKey;
+  final BoxConstraints? constraints;
+  final TextEditingController? titleController;
+  final RxBool? editMessage;
+  final FocusNode? textFieldFocusNode;
+  final RxInt selected;
+  final TextEditingController? contentController;
+  final RxInt? selectedMessage;
+  final RxBool showDate;
+  final bool fullScreen;
+  final Message message;
+  final String dateTime;
+  final RxBool splitMessages;
+  final RxBool isShowColorSelector;
+  final RxInt selectedMessagesCount;
+  final List selectedMessages;
+  final RxList pinnedMessages;
+  const MessageWidget(
+      {Key? key,
+      required this.index,
+      this.messageKey,
+      this.scrollController,
+      this.constraints,
+      required this.selected,
+      this.contentController,
+      required this.selectedMessagesCount,
+      this.editMessage,
+      this.selectedMessage,
+      this.titleController,
+      this.textFieldFocusNode,
+      required this.message,
+      required this.showDate,
+      required this.dateTime,
+      required this.splitMessages,
+      required this.isShowColorSelector,
+      required this.selectedMessages,
+      required this.pinnedMessages,
+      this.fullScreen = false})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() => Controller
+            .to
+            .all[Controller.to.selectedFolder.value]
+            .directoryChildrens[Controller.to.selectedElementIndex.value]
+            .messages![index]
+            .isLocked
+        ? GestureDetector(
+            onTap: () {
+              selected.value = index;
+              isLocked() {
+                List messages = Controller
+                    .to
+                    .all[Controller.to.selectedFolder.value]
+                    .directoryChildrens[
+                        Controller.to.selectedElementIndex.value]
+                    .messages;
+
+                messages[selectedMessage!.value].isLocked =
+                    !messages[selectedMessage!.value].isLocked;
+
+                Controller.to.change(Chat(messages: messages.obs));
+              }
+
+              Controller.to.isUnblocked.value
+                  ? isLocked()
+                  : Get.to(() => VaultPage(
+                        isChat: true,
+                        selectedElement: selectedMessage!,
+                      ));
+            },
+            child: Container(
+              margin: const EdgeInsets.symmetric(vertical: 2),
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                  color: Colors.grey.shade300,
+                  borderRadius: BorderRadius.circular(6)),
+              child: const Icon(Icons.lock_outline),
+            ),
+          )
+        : fullScreen
+            ? MessageWidgetChild(
+                index: index,
+                messageKey: messageKey,
+                scrollController: scrollController,
+                selected: selected,
+                contentController: contentController,
+                selectedMessagesCount: selectedMessagesCount,
+                editMessage: editMessage,
+                selectedMessage: selectedMessage,
+                titleController: titleController,
+                textFieldFocusNode: textFieldFocusNode,
+                constraints: constraints,
+                message: message,
+                showDate: showDate,
+                dateTime: dateTime,
+                splitMessages: splitMessages,
+                isShowColorSelector: isShowColorSelector,
+                selectedMessages: selectedMessages,
+                pinnedMessages: pinnedMessages)
+            : SwipeTo(
+                onRightSwipe: () {
+                  selectedMessage!.value = index;
+                  editMessage!.value = true;
+                  contentController!.value = TextEditingValue(
+                      text: Controller
+                          .to
+                          .all[Controller.to.selectedFolder.value]
+                          .directoryChildrens[
+                              Controller.to.selectedElementIndex.value]
+                          .messages[selectedMessage!.value]
+                          .messageText);
+                  titleController!.value = TextEditingValue(
+                      text: Controller
+                          .to
+                          .all[Controller.to.selectedFolder.value]
+                          .directoryChildrens[
+                              Controller.to.selectedElementIndex.value]
+                          .messages[selectedMessage!.value]
+                          .title);
+                  textFieldFocusNode!.requestFocus();
+                },
+                child: MessageWidgetChild(
+                    index: index,
+                    constraints: constraints,
+                    messageKey: messageKey,
+                    scrollController: scrollController,
+                    selected: selected,
+                    contentController: contentController,
+                    selectedMessagesCount: selectedMessagesCount,
+                    editMessage: editMessage,
+                    selectedMessage: selectedMessage,
+                    titleController: titleController,
+                    textFieldFocusNode: textFieldFocusNode,
+                    message: message,
+                    showDate: showDate,
+                    dateTime: dateTime,
+                    splitMessages: splitMessages,
+                    isShowColorSelector: isShowColorSelector,
+                    selectedMessages: selectedMessages,
+                    pinnedMessages: pinnedMessages)));
+  }
+}
+
+class MessageWidgetChild extends StatelessWidget {
+  final AutoScrollController? scrollController;
+  final int index;
+  final GlobalKey? messageKey;
+  final BoxConstraints? constraints;
+  final TextEditingController? titleController;
+  final RxBool? editMessage;
+  final FocusNode? textFieldFocusNode;
+  final RxInt selected;
+  final TextEditingController? contentController;
+  final RxInt? selectedMessage;
+  final RxBool showDate;
+  final bool fullScreen;
+  final Message message;
+  final String dateTime;
+  final RxBool splitMessages;
+  final RxBool isShowColorSelector;
+  final RxInt selectedMessagesCount;
+  final List selectedMessages;
+  final RxList pinnedMessages;
+  const MessageWidgetChild(
+      {Key? key,
+      required this.index,
+      required this.messageKey,
+      required this.scrollController,
+      required this.constraints,
+      required this.selected,
+      required this.contentController,
+      required this.selectedMessagesCount,
+      required this.editMessage,
+      required this.selectedMessage,
+      required this.titleController,
+      required this.textFieldFocusNode,
+      required this.message,
+      required this.showDate,
+      required this.dateTime,
+      required this.splitMessages,
+      required this.isShowColorSelector,
+      required this.selectedMessages,
+      required this.pinnedMessages,
+      this.fullScreen = false})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        if (isShowColorSelector.value != true &&
+            splitMessages.value != true &&
+            fullScreen != true) {
+          selectedMessage!.value = index;
+          showModalBottomSheet(
+              isScrollControlled: true,
+              context: context,
+              builder: (context) => ChatPageMenu(
+                  pinnedMessages: pinnedMessages,
+                  selectedMessages: selectedMessages,
+                  selectedMessageCount: selectedMessagesCount,
+                  constraints: constraints!,
+                  showDate: showDate,
+                  isShowColorSelector: isShowColorSelector,
+                  splitMessages: splitMessages,
+                  titleController: titleController!,
+                  editMessage: editMessage!,
+                  textFieldFocusNode: textFieldFocusNode!,
+                  contentController: contentController!,
+                  selectedMessage: selectedMessage!));
+        }
+        selected.value = index;
+
+        if (splitMessages.value) {
+          List messages = Controller
+              .to
+              .all[Controller.to.selectedFolder.value]
+              .directoryChildrens[Controller.to.selectedElementIndex.value]
+              .messages;
+          message.isSelected = !message.isSelected;
+          if (message.isSelected) {
+            selectedMessages.add(message);
+            selectedMessagesCount.value += 1;
+          } else {
+            selectedMessages.remove(message);
+            selectedMessagesCount.value -= 1;
+          }
+          // print(selectedMessages);
+          messages[index] = message;
+          Controller.to.change(
+            Chat(messages: messages.obs),
+          );
+        }
+      },
+      child: MessageWidgetBody(
+        index: index,
+        message: message,
+        splitMessages: splitMessages,
+        fullScreen: fullScreen,
+        showDate: showDate,
+        selected: selected,
+        dateTime: dateTime,
+      ),
+    );
+  }
+}
+
+class MessageWidgetBody extends StatelessWidget {
+  final int? index;
+  final bool fullScreen;
+  final RxInt? selected;
+  final RxBool? splitMessages;
+  final Message message;
+  final RxBool? showDate;
+  final String? dateTime;
+  final String term;
+  final RxBool? isCollapsed;
+  const MessageWidgetBody(
+      {Key? key,
+      this.index,
+      this.fullScreen = false,
+      this.selected,
+      this.splitMessages,
+      required this.message,
+      this.term = '',
+      this.showDate,
+      this.isCollapsed,
+      this.dateTime})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    DateFormat format = DateFormat('yyyy-MM-dd HH:mm:ss');
+    DateTime time = format.parse(dateTime!);
+
+    body() {
+      return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: fullScreen ? MainAxisSize.min : MainAxisSize.max,
+          children: [
+            message.title.isNotEmpty
+                ? Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                        color: const Color(0xFF9FA8A8),
+                        borderRadius: BorderRadius.circular(6)),
+                    child: SubstringHighlight(text: message.title, term: term),
+                  )
+                : Container(),
+            Container(
+                margin: const EdgeInsets.symmetric(vertical: 2),
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6),
+                    border: splitMessages != null
+                        ? splitMessages!.value && message.isSelected
+                            ? Border.all()
+                            : null
+                        : null,
+                    color: splitMessages != null
+                        ? splitMessages!.value && message.isSelected
+                            ? Colors.white
+                            : messageColors[message.selectedColorIndex]
+                        : messageColors[message.selectedColorIndex]),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: SubstringHighlight(
+                            text: message.messageText,
+                            term: term,
+                          ),
+                        ),
+                        message.isFavorite
+                            ? const Icon(
+                                Icons.star,
+                                color: Colors.amber,
+                              )
+                            : Container(),
+                      ],
+                    ),
+                    showDate != null
+                        ? showDate!.value
+                            ? Padding(
+                                padding: const EdgeInsets.only(top: 4),
+                                child: Text(
+                                  '${time.hour}:${time.minute}',
+                                  style: TextStyle(color: Colors.grey.shade600),
+                                ),
+                              )
+                            : Container()
+                        : Container()
+                  ],
+                ))
+          ]);
+    }
+
+    if (term.isNotEmpty) {
+      return LayoutBuilder(
+        builder: (context, constraints) => GestureDetector(
+            onTap: () {
+              Clipboard.setData(ClipboardData(text: message.messageText));
+              Navigator.pop(context);
+              Get.snackbar('Done', 'The message has been copied',
+                  shouldIconPulse: true,
+                  icon: const Icon(Icons.done),
+                  margin: const EdgeInsets.all(10),
+                  duration: const Duration(seconds: 1),
+                  maxWidth: constraints.maxWidth * 0.8,
+                  isDismissible: true,
+                  snackPosition: SnackPosition.BOTTOM);
+            },
+            child: body()),
+      );
+    }
+
+    return body();
+  }
+}

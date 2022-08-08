@@ -1,0 +1,131 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:get/get.dart';
+import 'package:info_keeper/model/controller.dart';
+import 'package:info_keeper/model/types/chat/chat.dart';
+import 'package:info_keeper/pages/home_page/home_widget/home_widget.dart';
+import 'package:info_keeper/pages/home_page/widgets/home_btm_nav_bar.dart';
+import 'package:info_keeper/pages/vault_page/vault_password.dart';
+
+class VaultPage extends StatelessWidget {
+  final RxList? childrens;
+  final RxInt selectedElement;
+  final bool isChat;
+
+  const VaultPage(
+      {Key? key,
+      this.childrens,
+      this.isChat = false,
+      required this.selectedElement})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    TextEditingController passwordController = TextEditingController();
+    TextEditingController repeatPasswordController = TextEditingController();
+    final isGridView = true.obs;
+
+    return Obx(() => Scaffold(
+        appBar: AppBar(
+          centerTitle: false,
+          actions: Controller.to.isUnblocked.value
+              ? [
+                  IconButton(
+                    onPressed: () {
+                      isGridView.value = !isGridView.value;
+                    },
+                    icon: Obx(() =>
+                        Icon(isGridView.value ? Icons.list : Icons.grid_view)),
+                    splashRadius: 20,
+                  ),
+                ]
+              : null,
+          leading: IconButton(
+              splashRadius: 20,
+              onPressed: () => Get.back(),
+              icon: const Icon(Icons.arrow_back)),
+          title: const Text('vault'),
+        ),
+        body: Controller.to.isUnblocked.value && childrens != null
+            ? MasonryGridView.count(
+                physics: const BouncingScrollPhysics(),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                crossAxisCount: isGridView.value ? 2 : 1,
+                itemCount: childrens!.length,
+                itemBuilder: (context, index) {
+                  return childrens![index].isLocked
+                      ? Padding(
+                          padding: const EdgeInsets.all(5),
+                          child: HomeWidget(
+                            value: childrens![index],
+                            isVault: true,
+                            index: index,
+                          ),
+                        )
+                      : Container();
+                })
+            : VaultPagePasswordWidget(
+                passwordController: passwordController,
+                repeatPasswordController: repeatPasswordController),
+        bottomNavigationBar: const HomePageBottomNavigationBar(isVault: true),
+        floatingActionButton: Controller.to.isUnblocked.value
+            ? null
+            : FloatingActionButton(
+                onPressed: () {
+                  messageFunc() {
+                    if (passwordController.text ==
+                        repeatPasswordController.text) {
+                      List messages = Controller
+                          .to
+                          .all[Controller.to.selectedFolder.value]
+                          .directoryChildrens[
+                              Controller.to.selectedElementIndex.value]
+                          .messages;
+
+                      messages[selectedElement.value].isLocked =
+                          !messages[selectedElement.value].isLocked;
+
+                      Controller.to.password = passwordController.text.obs;
+
+                      Controller.to.change(Chat(messages: messages.obs));
+                    }
+                    if (passwordController.text ==
+                        Controller.to.password.value) {
+                      List messages = Controller
+                          .to
+                          .all[Controller.to.selectedFolder.value]
+                          .directoryChildrens[
+                              Controller.to.selectedElementIndex.value]
+                          .messages;
+
+                      messages[selectedElement.value].isLocked =
+                          !messages[selectedElement.value].isLocked;
+                      Controller.to.change(Chat(messages: messages.obs));
+                      Controller.to.isUnblocked.value = true;
+                    }
+                    Get.back();
+                  }
+
+                  homeFunc() {
+                    if (passwordController.text ==
+                        repeatPasswordController.text) {
+                      Controller.to.password = passwordController.text.obs;
+                      Controller.to.setData();
+                      Controller.to.isUnblocked.value = true;
+                    } else if (passwordController.text ==
+                        Controller.to.password.value) {
+                      Controller.to.isUnblocked.value = true;
+                    }
+                  }
+
+                  isChat ? messageFunc() : homeFunc();
+                },
+                backgroundColor: Colors.blue,
+                child: const Icon(
+                  Icons.done,
+                  color: Colors.white,
+                ),
+              )));
+  }
+}
