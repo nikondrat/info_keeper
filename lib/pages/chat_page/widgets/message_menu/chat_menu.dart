@@ -7,7 +7,6 @@ import 'package:info_keeper/model/types/location_element.dart';
 import 'package:info_keeper/pages/chat_page/chat_history_page.dart';
 import 'package:info_keeper/pages/chat_page/widgets/message_menu/chat_menu_item.dart';
 import 'package:info_keeper/pages/chat_page/widgets/message_menu/chat_message_full_screen.dart';
-import 'package:info_keeper/pages/vault_page/vault_page.dart';
 import 'package:info_keeper/widgets/notifications.dart';
 
 class ChatPageMenu extends StatelessWidget {
