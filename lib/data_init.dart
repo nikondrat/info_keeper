@@ -19,7 +19,11 @@ initData() async {
       Controller.to.all = items.obs;
     }
   }
-  Controller.to.password = prefs.getString('password')!.obs;
+  if (prefs.getString('password') == null) {
+    prefs.setString('password', '');
+  } else {
+    Controller.to.password = prefs.getString('password')!.obs;
+  }
 }
 
 clearData() async {

@@ -19,7 +19,7 @@ notificationInit() async {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
   const AndroidInitializationSettings initializationSettingsAndroid =
-      AndroidInitializationSettings('ntf_icon');
+      AndroidInitializationSettings('ic_stat_name');
   const IOSInitializationSettings initializationSettingsIos =
       IOSInitializationSettings();
 

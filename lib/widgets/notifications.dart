@@ -25,7 +25,7 @@ class Notifications extends StatefulWidget {
 class _NotificationsState extends State<Notifications> {
   AndroidNotificationDetails androidPlatformChannelSpecifics =
       const AndroidNotificationDetails('com.example.info_keeper', 'info keeper',
-          icon: 'ntf_icon',
+          icon: 'ic_stat_name',
           importance: Importance.max,
           priority: Priority.high);
 
@@ -48,6 +48,13 @@ class _NotificationsState extends State<Notifications> {
         selectedDate.day,
         selectedDate.hour,
         selectedDate.minute);
+
+    // await flutterLocalNotificationsPlugin.show(
+    //     widget.locElement.index,
+    //     widget.messageText == null ? 'Notification' : widget.name,
+    //     widget.messageText ?? widget.name,
+    //     platformChannelSpecifics,
+    //     payload: jsonEncode(widget.locElement));
 
     await flutterLocalNotificationsPlugin.zonedSchedule(
       widget.locElement.index,
