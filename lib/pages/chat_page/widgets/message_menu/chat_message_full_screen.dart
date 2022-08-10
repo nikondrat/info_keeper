@@ -4,7 +4,6 @@ import 'package:info_keeper/model/types/chat/message.dart';
 import 'package:info_keeper/pages/chat_page/widgets/type/chat_message.dart';
 
 class ChatPageMessageInFullScreen extends StatelessWidget {
-  final int index;
   final RxInt selected;
   final Message message;
   final String dateTime;
@@ -16,7 +15,6 @@ class ChatPageMessageInFullScreen extends StatelessWidget {
   final RxList pinnedMessages;
   const ChatPageMessageInFullScreen(
       {Key? key,
-      required this.index,
       required this.selected,
       required this.message,
       required this.showDate,
@@ -46,7 +44,6 @@ class ChatPageMessageInFullScreen extends StatelessWidget {
               pinnedMessages: pinnedMessages,
               selectedMessagesCount: selectedMessageCount,
               fullScreen: true,
-              index: index,
               splitMessages: splitMessages,
               dateTime: dateTime,
               showDate: showDate,

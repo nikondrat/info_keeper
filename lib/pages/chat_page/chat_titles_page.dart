@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/chat/chat_type.dart';
+import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/pages/chat_page/widgets/type/chat_message.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
@@ -33,7 +33,7 @@ class ChatPageTitles extends StatelessWidget {
               .directoryChildrens[Controller.to.selectedElementIndex.value]
               .messages![i]
               .type ==
-          ChatType.chatMessage) {
+          AllType.chatMessage) {
         titlesMessages.add(Controller
             .to
             .all[Controller.to.selectedFolder.value]

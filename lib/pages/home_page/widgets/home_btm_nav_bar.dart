@@ -392,9 +392,15 @@ class HomePageBottomNavigationBar extends StatelessWidget {
             onTap: () {
               Controller.to.isShowMenu.value = false;
               //
-              Controller
-                  .to.all[Controller.to.selectedFolder.value].directoryChildrens
-                  .removeAt(Controller.to.selectedElementIndex.value);
+              Controller.to.delete(Controller
+                      .to
+                      .all[Controller.to.selectedFolder.value]
+                      .directoryChildrens[
+                  Controller.to.selectedElementIndex.value]);
+              Controller.to.setData();
+              // Controller
+              //     .to.all[Controller.to.selectedFolder.value].directoryChildrens
+              //     .removeAt(Controller.to.selectedElementIndex.value);
             },
             child: Row(
               children: const [

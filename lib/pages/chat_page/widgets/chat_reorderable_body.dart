@@ -38,7 +38,7 @@ class ChatPageReorderableBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ReorderableListView.builder(
+    return Obx(() => ReorderableListView.builder(
         scrollController: autoScrollController,
         onReorder: (oldIndex, newIndex) {
           if (oldIndex < newIndex) {
@@ -49,21 +49,16 @@ class ChatPageReorderableBody extends StatelessWidget {
               .to
               .all[Controller.to.selectedFolder.value]
               .directoryChildrens[Controller.to.selectedElementIndex.value]
-              .messages!
+              .messages
               .removeAt(oldIndex);
-          Controller
+          List messages = Controller
               .to
               .all[Controller.to.selectedFolder.value]
               .directoryChildrens[Controller.to.selectedElementIndex.value]
-              .messages!
-              .insert(newIndex, message);
+              .messages;
+          messages.insert(newIndex, message);
 
-          Controller.to.change(Chat(
-              messages: Controller
-                  .to
-                  .all[Controller.to.selectedFolder.value]
-                  .directoryChildrens[Controller.to.selectedElementIndex.value]
-                  .messages));
+          Controller.to.change(Chat(messages: messages.obs));
         },
         reverse: true,
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
@@ -72,9 +67,17 @@ class ChatPageReorderableBody extends StatelessWidget {
             .to
             .all[Controller.to.selectedFolder.value]
             .directoryChildrens[Controller.to.selectedElementIndex.value]
-            .messages!
+            .messages
             .length,
         itemBuilder: (context, messageIndex) {
+          Controller
+              .to
+              .all[Controller.to.selectedFolder.value]
+              .directoryChildrens[Controller.to.selectedElementIndex.value]
+              .messages[messageIndex]
+              .location
+              .selectedMessageIndex = messageIndex;
+
           return ChatPageBodyElement(
               pinnedMessages: pinnedMessages,
               key: Key(messageIndex.toString()),
@@ -91,6 +94,6 @@ class ChatPageReorderableBody extends StatelessWidget {
               showDate: showDate,
               splitMessages: splitMessages,
               titleController: titleController);
-        });
+        }));
   }
 }

@@ -5,6 +5,7 @@ import 'package:info_keeper/pages/home_page/widgets/home_body.dart';
 import 'package:info_keeper/pages/home_page/widgets/home_btm_nav_bar.dart';
 import 'package:info_keeper/pages/home_page/widgets/home_float_btn.dart';
 import 'package:info_keeper/pages/home_page/home_search.dart';
+import 'package:info_keeper/pages/trash_page/trash_page.dart';
 import 'package:info_keeper/pages/vault_page/vault_page.dart';
 import 'package:swipe/swipe.dart';
 
@@ -42,6 +43,9 @@ class HomePage extends StatelessWidget {
               onSelected: (value) {
                 if (value == 0) {
                   Get.to(() => const SearchPage());
+                }
+                if (value == 1) {
+                  Get.to(() => const TrashPage());
                 }
               },
               padding: EdgeInsets.zero,

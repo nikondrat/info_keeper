@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/model/controller.dart';
+import 'package:info_keeper/model/types/location_element.dart';
 import 'package:info_keeper/model/types/storage_file.dart';
 
 class StorageFilePageAction extends StatelessWidget {
@@ -27,8 +27,15 @@ class StorageFilePageAction extends StatelessWidget {
               if (titleController.text.isNotEmpty) {
                 history.add(dataController.text);
                 Controller.to.change(StorageFile(
-                    type: AllType.storageFile,
                     history: history,
+                    location: LocationElement(
+                        inDirectory: Controller.to.selectedFolder.value,
+                        index: Controller
+                                .to
+                                .all[Controller.to.selectedFolder.value]
+                                .directoryChildrens
+                                .length -
+                            1),
                     name: titleController.text,
                     pathToImage: pathToImage.value,
                     data: dataController.text));
@@ -42,8 +49,15 @@ class StorageFilePageAction extends StatelessWidget {
             onPressed: () {
               if (titleController.text.isNotEmpty) {
                 Controller.to.add(StorageFile(
-                    type: AllType.storageFile,
                     history: history,
+                    location: LocationElement(
+                        inDirectory: Controller.to.selectedFolder.value,
+                        index: Controller
+                                .to
+                                .all[Controller.to.selectedFolder.value]
+                                .directoryChildrens
+                                .length -
+                            1),
                     name: titleController.text,
                     pathToImage: pathToImage.value,
                     data: dataController.text));

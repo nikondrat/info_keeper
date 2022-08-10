@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/chat/chat_type.dart';
+import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/pages/chat_page/widgets/type/chat_message.dart';
 import 'package:info_keeper/pages/vault_page/vault_password.dart';
 
@@ -31,7 +31,7 @@ class ChatPageVault extends StatelessWidget {
                   .directoryChildrens[Controller.to.selectedElementIndex.value]
                   .messages![i]
                   .type ==
-              ChatType.chatMessage &&
+              AllType.chatMessage &&
           Controller
               .to
               .all[Controller.to.selectedFolder.value]

@@ -135,7 +135,6 @@ class ChatPageMenu extends StatelessWidget {
                   Navigator.pop(context);
                   Get.to(() => ChatPageMessageInFullScreen(
                       selectedMessageCount: selectedMessageCount,
-                      index: selectedMessage.value,
                       pinnedMessages: pinnedMessages,
                       selectedMessages: selectedMessages,
                       splitMessages: splitMessages,
@@ -146,14 +145,14 @@ class ChatPageMenu extends StatelessWidget {
                           .all[Controller.to.selectedFolder.value]
                           .directoryChildrens[
                               Controller.to.selectedElementIndex.value]
-                          .messages![selectedMessage.value]
+                          .messages[selectedMessage.value]
                           .dateTime,
                       message: Controller
                           .to
                           .all[Controller.to.selectedFolder.value]
                           .directoryChildrens[
                               Controller.to.selectedElementIndex.value]
-                          .messages![selectedMessage.value],
+                          .messages[selectedMessage.value],
                       isShowColorSelector: isShowColorSelector));
                 },
                 icon: const Icon(Icons.open_in_full),
@@ -168,6 +167,7 @@ class ChatPageMenu extends StatelessWidget {
                       .directoryChildrens[
                           Controller.to.selectedElementIndex.value]
                       .messages;
+
                   messages[selectedMessage.value].isPinned =
                       !messages[selectedMessage.value].isPinned;
 
@@ -191,12 +191,14 @@ class ChatPageMenu extends StatelessWidget {
             ChatPageMenuItem(
                 function: () {
                   Navigator.pop(context);
+
                   List messages = Controller
                       .to
                       .all[Controller.to.selectedFolder.value]
                       .directoryChildrens[
                           Controller.to.selectedElementIndex.value]
                       .messages;
+
                   messages[selectedMessage.value].isFavorite =
                       !messages[selectedMessage.value].isFavorite;
 
@@ -268,6 +270,9 @@ class ChatPageMenu extends StatelessWidget {
             ChatPageMenuItem(
                 function: () {
                   Navigator.pop(context);
+                  // print(selectedMessage.value);
+                  // messages.removeAt(0);
+                  // Controller.to.change(Chat(messages: messages));
                 },
                 icon: const Icon(Icons.delete_outline),
                 text: 'Move to trash'),

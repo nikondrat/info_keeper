@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/types/chat/chat.dart';
 import 'package:info_keeper/model/controller.dart';
+import 'package:info_keeper/model/types/location_element.dart';
 
 class HomePageAlertDialog extends StatelessWidget {
   const HomePageAlertDialog({Key? key}) : super(key: key);
@@ -10,6 +11,7 @@ class HomePageAlertDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     TextEditingController controller = TextEditingController();
     final validate = false.obs;
+
     return AlertDialog(
       title: const Text('Enter chat name'),
       content: Obx(
@@ -49,6 +51,14 @@ class HomePageAlertDialog extends StatelessWidget {
             if (value.isNotEmpty) {
               validate.value = false;
               Controller.to.add(Chat(
+                  location: LocationElement(
+                      inDirectory: Controller.to.selectedFolder.value,
+                      index: Controller
+                              .to
+                              .all[Controller.to.selectedFolder.value]
+                              .directoryChildrens
+                              .length -
+                          1),
                   name: value,
                   favorites: [].obs,
                   pinnedMessages: [].obs,
@@ -65,6 +75,14 @@ class HomePageAlertDialog extends StatelessWidget {
             if (controller.text.isNotEmpty) {
               validate.value = false;
               Controller.to.add(Chat(
+                  location: LocationElement(
+                      inDirectory: Controller.to.selectedFolder.value,
+                      index: Controller
+                              .to
+                              .all[Controller.to.selectedFolder.value]
+                              .directoryChildrens
+                              .length -
+                          1),
                   name: controller.text,
                   pinnedMessages: [].obs,
                   favorites: [].obs,

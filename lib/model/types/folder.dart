@@ -26,6 +26,14 @@ class Folder {
                   return Todo.fromJson(e);
                 case AllType.audioNote:
                   return AudioNote.fromJson(e);
+                case AllType.chatMessage:
+                  break;
+                case AllType.chatFile:
+                  break;
+                case AllType.chatVoice:
+                  break;
+                case AllType.chatImage:
+                  break;
               }
             })
             .toList()

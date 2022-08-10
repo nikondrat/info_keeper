@@ -1,7 +1,9 @@
 import 'package:info_keeper/model/types/all.dart';
+import 'package:info_keeper/model/types/location_element.dart';
 
 class StorageFile {
   AllType type;
+  LocationElement? location;
   String? name;
   String? data;
   List? history;
@@ -14,6 +16,7 @@ class StorageFile {
 
   StorageFile(
       {this.type = AllType.storageFile,
+      this.location,
       this.name,
       this.data,
       this.link = false,
@@ -26,6 +29,7 @@ class StorageFile {
 
   StorageFile.fromJson(Map<String, dynamic> json)
       : type = AllType.values.elementAt(json['type']),
+        location = LocationElement.fromJson(json['location']),
         name = json['name'],
         link = json['link'],
         dublicated = json['dublicated'],
@@ -39,6 +43,7 @@ class StorageFile {
   Map<String, dynamic> toJson() => {
         'type': type.index,
         'name': name,
+        'location': location!.toJson(),
         'link': link,
         'dublicated': dublicated,
         'pinned': pinned,

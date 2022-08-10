@@ -10,7 +10,6 @@ import 'package:info_keeper/model/types/folder.dart';
 import 'package:info_keeper/model/types/chat/message.dart';
 import 'package:info_keeper/model/types/storage_file.dart';
 import 'package:info_keeper/model/types/todo.dart';
-import 'package:info_keeper/model/types/trash.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Controller extends GetxController {
@@ -27,7 +26,7 @@ class Controller extends GetxController {
     Folder(directoryName: 'Main screen', directoryChildrens: [].obs),
   ].obs;
 
-  var trashElements = <TrashElement>[].obs;
+  RxList trashElements = [].obs;
 
   void setData() async {
     final prefs = await SharedPreferences.getInstance();
@@ -35,6 +34,7 @@ class Controller extends GetxController {
     // print(jsonEncode(all));
 
     await prefs.setString('all', jsonEncode(all));
+    await prefs.setString('trash', jsonEncode(trashElements));
     await prefs.setString('password', password.value);
   }
 
@@ -45,12 +45,17 @@ class Controller extends GetxController {
 
   void delete(value) {
     all[selectedFolder.value].directoryChildrens.remove(value);
+    trashElements.add(value);
     setData();
   }
 
   void change(dynamic value) {
     chat() {
       Chat chat = Chat();
+      chat.location = value.location ??
+          all[selectedFolder.value]
+              .directoryChildrens[selectedElementIndex.value]
+              .location;
       chat.name = value.name ??
           all[selectedFolder.value]
               .directoryChildrens[selectedElementIndex.value]
@@ -93,6 +98,10 @@ class Controller extends GetxController {
 
     storageFile() {
       StorageFile storageFile = StorageFile();
+      storageFile.location = value.location ??
+          all[selectedFolder.value]
+              .directoryChildrens[selectedElementIndex.value]
+              .location;
       storageFile.name = value.name ??
           all[selectedFolder.value]
               .directoryChildrens[selectedElementIndex.value]
@@ -130,6 +139,10 @@ class Controller extends GetxController {
 
     todo() {
       Todo todo = Todo();
+      todo.location = value.location ??
+          all[selectedFolder.value]
+              .directoryChildrens[selectedElementIndex.value]
+              .location;
       todo.name = value.name ??
           all[selectedFolder.value]
               .directoryChildrens[selectedElementIndex.value]
@@ -160,6 +173,10 @@ class Controller extends GetxController {
 
     audioNote() {
       AudioNote audioNote = AudioNote();
+      audioNote.location = value.location ??
+          all[selectedFolder.value]
+              .directoryChildrens[selectedElementIndex.value]
+              .location;
       audioNote.name = value.name ??
           all[selectedFolder.value]
               .directoryChildrens[selectedElementIndex.value]
@@ -209,6 +226,10 @@ class Controller extends GetxController {
   void addLink(dynamic value, int folderIndex) {
     chat() {
       Chat chat = Chat();
+      chat.location = value.location ??
+          all[selectedFolder.value]
+              .directoryChildrens[selectedElementIndex.value]
+              .location;
       chat.name = value.name ??
           all[selectedFolder.value]
               .directoryChildrens[selectedElementIndex.value]
@@ -248,6 +269,10 @@ class Controller extends GetxController {
 
     storageFile() {
       StorageFile storageFile = StorageFile();
+      storageFile.location = value.location ??
+          all[selectedFolder.value]
+              .directoryChildrens[selectedElementIndex.value]
+              .location;
       storageFile.name = value.name ??
           all[selectedFolder.value]
               .directoryChildrens[selectedElementIndex.value]
@@ -282,6 +307,10 @@ class Controller extends GetxController {
 
     todo() {
       Todo todo = Todo();
+      todo.location = value.location ??
+          all[selectedFolder.value]
+              .directoryChildrens[selectedElementIndex.value]
+              .location;
       todo.name = value.name ??
           all[selectedFolder.value]
               .directoryChildrens[selectedElementIndex.value]
@@ -308,6 +337,10 @@ class Controller extends GetxController {
 
     audioNote() {
       AudioNote audioNote = AudioNote();
+      audioNote.location = value.location ??
+          all[selectedFolder.value]
+              .directoryChildrens[selectedElementIndex.value]
+              .location;
       audioNote.name = value.name ??
           all[selectedFolder.value]
               .directoryChildrens[selectedElementIndex.value]

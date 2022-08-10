@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/all.dart';
+import 'package:info_keeper/model/types/location_element.dart';
 import 'package:info_keeper/model/types/task.dart';
 import 'package:info_keeper/model/types/todo.dart';
 import 'package:info_keeper/pages/todo_page/widgets/todo_body.dart';
@@ -34,10 +34,30 @@ class TodoPage extends StatelessWidget {
             onPressed: () {
               if (titleController.text.isNotEmpty) {
                 change
-                    ? Controller.to
-                        .change(Todo(name: titleController.text, tasks: tasks))
-                    : Controller.to
-                        .add(Todo(name: titleController.text, tasks: tasks));
+                    ? Controller.to.change(Todo(
+                        name: titleController.text,
+                        tasks: tasks,
+                        location: LocationElement(
+                            inDirectory: Controller.to.selectedFolder.value,
+                            index: Controller
+                                    .to
+                                    .all[Controller.to.selectedFolder.value]
+                                    .directoryChildrens
+                                    .length -
+                                1),
+                      ))
+                    : Controller.to.add(Todo(
+                        name: titleController.text,
+                        tasks: tasks,
+                        location: LocationElement(
+                            inDirectory: Controller.to.selectedFolder.value,
+                            index: Controller
+                                    .to
+                                    .all[Controller.to.selectedFolder.value]
+                                    .directoryChildrens
+                                    .length -
+                                1),
+                      ));
               }
               Get.back();
             }),
@@ -50,8 +70,17 @@ class TodoPage extends StatelessWidget {
                       onPressed: () {
                         if (titleController.text.isNotEmpty) {
                           Controller.to.change(Todo(
-                              type: AllType.todo,
                               name: titleController.text,
+                              location: LocationElement(
+                                  inDirectory:
+                                      Controller.to.selectedFolder.value,
+                                  index: Controller
+                                          .to
+                                          .all[Controller
+                                              .to.selectedFolder.value]
+                                          .directoryChildrens
+                                          .length -
+                                      1),
                               tasks: tasks));
                           Get.back();
                         }
@@ -65,7 +94,16 @@ class TodoPage extends StatelessWidget {
                       onPressed: () {
                         if (titleController.text.isNotEmpty) {
                           Controller.to.add(Todo(
-                              type: AllType.todo,
+                              location: LocationElement(
+                                  inDirectory:
+                                      Controller.to.selectedFolder.value,
+                                  index: Controller
+                                          .to
+                                          .all[Controller
+                                              .to.selectedFolder.value]
+                                          .directoryChildrens
+                                          .length -
+                                      1),
                               name: titleController.text,
                               tasks: tasks));
                           Get.back();

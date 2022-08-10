@@ -1,13 +1,13 @@
 import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
+import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/model/types/chat/chat.dart';
 import 'package:info_keeper/model/types/chat/chat_image.dart';
-import 'package:info_keeper/model/types/chat/chat_type.dart';
 import 'package:info_keeper/model/types/chat/message.dart';
+import 'package:info_keeper/model/types/location_element.dart';
 import 'package:info_keeper/pages/chat_page/widgets/chat_record_voice.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
@@ -42,7 +42,19 @@ class ChatPageBottomTextField extends StatelessWidget {
         File file = File(result.files.single.path.toString());
         String path = '${dir.path}/${result.files.single.name}';
         await file.copy(path);
-        Controller.to.addChatImage(ChatImage(path: path, dateTime: dateTime));
+        Controller.to.addChatImage(ChatImage(
+            path: path,
+            dateTime: dateTime,
+            location: LocationElement(
+                inDirectory: Controller.to.selectedFolder.value,
+                index: Controller.to.selectedElementIndex.value,
+                selectedMessageIndex: Controller
+                    .to
+                    .all[Controller.to.selectedFolder.value]
+                    .directoryChildrens[
+                        Controller.to.selectedElementIndex.value]
+                    .messages
+                    .length)));
       }
     }
 
@@ -69,7 +81,7 @@ class ChatPageBottomTextField extends StatelessWidget {
                                       Controller.to.selectedElementIndex.value]
                                   .messages![selectedMessage.value]
                                   .type ==
-                              ChatType.chatMessage
+                              AllType.chatMessage
                       ? ListTile(
                           minVerticalPadding: 0,
                           visualDensity: VisualDensity.compact,
@@ -177,7 +189,7 @@ class ChatPageBottomTextField extends StatelessWidget {
                                                   .selectedElementIndex.value]
                                               .messages![selectedMessage.value]
                                               .type ==
-                                          ChatType.chatMessage) {
+                                          AllType.chatMessage) {
                                     List messages = Controller
                                         .to
                                         .all[Controller.to.selectedFolder.value]
@@ -203,13 +215,8 @@ class ChatPageBottomTextField extends StatelessWidget {
                                     messages[selectedMessage.value]
                                             .messageText =
                                         contentController.value.text;
-                                    // print(messages[selectedMessage.value]
-                                    //     .messageText);
                                     history.add(messages[selectedMessage.value]
                                         .messageText);
-                                    // for (int i = 0; i < history.length; i++) {
-                                    //   print(history[i].messageText);
-                                    // }
                                     messages[selectedMessage.value].history =
                                         history;
 
@@ -225,7 +232,13 @@ class ChatPageBottomTextField extends StatelessWidget {
                                               .to.selectedElementIndex.value]
                                           .messages!;
                                       Controller.to.addMessage(Message(
-                                          index: messages.length,
+                                          location: LocationElement(
+                                              inDirectory: Controller
+                                                  .to.selectedFolder.value,
+                                              index: Controller.to
+                                                  .selectedElementIndex.value,
+                                              selectedMessageIndex:
+                                                  messages.length),
                                           title: titleController.text,
                                           messageText: contentController.text,
                                           history: [],

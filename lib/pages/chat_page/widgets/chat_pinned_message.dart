@@ -18,12 +18,8 @@ class ChatPagePinnedMessage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
         onTap: () {
-          autoScrollController.scrollToIndex(Controller
-              .to
-              .all[Controller.to.selectedFolder.value]
-              .directoryChildrens[Controller.to.selectedElementIndex.value]
-              .messages
-              .indexOf(pinnedMessages[0]));
+          autoScrollController
+              .scrollToIndex(pinnedMessages[0].location.selectedMessageIndex);
         },
         style: ListTileStyle.drawer,
         contentPadding: EdgeInsets.zero,
@@ -59,18 +55,20 @@ class ChatPagePinnedMessage extends StatelessWidget {
                 icon: const Icon(Icons.article_outlined))
             : IconButton(
                 onPressed: () {
-                  List messages = Controller
+                  final messages = Controller
                       .to
                       .all[Controller.to.selectedFolder.value]
                       .directoryChildrens[
                           Controller.to.selectedElementIndex.value]
                       .messages;
-                  messages[pinnedMessages[0].index].isPinned =
-                      !messages[pinnedMessages[0].index].isPinned;
+                  messages[pinnedMessages[0].location.selectedMessageIndex]
+                          .isPinned =
+                      !messages[pinnedMessages[0].location.selectedMessageIndex]
+                          .isPinned;
 
                   pinnedMessages.removeAt(0);
-                  Controller.to.change(Chat(
-                      messages: messages.obs, pinnedMessages: pinnedMessages));
+                  Controller.to.change(
+                      Chat(messages: messages, pinnedMessages: pinnedMessages));
                 },
                 splashRadius: 20,
                 icon: Icon(

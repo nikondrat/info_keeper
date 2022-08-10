@@ -10,11 +10,13 @@ class HomeWidgetChild extends StatelessWidget {
   final String term;
   final int index;
   final bool? isVault;
+  final bool? isTrash;
   const HomeWidgetChild(
       {Key? key,
       required this.value,
       required this.index,
       this.term = '',
+      this.isTrash,
       this.isVault})
       : super(key: key);
 
@@ -25,6 +27,7 @@ class HomeWidgetChild extends StatelessWidget {
         return HomeWidgetChat(
           index: index,
           term: term,
+          isTrash: isTrash,
         );
       case AllType.storageFile:
         return HomeWidgetStorageFile(

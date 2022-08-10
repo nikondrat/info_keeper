@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/chat/chat_type.dart';
+import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/pages/chat_page/widgets/type/chat_message.dart';
 
 class ChatPageSearch extends StatelessWidget {
@@ -28,7 +28,7 @@ class ChatPageSearch extends StatelessWidget {
               .directoryChildrens[Controller.to.selectedElementIndex.value]
               .messages![i]
               .type ==
-          ChatType.chatMessage) {
+          AllType.chatMessage) {
         list.add(Controller
             .to
             .all[Controller.to.selectedFolder.value]

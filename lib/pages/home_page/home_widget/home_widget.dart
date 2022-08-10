@@ -7,11 +7,13 @@ class HomeWidget extends StatelessWidget {
   final String term;
   final int index;
   final bool? isVault;
+  final bool? isTrash;
   const HomeWidget(
       {Key? key,
       required this.value,
       required this.index,
       this.term = '',
+      this.isTrash,
       this.isVault})
       : super(key: key);
 
@@ -24,12 +26,14 @@ class HomeWidget extends StatelessWidget {
             value: value,
             term: term,
             isVault: isVault,
+            isTrash: isTrash,
           ))
         : HomeWidgetChild(
             index: index,
             value: value,
             term: term,
             isVault: isVault,
+            isTrash: isTrash,
           );
   }
 }

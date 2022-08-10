@@ -1,8 +1,9 @@
-import 'package:info_keeper/model/types/chat/chat_type.dart';
+import 'package:info_keeper/model/types/all.dart';
+import 'package:info_keeper/model/types/location_element.dart';
 
 class Message {
-  int index;
-  ChatType type;
+  LocationElement location;
+  AllType type;
   String title;
   String messageText;
   int selectedColorIndex;
@@ -15,9 +16,9 @@ class Message {
   List? history;
 
   Message(
-      {required this.index,
+      {required this.location,
       this.title = '',
-      this.type = ChatType.chatMessage,
+      this.type = AllType.chatMessage,
       required this.messageText,
       this.selectedColorIndex = 5,
       this.isFavorite = false,
@@ -29,8 +30,8 @@ class Message {
       required this.dateTime});
 
   Message.fromJson(Map<String, dynamic> json)
-      : index = json['index'],
-        type = ChatType.values.elementAt(json['type']),
+      : type = AllType.values.elementAt(json['type']),
+        location = LocationElement.fromJson(json['location']),
         title = json['title'],
         messageText = json['messageText'],
         isSelected = json['isSelected'],
@@ -43,8 +44,8 @@ class Message {
         dateTime = json['dateTime'];
 
   Map<String, dynamic> toJson() => {
-        'index': index,
         'type': type.index,
+        'location': location.toJson(),
         'title': title,
         'messageText': messageText,
         'selectedColorIndex': selectedColorIndex,

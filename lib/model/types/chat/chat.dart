@@ -1,12 +1,13 @@
 import 'package:get/get.dart';
 import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/model/types/chat/chat_image.dart';
-import 'package:info_keeper/model/types/chat/chat_type.dart';
 import 'package:info_keeper/model/types/chat/chat_voice.dart';
 import 'package:info_keeper/model/types/chat/message.dart';
+import 'package:info_keeper/model/types/location_element.dart';
 
 class Chat {
   AllType type;
+  LocationElement? location;
   String? name;
   bool animate;
   bool dublicated;
@@ -20,6 +21,7 @@ class Chat {
 
   Chat(
       {this.type = AllType.chat,
+      this.location,
       this.name,
       this.animate = false,
       this.pinned = false,
@@ -33,6 +35,7 @@ class Chat {
 
   Chat.fromJson(Map<String, dynamic> json)
       : type = AllType.values.elementAt(json['type']),
+        location = LocationElement.fromJson(json['location']),
         name = json['name'],
         link = json['link'],
         isLocked = json['isLocked'],
@@ -41,14 +44,22 @@ class Chat {
         animate = json['animate'],
         messages = (json['messages'] as List<dynamic>)
             .map<dynamic>((dynamic e) {
-              switch (ChatType.values.elementAt(e['type'])) {
-                case ChatType.chatMessage:
+              switch (AllType.values.elementAt(e['type'])) {
+                case AllType.chatMessage:
                   return Message.fromJson(e);
-                case ChatType.chatVoice:
+                case AllType.chatVoice:
                   return ChatVoice.fromJson(e);
-                case ChatType.chatImage:
+                case AllType.chatImage:
                   return ChatImage.fromJson(e);
-                case ChatType.chatFile:
+                case AllType.chatFile:
+                  break;
+                case AllType.chat:
+                  break;
+                case AllType.storageFile:
+                  break;
+                case AllType.todo:
+                  break;
+                case AllType.audioNote:
                   break;
               }
             })
@@ -56,14 +67,22 @@ class Chat {
             .obs,
         pinnedMessages = (json['pinnedMessages'] as List<dynamic>)
             .map<dynamic>((dynamic e) {
-              switch (ChatType.values.elementAt(e['type'])) {
-                case ChatType.chatMessage:
+              switch (AllType.values.elementAt(e['type'])) {
+                case AllType.chatMessage:
                   return Message.fromJson(e);
-                case ChatType.chatVoice:
+                case AllType.chatVoice:
                   return ChatVoice.fromJson(e);
-                case ChatType.chatImage:
+                case AllType.chatImage:
                   return ChatImage.fromJson(e);
-                case ChatType.chatFile:
+                case AllType.chatFile:
+                  break;
+                case AllType.chat:
+                  break;
+                case AllType.storageFile:
+                  break;
+                case AllType.todo:
+                  break;
+                case AllType.audioNote:
                   break;
               }
             })
@@ -72,14 +91,22 @@ class Chat {
         pathToImage = json['pathToImage'],
         favorites = (json['favorites'] as List<dynamic>)
             .map<dynamic>((dynamic e) {
-              switch (ChatType.values.elementAt(e['type'])) {
-                case ChatType.chatMessage:
+              switch (AllType.values.elementAt(e['type'])) {
+                case AllType.chatMessage:
                   return Message.fromJson(e);
-                case ChatType.chatVoice:
+                case AllType.chatVoice:
                   return ChatVoice.fromJson(e);
-                case ChatType.chatImage:
+                case AllType.chatImage:
                   return ChatImage.fromJson(e);
-                case ChatType.chatFile:
+                case AllType.chatFile:
+                  break;
+                case AllType.chat:
+                  break;
+                case AllType.storageFile:
+                  break;
+                case AllType.todo:
+                  break;
+                case AllType.audioNote:
                   break;
               }
             })
@@ -89,6 +116,7 @@ class Chat {
   Map<String, dynamic> toJson() {
     return {
       'type': type.index,
+      'location': location!.toJson(),
       'name': name,
       'link': link,
       'pinned': pinned,

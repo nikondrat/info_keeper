@@ -1,9 +1,11 @@
 import 'package:get/get.dart';
 import 'package:info_keeper/model/types/all.dart';
+import 'package:info_keeper/model/types/location_element.dart';
 import 'package:info_keeper/model/types/task.dart';
 
 class Todo {
   AllType type;
+  LocationElement? location;
   String? name;
   RxList<Task>? tasks;
   bool pinned;
@@ -14,6 +16,7 @@ class Todo {
 
   Todo(
       {this.type = AllType.todo,
+      this.location,
       this.name,
       this.tasks,
       this.pinned = false,
@@ -24,6 +27,7 @@ class Todo {
 
   Todo.fromJson(Map<String, dynamic> json)
       : type = AllType.values.elementAt(json['type']),
+        location = LocationElement.fromJson(json['location']),
         name = json['name'],
         tasks = (json['tasks'] as List<dynamic>)
             .map((e) => Task.fromJson(e))
@@ -39,6 +43,7 @@ class Todo {
     return {
       'type': type.index,
       'name': name,
+      'location': location!.toJson(),
       'tasks': tasks!.map((e) => e.toJson()).toList(),
       'pinned': pinned,
       'isLocked': isLocked,

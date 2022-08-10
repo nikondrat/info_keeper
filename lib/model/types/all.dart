@@ -3,8 +3,8 @@ enum AllType {
   storageFile,
   todo,
   audioNote,
-  // chatMessage,
-  // chatFile,
-  // chatVoice,
-  // chatImage
+  chatMessage,
+  chatFile,
+  chatVoice,
+  chatImage
 }

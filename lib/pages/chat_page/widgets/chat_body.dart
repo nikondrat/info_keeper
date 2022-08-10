@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/chat/chat_type.dart';
+import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/pages/chat_page/widgets/chat_reorderable_body.dart';
 import 'package:info_keeper/pages/chat_page/widgets/chat_shown_date_body.dart';
 import 'package:info_keeper/pages/chat_page/widgets/type/chat_image.dart';
@@ -42,11 +42,18 @@ class ChatPageBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final RxList messages = Controller
+        .to
+        .all[Controller.to.selectedFolder.value]
+        .directoryChildrens[Controller.to.selectedElementIndex.value]
+        .messages;
+
     return Transform.translate(
       offset: Offset(0, -1 * MediaQuery.of(context).viewInsets.bottom),
       child: LayoutBuilder(
           builder: (context, constraints) => Obx(() => showDate.value
               ? ChatPageShownDateBody(
+                  messages: messages,
                   autoScrollController: autoScrollController,
                   constraints: constraints,
                   contentController: contentController,
@@ -269,9 +276,42 @@ class ChatPageBodyElement extends StatelessWidget {
         .to
         .all[Controller.to.selectedFolder.value]
         .directoryChildrens[Controller.to.selectedElementIndex.value]
-        .messages![messageIndex]
+        .messages[messageIndex]
         .type) {
-      case ChatType.chatMessage:
+      case AllType.chatImage:
+        return ChatImageWidget(
+            key: ValueKey(messageIndex),
+            dateTime: Controller
+                .to
+                .all[Controller.to.selectedFolder.value]
+                .directoryChildrens[Controller.to.selectedElementIndex.value]
+                .messages[messageIndex]
+                .dateTime,
+            showDate: showDate,
+            path: Controller
+                .to
+                .all[Controller.to.selectedFolder.value]
+                .directoryChildrens[Controller.to.selectedElementIndex.value]
+                .messages[messageIndex]
+                .path);
+      case AllType.chatVoice:
+        return ChatVoiceWidget(
+          key: ValueKey(messageIndex),
+          dateTime: Controller
+              .to
+              .all[Controller.to.selectedFolder.value]
+              .directoryChildrens[Controller.to.selectedElementIndex.value]
+              .messages[messageIndex]
+              .dateTime,
+          showDate: showDate,
+          path: Controller
+              .to
+              .all[Controller.to.selectedFolder.value]
+              .directoryChildrens[Controller.to.selectedElementIndex.value]
+              .messages[messageIndex]
+              .path,
+        );
+      case AllType.chatMessage:
         return AutoScrollTag(
           index: messageIndex,
           controller: scrollController,
@@ -288,55 +328,21 @@ class ChatPageBodyElement extends StatelessWidget {
             selectedMessage: selectedMessage,
             contentController: contentController,
             editMessage: editMessage,
-            index: messageIndex,
             splitMessages: splitMessages,
             selected: selectedMessage,
             dateTime: Controller
                 .to
                 .all[Controller.to.selectedFolder.value]
                 .directoryChildrens[Controller.to.selectedElementIndex.value]
-                .messages![messageIndex]
+                .messages[messageIndex]
                 .dateTime,
             message: Controller
                 .to
                 .all[Controller.to.selectedFolder.value]
                 .directoryChildrens[Controller.to.selectedElementIndex.value]
-                .messages![messageIndex],
+                .messages[messageIndex],
             isShowColorSelector: isShowColorSelector,
           ),
-        );
-      case ChatType.chatImage:
-        return ChatImageWidget(
-            key: ValueKey(messageIndex),
-            dateTime: Controller
-                .to
-                .all[Controller.to.selectedFolder.value]
-                .directoryChildrens[Controller.to.selectedElementIndex.value]
-                .messages![messageIndex]
-                .dateTime,
-            showDate: showDate,
-            path: Controller
-                .to
-                .all[Controller.to.selectedFolder.value]
-                .directoryChildrens[Controller.to.selectedElementIndex.value]
-                .messages![messageIndex]
-                .path);
-      case ChatType.chatVoice:
-        return ChatVoiceWidget(
-          key: ValueKey(messageIndex),
-          dateTime: Controller
-              .to
-              .all[Controller.to.selectedFolder.value]
-              .directoryChildrens[Controller.to.selectedElementIndex.value]
-              .messages![messageIndex]
-              .dateTime,
-          showDate: showDate,
-          path: Controller
-              .to
-              .all[Controller.to.selectedFolder.value]
-              .directoryChildrens[Controller.to.selectedElementIndex.value]
-              .messages![messageIndex]
-              .path,
         );
       default:
         return Container();

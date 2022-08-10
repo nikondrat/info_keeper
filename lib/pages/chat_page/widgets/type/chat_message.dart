@@ -14,7 +14,6 @@ import 'package:swipe_to/swipe_to.dart';
 
 class MessageWidget extends StatelessWidget {
   final AutoScrollController? scrollController;
-  final int index;
   final GlobalKey? messageKey;
   final BoxConstraints? constraints;
   final TextEditingController? titleController;
@@ -34,7 +33,6 @@ class MessageWidget extends StatelessWidget {
   final RxList pinnedMessages;
   const MessageWidget(
       {Key? key,
-      required this.index,
       this.messageKey,
       this.scrollController,
       this.constraints,
@@ -61,17 +59,17 @@ class MessageWidget extends StatelessWidget {
                 .to
                 .all[Controller.to.selectedFolder.value]
                 .directoryChildrens[Controller.to.selectedElementIndex.value]
-                .messages![index]
+                .messages[message.location.selectedMessageIndex!]
                 .isLocked &&
             !Controller
                 .to
                 .all[Controller.to.selectedFolder.value]
                 .directoryChildrens[Controller.to.selectedElementIndex.value]
-                .messages![index]
+                .messages[message.location.selectedMessageIndex!]
                 .isUnlocked
         ? GestureDetector(
             onTap: () {
-              selected.value = index;
+              selected.value = message.location.selectedMessageIndex!;
               Get.to(() => VaultPage(
                     isChat: true,
                     selectedElement: selectedMessage!,
@@ -89,7 +87,7 @@ class MessageWidget extends StatelessWidget {
                         .all[Controller.to.selectedFolder.value]
                         .directoryChildrens[
                             Controller.to.selectedElementIndex.value]
-                        .messages[index]
+                        .messages[message.location.selectedMessageIndex]
                         .title
                         .isNotEmpty
                     ? MainAxisAlignment.start
@@ -101,7 +99,7 @@ class MessageWidget extends StatelessWidget {
                       .all[Controller.to.selectedFolder.value]
                       .directoryChildrens[
                           Controller.to.selectedElementIndex.value]
-                      .messages[index]
+                      .messages[message.location.selectedMessageIndex]
                       .title),
                 ],
               ),
@@ -109,7 +107,6 @@ class MessageWidget extends StatelessWidget {
           )
         : fullScreen
             ? MessageWidgetChild(
-                index: index,
                 messageKey: messageKey,
                 scrollController: scrollController,
                 selected: selected,
@@ -129,7 +126,8 @@ class MessageWidget extends StatelessWidget {
                 pinnedMessages: pinnedMessages)
             : SwipeTo(
                 onRightSwipe: () {
-                  selectedMessage!.value = index;
+                  selectedMessage!.value =
+                      message.location.selectedMessageIndex!;
                   editMessage!.value = true;
                   contentController!.value = TextEditingValue(
                       text: Controller
@@ -150,7 +148,6 @@ class MessageWidget extends StatelessWidget {
                   textFieldFocusNode!.requestFocus();
                 },
                 child: MessageWidgetChild(
-                    index: index,
                     constraints: constraints,
                     messageKey: messageKey,
                     scrollController: scrollController,
@@ -173,7 +170,6 @@ class MessageWidget extends StatelessWidget {
 
 class MessageWidgetChild extends StatelessWidget {
   final AutoScrollController? scrollController;
-  final int index;
   final GlobalKey? messageKey;
   final BoxConstraints? constraints;
   final TextEditingController? titleController;
@@ -193,7 +189,6 @@ class MessageWidgetChild extends StatelessWidget {
   final RxList pinnedMessages;
   const MessageWidgetChild(
       {Key? key,
-      required this.index,
       required this.messageKey,
       required this.scrollController,
       required this.constraints,
@@ -221,7 +216,7 @@ class MessageWidgetChild extends StatelessWidget {
         if (isShowColorSelector.value != true &&
             splitMessages.value != true &&
             fullScreen != true) {
-          selectedMessage!.value = index;
+          selectedMessage!.value = message.location.selectedMessageIndex!;
           showModalBottomSheet(
               isScrollControlled: true,
               context: context,
@@ -239,7 +234,7 @@ class MessageWidgetChild extends StatelessWidget {
                   contentController: contentController!,
                   selectedMessage: selectedMessage!));
         }
-        selected.value = index;
+        selected.value = message.location.selectedMessageIndex!;
 
         if (splitMessages.value) {
           List messages = Controller
@@ -256,14 +251,13 @@ class MessageWidgetChild extends StatelessWidget {
             selectedMessagesCount.value -= 1;
           }
           // print(selectedMessages);
-          messages[index] = message;
+          messages[message.location.selectedMessageIndex!] = message;
           Controller.to.change(
             Chat(messages: messages.obs),
           );
         }
       },
       child: MessageWidgetBody(
-        index: index,
         message: message,
         splitMessages: splitMessages,
         fullScreen: fullScreen,
@@ -276,7 +270,7 @@ class MessageWidgetChild extends StatelessWidget {
 }
 
 class MessageWidgetBody extends StatelessWidget {
-  final int? index;
+  final bool? isTrash;
   final bool fullScreen;
   final RxInt? selected;
   final RxBool? splitMessages;
@@ -287,7 +281,7 @@ class MessageWidgetBody extends StatelessWidget {
   final RxBool? isCollapsed;
   const MessageWidgetBody(
       {Key? key,
-      this.index,
+      this.isTrash,
       this.fullScreen = false,
       this.selected,
       this.splitMessages,
@@ -302,78 +296,113 @@ class MessageWidgetBody extends StatelessWidget {
   Widget build(BuildContext context) {
     DateFormat format = DateFormat('yyyy-MM-dd HH:mm:ss');
     DateTime time = format.parse(dateTime!);
+    final isShowRestoreMenu = false.obs;
 
     body() {
-      return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisSize: fullScreen ? MainAxisSize.min : MainAxisSize.max,
-          children: [
-            message.title.isNotEmpty
-                ? Container(
-                    padding: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                        color: const Color(0xFF9FA8A8),
-                        borderRadius: BorderRadius.circular(6)),
-                    child: SubstringHighlight(text: message.title, term: term),
-                  )
-                : Container(),
-            Container(
-                margin: const EdgeInsets.symmetric(vertical: 2),
-                padding: const EdgeInsets.all(10),
+      return isTrash != null && isShowRestoreMenu.value
+          ? GestureDetector(
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(6),
-                    border: splitMessages != null
-                        ? splitMessages!.value && message.isSelected ||
-                                message.isUnlocked
-                            ? Border.all()
-                            : null
-                        : null,
-                    color: splitMessages != null
-                        ? splitMessages!.value && message.isSelected
-                            ? Colors.white
-                            : messageColors[message.selectedColorIndex]
-                        : messageColors[message.selectedColorIndex]),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                    border: Border.all(color: Colors.grey.shade600)),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      TextButton(
+                          onPressed: () => isShowRestoreMenu.value = false,
+                          child: const Text('Cancel')),
+                      TextButton(
+                          onPressed: () {
+                            // Controller.to.all[message.location.inDirectory]
+                            //     .directoryChildrens[message.location.index]
+                            //     .add(message.location.index);
+                            // Controller.to.trashElements.removeAt(
+                            //     message.location.selectedMessageIndex!);
+                            Controller.to.setData();
+                          },
+                          child: const Text('Restore'))
+                    ]),
+              ),
+            )
+          : GestureDetector(
+              onLongPress: () {
+                isTrash != null ? isShowRestoreMenu.value = true : null;
+              },
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisSize:
+                      fullScreen ? MainAxisSize.min : MainAxisSize.max,
                   children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: SubstringHighlight(
-                            text: message.messageText,
-                            term: term,
-                          ),
-                        ),
-                        Column(
+                    message.title.isNotEmpty
+                        ? Container(
+                            padding: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                                color: const Color(0xFF9FA8A8),
+                                borderRadius: BorderRadius.circular(6)),
+                            child: SubstringHighlight(
+                                text: message.title, term: term),
+                          )
+                        : Container(),
+                    Container(
+                        margin: const EdgeInsets.symmetric(vertical: 2),
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(6),
+                            border: splitMessages != null
+                                ? splitMessages!.value && message.isSelected ||
+                                        message.isUnlocked
+                                    ? Border.all()
+                                    : null
+                                : null,
+                            color: splitMessages != null
+                                ? splitMessages!.value && message.isSelected
+                                    ? Colors.white
+                                    : messageColors[message.selectedColorIndex]
+                                : messageColors[message.selectedColorIndex]),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            message.isUnlocked
-                                ? const Icon(Icons.lock_open_outlined)
-                                : const SizedBox.shrink(),
-                            message.isFavorite
-                                ? const Icon(
-                                    Icons.star,
-                                    color: Colors.amber,
-                                  )
-                                : Container(),
-                          ],
-                        ),
-                      ],
-                    ),
-                    showDate != null
-                        ? showDate!.value
-                            ? Padding(
-                                padding: const EdgeInsets.only(top: 4),
-                                child: Text(
-                                  '${time.hour}:${time.minute}',
-                                  style: TextStyle(color: Colors.grey.shade600),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: SubstringHighlight(
+                                    text: message.messageText,
+                                    term: term,
+                                  ),
                                 ),
-                              )
-                            : Container()
-                        : Container()
-                  ],
-                ))
-          ]);
+                                Column(
+                                  children: [
+                                    message.isUnlocked
+                                        ? const Icon(Icons.lock_open_outlined)
+                                        : const SizedBox.shrink(),
+                                    message.isFavorite
+                                        ? const Icon(
+                                            Icons.star,
+                                            color: Colors.amber,
+                                          )
+                                        : Container(),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            showDate != null
+                                ? showDate!.value
+                                    ? Padding(
+                                        padding: const EdgeInsets.only(top: 4),
+                                        child: Text(
+                                          '${time.hour}:${time.minute}',
+                                          style: TextStyle(
+                                              color: Colors.grey.shade600),
+                                        ),
+                                      )
+                                    : Container()
+                                : Container()
+                          ],
+                        ))
+                  ]),
+            );
     }
 
     if (term.isNotEmpty) {

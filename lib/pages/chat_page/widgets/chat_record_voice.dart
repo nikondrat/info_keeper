@@ -3,6 +3,7 @@ import 'package:flutter_sound/flutter_sound.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/chat/chat_voice.dart';
+import 'package:info_keeper/model/types/location_element.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -47,7 +48,18 @@ class _ChatPageRecordVoiceState extends State<ChatPageRecordVoice> {
     String dateTime = format.format(DateTime.now());
     isRecord.value = false;
     _mRecorder!.closeRecorder();
-    Controller.to.addChatVoice(ChatVoice(path: mPath, dateTime: dateTime));
+    Controller.to.addChatVoice(ChatVoice(
+        path: mPath,
+        dateTime: dateTime,
+        location: LocationElement(
+            inDirectory: Controller.to.selectedFolder.value,
+            index: Controller.to.selectedElementIndex.value,
+            selectedMessageIndex: Controller
+                .to
+                .all[Controller.to.selectedFolder.value]
+                .directoryChildrens[Controller.to.selectedElementIndex.value]
+                .messages
+                .length)));
   }
 
   Future<void> openTheRecorder() async {

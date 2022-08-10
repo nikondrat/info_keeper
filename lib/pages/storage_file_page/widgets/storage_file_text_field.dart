@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/model/controller.dart';
+import 'package:info_keeper/model/types/location_element.dart';
 import 'package:info_keeper/model/types/storage_file.dart';
 
 class StorageFilePageTextField extends StatelessWidget {
@@ -54,7 +54,11 @@ class StorageFilePageTextField extends StatelessWidget {
         if (value.isNotEmpty) {
           Controller.to.add(StorageFile(
               history: history,
-              type: AllType.storageFile,
+              location: LocationElement(
+                  inDirectory: Controller.to.selectedFolder.value,
+                  index: Controller.to.all[Controller.to.selectedFolder.value]
+                          .directoryChildrens.length -
+                      1),
               name: titleController.text,
               data: dataController.text));
         }

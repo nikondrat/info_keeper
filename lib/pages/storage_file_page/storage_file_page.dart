@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
+import 'package:info_keeper/model/types/location_element.dart';
 import 'package:info_keeper/model/types/storage_file.dart';
 import 'package:info_keeper/pages/storage_file_page/storage_history_page.dart';
 import 'package:info_keeper/pages/storage_file_page/widgets/storage_file_action.dart';
@@ -47,7 +48,14 @@ class StorageFilePage extends StatelessWidget {
         await file.copy(path);
         pathToImage.value = path;
         Controller.to.change(
-          StorageFile(pathToImage: pathToImage.value),
+          StorageFile(
+            pathToImage: pathToImage.value,
+            location: LocationElement(
+                inDirectory: Controller.to.selectedFolder.value,
+                index: Controller.to.all[Controller.to.selectedFolder.value]
+                        .directoryChildrens.length -
+                    1),
+          ),
         );
       }
     }
@@ -174,10 +182,26 @@ class StorageFilePage extends StatelessWidget {
                             name: title.text,
                             pathToImage: pathToImage.value,
                             history: history,
+                            location: LocationElement(
+                                inDirectory: Controller.to.selectedFolder.value,
+                                index: Controller
+                                        .to
+                                        .all[Controller.to.selectedFolder.value]
+                                        .directoryChildrens
+                                        .length -
+                                    1),
                             data: data.value.text))
                         : Controller.to.add(StorageFile(
                             name: title.text,
                             history: history,
+                            location: LocationElement(
+                                inDirectory: Controller.to.selectedFolder.value,
+                                index: Controller
+                                        .to
+                                        .all[Controller.to.selectedFolder.value]
+                                        .directoryChildrens
+                                        .length -
+                                    1),
                             pathToImage: pathToImage.value,
                             data: data.value.text));
                   }

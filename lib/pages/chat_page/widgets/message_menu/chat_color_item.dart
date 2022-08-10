@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/model/types/chat/chat.dart';
 import 'package:info_keeper/theme.dart';
 
@@ -30,26 +29,8 @@ class ChatPageColorItem extends StatelessWidget {
                 selectedIndex.value;
 
             Controller.to.change(Chat(
-                type: AllType.chat,
-                name: Controller
-                    .to
-                    .all[Controller.to.selectedFolder.value]
-                    .directoryChildrens[
-                        Controller.to.selectedElementIndex.value]
-                    .name,
-                messages: messages.obs,
-                favorites: Controller
-                    .to
-                    .all[Controller.to.selectedFolder.value]
-                    .directoryChildrens[
-                        Controller.to.selectedElementIndex.value]
-                    .favorites,
-                animate: Controller
-                    .to
-                    .all[Controller.to.selectedFolder.value]
-                    .directoryChildrens[
-                        Controller.to.selectedElementIndex.value]
-                    .animate));
+              messages: messages.obs,
+            ));
           },
           child: Container(
             decoration: BoxDecoration(
