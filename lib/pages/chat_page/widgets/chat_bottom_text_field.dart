@@ -34,27 +34,30 @@ class ChatPageBottomTextField extends StatelessWidget {
     DateFormat format = DateFormat('yyyy-MM-dd HH:mm:ss');
     String dateTime = format.format(DateTime.now());
 
+    List imageFormats = ['jpeg', 'png', 'gif', 'bmp', 'webP', 'wbmp'];
+
     void pickImage() async {
-      FilePickerResult? result =
-          await FilePicker.platform.pickFiles(type: FileType.image);
+      FilePickerResult? result = await FilePicker.platform.pickFiles();
       if (result != null) {
         Directory dir = await getApplicationDocumentsDirectory();
         File file = File(result.files.single.path.toString());
         String path = '${dir.path}/${result.files.single.name}';
         await file.copy(path);
-        Controller.to.addChatImage(ChatImage(
-            path: path,
-            dateTime: dateTime,
-            location: LocationElement(
-                inDirectory: Controller.to.selectedFolder.value,
-                index: Controller.to.selectedElementIndex.value,
-                selectedMessageIndex: Controller
-                    .to
-                    .all[Controller.to.selectedFolder.value]
-                    .directoryChildrens[
-                        Controller.to.selectedElementIndex.value]
-                    .messages
-                    .length)));
+        if (imageFormats.contains(result.files.single.path!.split('.')[3])) {
+          Controller.to.addChatImage(ChatImage(
+              path: path,
+              dateTime: dateTime,
+              location: LocationElement(
+                  inDirectory: Controller.to.selectedFolder.value,
+                  index: Controller.to.selectedElementIndex.value,
+                  selectedMessageIndex: Controller
+                      .to
+                      .all[Controller.to.selectedFolder.value]
+                      .directoryChildrens[
+                          Controller.to.selectedElementIndex.value]
+                      .messages
+                      .length)));
+        }
       }
     }
 
