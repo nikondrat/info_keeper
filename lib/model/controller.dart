@@ -43,7 +43,7 @@ class Controller extends GetxController {
     setData();
   }
 
-  void delete(value) {
+  delete(value) {
     all[selectedFolder.value].directoryChildrens.remove(value);
     trashElements.add(value);
     setData();

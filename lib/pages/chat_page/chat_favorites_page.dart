@@ -63,12 +63,30 @@ class ChatPageFavoritesBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final RxList messages = Controller
-        .to
-        .all[Controller.to.selectedFolder.value]
-        .directoryChildrens[Controller.to.selectedElementIndex.value]
-        .favorites!;
+    final RxList messages = [].obs;
 
+    for (int i = 0;
+        i <
+            Controller
+                .to
+                .all[Controller.to.selectedFolder.value]
+                .directoryChildrens[Controller.to.selectedElementIndex.value]
+                .favorites!
+                .length;
+        i++) {
+      if (!Controller
+          .to
+          .all[Controller.to.selectedFolder.value]
+          .directoryChildrens[Controller.to.selectedElementIndex.value]
+          .messages![i]
+          .isLocked) {
+        messages.add(Controller
+            .to
+            .all[Controller.to.selectedFolder.value]
+            .directoryChildrens[Controller.to.selectedElementIndex.value]
+            .messages![i]);
+      }
+    }
     return ListView.builder(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
         physics: const BouncingScrollPhysics(),

@@ -204,17 +204,6 @@ class ChatPage extends StatelessWidget {
                                           Text('Change background')
                                         ],
                                       )),
-                                  PopupMenuItem(
-                                      onTap: () {},
-                                      child: Row(
-                                        children: const [
-                                          Padding(
-                                            padding: EdgeInsets.only(right: 8),
-                                            child: Icon(Icons.delete_outline),
-                                          ),
-                                          Text('Move to trash')
-                                        ],
-                                      )),
                                 ])
                       ],
                 leading: splitMessages.value

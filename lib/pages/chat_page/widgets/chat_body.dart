@@ -42,18 +42,11 @@ class ChatPageBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final RxList messages = Controller
-        .to
-        .all[Controller.to.selectedFolder.value]
-        .directoryChildrens[Controller.to.selectedElementIndex.value]
-        .messages;
-
     return Transform.translate(
       offset: Offset(0, -1 * MediaQuery.of(context).viewInsets.bottom),
       child: LayoutBuilder(
           builder: (context, constraints) => Obx(() => showDate.value
               ? ChatPageShownDateBody(
-                  messages: messages,
                   autoScrollController: autoScrollController,
                   constraints: constraints,
                   contentController: contentController,

@@ -5,6 +5,7 @@ import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/chat/chat.dart';
 import 'package:info_keeper/model/types/chat/message.dart';
 import 'package:info_keeper/pages/chat_page/widgets/message_menu/chat_menu.dart';
+import 'package:info_keeper/pages/trash_page/trash_element.dart';
 import 'package:info_keeper/pages/vault_page/vault_page.dart';
 import 'package:info_keeper/theme.dart';
 import 'package:intl/intl.dart';
@@ -270,6 +271,7 @@ class MessageWidgetChild extends StatelessWidget {
 }
 
 class MessageWidgetBody extends StatelessWidget {
+  final int? index;
   final bool? isTrash;
   final bool fullScreen;
   final RxInt? selected;
@@ -281,6 +283,7 @@ class MessageWidgetBody extends StatelessWidget {
   final RxBool? isCollapsed;
   const MessageWidgetBody(
       {Key? key,
+      this.index,
       this.isTrash,
       this.fullScreen = false,
       this.selected,
@@ -299,110 +302,87 @@ class MessageWidgetBody extends StatelessWidget {
     final isShowRestoreMenu = false.obs;
 
     body() {
-      return isTrash != null && isShowRestoreMenu.value
-          ? GestureDetector(
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 4),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6),
-                    border: Border.all(color: Colors.grey.shade600)),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      TextButton(
-                          onPressed: () => isShowRestoreMenu.value = false,
-                          child: const Text('Cancel')),
-                      TextButton(
-                          onPressed: () {
-                            // Controller.to.all[message.location.inDirectory]
-                            //     .directoryChildrens[message.location.index]
-                            //     .add(message.location.index);
-                            // Controller.to.trashElements.removeAt(
-                            //     message.location.selectedMessageIndex!);
-                            Controller.to.setData();
-                          },
-                          child: const Text('Restore'))
-                    ]),
-              ),
-            )
-          : GestureDetector(
-              onLongPress: () {
-                isTrash != null ? isShowRestoreMenu.value = true : null;
-              },
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisSize:
-                      fullScreen ? MainAxisSize.min : MainAxisSize.max,
-                  children: [
-                    message.title.isNotEmpty
-                        ? Container(
-                            padding: const EdgeInsets.all(4),
-                            decoration: BoxDecoration(
-                                color: const Color(0xFF9FA8A8),
-                                borderRadius: BorderRadius.circular(6)),
-                            child: SubstringHighlight(
-                                text: message.title, term: term),
-                          )
-                        : Container(),
-                    Container(
-                        margin: const EdgeInsets.symmetric(vertical: 2),
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(6),
-                            border: splitMessages != null
-                                ? splitMessages!.value && message.isSelected ||
-                                        message.isUnlocked
-                                    ? Border.all()
-                                    : null
-                                : null,
-                            color: splitMessages != null
-                                ? splitMessages!.value && message.isSelected
-                                    ? Colors.white
-                                    : messageColors[message.selectedColorIndex]
-                                : messageColors[message.selectedColorIndex]),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  child: SubstringHighlight(
-                                    text: message.messageText,
-                                    term: term,
-                                  ),
+      return TrashElement(
+          isShowRestoreMenu: isShowRestoreMenu,
+          index: index,
+          isMessage: true,
+          child: GestureDetector(
+            onLongPress: () {
+              isTrash != null ? isShowRestoreMenu.value = true : null;
+            },
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisSize: fullScreen ? MainAxisSize.min : MainAxisSize.max,
+                children: [
+                  message.title.isNotEmpty
+                      ? Container(
+                          padding: const EdgeInsets.all(4),
+                          decoration: BoxDecoration(
+                              color: const Color(0xFF9FA8A8),
+                              borderRadius: BorderRadius.circular(6)),
+                          child: SubstringHighlight(
+                              text: message.title, term: term),
+                        )
+                      : Container(),
+                  Container(
+                      margin: const EdgeInsets.symmetric(vertical: 2),
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(6),
+                          border: splitMessages != null
+                              ? splitMessages!.value && message.isSelected ||
+                                      message.isUnlocked
+                                  ? Border.all()
+                                  : null
+                              : null,
+                          color: splitMessages != null
+                              ? splitMessages!.value && message.isSelected
+                                  ? Colors.white
+                                  : messageColors[message.selectedColorIndex]
+                              : messageColors[message.selectedColorIndex]),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: SubstringHighlight(
+                                  text: message.messageText,
+                                  term: term,
                                 ),
-                                Column(
-                                  children: [
-                                    message.isUnlocked
-                                        ? const Icon(Icons.lock_open_outlined)
-                                        : const SizedBox.shrink(),
-                                    message.isFavorite
-                                        ? const Icon(
-                                            Icons.star,
-                                            color: Colors.amber,
-                                          )
-                                        : Container(),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            showDate != null
-                                ? showDate!.value
-                                    ? Padding(
-                                        padding: const EdgeInsets.only(top: 4),
-                                        child: Text(
-                                          '${time.hour}:${time.minute}',
-                                          style: TextStyle(
-                                              color: Colors.grey.shade600),
-                                        ),
-                                      )
-                                    : Container()
-                                : Container()
-                          ],
-                        ))
-                  ]),
-            );
+                              ),
+                              Column(
+                                children: [
+                                  message.isUnlocked
+                                      ? const Icon(Icons.lock_open_outlined)
+                                      : const SizedBox(),
+                                  message.isFavorite
+                                      ? const Icon(
+                                          Icons.star,
+                                          color: Colors.amber,
+                                        )
+                                      : const SizedBox(),
+                                ],
+                              ),
+                            ],
+                          ),
+                          showDate != null
+                              ? showDate!.value
+                                  ? Padding(
+                                      padding: const EdgeInsets.only(top: 4),
+                                      child: Text(
+                                        '${time.hour}:${time.minute}',
+                                        style: TextStyle(
+                                            color: Colors.grey.shade600),
+                                      ),
+                                    )
+                                  : const SizedBox()
+                              : const SizedBox()
+                        ],
+                      ))
+                ]),
+          ));
     }
 
     if (term.isNotEmpty) {

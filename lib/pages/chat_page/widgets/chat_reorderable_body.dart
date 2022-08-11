@@ -39,6 +39,7 @@ class ChatPageReorderableBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() => ReorderableListView.builder(
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         scrollController: autoScrollController,
         onReorder: (oldIndex, newIndex) {
           if (oldIndex < newIndex) {
@@ -57,6 +58,7 @@ class ChatPageReorderableBody extends StatelessWidget {
               .directoryChildrens[Controller.to.selectedElementIndex.value]
               .messages;
           messages.insert(newIndex, message);
+          message.location.selectedMessageIndex = newIndex;
 
           Controller.to.change(Chat(messages: messages.obs));
         },

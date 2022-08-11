@@ -10,10 +10,12 @@ import 'package:timezone/timezone.dart' as tz;
 class Notifications extends StatefulWidget {
   final String name;
   final String? messageText;
+  final bool isStorageFile;
   final LocationElement locElement;
   const Notifications(
       {Key? key,
       required this.locElement,
+      this.isStorageFile = false,
       required this.name,
       this.messageText})
       : super(key: key);
@@ -72,6 +74,30 @@ class _NotificationsState extends State<Notifications> {
   @override
   Widget build(BuildContext context) {
     DateTime selectedDateTime = DateTime.now();
+
+    if (widget.isStorageFile) {
+      return GestureDetector(
+        onTap: () async {
+          Navigator.pop(context);
+          DateTime? picker = await showOmniDateTimePicker(
+              context: context, is24HourMode: true);
+
+          if (picker != null) {
+            selectedDateTime = picker;
+            showNotification(selectedDateTime);
+          }
+        },
+        child: Row(
+          children: const [
+            Padding(
+              padding: EdgeInsets.only(right: 8),
+              child: Icon(Icons.notifications_none),
+            ),
+            Text('Remind')
+          ],
+        ),
+      );
+    }
 
     return widget.locElement.selectedMessageIndex != null
         ? TextButton.icon(

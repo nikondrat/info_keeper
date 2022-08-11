@@ -12,6 +12,7 @@ import 'package:info_keeper/pages/storage_file_page/widgets/storage_file_action.
 import 'package:info_keeper/pages/storage_file_page/widgets/storage_file_body.dart';
 import 'package:info_keeper/pages/storage_file_page/widgets/storage_file_text_field.dart';
 import 'package:info_keeper/widgets/background_image.dart';
+import 'package:info_keeper/widgets/notifications.dart';
 import 'package:path_provider/path_provider.dart';
 
 class StorageFilePage extends StatelessWidget {
@@ -60,6 +61,134 @@ class StorageFilePage extends StatelessWidget {
       }
     }
 
+    List<PopupMenuItem> changePopupMenuItems(BoxConstraints constraints) => [
+          PopupMenuItem(
+              value: 0,
+              onTap: () {
+                Clipboard.setData(ClipboardData(text: data.value.text));
+                Get.snackbar('Done', 'The content has been copied',
+                    shouldIconPulse: true,
+                    icon: const Icon(Icons.done),
+                    margin: const EdgeInsets.all(10),
+                    duration: const Duration(seconds: 1),
+                    maxWidth: constraints.maxWidth * 0.9,
+                    isDismissible: true,
+                    snackPosition: SnackPosition.BOTTOM);
+              },
+              child: Row(
+                children: const [
+                  Padding(
+                    padding: EdgeInsets.only(right: 8),
+                    child: Icon(Icons.copy),
+                  ),
+                  Text('Copy page')
+                ],
+              )),
+          PopupMenuItem(
+              value: 1,
+              onTap: () => pickImage(),
+              child: Row(
+                children: const [
+                  Padding(
+                    padding: EdgeInsets.only(right: 8),
+                    child: Icon(Icons.palette_outlined),
+                  ),
+                  Text('Change background')
+                ],
+              )),
+          PopupMenuItem(
+              value: 2,
+              child: Row(
+                children: const [
+                  Padding(
+                    padding: EdgeInsets.only(right: 8),
+                    child: Icon(Icons.history),
+                  ),
+                  Text('Edit history')
+                ],
+              )),
+          PopupMenuItem(
+              value: 3,
+              child: Notifications(
+                locElement: file!.location!,
+                name: file!.name!,
+                isStorageFile: true,
+              )),
+          PopupMenuItem(
+              onTap: () {
+                if (history.indexOf(data.text) >= 1) {
+                  data.text = history[history.indexOf(data.text) - 1];
+                }
+              },
+              value: 4,
+              child: Row(
+                children: const [
+                  Padding(
+                    padding: EdgeInsets.only(right: 8),
+                    child: Icon(Icons.undo),
+                  ),
+                  Text('Undo')
+                ],
+              )),
+          PopupMenuItem(
+              value: 5,
+              onTap: () {
+                Get.back();
+                Controller.to.delete(Controller
+                        .to
+                        .all[Controller.to.selectedFolder.value]
+                        .directoryChildrens[
+                    Controller.to.selectedElementIndex.value]);
+                Controller.to.setData();
+              },
+              child: Row(
+                children: const [
+                  Padding(
+                    padding: EdgeInsets.only(right: 8),
+                    child: Icon(Icons.delete_outline),
+                  ),
+                  Text('Move to trash')
+                ],
+              )),
+        ];
+
+    List<PopupMenuItem> addPopupMenuItems(BoxConstraints constraints) => [
+          PopupMenuItem(
+              value: 0,
+              onTap: () {
+                Clipboard.setData(ClipboardData(text: data.value.text));
+                Get.snackbar('Done', 'The content has been copied',
+                    shouldIconPulse: true,
+                    icon: const Icon(Icons.done),
+                    margin: const EdgeInsets.all(10),
+                    duration: const Duration(seconds: 1),
+                    maxWidth: constraints.maxWidth * 0.9,
+                    isDismissible: true,
+                    snackPosition: SnackPosition.BOTTOM);
+              },
+              child: Row(
+                children: const [
+                  Padding(
+                    padding: EdgeInsets.only(right: 8),
+                    child: Icon(Icons.copy),
+                  ),
+                  Text('Copy page')
+                ],
+              )),
+          PopupMenuItem(
+              value: 1,
+              onTap: () => pickImage(),
+              child: Row(
+                children: const [
+                  Padding(
+                    padding: EdgeInsets.only(right: 8),
+                    child: Icon(Icons.palette_outlined),
+                  ),
+                  Text('Change background')
+                ],
+              )),
+        ];
+
     return LayoutBuilder(
       builder: (context, constraints) => Scaffold(
           resizeToAvoidBottomInset: false,
@@ -83,94 +212,9 @@ class StorageFilePage extends StatelessWidget {
                             ));
                       }
                     },
-                    itemBuilder: (context) => [
-                          PopupMenuItem(
-                              value: 0,
-                              onTap: () {
-                                Clipboard.setData(
-                                    ClipboardData(text: data.value.text));
-                                Get.snackbar(
-                                    'Done', 'The content has been copied',
-                                    shouldIconPulse: true,
-                                    icon: const Icon(Icons.done),
-                                    margin: const EdgeInsets.all(10),
-                                    duration: const Duration(seconds: 1),
-                                    maxWidth: constraints.maxWidth * 0.9,
-                                    isDismissible: true,
-                                    snackPosition: SnackPosition.BOTTOM);
-                              },
-                              child: Row(
-                                children: const [
-                                  Padding(
-                                    padding: EdgeInsets.only(right: 8),
-                                    child: Icon(Icons.copy),
-                                  ),
-                                  Text('Copy page')
-                                ],
-                              )),
-                          PopupMenuItem(
-                              value: 1,
-                              onTap: () => pickImage(),
-                              child: Row(
-                                children: const [
-                                  Padding(
-                                    padding: EdgeInsets.only(right: 8),
-                                    child: Icon(Icons.palette_outlined),
-                                  ),
-                                  Text('Change background')
-                                ],
-                              )),
-                          PopupMenuItem(
-                              value: 2,
-                              child: Row(
-                                children: const [
-                                  Padding(
-                                    padding: EdgeInsets.only(right: 8),
-                                    child: Icon(Icons.history),
-                                  ),
-                                  Text('Edit history')
-                                ],
-                              )),
-                          PopupMenuItem(
-                              value: 3,
-                              child: Row(
-                                children: const [
-                                  Padding(
-                                    padding: EdgeInsets.only(right: 8),
-                                    child: Icon(Icons.notifications_none),
-                                  ),
-                                  Text('Remind')
-                                ],
-                              )),
-                          PopupMenuItem(
-                              onTap: () {
-                                if (history.indexOf(data.text) >= 1) {
-                                  data.text =
-                                      history[history.indexOf(data.text) - 1];
-                                }
-                              },
-                              value: 4,
-                              child: Row(
-                                children: const [
-                                  Padding(
-                                    padding: EdgeInsets.only(right: 8),
-                                    child: Icon(Icons.undo),
-                                  ),
-                                  Text('Undo')
-                                ],
-                              )),
-                          PopupMenuItem(
-                              value: 5,
-                              child: Row(
-                                children: const [
-                                  Padding(
-                                    padding: EdgeInsets.only(right: 8),
-                                    child: Icon(Icons.delete_outline),
-                                  ),
-                                  Text('Move to trash')
-                                ],
-                              )),
-                        ])
+                    itemBuilder: (context) => change
+                        ? changePopupMenuItems(constraints)
+                        : addPopupMenuItems(constraints))
               ],
               leading: IconButton(
                 splashRadius: 20,

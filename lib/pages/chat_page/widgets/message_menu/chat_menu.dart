@@ -270,6 +270,17 @@ class ChatPageMenu extends StatelessWidget {
             ChatPageMenuItem(
                 function: () {
                   Navigator.pop(context);
+
+                  var message = Controller
+                      .to
+                      .all[Controller.to.selectedFolder.value]
+                      .directoryChildrens[
+                          Controller.to.selectedElementIndex.value]
+                      .messages
+                      .removeAt(selectedMessage.value);
+
+                  Controller.to.trashElements.add(message);
+                  Controller.to.setData();
                   // print(selectedMessage.value);
                   // messages.removeAt(0);
                   // Controller.to.change(Chat(messages: messages));

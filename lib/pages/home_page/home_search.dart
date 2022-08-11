@@ -40,7 +40,8 @@ class SearchPage extends StatelessWidget {
               for (var allList in Controller.to.all) {
                 for (var element in allList.directoryChildrens) {
                   if (searchQueryController.text.isNotEmpty) {
-                    if (element.name.toLowerCase().contains(text)) {
+                    if (element.name.toLowerCase().contains(text) &&
+                        !element.isLocked) {
                       searchResult.add(SearchElement(
                           index: allList.directoryChildrens.indexOf(element),
                           directoryIndex: Controller.to.all.indexOf(allList),

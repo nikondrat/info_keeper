@@ -31,11 +31,13 @@ class HomeWidgetChild extends StatelessWidget {
         );
       case AllType.storageFile:
         return HomeWidgetStorageFile(
-            storageFile: value, index: index, term: term);
+            isTrash: isTrash, storageFile: value, index: index, term: term);
       case AllType.todo:
-        return HomeWidgetTodo(todo: value, index: index, term: term);
+        return HomeWidgetTodo(
+            isTrash: isTrash, todo: value, index: index, term: term);
       case AllType.audioNote:
-        return HomeWidgetAudioNote(audioNote: value, index: index, term: term);
+        return HomeWidgetAudioNote(
+            isTrash: isTrash, audioNote: value, index: index, term: term);
       default:
         return Container();
     }

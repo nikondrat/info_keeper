@@ -391,16 +391,13 @@ class HomePageBottomNavigationBar extends StatelessWidget {
         PopupMenuItem(
             onTap: () {
               Controller.to.isShowMenu.value = false;
-              //
+
               Controller.to.delete(Controller
                       .to
                       .all[Controller.to.selectedFolder.value]
                       .directoryChildrens[
                   Controller.to.selectedElementIndex.value]);
               Controller.to.setData();
-              // Controller
-              //     .to.all[Controller.to.selectedFolder.value].directoryChildrens
-              //     .removeAt(Controller.to.selectedElementIndex.value);
             },
             child: Row(
               children: const [
@@ -431,10 +428,13 @@ class HomePageBottomNavigationBar extends StatelessWidget {
         PopupMenuItem(
             onTap: () {
               Controller.to.isShowMenu.value = false;
-              //
-              Controller
-                  .to.all[Controller.to.selectedFolder.value].directoryChildrens
-                  .removeAt(Controller.to.selectedElementIndex.value);
+
+              Controller.to.delete(Controller
+                      .to
+                      .all[Controller.to.selectedFolder.value]
+                      .directoryChildrens[
+                  Controller.to.selectedElementIndex.value]);
+              Controller.to.setData();
             },
             child: Row(
               children: const [

@@ -3,47 +3,61 @@ import 'package:flutter_sound/flutter_sound.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/audio_note.dart';
+import 'package:info_keeper/pages/trash_page/trash_element.dart';
 import 'package:substring_highlight/substring_highlight.dart';
 
 class HomeWidgetAudioNote extends StatelessWidget {
   final AudioNote audioNote;
   final String term;
   final int index;
+  final bool? isTrash;
   const HomeWidgetAudioNote(
-      {Key? key, required this.audioNote, required this.index, this.term = ''})
+      {Key? key,
+      required this.audioNote,
+      required this.index,
+      this.term = '',
+      this.isTrash})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final isShowRestoreMenu = false.obs;
+
     return GestureDetector(
-        onLongPress: () {
-          Controller.to.isShowMenu.value = true;
-          Controller.to.selectedElementIndex.value = index;
-        },
-        child: Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(6),
-                border: Border.all(
-                    color: audioNote.animate
-                        ? const Color(0xFFB9DFBB)
-                        : Colors.grey.shade600,
-                    width: audioNote.animate ? 1.4 : 1)),
-            child: Row(children: [
-              audioNote.pinned
-                  ? const Padding(
-                      padding: EdgeInsets.only(left: 8),
-                      child: Icon(Icons.push_pin_outlined),
-                    )
-                  : Container(),
-              audioNote.dublicated
-                  ? const Padding(
-                      padding: EdgeInsets.only(left: 8),
-                      child: Icon(Icons.copy_all))
-                  : Container(),
-              HomeWidgetAudioNoteBody(audioNote: audioNote),
-              Expanded(
-                  child: SubstringHighlight(text: audioNote.name!, term: term))
-            ])));
+        onLongPress: isTrash != null
+            ? () => isShowRestoreMenu.value = true
+            : () {
+                Controller.to.isShowMenu.value = true;
+                Controller.to.selectedElementIndex.value = index;
+              },
+        child: TrashElement(
+            isShowRestoreMenu: isShowRestoreMenu,
+            index: index,
+            child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6),
+                    border: Border.all(
+                        color: audioNote.animate
+                            ? const Color(0xFFB9DFBB)
+                            : Colors.grey.shade600,
+                        width: audioNote.animate ? 1.4 : 1)),
+                child: Row(children: [
+                  audioNote.pinned
+                      ? const Padding(
+                          padding: EdgeInsets.only(left: 8),
+                          child: Icon(Icons.push_pin_outlined),
+                        )
+                      : Container(),
+                  audioNote.dublicated
+                      ? const Padding(
+                          padding: EdgeInsets.only(left: 8),
+                          child: Icon(Icons.copy_all))
+                      : Container(),
+                  HomeWidgetAudioNoteBody(audioNote: audioNote),
+                  Expanded(
+                      child:
+                          SubstringHighlight(text: audioNote.name!, term: term))
+                ]))));
   }
 }
 

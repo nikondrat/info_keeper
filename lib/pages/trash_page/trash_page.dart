@@ -44,6 +44,7 @@ class TrashPage extends StatelessWidget {
                       switch (Controller.to.trashElements[index].type) {
                         case AllType.chatMessage:
                           return MessageWidgetBody(
+                              index: index,
                               isTrash: true,
                               dateTime:
                                   Controller.to.trashElements[index].dateTime,

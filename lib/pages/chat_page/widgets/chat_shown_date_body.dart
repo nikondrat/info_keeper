@@ -7,7 +7,6 @@ import 'package:intl/intl.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
 class ChatPageShownDateBody extends StatelessWidget {
-  final RxList messages;
   final RxList pinnedMessages;
   final List selectedMessages;
   final TextEditingController contentController;
@@ -23,7 +22,6 @@ class ChatPageShownDateBody extends StatelessWidget {
   final TextEditingController titleController;
   const ChatPageShownDateBody(
       {Key? key,
-      required this.messages,
       required this.autoScrollController,
       required this.constraints,
       required this.contentController,

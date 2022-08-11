@@ -241,7 +241,7 @@ class ChatPageBottomTextField extends StatelessWidget {
                                                   messages.length),
                                           title: titleController.text,
                                           messageText: contentController.text,
-                                          history: [],
+                                          history: [contentController.text],
                                           dateTime: dateTime));
                                     }
                                   }

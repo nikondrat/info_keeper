@@ -28,12 +28,18 @@ class ChatPageTitles extends StatelessWidget {
                 .length;
         i++) {
       if (Controller
+                  .to
+                  .all[Controller.to.selectedFolder.value]
+                  .directoryChildrens[Controller.to.selectedElementIndex.value]
+                  .messages![i]
+                  .type ==
+              AllType.chatMessage &&
+          !Controller
               .to
               .all[Controller.to.selectedFolder.value]
               .directoryChildrens[Controller.to.selectedElementIndex.value]
               .messages![i]
-              .type ==
-          AllType.chatMessage) {
+              .isLocked) {
         titlesMessages.add(Controller
             .to
             .all[Controller.to.selectedFolder.value]
