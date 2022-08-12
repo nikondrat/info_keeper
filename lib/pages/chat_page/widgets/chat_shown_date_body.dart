@@ -43,12 +43,15 @@ class ChatPageShownDateBody extends StatelessWidget {
         controller: autoScrollController,
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
         physics: const BouncingScrollPhysics(),
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         floatingHeader: true,
-        itemComparator: (dynamic item1, dynamic item2) =>
-            item2.dateTime.compareTo(item1.dateTime),
-        groupComparator: (dynamic value1, dynamic value2) =>
-            value2.compareTo(value1),
-        groupSeparatorBuilder: (dynamic value) {
+        itemComparator: (dynamic item1, dynamic item2) {
+          return item1.dateTime.compareTo(item2.dateTime);
+        },
+        groupComparator: (dynamic value1, dynamic value2) {
+          return value1.compareTo(value2);
+        },
+        groupSeparatorBuilder: (DateTime value) {
           var months = [
             'December',
             'January',
@@ -63,9 +66,6 @@ class ChatPageShownDateBody extends StatelessWidget {
             'October',
             'November',
           ];
-          DateFormat format = DateFormat('yyyy-MM-dd HH:mm:ss');
-
-          DateTime dateTime = format.parse(value);
 
           return LayoutBuilder(
             builder: (context, constraints) => Container(
@@ -77,7 +77,7 @@ class ChatPageShownDateBody extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  '${months[dateTime.month]} ${dateTime.day}',
+                  '${months[value.month]} ${value.day}',
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -104,6 +104,11 @@ class ChatPageShownDateBody extends StatelessWidget {
             .all[Controller.to.selectedFolder.value]
             .directoryChildrens[Controller.to.selectedElementIndex.value]
             .messages!,
-        groupBy: (dynamic element) => element?.dateTime);
+        groupBy: (dynamic element) {
+          late DateFormat format = DateFormat('yyyy-MM-dd HH:mm:ss');
+          late DateTime item = format.parse(element.dateTime);
+
+          return item;
+        });
   }
 }

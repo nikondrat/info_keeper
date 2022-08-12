@@ -385,7 +385,7 @@ class HomePageBottomNavigationBar extends StatelessWidget {
                   padding: EdgeInsets.only(right: 8),
                   child: Icon(Icons.content_copy),
                 ),
-                Text('Dublicate content')
+                Text('Dublicate')
               ],
             )),
         PopupMenuItem(
@@ -422,7 +422,7 @@ class HomePageBottomNavigationBar extends StatelessWidget {
                   padding: EdgeInsets.only(right: 8),
                   child: Icon(Icons.content_copy),
                 ),
-                Text('Dublicate content')
+                Text('Dublicate')
               ],
             )),
         PopupMenuItem(
@@ -541,7 +541,10 @@ class HomePageBottomNavigationBar extends StatelessWidget {
                             onPressed: () {
                               Controller.to.selectedFolder.value = 0;
                             },
-                            icon: const Icon(Icons.home_outlined)),
+                            icon: const Icon(
+                              Icons.home_outlined,
+                              size: 26,
+                            )),
                         Controller.to.selectedFolder.value == 0
                             ? IconButton(
                                 splashRadius: 20,

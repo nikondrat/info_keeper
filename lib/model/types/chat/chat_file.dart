@@ -1,41 +1,40 @@
-import 'package:flutter_sound/flutter_sound.dart';
 import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/model/types/location_element.dart';
 
-class ChatVoice {
+class ChatFile {
+  String name;
   AllType type;
   LocationElement location;
   String path;
   String dateTime;
-  Codec codec;
   bool isLocked;
   bool isUnlocked;
 
-  ChatVoice(
-      {required this.path,
-      this.type = AllType.chatVoice,
+  ChatFile(
+      {required this.name,
+      required this.path,
       required this.location,
+      this.type = AllType.chatFile,
       this.isLocked = false,
       this.isUnlocked = false,
-      this.codec = Codec.aacMP4,
       required this.dateTime});
 
-  ChatVoice.fromJson(Map<String, dynamic> json)
-      : type = AllType.values.elementAt(json['type']),
+  ChatFile.fromJson(Map<String, dynamic> json)
+      : name = json['name'],
+        type = AllType.values.elementAt(json['type']),
         location = LocationElement.fromJson(json['location']),
         dateTime = json['dateTime'],
         isLocked = json['isLocked'],
         isUnlocked = json['isUnlocked'],
-        codec = Codec.values.elementAt(json['codec']),
         path = json['path'];
 
   Map<String, dynamic> toJson() => {
+        'name': name,
         'type': type.index,
+        'path': path,
         'location': location.toJson(),
-        'dateTime': dateTime,
         'isLocked': isLocked,
         'isUnlocked': isUnlocked,
-        'path': path,
-        'codec': codec.index
+        'dateTime': dateTime
       };
 }

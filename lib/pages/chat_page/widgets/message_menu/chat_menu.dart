@@ -122,7 +122,7 @@ class ChatPageMenu extends StatelessWidget {
                       ));
                 },
                 icon: const Icon(Icons.history),
-                text: 'History'),
+                text: 'Edit history'),
             ChatPageMenuItem(
                 function: () {
                   Navigator.pop(context);

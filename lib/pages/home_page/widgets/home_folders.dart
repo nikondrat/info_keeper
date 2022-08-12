@@ -84,20 +84,22 @@ class HomePageFoldersWidget extends StatelessWidget {
           ],
         ),
         Expanded(
-            child: Obx(() => GridView.builder(
-                physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.all(8),
-                itemCount: Controller.to.all.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    childAspectRatio: 3,
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 8,
-                    crossAxisSpacing: 8),
-                itemBuilder: (context, index) => HomePageFolderElement(
-                      index: index,
-                      isSelect: isSelect,
-                      delete: delete,
-                    ))))
+            child: Obx(() => LayoutBuilder(
+                  builder: (context, constraints) => GridView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      padding: const EdgeInsets.all(8),
+                      itemCount: Controller.to.all.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          childAspectRatio: constraints.maxHeight / 140,
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 8,
+                          crossAxisSpacing: 8),
+                      itemBuilder: (context, index) => HomePageFolderElement(
+                            index: index,
+                            isSelect: isSelect,
+                            delete: delete,
+                          )),
+                )))
       ],
     );
   }

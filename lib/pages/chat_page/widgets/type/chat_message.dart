@@ -348,6 +348,8 @@ class MessageWidgetBody extends StatelessWidget {
                             children: [
                               Expanded(
                                 child: SubstringHighlight(
+                                  textStyle: const TextStyle(
+                                      color: Colors.black, fontSize: 16),
                                   text: message.messageText,
                                   term: term,
                                 ),

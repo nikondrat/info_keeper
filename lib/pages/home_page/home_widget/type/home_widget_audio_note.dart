@@ -55,8 +55,12 @@ class HomeWidgetAudioNote extends StatelessWidget {
                       : Container(),
                   HomeWidgetAudioNoteBody(audioNote: audioNote),
                   Expanded(
-                      child:
-                          SubstringHighlight(text: audioNote.name!, term: term))
+                      child: SubstringHighlight(
+                    text: audioNote.name!,
+                    term: term,
+                    textStyle: const TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.black),
+                  ))
                 ]))));
   }
 }

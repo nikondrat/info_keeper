@@ -105,6 +105,8 @@ class HomeWidgetChat extends StatelessWidget {
                 Expanded(
                   child: SubstringHighlight(
                     term: term,
+                    textStyle: const TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.black),
                     text: isTrash != null
                         ? Controller.to.trashElements[index].name
                         : Controller.to.all[Controller.to.selectedFolder.value]

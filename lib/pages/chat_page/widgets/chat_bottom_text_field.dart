@@ -1,16 +1,23 @@
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_sound/flutter_sound.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/model/types/chat/chat.dart';
+import 'package:info_keeper/model/types/chat/chat_file.dart';
 import 'package:info_keeper/model/types/chat/chat_image.dart';
+import 'package:info_keeper/model/types/chat/chat_voice.dart';
 import 'package:info_keeper/model/types/chat/message.dart';
 import 'package:info_keeper/model/types/location_element.dart';
 import 'package:info_keeper/pages/chat_page/widgets/chat_record_voice.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
+
+enum MusicFormat { webm, ogg, mp3, mp4, flac, wav }
+
+enum ImageFormat { jpeg, png, gif, bmp, webp, wbmp }
 
 class ChatPageBottomTextField extends StatelessWidget {
   final RxBool editMessage;
@@ -31,19 +38,29 @@ class ChatPageBottomTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     final textFieldIsEmpty = true.obs;
     final isShowTitleTextField = false.obs;
-    DateFormat format = DateFormat('yyyy-MM-dd HH:mm:ss');
-    String dateTime = format.format(DateTime.now());
+    final DateFormat format = DateFormat('yyyy-MM-dd HH:mm:ss');
+    final String dateTime = format.format(DateTime.now());
 
-    List imageFormats = ['jpeg', 'png', 'gif', 'bmp', 'webP', 'wbmp'];
+    // final List imageFormats = ['jpeg', 'png', 'gif', 'bmp', 'webp', 'wbmp'];
+    // final List musicFormats = ['webm', 'ogg', 'mp3', 'mp4', 'flac', 'wav'];
 
-    void pickImage() async {
+    void pickFiles() async {
       FilePickerResult? result = await FilePicker.platform.pickFiles();
       if (result != null) {
         Directory dir = await getApplicationDocumentsDirectory();
-        File file = File(result.files.single.path.toString());
-        String path = '${dir.path}/${result.files.single.name}';
+        final File file = File(result.files.single.path.toString());
+        final String path = '${dir.path}/${result.files.single.name}';
         await file.copy(path);
-        if (imageFormats.contains(result.files.single.path!.split('.')[3])) {
+
+        final String type = result.files.single.path!.split('.')[3];
+        Codec codec = Codec.aacMP4;
+
+        final imageFormat = ImageFormat.values.firstWhereOrNull(
+            (element) => element.toString() == 'ImageFormat.$type');
+        final musicFormat = MusicFormat.values.firstWhereOrNull(
+            (element) => element.toString() == 'MusicFormat.$type');
+
+        if (imageFormat != null) {
           Controller.to.addChatImage(ChatImage(
               path: path,
               dateTime: dateTime,
@@ -57,6 +74,57 @@ class ChatPageBottomTextField extends StatelessWidget {
                           Controller.to.selectedElementIndex.value]
                       .messages
                       .length)));
+        } else if (musicFormat != null) {
+          switch (musicFormat) {
+            case MusicFormat.webm:
+              codec = Codec.vorbisWebM;
+              break;
+            case MusicFormat.flac:
+              codec = Codec.flac;
+              break;
+            case MusicFormat.mp3:
+              codec = Codec.mp3;
+              break;
+            case MusicFormat.mp4:
+              codec = Codec.aacMP4;
+              break;
+            case MusicFormat.ogg:
+              codec = Codec.vorbisOGG;
+              break;
+            case MusicFormat.wav:
+              codec = Codec.pcm16WAV;
+              break;
+            default:
+          }
+          Controller.to.addChatVoice(ChatVoice(
+              path: path,
+              codec: codec,
+              dateTime: dateTime,
+              location: LocationElement(
+                  inDirectory: Controller.to.selectedFolder.value,
+                  index: Controller.to.selectedElementIndex.value,
+                  selectedMessageIndex: Controller
+                      .to
+                      .all[Controller.to.selectedFolder.value]
+                      .directoryChildrens[
+                          Controller.to.selectedElementIndex.value]
+                      .messages
+                      .length)));
+        } else {
+          Controller.to.addChatFile(ChatFile(
+              name: path[1],
+              path: path,
+              location: LocationElement(
+                  inDirectory: Controller.to.selectedFolder.value,
+                  index: Controller.to.selectedElementIndex.value,
+                  selectedMessageIndex: Controller
+                      .to
+                      .all[Controller.to.selectedFolder.value]
+                      .directoryChildrens[
+                          Controller.to.selectedElementIndex.value]
+                      .messages
+                      .length),
+              dateTime: dateTime));
         }
       }
     }
@@ -173,7 +241,7 @@ class ChatPageBottomTextField extends StatelessWidget {
                                 ? Row(
                                     children: [
                                       IconButton(
-                                        onPressed: pickImage,
+                                        onPressed: pickFiles,
                                         icon: const Icon(Icons.attach_file),
                                         splashRadius: 20,
                                       ),

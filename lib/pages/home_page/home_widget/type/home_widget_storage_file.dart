@@ -58,7 +58,11 @@ class HomeWidgetStorageFile extends StatelessWidget {
                               : Colors.grey.shade600,
                           width: storageFile.animate ? 1.4 : 1)),
                   child: ExpansionWidget(
-                    content: Text(storageFile.data!, maxLines: 6),
+                    content: Padding(
+                      padding:
+                          const EdgeInsets.only(left: 8, right: 8, bottom: 8),
+                      child: Text(storageFile.data!, maxLines: 6),
+                    ),
                     titleBuilder: (animationValue, easeInValue, isExpanded,
                             toggleFunction) =>
                         Padding(
@@ -82,6 +86,9 @@ class HomeWidgetStorageFile extends StatelessWidget {
                           Expanded(
                             child: SubstringHighlight(
                               term: term,
+                              textStyle: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
                               text: storageFile.name!,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,

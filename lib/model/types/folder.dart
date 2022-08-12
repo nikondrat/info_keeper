@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/model/types/audio_note.dart';
 import 'package:info_keeper/model/types/chat/chat.dart';
+import 'package:info_keeper/model/types/chat/chat_file.dart';
 import 'package:info_keeper/model/types/storage_file.dart';
 import 'package:info_keeper/model/types/todo.dart';
 
@@ -26,9 +27,9 @@ class Folder {
                   return Todo.fromJson(e);
                 case AllType.audioNote:
                   return AudioNote.fromJson(e);
-                case AllType.chatMessage:
-                  break;
                 case AllType.chatFile:
+                  return ChatFile.fromJson(e);
+                case AllType.chatMessage:
                   break;
                 case AllType.chatVoice:
                   break;

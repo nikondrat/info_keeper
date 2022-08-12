@@ -5,6 +5,7 @@ import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/model/types/audio_note.dart';
 import 'package:info_keeper/model/types/chat/chat.dart';
+import 'package:info_keeper/model/types/chat/chat_file.dart';
 import 'package:info_keeper/model/types/chat/chat_image.dart';
 import 'package:info_keeper/model/types/chat/chat_voice.dart';
 import 'package:info_keeper/model/types/chat/message.dart';
@@ -47,7 +48,7 @@ initData() async {
               case AllType.chatMessage:
                 return Message.fromJson(e);
               case AllType.chatFile:
-                break;
+                return ChatFile.fromJson(e);
               case AllType.chatVoice:
                 return ChatVoice.fromJson(e);
               case AllType.chatImage:

@@ -8,10 +8,12 @@ class ChatVoiceWidget extends StatefulWidget {
   final String path;
   final String dateTime;
   final RxBool showDate;
+  final Codec codec;
   const ChatVoiceWidget(
       {Key? key,
       required this.path,
       required this.dateTime,
+      required this.codec,
       required this.showDate})
       : super(key: key);
 
@@ -41,7 +43,7 @@ class _ChatVoiceWidgetState extends State<ChatVoiceWidget> {
   void play() {
     isPlay.value = true;
     mPlayer!.startPlayer(
-        codec: Codec.aacMP4,
+        codec: widget.codec,
         fromURI: widget.path,
         whenFinished: () {
           isPlay.value = false;
@@ -55,44 +57,41 @@ class _ChatVoiceWidgetState extends State<ChatVoiceWidget> {
 
   @override
   Widget build(BuildContext context) {
-    body() {
-      return Container(
-          margin: const EdgeInsets.symmetric(vertical: 2),
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: messageColors[5],
-            borderRadius: BorderRadius.circular(6),
-          ),
-          child: Column(
-            children: [
-              Obx(() => isPlay.value
-                  ? IconButton(
-                      onPressed: stop,
-                      icon: const Icon(Icons.pause),
-                      splashRadius: 20)
-                  : IconButton(
-                      icon: const Icon(Icons.play_arrow),
-                      onPressed: play,
-                      splashRadius: 20,
-                    )),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  widget.showDate.value
-                      ? Padding(
-                          padding: const EdgeInsets.only(top: 4),
-                          child: Text(
-                            '${time.hour}:${time.minute}',
-                            style: TextStyle(color: Colors.grey.shade600),
-                          ),
-                        )
-                      : Container(),
-                ],
-              )
-            ],
-          ));
-    }
+    Widget body = Container(
+        margin: const EdgeInsets.symmetric(vertical: 2),
+        decoration: BoxDecoration(
+          color: messageColors[5],
+          borderRadius: BorderRadius.circular(6),
+        ),
+        child: Column(
+          children: [
+            Obx(() => isPlay.value
+                ? IconButton(
+                    onPressed: stop,
+                    icon: const Icon(Icons.pause),
+                    splashRadius: 20)
+                : IconButton(
+                    icon: const Icon(Icons.play_arrow),
+                    onPressed: play,
+                    splashRadius: 20,
+                  )),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                widget.showDate.value
+                    ? Padding(
+                        padding: const EdgeInsets.only(bottom: 8, right: 8),
+                        child: Text(
+                          '${time.hour}:${time.minute}',
+                          style: TextStyle(color: Colors.grey.shade600),
+                        ),
+                      )
+                    : Container(),
+              ],
+            )
+          ],
+        ));
 
-    return body();
+    return body;
   }
 }

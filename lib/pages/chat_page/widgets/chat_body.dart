@@ -4,6 +4,7 @@ import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/pages/chat_page/widgets/chat_reorderable_body.dart';
 import 'package:info_keeper/pages/chat_page/widgets/chat_shown_date_body.dart';
+import 'package:info_keeper/pages/chat_page/widgets/type/chat_file.dart';
 import 'package:info_keeper/pages/chat_page/widgets/type/chat_image.dart';
 import 'package:info_keeper/pages/chat_page/widgets/type/chat_message.dart';
 import 'package:info_keeper/pages/chat_page/widgets/type/chat_voice.dart';
@@ -290,6 +291,12 @@ class ChatPageBodyElement extends StatelessWidget {
       case AllType.chatVoice:
         return ChatVoiceWidget(
           key: ValueKey(messageIndex),
+          codec: Controller
+              .to
+              .all[Controller.to.selectedFolder.value]
+              .directoryChildrens[Controller.to.selectedElementIndex.value]
+              .messages[messageIndex]
+              .codec,
           dateTime: Controller
               .to
               .all[Controller.to.selectedFolder.value]
@@ -337,6 +344,16 @@ class ChatPageBodyElement extends StatelessWidget {
             isShowColorSelector: isShowColorSelector,
           ),
         );
+      case AllType.chatFile:
+        return ChatPageFile(
+            key: ValueKey(messageIndex),
+            dateTime: Controller
+                .to
+                .all[Controller.to.selectedFolder.value]
+                .directoryChildrens[Controller.to.selectedElementIndex.value]
+                .messages[messageIndex]
+                .dateTime,
+            showDate: showDate);
       default:
         return Container();
     }

@@ -32,8 +32,10 @@ class HomePage extends StatelessWidget {
                 onPressed: () {
                   isGridView.value = !isGridView.value;
                 },
-                icon: Obx(() =>
-                    Icon(isGridView.value ? Icons.list : Icons.grid_view)),
+                icon: Obx(() => Icon(
+                      isGridView.value ? Icons.list : Icons.grid_view,
+                      size: 26,
+                    )),
                 splashRadius: 20,
               ),
             ],
