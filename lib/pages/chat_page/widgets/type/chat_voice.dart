@@ -72,16 +72,10 @@ class _ChatVoiceWidgetState extends State<ChatVoiceWidget> {
                   ? MainAxisAlignment.center
                   : MainAxisAlignment.start,
               children: [
-                Obx(() => isPlay.value
-                    ? IconButton(
-                        onPressed: stop,
-                        icon: const Icon(Icons.pause),
-                        splashRadius: 20)
-                    : IconButton(
-                        icon: const Icon(Icons.play_arrow),
-                        onPressed: play,
-                        splashRadius: 20,
-                      )),
+                Obx(() => IconButton(
+                    onPressed: isPlay.value ? stop : play,
+                    icon: Icon(isPlay.value ? Icons.pause : Icons.play_arrow),
+                    splashRadius: 20)),
                 widget.name.isNotEmpty ? Text(widget.name) : const SizedBox()
               ],
             ),

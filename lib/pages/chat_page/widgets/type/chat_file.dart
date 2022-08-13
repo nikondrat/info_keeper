@@ -26,7 +26,7 @@ class ChatPageFile extends StatelessWidget {
       onTap: () async => await OpenFilex.open(path),
       child: Container(
           margin: const EdgeInsets.symmetric(vertical: 2),
-          padding: const EdgeInsets.all(6),
+          padding: const EdgeInsets.all(2),
           decoration: BoxDecoration(
             color: messageColors[5],
             borderRadius: BorderRadius.circular(6),
@@ -34,7 +34,13 @@ class ChatPageFile extends StatelessWidget {
           child: Column(
             children: [
               Row(
-                children: [const Icon(Icons.file_copy), Text(name)],
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Icon(Icons.file_copy),
+                  ),
+                  Expanded(child: Text(name))
+                ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,

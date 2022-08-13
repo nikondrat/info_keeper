@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/chat/chat.dart';
 import 'package:info_keeper/pages/chat_page/chat_favorites_page.dart';
+import 'package:info_keeper/pages/chat_page/chat_media.dart';
 import 'package:info_keeper/pages/chat_page/chat_search.dart';
 import 'package:info_keeper/pages/chat_page/chat_titles_page.dart';
 import 'package:info_keeper/pages/chat_page/chat_vault_page.dart';
@@ -139,6 +140,9 @@ class ChatPage extends StatelessWidget {
                               if (value == 0) {
                                 Get.to(() => const ChatPageSearch());
                               }
+                              if (value == 2) {
+                                Get.to(() => ChatPageMedia(index: chatIndex));
+                              }
                             },
                             tooltip: '',
                             itemBuilder: (context) => [
@@ -167,7 +171,7 @@ class ChatPage extends StatelessWidget {
                                         ],
                                       )),
                                   PopupMenuItem(
-                                      onTap: () {},
+                                      value: 2,
                                       child: Row(
                                         children: const [
                                           Padding(

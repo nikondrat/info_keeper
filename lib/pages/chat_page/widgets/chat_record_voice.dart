@@ -35,19 +35,10 @@ class _ChatPageRecordVoiceState extends State<ChatPageRecordVoice> {
     super.dispose();
   }
 
-  void record() {
-    _mRecorder!.startRecorder(
-      toFile: mPath,
-      codec: codec,
-    );
-    isRecord.value = true;
-  }
-
   void closeRecorder() {
     DateFormat format = DateFormat('yyyy-MM-dd HH:mm:ss');
     String dateTime = format.format(DateTime.now());
     isRecord.value = false;
-    _mRecorder!.closeRecorder();
     Controller.to.addChatVoice(ChatVoice(
         path: mPath,
         dateTime: dateTime,
@@ -70,21 +61,22 @@ class _ChatPageRecordVoiceState extends State<ChatPageRecordVoice> {
     await _mRecorder!.openRecorder();
   }
 
+  void record() {
+    _mRecorder!.startRecorder(
+      toFile: mPath,
+      codec: codec,
+    );
+
+    isRecord.value = true;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Obx(() => isRecord.value
-        ? IconButton(
-            onPressed: closeRecorder,
-            splashRadius: 20,
-            icon: const Icon(
-              Icons.radio_button_checked,
-              color: Colors.red,
-            ))
-        : IconButton(
-            splashRadius: 20,
-            onPressed: () {
-              record();
-            },
-            icon: const Icon(Icons.mic)));
+    return Obx(() => IconButton(
+        onPressed: isRecord.value ? closeRecorder : record,
+        splashRadius: 20,
+        icon: isRecord.value
+            ? const Icon(Icons.radio_button_checked, color: Colors.red)
+            : const Icon(Icons.mic)));
   }
 }
