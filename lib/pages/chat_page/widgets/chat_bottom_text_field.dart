@@ -17,7 +17,7 @@ import 'package:path_provider/path_provider.dart';
 
 enum MusicFormat { webm, ogg, mp3, mp4, flac, wav }
 
-enum ImageFormat { jpeg, png, gif, bmp, webp, wbmp }
+enum ImageFormat { jpeg, png, gif, bmp, webp, wbmp, jpg }
 
 class ChatPageBottomTextField extends StatelessWidget {
   final RxBool editMessage;
@@ -52,6 +52,8 @@ class ChatPageBottomTextField extends StatelessWidget {
         final String path = '${dir.path}/${result.files.single.name}';
         await file.copy(path);
 
+        final String name =
+            result.files.single.path!.split('.')[2].split('/')[3];
         final String type = result.files.single.path!.split('.')[3];
         Codec codec = Codec.aacMP4;
 
@@ -97,6 +99,7 @@ class ChatPageBottomTextField extends StatelessWidget {
             default:
           }
           Controller.to.addChatVoice(ChatVoice(
+              name: name,
               path: path,
               codec: codec,
               dateTime: dateTime,
@@ -112,7 +115,7 @@ class ChatPageBottomTextField extends StatelessWidget {
                       .length)));
         } else {
           Controller.to.addChatFile(ChatFile(
-              name: path[1],
+              name: name,
               path: path,
               location: LocationElement(
                   inDirectory: Controller.to.selectedFolder.value,

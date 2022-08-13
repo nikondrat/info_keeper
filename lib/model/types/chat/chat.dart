@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:info_keeper/model/types/all.dart';
+import 'package:info_keeper/model/types/chat/chat_file.dart';
 import 'package:info_keeper/model/types/chat/chat_image.dart';
 import 'package:info_keeper/model/types/chat/chat_voice.dart';
 import 'package:info_keeper/model/types/chat/message.dart';
@@ -52,7 +53,7 @@ class Chat {
                 case AllType.chatImage:
                   return ChatImage.fromJson(e);
                 case AllType.chatFile:
-                  break;
+                  return ChatFile.fromJson(e);
                 case AllType.chat:
                   break;
                 case AllType.storageFile:
@@ -75,7 +76,7 @@ class Chat {
                 case AllType.chatImage:
                   return ChatImage.fromJson(e);
                 case AllType.chatFile:
-                  break;
+                  return ChatFile.fromJson(e);
                 case AllType.chat:
                   break;
                 case AllType.storageFile:
@@ -99,7 +100,7 @@ class Chat {
                 case AllType.chatImage:
                   return ChatImage.fromJson(e);
                 case AllType.chatFile:
-                  break;
+                  return ChatFile.fromJson(e);
                 case AllType.chat:
                   break;
                 case AllType.storageFile:

@@ -5,12 +5,14 @@ import 'package:info_keeper/theme.dart';
 import 'package:intl/intl.dart';
 
 class ChatVoiceWidget extends StatefulWidget {
+  final String name;
   final String path;
   final String dateTime;
   final RxBool showDate;
   final Codec codec;
   const ChatVoiceWidget(
       {Key? key,
+      required this.name,
       required this.path,
       required this.dateTime,
       required this.codec,
@@ -65,16 +67,24 @@ class _ChatVoiceWidgetState extends State<ChatVoiceWidget> {
         ),
         child: Column(
           children: [
-            Obx(() => isPlay.value
-                ? IconButton(
-                    onPressed: stop,
-                    icon: const Icon(Icons.pause),
-                    splashRadius: 20)
-                : IconButton(
-                    icon: const Icon(Icons.play_arrow),
-                    onPressed: play,
-                    splashRadius: 20,
-                  )),
+            Row(
+              mainAxisAlignment: widget.name.isEmpty
+                  ? MainAxisAlignment.center
+                  : MainAxisAlignment.start,
+              children: [
+                Obx(() => isPlay.value
+                    ? IconButton(
+                        onPressed: stop,
+                        icon: const Icon(Icons.pause),
+                        splashRadius: 20)
+                    : IconButton(
+                        icon: const Icon(Icons.play_arrow),
+                        onPressed: play,
+                        splashRadius: 20,
+                      )),
+                widget.name.isNotEmpty ? Text(widget.name) : const SizedBox()
+              ],
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [

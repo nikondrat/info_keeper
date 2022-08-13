@@ -5,6 +5,7 @@ import 'package:info_keeper/model/types/location_element.dart';
 class ChatVoice {
   AllType type;
   LocationElement location;
+  String name;
   String path;
   String dateTime;
   Codec codec;
@@ -12,7 +13,8 @@ class ChatVoice {
   bool isUnlocked;
 
   ChatVoice(
-      {required this.path,
+      {this.name = '',
+      required this.path,
       this.type = AllType.chatVoice,
       required this.location,
       this.isLocked = false,
@@ -21,7 +23,8 @@ class ChatVoice {
       required this.dateTime});
 
   ChatVoice.fromJson(Map<String, dynamic> json)
-      : type = AllType.values.elementAt(json['type']),
+      : name = json['name'],
+        type = AllType.values.elementAt(json['type']),
         location = LocationElement.fromJson(json['location']),
         dateTime = json['dateTime'],
         isLocked = json['isLocked'],
@@ -30,6 +33,7 @@ class ChatVoice {
         path = json['path'];
 
   Map<String, dynamic> toJson() => {
+        'name': name,
         'type': type.index,
         'location': location.toJson(),
         'dateTime': dateTime,

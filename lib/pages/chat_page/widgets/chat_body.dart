@@ -291,6 +291,12 @@ class ChatPageBodyElement extends StatelessWidget {
       case AllType.chatVoice:
         return ChatVoiceWidget(
           key: ValueKey(messageIndex),
+          name: Controller
+              .to
+              .all[Controller.to.selectedFolder.value]
+              .directoryChildrens[Controller.to.selectedElementIndex.value]
+              .messages[messageIndex]
+              .name,
           codec: Controller
               .to
               .all[Controller.to.selectedFolder.value]
@@ -347,6 +353,18 @@ class ChatPageBodyElement extends StatelessWidget {
       case AllType.chatFile:
         return ChatPageFile(
             key: ValueKey(messageIndex),
+            path: Controller
+                .to
+                .all[Controller.to.selectedFolder.value]
+                .directoryChildrens[Controller.to.selectedElementIndex.value]
+                .messages[messageIndex]
+                .path,
+            name: Controller
+                .to
+                .all[Controller.to.selectedFolder.value]
+                .directoryChildrens[Controller.to.selectedElementIndex.value]
+                .messages[messageIndex]
+                .name,
             dateTime: Controller
                 .to
                 .all[Controller.to.selectedFolder.value]
