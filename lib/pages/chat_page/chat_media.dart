@@ -1,6 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
+import 'package:info_keeper/model/types/all.dart';
+import 'package:info_keeper/pages/chat_page/widgets/type/chat_file.dart';
+import 'package:info_keeper/pages/chat_page/widgets/type/chat_message.dart';
+import 'package:info_keeper/pages/chat_page/widgets/type/chat_voice.dart';
 
 class ChatPageMedia extends StatefulWidget {
   final int index;
@@ -41,6 +47,7 @@ class _ChatPageMediaState extends State<ChatPageMedia>
           splashRadius: 20,
         ),
         bottom: TabBar(
+            physics: const NeverScrollableScrollPhysics(),
             controller: tabController,
             unselectedLabelColor: Colors.grey,
             labelColor: Colors.black,
@@ -52,12 +59,15 @@ class _ChatPageMediaState extends State<ChatPageMedia>
               Tab(text: 'Sounds'),
             ]),
       ),
-      body: TabBarView(controller: tabController, children: const [
-        ChatMediaBodyImages(),
-        ChatMediaBodyFiles(),
-        ChatMediaBodyLinks(),
-        ChatMediaBodySounds()
-      ]),
+      body: TabBarView(
+          physics: const BouncingScrollPhysics(),
+          controller: tabController,
+          children: const [
+            ChatMediaBodyImages(),
+            ChatMediaBodyFiles(),
+            ChatMediaBodyLinks(),
+            ChatMediaBodySounds()
+          ]),
     );
   }
 }
@@ -67,7 +77,42 @@ class ChatMediaBodyImages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text('images');
+    List images = [];
+
+    for (int i = 0;
+        i <
+            Controller
+                .to
+                .all[Controller.to.selectedFolder.value]
+                .directoryChildrens[Controller.to.selectedElementIndex.value]
+                .messages
+                .length;
+        i++) {
+      if (Controller
+              .to
+              .all[Controller.to.selectedFolder.value]
+              .directoryChildrens[Controller.to.selectedElementIndex.value]
+              .messages[i]
+              .type ==
+          AllType.chatImage) {
+        images.add(Controller
+            .to
+            .all[Controller.to.selectedFolder.value]
+            .directoryChildrens[Controller.to.selectedElementIndex.value]
+            .messages[i]);
+      }
+    }
+
+    return GridView.builder(
+      itemCount: images.length,
+      physics: const BouncingScrollPhysics(),
+      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: 150, crossAxisSpacing: 4, mainAxisSpacing: 4),
+      itemBuilder: (context, index) => Image(
+        fit: BoxFit.cover,
+        image: FileImage(File(images[index].path)),
+      ),
+    );
   }
 }
 
@@ -76,7 +121,40 @@ class ChatMediaBodyFiles extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text('files');
+    List files = [];
+
+    for (int i = 0;
+        i <
+            Controller
+                .to
+                .all[Controller.to.selectedFolder.value]
+                .directoryChildrens[Controller.to.selectedElementIndex.value]
+                .messages
+                .length;
+        i++) {
+      if (Controller
+              .to
+              .all[Controller.to.selectedFolder.value]
+              .directoryChildrens[Controller.to.selectedElementIndex.value]
+              .messages[i]
+              .type ==
+          AllType.chatFile) {
+        files.add(Controller
+            .to
+            .all[Controller.to.selectedFolder.value]
+            .directoryChildrens[Controller.to.selectedElementIndex.value]
+            .messages[i]);
+      }
+    }
+    return ListView.builder(
+        itemCount: files.length,
+        padding: const EdgeInsets.all(10),
+        physics: const BouncingScrollPhysics(),
+        itemBuilder: (context, i) => ChatPageFile(
+            name: files[i].name,
+            path: files[i].path,
+            dateTime: files[i].dateTime,
+            showDate: false.obs));
   }
 }
 
@@ -85,7 +163,48 @@ class ChatMediaBodyLinks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text('links');
+    List links = [];
+
+    for (int i = 0;
+        i <
+            Controller
+                .to
+                .all[Controller.to.selectedFolder.value]
+                .directoryChildrens[Controller.to.selectedElementIndex.value]
+                .messages
+                .length;
+        i++) {
+      if (Controller
+                  .to
+                  .all[Controller.to.selectedFolder.value]
+                  .directoryChildrens[Controller.to.selectedElementIndex.value]
+                  .messages[i]
+                  .type ==
+              AllType.chatMessage &&
+          Controller
+                  .to
+                  .all[Controller.to.selectedFolder.value]
+                  .directoryChildrens[Controller.to.selectedElementIndex.value]
+                  .messages[i]
+                  .messageText
+                  .split('://') !=
+              null) {
+        links.add(Controller
+            .to
+            .all[Controller.to.selectedFolder.value]
+            .directoryChildrens[Controller.to.selectedElementIndex.value]
+            .messages[i]);
+      }
+    }
+
+    return ListView.builder(
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.all(10),
+        itemCount: links.length,
+        itemBuilder: (context, i) => MessageWidgetBody(
+              message: links[i],
+              dateTime: links[i].dateTime,
+            ));
   }
 }
 
@@ -94,6 +213,40 @@ class ChatMediaBodySounds extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text('sounds');
+    List sounds = [];
+
+    for (int i = 0;
+        i <
+            Controller
+                .to
+                .all[Controller.to.selectedFolder.value]
+                .directoryChildrens[Controller.to.selectedElementIndex.value]
+                .messages
+                .length;
+        i++) {
+      if (Controller
+              .to
+              .all[Controller.to.selectedFolder.value]
+              .directoryChildrens[Controller.to.selectedElementIndex.value]
+              .messages[i]
+              .type ==
+          AllType.chatVoice) {
+        sounds.add(Controller
+            .to
+            .all[Controller.to.selectedFolder.value]
+            .directoryChildrens[Controller.to.selectedElementIndex.value]
+            .messages[i]);
+      }
+    }
+    return ListView.builder(
+        itemCount: sounds.length,
+        padding: const EdgeInsets.all(10),
+        physics: const BouncingScrollPhysics(),
+        itemBuilder: (context, i) => ChatVoiceWidget(
+            name: sounds[i].name,
+            path: sounds[i].path,
+            codec: sounds[i].codec,
+            dateTime: sounds[i].dateTime,
+            showDate: false.obs));
   }
 }

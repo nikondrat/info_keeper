@@ -83,16 +83,6 @@ class MessageWidget extends StatelessWidget {
                   color: Colors.grey.shade300,
                   borderRadius: BorderRadius.circular(6)),
               child: Row(
-                mainAxisAlignment: Controller
-                        .to
-                        .all[Controller.to.selectedFolder.value]
-                        .directoryChildrens[
-                            Controller.to.selectedElementIndex.value]
-                        .messages[message.location.selectedMessageIndex]
-                        .title
-                        .isNotEmpty
-                    ? MainAxisAlignment.start
-                    : MainAxisAlignment.center,
                 children: [
                   const Icon(Icons.lock_outline),
                   Text(Controller
@@ -300,92 +290,99 @@ class MessageWidgetBody extends StatelessWidget {
     DateFormat format = DateFormat('yyyy-MM-dd HH:mm:ss');
     DateTime time = format.parse(dateTime!);
     final isShowRestoreMenu = false.obs;
+    final isSmall = false.obs;
 
-    body() {
-      return TrashElement(
-          isShowRestoreMenu: isShowRestoreMenu,
-          index: index,
-          isMessage: true,
-          child: GestureDetector(
-            onLongPress: () {
-              isTrash != null ? isShowRestoreMenu.value = true : null;
-            },
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisSize: fullScreen ? MainAxisSize.min : MainAxisSize.max,
-                children: [
-                  message.title.isNotEmpty
-                      ? Container(
-                          padding: const EdgeInsets.all(4),
-                          decoration: BoxDecoration(
-                              color: const Color(0xFF9FA8A8),
-                              borderRadius: BorderRadius.circular(6)),
-                          child: SubstringHighlight(
-                              text: message.title, term: term),
-                        )
-                      : Container(),
-                  Container(
-                      margin: const EdgeInsets.symmetric(vertical: 2),
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(6),
-                          border: splitMessages != null
-                              ? splitMessages!.value && message.isSelected ||
-                                      message.isUnlocked
-                                  ? Border.all()
-                                  : null
-                              : null,
-                          color: splitMessages != null
-                              ? splitMessages!.value && message.isSelected
-                                  ? Colors.white
-                                  : messageColors[message.selectedColorIndex]
-                              : messageColors[message.selectedColorIndex]),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                child: SubstringHighlight(
-                                  textStyle: const TextStyle(
-                                      color: Colors.black, fontSize: 16),
-                                  text: message.messageText,
-                                  term: term,
-                                ),
-                              ),
-                              Column(
-                                children: [
-                                  message.isUnlocked
-                                      ? const Icon(Icons.lock_open_outlined)
-                                      : const SizedBox(),
-                                  message.isFavorite
-                                      ? const Icon(
-                                          Icons.star,
-                                          color: Colors.amber,
-                                        )
-                                      : const SizedBox(),
-                                ],
-                              ),
-                            ],
-                          ),
-                          showDate != null
-                              ? showDate!.value
-                                  ? Padding(
-                                      padding: const EdgeInsets.only(top: 4),
-                                      child: Text(
-                                        '${time.hour}:${time.minute}',
-                                        style: TextStyle(
-                                            color: Colors.grey.shade600),
-                                      ),
-                                    )
-                                  : const SizedBox()
-                              : const SizedBox()
-                        ],
-                      ))
-                ]),
-          ));
-    }
+    Widget body = TrashElement(
+        isShowRestoreMenu: isShowRestoreMenu,
+        index: index,
+        isMessage: true,
+        child: GestureDetector(
+          onLongPress: () {
+            isTrash != null ? isShowRestoreMenu.value = true : null;
+          },
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: fullScreen ? MainAxisSize.min : MainAxisSize.max,
+              children: [
+                message.title.isNotEmpty
+                    ? Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                            color: const Color(0xFF9FA8A8),
+                            borderRadius: BorderRadius.circular(6)),
+                        child:
+                            SubstringHighlight(text: message.title, term: term),
+                      )
+                    : Container(),
+                Container(
+                    margin: const EdgeInsets.symmetric(vertical: 2),
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6),
+                        border: splitMessages != null
+                            ? splitMessages!.value && message.isSelected ||
+                                    message.isUnlocked
+                                ? Border.all()
+                                : null
+                            : null,
+                        color: splitMessages != null
+                            ? splitMessages!.value && message.isSelected
+                                ? Colors.white
+                                : messageColors[message.selectedColorIndex]
+                            : messageColors[message.selectedColorIndex]),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            message.messageText.length > 200
+                                ? IconButton(
+                                    onPressed: () =>
+                                        isSmall.value = !isSmall.value,
+                                    icon: const Icon(Icons.open_in_full))
+                                : const SizedBox(),
+                            Obx(
+                              () => Expanded(
+                                  child: SubstringHighlight(
+                                textStyle: const TextStyle(
+                                    color: Colors.black, fontSize: 16),
+                                text: message.messageText,
+                                maxLines: isSmall.value ? 6 : null,
+                                term: term,
+                              )),
+                            ),
+                            Column(
+                              children: [
+                                message.isUnlocked
+                                    ? const Icon(Icons.lock_open_outlined)
+                                    : const SizedBox(),
+                                message.isFavorite
+                                    ? const Icon(
+                                        Icons.star,
+                                        color: Colors.amber,
+                                      )
+                                    : const SizedBox(),
+                              ],
+                            ),
+                          ],
+                        ),
+                        showDate != null
+                            ? showDate!.value
+                                ? Padding(
+                                    padding: const EdgeInsets.only(top: 4),
+                                    child: Text(
+                                      '${time.hour}:${time.minute}',
+                                      style: TextStyle(
+                                          color: Colors.grey.shade600),
+                                    ),
+                                  )
+                                : const SizedBox()
+                            : const SizedBox()
+                      ],
+                    ))
+              ]),
+        ));
 
     if (term.isNotEmpty) {
       return LayoutBuilder(
@@ -402,10 +399,10 @@ class MessageWidgetBody extends StatelessWidget {
                   isDismissible: true,
                   snackPosition: SnackPosition.BOTTOM);
             },
-            child: body()),
+            child: body),
       );
     }
 
-    return body();
+    return body;
   }
 }

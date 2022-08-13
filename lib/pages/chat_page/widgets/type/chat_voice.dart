@@ -68,9 +68,6 @@ class _ChatVoiceWidgetState extends State<ChatVoiceWidget> {
         child: Column(
           children: [
             Row(
-              mainAxisAlignment: widget.name.isEmpty
-                  ? MainAxisAlignment.center
-                  : MainAxisAlignment.start,
               children: [
                 Obx(() => IconButton(
                     onPressed: isPlay.value ? stop : play,
