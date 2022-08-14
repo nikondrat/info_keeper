@@ -48,9 +48,9 @@ class ChatPageBottomTextField extends StatelessWidget {
       FilePickerResult? result = await FilePicker.platform.pickFiles();
       if (result != null) {
         Directory dir = await getApplicationDocumentsDirectory();
-        // final File file = File(result.files.single.path.toString());
+        final File file = File(result.files.single.path.toString());
         final String path = '${dir.path}/${result.files.single.name}';
-        // await file.copy(path);
+        await file.copy(path);
 
         final String name =
             result.files.single.path!.split('/').last.split('.').first;
