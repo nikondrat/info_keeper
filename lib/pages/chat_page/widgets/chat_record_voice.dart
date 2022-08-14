@@ -19,7 +19,7 @@ class _ChatPageRecordVoiceState extends State<ChatPageRecordVoice> {
   DateFormat dateFormat = DateFormat("yyyy_MM_dd_HH_mm_ss");
   String mPath = '';
   Codec codec = Codec.aacMP4;
-  FlutterSoundRecorder? _mRecorder = FlutterSoundRecorder();
+  FlutterSoundRecorder? recorder = FlutterSoundRecorder();
 
   @override
   void initState() {
@@ -30,8 +30,8 @@ class _ChatPageRecordVoiceState extends State<ChatPageRecordVoice> {
 
   @override
   void dispose() {
-    _mRecorder!.closeRecorder();
-    _mRecorder = null;
+    recorder!.closeRecorder();
+    recorder = null;
     super.dispose();
   }
 
@@ -39,6 +39,7 @@ class _ChatPageRecordVoiceState extends State<ChatPageRecordVoice> {
     DateFormat format = DateFormat('yyyy-MM-dd HH:mm:ss');
     String dateTime = format.format(DateTime.now());
     isRecord.value = false;
+    recorder!.stopRecorder();
     Controller.to.addChatVoice(ChatVoice(
         path: mPath,
         dateTime: dateTime,
@@ -58,11 +59,11 @@ class _ChatPageRecordVoiceState extends State<ChatPageRecordVoice> {
     if (status != PermissionStatus.granted) {
       throw RecordingPermissionException('Microphone permission not granted');
     }
-    await _mRecorder!.openRecorder();
+    await recorder!.openRecorder();
   }
 
   void record() {
-    _mRecorder!.startRecorder(
+    recorder!.startRecorder(
       toFile: mPath,
       codec: codec,
     );

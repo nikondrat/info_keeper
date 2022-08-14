@@ -14,6 +14,8 @@ class TrashPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          centerTitle: false,
+          title: const Text('Trash bin'),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             splashRadius: 20,

@@ -48,13 +48,14 @@ class ChatPageBottomTextField extends StatelessWidget {
       FilePickerResult? result = await FilePicker.platform.pickFiles();
       if (result != null) {
         Directory dir = await getApplicationDocumentsDirectory();
-        final File file = File(result.files.single.path.toString());
+        // final File file = File(result.files.single.path.toString());
         final String path = '${dir.path}/${result.files.single.name}';
-        await file.copy(path);
+        // await file.copy(path);
 
         final String name =
-            result.files.single.path!.split('.')[2].split('/')[3];
-        final String type = result.files.single.path!.split('.')[3];
+            result.files.single.path!.split('/').last.split('.').first;
+        final String type =
+            result.files.single.path!.split('/').last.split('.').last;
         Codec codec = Codec.aacMP4;
 
         final imageFormat = ImageFormat.values.firstWhereOrNull(

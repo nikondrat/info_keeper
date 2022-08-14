@@ -69,6 +69,7 @@ class MessageWidget extends StatelessWidget {
                 .messages[message.location.selectedMessageIndex!]
                 .isUnlocked
         ? GestureDetector(
+            key: messageKey,
             onTap: () {
               selected.value = message.location.selectedMessageIndex!;
               Get.to(() => VaultPage(
@@ -82,23 +83,23 @@ class MessageWidget extends StatelessWidget {
               decoration: BoxDecoration(
                   color: Colors.grey.shade300,
                   borderRadius: BorderRadius.circular(6)),
-              child: Row(
-                children: [
-                  const Icon(Icons.lock_outline),
-                  Text(Controller
-                      .to
-                      .all[Controller.to.selectedFolder.value]
-                      .directoryChildrens[
-                          Controller.to.selectedElementIndex.value]
-                      .messages[message.location.selectedMessageIndex]
-                      .title),
-                ],
-              ),
+              child: const Icon(Icons.lock_outline),
+              // child: Row(
+              //   children: [
+              //     const Icon(Icons.lock_outline),
+              //     Text(Controller
+              //         .to
+              //         .all[Controller.to.selectedFolder.value]
+              //         .directoryChildrens[
+              //             Controller.to.selectedElementIndex.value]
+              //         .messages[message.location.selectedMessageIndex]
+              //         .title),
+              //   ],
+              // ),
             ),
           )
         : fullScreen
             ? MessageWidgetChild(
-                messageKey: messageKey,
                 scrollController: scrollController,
                 selected: selected,
                 contentController: contentController,
@@ -116,6 +117,7 @@ class MessageWidget extends StatelessWidget {
                 selectedMessages: selectedMessages,
                 pinnedMessages: pinnedMessages)
             : SwipeTo(
+                key: messageKey,
                 onRightSwipe: () {
                   selectedMessage!.value =
                       message.location.selectedMessageIndex!;
@@ -140,7 +142,6 @@ class MessageWidget extends StatelessWidget {
                 },
                 child: MessageWidgetChild(
                     constraints: constraints,
-                    messageKey: messageKey,
                     scrollController: scrollController,
                     selected: selected,
                     contentController: contentController,
@@ -161,7 +162,6 @@ class MessageWidget extends StatelessWidget {
 
 class MessageWidgetChild extends StatelessWidget {
   final AutoScrollController? scrollController;
-  final GlobalKey? messageKey;
   final BoxConstraints? constraints;
   final TextEditingController? titleController;
   final RxBool? editMessage;
@@ -180,7 +180,6 @@ class MessageWidgetChild extends StatelessWidget {
   final RxList pinnedMessages;
   const MessageWidgetChild(
       {Key? key,
-      required this.messageKey,
       required this.scrollController,
       required this.constraints,
       required this.selected,

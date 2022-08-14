@@ -7,6 +7,7 @@ import 'package:info_keeper/model/types/location_element.dart';
 import 'package:info_keeper/pages/chat_page/chat_history_page.dart';
 import 'package:info_keeper/pages/chat_page/widgets/message_menu/chat_menu_item.dart';
 import 'package:info_keeper/pages/chat_page/widgets/message_menu/chat_message_full_screen.dart';
+import 'package:info_keeper/pages/vault_page/vault_page.dart';
 import 'package:info_keeper/widgets/notifications.dart';
 
 class ChatPageMenu extends StatelessWidget {
@@ -230,17 +231,22 @@ class ChatPageMenu extends StatelessWidget {
                 function: () {
                   Navigator.pop(context);
 
-                  List messages = Controller
-                      .to
-                      .all[Controller.to.selectedFolder.value]
-                      .directoryChildrens[
-                          Controller.to.selectedElementIndex.value]
-                      .messages;
+                  if (Controller.to.password.isNotEmpty) {
+                    List messages = Controller
+                        .to
+                        .all[Controller.to.selectedFolder.value]
+                        .directoryChildrens[
+                            Controller.to.selectedElementIndex.value]
+                        .messages;
 
-                  messages[selectedMessage.value].isLocked = true;
-                  messages[selectedMessage.value].isUnlocked = false;
+                    messages[selectedMessage.value].isLocked = true;
+                    messages[selectedMessage.value].isUnlocked = false;
 
-                  Controller.to.change(Chat(messages: messages.obs));
+                    Controller.to.change(Chat(messages: messages.obs));
+                  } else {
+                    Get.to(() => VaultPage(
+                        selectedElement: selectedMessage, first: true));
+                  }
                 },
                 icon: const Icon(Icons.lock_outline),
                 text: 'Lock message'),

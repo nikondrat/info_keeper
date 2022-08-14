@@ -11,11 +11,13 @@ class VaultPage extends StatelessWidget {
   final RxList? childrens;
   final RxInt selectedElement;
   final bool isChat;
+  final bool first;
 
   const VaultPage(
       {Key? key,
       this.childrens,
       this.isChat = false,
+      this.first = false,
       required this.selectedElement})
       : super(key: key);
 
@@ -45,7 +47,7 @@ class VaultPage extends StatelessWidget {
               splashRadius: 20,
               onPressed: () => Get.back(),
               icon: const Icon(Icons.arrow_back)),
-          title: const Text('vault'),
+          title: const Text('Vault'),
         ),
         body: isUnblocked.value && childrens != null
             ? MasonryGridView.count(
@@ -115,7 +117,11 @@ class VaultPage extends StatelessWidget {
                         repeatPasswordController.text) {
                       Controller.to.password = passwordController.text.obs;
                       Controller.to.setData();
-                      isUnblocked.value = true;
+                      if (first) {
+                        Get.back();
+                      } else {
+                        isUnblocked.value = true;
+                      }
                     } else if (passwordController.text ==
                         Controller.to.password.value) {
                       isUnblocked.value = true;

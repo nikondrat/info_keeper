@@ -8,6 +8,7 @@ import 'package:info_keeper/model/types/location_element.dart';
 import 'package:info_keeper/model/types/storage_file.dart';
 import 'package:info_keeper/model/types/todo.dart';
 import 'package:info_keeper/pages/home_page/widgets/home_folders.dart';
+import 'package:info_keeper/pages/vault_page/vault_page.dart';
 import 'package:info_keeper/widgets/notifications.dart';
 
 class HomePageBottomNavigationBar extends StatelessWidget {
@@ -81,52 +82,11 @@ class HomePageBottomNavigationBar extends StatelessWidget {
   }
 
   lock() {
-    switch (Controller.to.all[Controller.to.selectedFolder.value]
-        .directoryChildrens[Controller.to.selectedElementIndex.value].type) {
-      case AllType.chat:
-        Controller.to.change(Chat(
-          isLocked: Controller
-                  .to
-                  .all[Controller.to.selectedFolder.value]
-                  .directoryChildrens[Controller.to.selectedElementIndex.value]
-                  .isLocked =
-              !Controller
-                  .to
-                  .all[Controller.to.selectedFolder.value]
-                  .directoryChildrens[Controller.to.selectedElementIndex.value]
-                  .isLocked,
-        ));
-        break;
-      case AllType.storageFile:
-        Controller.to.change(StorageFile(
-          isLocked: Controller
-                  .to
-                  .all[Controller.to.selectedFolder.value]
-                  .directoryChildrens[Controller.to.selectedElementIndex.value]
-                  .isLocked =
-              !Controller
-                  .to
-                  .all[Controller.to.selectedFolder.value]
-                  .directoryChildrens[Controller.to.selectedElementIndex.value]
-                  .isLocked,
-        ));
-        break;
-      case AllType.todo:
-        Controller.to.change(Todo(
-          isLocked: Controller
-                  .to
-                  .all[Controller.to.selectedFolder.value]
-                  .directoryChildrens[Controller.to.selectedElementIndex.value]
-                  .isLocked =
-              !Controller
-                  .to
-                  .all[Controller.to.selectedFolder.value]
-                  .directoryChildrens[Controller.to.selectedElementIndex.value]
-                  .isLocked,
-        ));
-        break;
-      case AllType.audioNote:
-        Controller.to.change(AudioNote(
+    if (Controller.to.password.isNotEmpty) {
+      switch (Controller.to.all[Controller.to.selectedFolder.value]
+          .directoryChildrens[Controller.to.selectedElementIndex.value].type) {
+        case AllType.chat:
+          Controller.to.change(Chat(
             isLocked:
                 Controller
                         .to
@@ -139,9 +99,64 @@ class HomePageBottomNavigationBar extends StatelessWidget {
                         .all[Controller.to.selectedFolder.value]
                         .directoryChildrens[
                             Controller.to.selectedElementIndex.value]
-                        .isLocked));
-        break;
-      default:
+                        .isLocked,
+          ));
+          break;
+        case AllType.storageFile:
+          Controller.to.change(StorageFile(
+            isLocked:
+                Controller
+                        .to
+                        .all[Controller.to.selectedFolder.value]
+                        .directoryChildrens[
+                            Controller.to.selectedElementIndex.value]
+                        .isLocked =
+                    !Controller
+                        .to
+                        .all[Controller.to.selectedFolder.value]
+                        .directoryChildrens[
+                            Controller.to.selectedElementIndex.value]
+                        .isLocked,
+          ));
+          break;
+        case AllType.todo:
+          Controller.to.change(Todo(
+            isLocked:
+                Controller
+                        .to
+                        .all[Controller.to.selectedFolder.value]
+                        .directoryChildrens[
+                            Controller.to.selectedElementIndex.value]
+                        .isLocked =
+                    !Controller
+                        .to
+                        .all[Controller.to.selectedFolder.value]
+                        .directoryChildrens[
+                            Controller.to.selectedElementIndex.value]
+                        .isLocked,
+          ));
+          break;
+        case AllType.audioNote:
+          Controller.to.change(AudioNote(
+              isLocked:
+                  Controller
+                          .to
+                          .all[Controller.to.selectedFolder.value]
+                          .directoryChildrens[
+                              Controller.to.selectedElementIndex.value]
+                          .isLocked =
+                      !Controller
+                          .to
+                          .all[Controller.to.selectedFolder.value]
+                          .directoryChildrens[
+                              Controller.to.selectedElementIndex.value]
+                          .isLocked));
+          break;
+        default:
+      }
+    } else {
+      Get.to(() => VaultPage(
+          selectedElement: Controller.to.selectedElementIndex, first: true));
     }
   }
 
@@ -558,10 +573,13 @@ class HomePageBottomNavigationBar extends StatelessWidget {
                                     context: context,
                                     builder: (context) =>
                                         const HomePageFoldersWidget()),
-                                child: Text(Controller
-                                    .to
-                                    .all[Controller.to.selectedFolder.value]
-                                    .directoryName)),
+                                child: Text(
+                                  Controller
+                                      .to
+                                      .all[Controller.to.selectedFolder.value]
+                                      .directoryName,
+                                  style: const TextStyle(fontSize: 16),
+                                )),
                         const Flexible(
                           child: FractionallySizedBox(
                             widthFactor: 0.16,
