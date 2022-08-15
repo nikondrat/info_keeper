@@ -39,13 +39,19 @@ class TrashElement extends StatelessWidget {
                                 .directoryChildrens[Controller
                                     .to.trashElements[index!].location.index]
                                 .messages
-                                .add(Controller.to.trashElements[index!])
+                                .insert(
+                                    Controller.to.trashElements[index!].location
+                                        .selectedMessageIndex,
+                                    Controller.to.trashElements[index!])
                             : Controller
                                 .to
                                 .all[Controller.to.trashElements[index!]
                                     .location.inDirectory]
                                 .directoryChildrens
-                                .add(Controller.to.trashElements[index!]);
+                                .insert(
+                                    Controller.to.trashElements[index!].location
+                                        .index,
+                                    Controller.to.trashElements[index!]);
                         Controller.to.trashElements.removeAt(index!);
                         Controller.to.setData();
                       },

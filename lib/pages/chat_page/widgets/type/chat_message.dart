@@ -83,7 +83,7 @@ class MessageWidget extends StatelessWidget {
               decoration: BoxDecoration(
                   color: Colors.grey.shade300,
                   borderRadius: BorderRadius.circular(6)),
-              child: const Icon(Icons.lock_outline),
+              child: const Center(child: Icon(Icons.lock_outline)),
               // child: Row(
               //   children: [
               //     const Icon(Icons.lock_outline),
@@ -296,9 +296,11 @@ class MessageWidgetBody extends StatelessWidget {
         index: index,
         isMessage: true,
         child: GestureDetector(
-          onLongPress: () {
-            isTrash != null ? isShowRestoreMenu.value = true : null;
-          },
+          onLongPress: isTrash != null
+              ? () {
+                  isShowRestoreMenu.value = true;
+                }
+              : null,
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisSize: fullScreen ? MainAxisSize.min : MainAxisSize.max,

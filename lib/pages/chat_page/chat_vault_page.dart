@@ -53,7 +53,7 @@ class ChatPageVault extends StatelessWidget {
               splashRadius: 20,
               onPressed: () => Get.back(),
               icon: const Icon(Icons.arrow_back)),
-          title: const Text('vault'),
+          title: const Text('Vault'),
         ),
         body: isUnblocked.value
             ? ListView.builder(
@@ -79,12 +79,7 @@ class ChatPageVault extends StatelessWidget {
                 onPressed: () {
                   if (passwordController.text ==
                       repeatPasswordController.text) {
-                    Controller
-                        .to
-                        .all[Controller.to.selectedFolder.value]
-                        .directoryChildrens[
-                            Controller.to.selectedElementIndex.value]
-                        .password = passwordController.text;
+                    Controller.to.password = passwordController.text.obs;
                     Controller.to.setData();
                     isUnblocked.value = true;
                   } else if (passwordController.text ==

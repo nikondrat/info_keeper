@@ -53,6 +53,7 @@ class TrashPage extends StatelessWidget {
                               message: Controller.to.trashElements[index]);
                         case AllType.chatImage:
                           return ChatImageWidget(
+                              isTrash: true,
                               path: Controller.to.trashElements[index].path,
                               dateTime:
                                   Controller.to.trashElements[index].dateTime,

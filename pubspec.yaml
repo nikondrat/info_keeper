@@ -32,7 +32,6 @@ dependencies:
   syncfusion_flutter_datepicker: ^20.2.40
   location: ^4.4.0
   omni_datetime_picker: ^0.1.2
-  reorderables: ^0.5.0
   open_filex: ^3.4.0
   #firebase for my protection
   firebase_core: ^1.20.0

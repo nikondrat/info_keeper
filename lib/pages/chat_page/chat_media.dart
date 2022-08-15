@@ -181,14 +181,19 @@ class ChatMediaBodyLinks extends StatelessWidget {
                   .messages[i]
                   .type ==
               AllType.chatMessage &&
+          !Controller
+              .to
+              .all[Controller.to.selectedFolder.value]
+              .directoryChildrens[Controller.to.selectedElementIndex.value]
+              .messages[i]
+              .isLocked &&
           Controller
-                  .to
-                  .all[Controller.to.selectedFolder.value]
-                  .directoryChildrens[Controller.to.selectedElementIndex.value]
-                  .messages[i]
-                  .messageText
-                  .split('://') !=
-              null) {
+              .to
+              .all[Controller.to.selectedFolder.value]
+              .directoryChildrens[Controller.to.selectedElementIndex.value]
+              .messages[i]
+              .messageText
+              .contains(RegExp(r'(https?://[^\s]+)'))) {
         links.add(Controller
             .to
             .all[Controller.to.selectedFolder.value]

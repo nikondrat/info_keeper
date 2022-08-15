@@ -274,6 +274,7 @@ class ChatPageBodyElement extends StatelessWidget {
         .type) {
       case AllType.chatImage:
         return ChatImageWidget(
+            index: messageIndex,
             key: ValueKey(messageIndex),
             dateTime: Controller
                 .to

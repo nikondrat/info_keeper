@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -14,21 +16,22 @@ void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
 
   Get.put(Controller());
-  // await clearData();
   await initData();
-  await notificationInit();
-
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  if (Platform.isAndroid || Platform.isIOS) {
+    await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform);
+  }
+  // await clearData();
 
   runApp(const MyApp());
+  await notificationInit();
 }
 
-CollectionReference _collectionRef =
-    FirebaseFirestore.instance.collection('paid');
-
 Future<String> getData() async {
+  CollectionReference collectionRef =
+      FirebaseFirestore.instance.collection('paid');
   // Get docs from collection reference
-  QuerySnapshot querySnapshot = await _collectionRef.get();
+  QuerySnapshot querySnapshot = await collectionRef.get();
 
   // Get data from docs and convert map to List
   final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
@@ -46,19 +49,21 @@ class MyApp extends StatelessWidget {
         builder: (context, myTheme) => GetMaterialApp(
               defaultTransition: Transition.cupertino,
               debugShowCheckedModeBanner: false,
-              home: FutureBuilder<String>(
-                  future: getData(),
-                  builder: (context, AsyncSnapshot<String> snapshot) {
-                    if (snapshot.hasData) {
-                      return snapshot.data! == '{paid: true}'
-                          ? const HomePage()
-                          : const Scaffold(
-                              body:
-                                  Center(child: Text('Приложение не оплачено')),
-                            );
-                    }
-                    return const Scaffold();
-                  }),
+              home: Platform.isAndroid || Platform.isIOS
+                  ? FutureBuilder<String>(
+                      future: getData(),
+                      builder: (context, AsyncSnapshot<String> snapshot) {
+                        if (snapshot.hasData) {
+                          return snapshot.data! == '{paid: true}'
+                              ? const HomePage()
+                              : const Scaffold(
+                                  body: Center(
+                                      child: Text('Приложение не оплачено')),
+                                );
+                        }
+                        return const Scaffold();
+                      })
+                  : const HomePage(),
               theme: myTheme,
             ));
   }

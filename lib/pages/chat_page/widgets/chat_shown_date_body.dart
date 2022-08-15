@@ -39,76 +39,84 @@ class ChatPageShownDateBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GroupedListView(
-        controller: autoScrollController,
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
-        physics: const BouncingScrollPhysics(),
-        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-        floatingHeader: true,
-        itemComparator: (dynamic item1, dynamic item2) {
-          return item1.dateTime.compareTo(item2.dateTime);
-        },
-        groupComparator: (dynamic value1, dynamic value2) {
-          return value1.compareTo(value2);
-        },
-        groupSeparatorBuilder: (DateTime value) {
-          var months = [
-            'December',
-            'January',
-            'February',
-            'March',
-            'April',
-            'May',
-            'June',
-            'July',
-            'August',
-            'September',
-            'October',
-            'November',
-          ];
-
-          return LayoutBuilder(
-            builder: (context, constraints) => Container(
-              margin: EdgeInsets.symmetric(
-                  vertical: 6, horizontal: constraints.maxWidth * 0.38),
-              decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
-                  borderRadius: BorderRadius.circular(12)),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  '${months[value.month]} ${value.day}',
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
-          );
-        },
-        itemBuilder: (context, dynamic element) => ChatPageBodyElement(
-            pinnedMessages: pinnedMessages,
-            selectedMessages: selectedMessages,
-            selectedMessageCount: selectedMessageCount,
-            contentController: contentController,
-            textFieldFocusNode: textFieldFocusNode,
-            constraints: constraints,
-            isShowColorSelector: isShowColorSelector,
-            editMessage: editMessage,
-            messageIndex: element.location.selectedMessageIndex,
-            scrollController: autoScrollController,
-            selectedMessage: selectedMessage,
-            showDate: showDate,
-            splitMessages: splitMessages,
-            titleController: titleController),
-        elements: Controller
+    return Obx(() => Controller
             .to
             .all[Controller.to.selectedFolder.value]
             .directoryChildrens[Controller.to.selectedElementIndex.value]
-            .messages!,
-        groupBy: (dynamic element) {
-          late DateFormat format = DateFormat('yyyy-MM-dd HH:mm:ss');
-          late DateTime item = format.parse(element.dateTime);
+            .messages
+            .isNotEmpty
+        ? GroupedListView(
+            reverse: true,
+            controller: autoScrollController,
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+            physics: const BouncingScrollPhysics(),
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+            floatingHeader: true,
+            itemComparator: (dynamic item1, dynamic item2) {
+              return item1.dateTime.compareTo(item2.dateTime);
+            },
+            groupComparator: (dynamic value1, dynamic value2) {
+              return value1.compareTo(value2);
+            },
+            groupSeparatorBuilder: (DateTime value) {
+              var months = [
+                'December',
+                'January',
+                'February',
+                'March',
+                'April',
+                'May',
+                'June',
+                'July',
+                'August',
+                'September',
+                'October',
+                'November',
+              ];
 
-          return item;
-        });
+              return LayoutBuilder(
+                builder: (context, constraints) => Container(
+                  margin: EdgeInsets.symmetric(
+                      vertical: 6, horizontal: constraints.maxWidth * 0.38),
+                  decoration: BoxDecoration(
+                      color: Colors.grey.shade300,
+                      borderRadius: BorderRadius.circular(12)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      '${months[value.month]} ${value.day}',
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              );
+            },
+            itemBuilder: (context, dynamic element) => ChatPageBodyElement(
+                pinnedMessages: pinnedMessages,
+                selectedMessages: selectedMessages,
+                selectedMessageCount: selectedMessageCount,
+                contentController: contentController,
+                textFieldFocusNode: textFieldFocusNode,
+                constraints: constraints,
+                isShowColorSelector: isShowColorSelector,
+                editMessage: editMessage,
+                messageIndex: element.location.selectedMessageIndex,
+                scrollController: autoScrollController,
+                selectedMessage: selectedMessage,
+                showDate: showDate,
+                splitMessages: splitMessages,
+                titleController: titleController),
+            elements: Controller
+                .to
+                .all[Controller.to.selectedFolder.value]
+                .directoryChildrens[Controller.to.selectedElementIndex.value]
+                .messages!,
+            groupBy: (dynamic element) {
+              late DateFormat format = DateFormat('yyyy-MM-dd HH:mm:ss');
+              late DateTime item = format.parse(element.dateTime);
+
+              return item;
+            })
+        : const SizedBox());
   }
 }
