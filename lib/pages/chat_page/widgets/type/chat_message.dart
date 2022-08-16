@@ -32,6 +32,7 @@ class MessageWidget extends StatelessWidget {
   final RxInt selectedMessagesCount;
   final List selectedMessages;
   final RxList pinnedMessages;
+  final RxBool moveMessage;
   const MessageWidget(
       {Key? key,
       this.messageKey,
@@ -39,6 +40,7 @@ class MessageWidget extends StatelessWidget {
       this.constraints,
       required this.selected,
       this.contentController,
+      required this.moveMessage,
       required this.selectedMessagesCount,
       this.editMessage,
       this.selectedMessage,
@@ -56,6 +58,8 @@ class MessageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isCollapsed = false.obs;
+
     return Obx(() => Controller
                 .to
                 .all[Controller.to.selectedFolder.value]
@@ -72,6 +76,23 @@ class MessageWidget extends StatelessWidget {
             key: messageKey,
             onTap: () {
               selected.value = message.location.selectedMessageIndex!;
+              if (moveMessage.value) {
+                var message = Controller
+                    .to
+                    .all[Controller.to.selectedFolder.value]
+                    .directoryChildrens[
+                        Controller.to.selectedElementIndex.value]
+                    .messages
+                    .removeAt(Controller.to.firstSelectedMessage);
+                Controller
+                    .to
+                    .all[Controller.to.selectedFolder.value]
+                    .directoryChildrens[
+                        Controller.to.selectedElementIndex.value]
+                    .messages
+                    .insert(selected.value, message);
+                moveMessage.value = false;
+              }
               Get.to(() => VaultPage(
                     isChat: true,
                     selectedElement: selectedMessage!,
@@ -100,6 +121,8 @@ class MessageWidget extends StatelessWidget {
           )
         : fullScreen
             ? MessageWidgetChild(
+                moveMessage: moveMessage,
+                isCollapsed: isCollapsed,
                 scrollController: scrollController,
                 selected: selected,
                 contentController: contentController,
@@ -118,6 +141,10 @@ class MessageWidget extends StatelessWidget {
                 pinnedMessages: pinnedMessages)
             : SwipeTo(
                 key: messageKey,
+                iconOnLeftSwipe: Icons.open_in_full,
+                onLeftSwipe: () {
+                  isCollapsed.value = !isCollapsed.value;
+                },
                 onRightSwipe: () {
                   selectedMessage!.value =
                       message.location.selectedMessageIndex!;
@@ -141,7 +168,9 @@ class MessageWidget extends StatelessWidget {
                   textFieldFocusNode!.requestFocus();
                 },
                 child: MessageWidgetChild(
+                    moveMessage: moveMessage,
                     constraints: constraints,
+                    isCollapsed: isCollapsed,
                     scrollController: scrollController,
                     selected: selected,
                     contentController: contentController,
@@ -178,11 +207,14 @@ class MessageWidgetChild extends StatelessWidget {
   final RxInt selectedMessagesCount;
   final List selectedMessages;
   final RxList pinnedMessages;
+  final RxBool isCollapsed;
+  final RxBool moveMessage;
   const MessageWidgetChild(
       {Key? key,
       required this.scrollController,
       required this.constraints,
       required this.selected,
+      required this.moveMessage,
       required this.contentController,
       required this.selectedMessagesCount,
       required this.editMessage,
@@ -195,6 +227,7 @@ class MessageWidgetChild extends StatelessWidget {
       required this.splitMessages,
       required this.isShowColorSelector,
       required this.selectedMessages,
+      required this.isCollapsed,
       required this.pinnedMessages,
       this.fullScreen = false})
       : super(key: key);
@@ -205,12 +238,15 @@ class MessageWidgetChild extends StatelessWidget {
       onTap: () {
         if (isShowColorSelector.value != true &&
             splitMessages.value != true &&
-            fullScreen != true) {
+            fullScreen != true &&
+            moveMessage.value != true) {
           selectedMessage!.value = message.location.selectedMessageIndex!;
+
           showModalBottomSheet(
               isScrollControlled: true,
               context: context,
               builder: (context) => ChatPageMenu(
+                  moveMessage: moveMessage,
                   pinnedMessages: pinnedMessages,
                   selectedMessages: selectedMessages,
                   selectedMessageCount: selectedMessagesCount,
@@ -225,6 +261,21 @@ class MessageWidgetChild extends StatelessWidget {
                   selectedMessage: selectedMessage!));
         }
         selected.value = message.location.selectedMessageIndex!;
+        if (moveMessage.value) {
+          var message = Controller
+              .to
+              .all[Controller.to.selectedFolder.value]
+              .directoryChildrens[Controller.to.selectedElementIndex.value]
+              .messages
+              .removeAt(Controller.to.firstSelectedMessage);
+          Controller
+              .to
+              .all[Controller.to.selectedFolder.value]
+              .directoryChildrens[Controller.to.selectedElementIndex.value]
+              .messages
+              .insert(selected.value, message);
+          moveMessage.value = false;
+        }
 
         if (splitMessages.value) {
           List messages = Controller
@@ -254,6 +305,7 @@ class MessageWidgetChild extends StatelessWidget {
         showDate: showDate,
         selected: selected,
         dateTime: dateTime,
+        isCollapsed: isCollapsed,
       ),
     );
   }
@@ -270,6 +322,7 @@ class MessageWidgetBody extends StatelessWidget {
   final String? dateTime;
   final String term;
   final RxBool? isCollapsed;
+
   const MessageWidgetBody(
       {Key? key,
       this.index,
@@ -289,7 +342,6 @@ class MessageWidgetBody extends StatelessWidget {
     DateFormat format = DateFormat('yyyy-MM-dd HH:mm:ss');
     DateTime time = format.parse(dateTime!);
     final isShowRestoreMenu = false.obs;
-    final isSmall = false.obs;
 
     Widget body = TrashElement(
         isShowRestoreMenu: isShowRestoreMenu,
@@ -337,22 +389,18 @@ class MessageWidgetBody extends StatelessWidget {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            message.messageText.length > 200
-                                ? IconButton(
-                                    onPressed: () =>
-                                        isSmall.value = !isSmall.value,
-                                    icon: const Icon(Icons.open_in_full))
-                                : const SizedBox(),
-                            Obx(
-                              () => Expanded(
-                                  child: SubstringHighlight(
-                                textStyle: const TextStyle(
-                                    color: Colors.black, fontSize: 16),
-                                text: message.messageText,
-                                maxLines: isSmall.value ? 6 : null,
-                                term: term,
-                              )),
-                            ),
+                            Expanded(
+                                child: SubstringHighlight(
+                              textStyle: const TextStyle(
+                                  color: Colors.black, fontSize: 16),
+                              text: message.messageText,
+                              maxLines: isCollapsed != null
+                                  ? isCollapsed!.value
+                                      ? 6
+                                      : null
+                                  : null,
+                              term: term,
+                            )),
                             Column(
                               children: [
                                 message.isUnlocked

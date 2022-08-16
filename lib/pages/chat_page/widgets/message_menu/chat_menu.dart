@@ -23,6 +23,7 @@ class ChatPageMenu extends StatelessWidget {
   final TextEditingController titleController;
   final RxInt selectedMessageCount;
   final RxList pinnedMessages;
+  final RxBool moveMessage;
   const ChatPageMenu(
       {Key? key,
       required this.constraints,
@@ -30,6 +31,7 @@ class ChatPageMenu extends StatelessWidget {
       required this.isShowColorSelector,
       required this.selectedMessageCount,
       required this.splitMessages,
+      required this.moveMessage,
       required this.selectedMessages,
       required this.titleController,
       required this.editMessage,
@@ -132,9 +134,18 @@ class ChatPageMenu extends StatelessWidget {
                 icon: const Icon(Icons.forum_outlined),
                 text: 'Unite messages'),
             ChatPageMenuItem(
+                icon: const Icon(Icons.drag_handle),
+                text: 'Move message',
+                function: () {
+                  Navigator.pop(context);
+                  Controller.to.firstSelectedMessage = selectedMessage.value;
+                  moveMessage.value = true;
+                }),
+            ChatPageMenuItem(
                 function: () {
                   Navigator.pop(context);
                   Get.to(() => ChatPageMessageInFullScreen(
+                      moveMessage: moveMessage,
                       selectedMessageCount: selectedMessageCount,
                       pinnedMessages: pinnedMessages,
                       selectedMessages: selectedMessages,

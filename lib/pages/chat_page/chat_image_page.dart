@@ -18,6 +18,7 @@ class ChatImagePage extends StatelessWidget {
             IconButton(
                 splashRadius: 20,
                 onPressed: () {
+                  Get.back();
                   var message = Controller
                       .to
                       .all[Controller.to.selectedFolder.value]

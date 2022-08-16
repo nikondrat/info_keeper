@@ -19,12 +19,14 @@ class ChatPageReorderableBody extends StatelessWidget {
   final RxBool showDate;
   final RxBool splitMessages;
   final TextEditingController titleController;
+  final RxBool moveMessage;
   const ChatPageReorderableBody(
       {Key? key,
       required this.autoScrollController,
       required this.constraints,
       required this.contentController,
       required this.editMessage,
+      required this.moveMessage,
       required this.isShowColorSelector,
       required this.pinnedMessages,
       required this.selectedMessage,
@@ -87,6 +89,7 @@ class ChatPageReorderableBody extends StatelessWidget {
                   .selectedMessageIndex = messageIndex;
 
               return ChatPageBodyElement(
+                  moveMessage: moveMessage,
                   pinnedMessages: pinnedMessages,
                   key: Key(messageIndex.toString()),
                   selectedMessages: selectedMessages,

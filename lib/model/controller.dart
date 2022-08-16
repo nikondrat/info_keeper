@@ -21,6 +21,8 @@ class Controller extends GetxController {
   final isShowDial = false.obs;
   final isShowMenu = false.obs;
 
+  int firstSelectedMessage = -1;
+
   var password = ''.obs;
 
   RxList all = [

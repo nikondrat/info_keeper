@@ -20,11 +20,13 @@ class ChatPageShownDateBody extends StatelessWidget {
   final RxBool showDate;
   final RxBool splitMessages;
   final TextEditingController titleController;
+  final RxBool moveMessage;
   const ChatPageShownDateBody(
       {Key? key,
       required this.autoScrollController,
       required this.constraints,
       required this.contentController,
+      required this.moveMessage,
       required this.editMessage,
       required this.isShowColorSelector,
       required this.pinnedMessages,
@@ -92,6 +94,7 @@ class ChatPageShownDateBody extends StatelessWidget {
               );
             },
             itemBuilder: (context, dynamic element) => ChatPageBodyElement(
+                moveMessage: moveMessage,
                 pinnedMessages: pinnedMessages,
                 selectedMessages: selectedMessages,
                 selectedMessageCount: selectedMessageCount,

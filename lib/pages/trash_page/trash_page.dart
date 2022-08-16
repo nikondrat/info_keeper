@@ -3,8 +3,11 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/all.dart';
+import 'package:info_keeper/model/types/chat/chat_file.dart';
+import 'package:info_keeper/pages/chat_page/widgets/type/chat_file.dart';
 import 'package:info_keeper/pages/chat_page/widgets/type/chat_image.dart';
 import 'package:info_keeper/pages/chat_page/widgets/type/chat_message.dart';
+import 'package:info_keeper/pages/chat_page/widgets/type/chat_voice.dart';
 import 'package:info_keeper/pages/home_page/home_widget/home_widget.dart';
 
 class TrashPage extends StatelessWidget {
@@ -44,6 +47,26 @@ class TrashPage extends StatelessWidget {
                     itemCount: Controller.to.trashElements.length,
                     itemBuilder: (context, index) {
                       switch (Controller.to.trashElements[index].type) {
+                        case AllType.chatVoice:
+                          return ChatVoiceWidget(
+                            index: index,
+                            name: Controller.to.trashElements[index].name,
+                            codec: Controller.to.trashElements[index].codec,
+                            dateTime:
+                                Controller.to.trashElements[index].dateTime,
+                            showDate: false.obs,
+                            isTrash: true,
+                            path: Controller.to.trashElements[index].path,
+                          );
+                        case AllType.chatFile:
+                          return ChatPageFile(
+                              index: index,
+                              name: Controller.to.trashElements[index].name,
+                              path: Controller.to.trashElements[index].path,
+                              isTrash: true,
+                              showDate: false.obs,
+                              dateTime:
+                                  Controller.to.trashElements[index].dateTime);
                         case AllType.chatMessage:
                           return MessageWidgetBody(
                               index: index,

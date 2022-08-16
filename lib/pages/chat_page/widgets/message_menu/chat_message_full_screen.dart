@@ -13,12 +13,14 @@ class ChatPageMessageInFullScreen extends StatelessWidget {
   final RxBool isShowColorSelector;
   final List selectedMessages;
   final RxList pinnedMessages;
+  final RxBool moveMessage;
   const ChatPageMessageInFullScreen(
       {Key? key,
       required this.selected,
       required this.message,
       required this.showDate,
       required this.selectedMessageCount,
+      required this.moveMessage,
       required this.splitMessages,
       required this.dateTime,
       required this.selectedMessages,
@@ -41,6 +43,7 @@ class ChatPageMessageInFullScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
           children: [
             MessageWidget(
+              moveMessage: moveMessage,
               pinnedMessages: pinnedMessages,
               selectedMessagesCount: selectedMessageCount,
               fullScreen: true,

@@ -24,6 +24,7 @@ class ChatPageBody extends StatelessWidget {
   final TextEditingController titleController;
   final List selectedMessages;
   final RxList pinnedMessages;
+  final RxBool moveMessage;
 
   const ChatPageBody(
       {Key? key,
@@ -37,6 +38,7 @@ class ChatPageBody extends StatelessWidget {
       required this.selectedMessages,
       required this.contentController,
       required this.titleController,
+      required this.moveMessage,
       required this.pinnedMessages,
       required this.selectedMessage})
       : super(key: key);
@@ -48,6 +50,7 @@ class ChatPageBody extends StatelessWidget {
       child: LayoutBuilder(
           builder: (context, constraints) => Obx(() => showDate.value
               ? ChatPageShownDateBody(
+                  moveMessage: moveMessage,
                   autoScrollController: autoScrollController,
                   constraints: constraints,
                   contentController: contentController,
@@ -195,6 +198,7 @@ class ChatPageBody extends StatelessWidget {
               //       }
               //     })
               : ChatPageReorderableBody(
+                  moveMessage: moveMessage,
                   autoScrollController: autoScrollController,
                   constraints: constraints,
                   contentController: contentController,
@@ -245,11 +249,13 @@ class ChatPageBodyElement extends StatelessWidget {
   final TextEditingController contentController;
   final List selectedMessages;
   final RxList pinnedMessages;
+  final RxBool moveMessage;
 
   const ChatPageBodyElement(
       {Key? key,
       required this.selectedMessageCount,
       required this.constraints,
+      required this.moveMessage,
       required this.editMessage,
       required this.contentController,
       required this.isShowColorSelector,
@@ -274,6 +280,7 @@ class ChatPageBodyElement extends StatelessWidget {
         .type) {
       case AllType.chatImage:
         return ChatImageWidget(
+            moveMessage: moveMessage,
             index: messageIndex,
             key: ValueKey(messageIndex),
             dateTime: Controller
@@ -291,6 +298,8 @@ class ChatPageBodyElement extends StatelessWidget {
                 .path);
       case AllType.chatVoice:
         return ChatVoiceWidget(
+          moveMessage: moveMessage,
+          index: messageIndex,
           key: ValueKey(messageIndex),
           name: Controller
               .to
@@ -324,6 +333,7 @@ class ChatPageBodyElement extends StatelessWidget {
           controller: scrollController,
           key: ValueKey(messageIndex),
           child: MessageWidget(
+            moveMessage: moveMessage,
             pinnedMessages: pinnedMessages,
             selectedMessages: selectedMessages,
             selectedMessagesCount: selectedMessageCount,
@@ -353,6 +363,7 @@ class ChatPageBodyElement extends StatelessWidget {
         );
       case AllType.chatFile:
         return ChatPageFile(
+            index: messageIndex,
             key: ValueKey(messageIndex),
             path: Controller
                 .to

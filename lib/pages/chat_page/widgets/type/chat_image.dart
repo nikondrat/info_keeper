@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/pages/chat_page/chat_image_page.dart';
 import 'package:info_keeper/theme.dart';
 import 'package:intl/intl.dart';
@@ -10,12 +11,14 @@ class ChatImageWidget extends StatelessWidget {
   final String dateTime;
   final RxBool showDate;
   final int? index;
+  final RxBool? moveMessage;
   final bool isTrash;
   const ChatImageWidget(
       {Key? key,
       required this.path,
       required this.dateTime,
       this.index,
+      this.moveMessage,
       this.isTrash = false,
       required this.showDate})
       : super(key: key);
@@ -29,7 +32,26 @@ class ChatImageWidget extends StatelessWidget {
       onTap: isTrash
           ? null
           : () {
-              Get.to(() => ChatImagePage(path: path, selectedMessage: index!));
+              if (moveMessage!.value) {
+                var message = Controller
+                    .to
+                    .all[Controller.to.selectedFolder.value]
+                    .directoryChildrens[
+                        Controller.to.selectedElementIndex.value]
+                    .messages
+                    .removeAt(Controller.to.firstSelectedMessage);
+                Controller
+                    .to
+                    .all[Controller.to.selectedFolder.value]
+                    .directoryChildrens[
+                        Controller.to.selectedElementIndex.value]
+                    .messages
+                    .insert(index, message);
+                moveMessage!.value = false;
+              } else {
+                Get.to(
+                    () => ChatImagePage(path: path, selectedMessage: index!));
+              }
             },
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 2),
@@ -39,18 +61,22 @@ class ChatImageWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(6),
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Image(
+              height: MediaQuery.of(context).size.height * 0.5,
               fit: BoxFit.cover,
               image: FileImage(File(path)),
             ),
             showDate.value
-                ? Padding(
-                    padding: const EdgeInsets.only(top: 4),
-                    child: Text(
-                      '${time.hour}:${time.minute}',
-                      style: TextStyle(color: Colors.grey.shade600),
+                ? Align(
+                    alignment: Alignment.bottomRight,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 4),
+                      child: Text(
+                        '${time.hour}:${time.minute}',
+                        style: TextStyle(color: Colors.grey.shade600),
+                      ),
                     ),
                   )
                 : Container()

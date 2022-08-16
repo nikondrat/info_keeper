@@ -16,15 +16,15 @@ void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
 
   Get.put(Controller());
+  await clearData();
   await initData();
   if (Platform.isAndroid || Platform.isIOS) {
     await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform);
+    await notificationInit();
   }
-  // await clearData();
 
   runApp(const MyApp());
-  await notificationInit();
 }
 
 Future<String> getData() async {

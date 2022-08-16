@@ -80,22 +80,26 @@ class ChatPageSearch extends StatelessWidget {
           },
         ),
       ),
-      body: Obx(() => ListView.builder(
-          physics: const BouncingScrollPhysics(),
-          padding: const EdgeInsets.all(20),
-          itemCount: searchResult.length,
-          itemBuilder: (context, index) {
-            return MessageWidgetBody(
-                dateTime: Controller
-                    .to
-                    .all[Controller.to.selectedFolder.value]
-                    .directoryChildrens[
-                        Controller.to.selectedElementIndex.value]
-                    .messages![index]
-                    .dateTime,
-                term: searchQueryController.text,
-                message: searchResult[index]);
-          })),
+      body: Obx(
+        () => searchResult.isNotEmpty
+            ? ListView.builder(
+                physics: const BouncingScrollPhysics(),
+                padding: const EdgeInsets.all(20),
+                itemCount: searchResult.length,
+                itemBuilder: (context, index) {
+                  return MessageWidgetBody(
+                      dateTime: Controller
+                          .to
+                          .all[Controller.to.selectedFolder.value]
+                          .directoryChildrens[
+                              Controller.to.selectedElementIndex.value]
+                          .messages![index]
+                          .dateTime,
+                      term: searchQueryController.text,
+                      message: searchResult[index]);
+                })
+            : const SizedBox(),
+      ),
     );
   }
 }

@@ -32,6 +32,7 @@ class ChatPage extends StatelessWidget {
     final isShowColorSelector = false.obs;
     final showDate = false.obs;
     final editMessage = false.obs;
+    final moveMessage = false.obs;
 
     final splitMessages = false.obs;
     final selectedMessagesCount = 0.obs;
@@ -244,6 +245,7 @@ class ChatPage extends StatelessWidget {
                 ? BackgroundImageWidget(
                     image: pathToImage.value,
                     child: ChatPageBody(
+                      moveMessage: moveMessage,
                       pinnedMessages: pinnedMessages,
                       selectedMessages: selectedMessages,
                       selectedMessageCount: selectedMessagesCount,
@@ -259,6 +261,7 @@ class ChatPage extends StatelessWidget {
                     ),
                   )
                 : ChatPageBody(
+                    moveMessage: moveMessage,
                     pinnedMessages: pinnedMessages,
                     selectedMessages: selectedMessages,
                     selectedMessageCount: selectedMessagesCount,
