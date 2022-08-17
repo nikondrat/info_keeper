@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
+import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/model/types/chat/chat.dart';
 import 'package:info_keeper/model/types/chat/message.dart';
 import 'package:info_keeper/pages/chat_page/widgets/message_menu/chat_menu.dart';
@@ -58,8 +59,6 @@ class MessageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isCollapsed = false.obs;
-
     return Obx(() => Controller
                 .to
                 .all[Controller.to.selectedFolder.value]
@@ -122,7 +121,6 @@ class MessageWidget extends StatelessWidget {
         : fullScreen
             ? MessageWidgetChild(
                 moveMessage: moveMessage,
-                isCollapsed: isCollapsed,
                 scrollController: scrollController,
                 selected: selected,
                 contentController: contentController,
@@ -141,10 +139,6 @@ class MessageWidget extends StatelessWidget {
                 pinnedMessages: pinnedMessages)
             : SwipeTo(
                 key: messageKey,
-                iconOnLeftSwipe: Icons.open_in_full,
-                onLeftSwipe: () {
-                  isCollapsed.value = !isCollapsed.value;
-                },
                 onRightSwipe: () {
                   selectedMessage!.value =
                       message.location.selectedMessageIndex!;
@@ -170,7 +164,6 @@ class MessageWidget extends StatelessWidget {
                 child: MessageWidgetChild(
                     moveMessage: moveMessage,
                     constraints: constraints,
-                    isCollapsed: isCollapsed,
                     scrollController: scrollController,
                     selected: selected,
                     contentController: contentController,
@@ -207,7 +200,6 @@ class MessageWidgetChild extends StatelessWidget {
   final RxInt selectedMessagesCount;
   final List selectedMessages;
   final RxList pinnedMessages;
-  final RxBool isCollapsed;
   final RxBool moveMessage;
   const MessageWidgetChild(
       {Key? key,
@@ -227,7 +219,6 @@ class MessageWidgetChild extends StatelessWidget {
       required this.splitMessages,
       required this.isShowColorSelector,
       required this.selectedMessages,
-      required this.isCollapsed,
       required this.pinnedMessages,
       this.fullScreen = false})
       : super(key: key);
@@ -305,7 +296,6 @@ class MessageWidgetChild extends StatelessWidget {
         showDate: showDate,
         selected: selected,
         dateTime: dateTime,
-        isCollapsed: isCollapsed,
       ),
     );
   }
@@ -321,7 +311,6 @@ class MessageWidgetBody extends StatelessWidget {
   final RxBool? showDate;
   final String? dateTime;
   final String term;
-  final RxBool? isCollapsed;
 
   const MessageWidgetBody(
       {Key? key,
@@ -333,7 +322,6 @@ class MessageWidgetBody extends StatelessWidget {
       required this.message,
       this.term = '',
       this.showDate,
-      this.isCollapsed,
       this.dateTime})
       : super(key: key);
 
@@ -394,8 +382,24 @@ class MessageWidgetBody extends StatelessWidget {
                               textStyle: const TextStyle(
                                   color: Colors.black, fontSize: 16),
                               text: message.messageText,
-                              maxLines: isCollapsed != null
-                                  ? isCollapsed!.value
+                              maxLines: selected != null &&
+                                      Controller
+                                              .to
+                                              .all[Controller
+                                                  .to.selectedFolder.value]
+                                              .directoryChildrens[Controller.to
+                                                  .selectedElementIndex.value]
+                                              .messages[selected!.value]
+                                              .type ==
+                                          AllType.chatMessage
+                                  ? Controller
+                                          .to
+                                          .all[Controller
+                                              .to.selectedFolder.value]
+                                          .directoryChildrens[Controller
+                                              .to.selectedElementIndex.value]
+                                          .messages[selected!.value]
+                                          .isCollapsed
                                       ? 6
                                       : null
                                   : null,

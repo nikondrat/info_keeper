@@ -68,85 +68,89 @@ class _ChatVoiceWidgetState extends State<ChatVoiceWidget> {
 
   @override
   Widget build(BuildContext context) {
-    Widget body = TrashElement(
+    return TrashElement(
         isShowRestoreMenu: isShowRestoreMenu,
         isMessage: true,
         index: widget.index,
-        child: Container(
-            margin: const EdgeInsets.symmetric(vertical: 2),
-            decoration: BoxDecoration(
-              color: messageColors[5],
-              borderRadius: BorderRadius.circular(6),
-            ),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Obx(() => IconButton(
-                        onPressed: isPlay.value ? stop : play,
-                        icon:
-                            Icon(isPlay.value ? Icons.pause : Icons.play_arrow),
-                        splashRadius: 20)),
-                    widget.name.isNotEmpty
-                        ? Expanded(child: Text(widget.name))
-                        : const SizedBox(),
-                    IconButton(
-                        splashRadius: 20,
-                        onPressed: () {
-                          var message = Controller
-                              .to
-                              .all[Controller.to.selectedFolder.value]
-                              .directoryChildrens[
-                                  Controller.to.selectedElementIndex.value]
-                              .messages
-                              .removeAt(widget.index);
+        child: GestureDetector(
+          onLongPress:
+              widget.isTrash ? () => isShowRestoreMenu.value = true : null,
+          onTap: widget.moveMessage != null
+              ? widget.moveMessage!.value && !widget.isTrash
+                  ? () {
+                      var message = Controller
+                          .to
+                          .all[Controller.to.selectedFolder.value]
+                          .directoryChildrens[
+                              Controller.to.selectedElementIndex.value]
+                          .messages
+                          .removeAt(Controller.to.firstSelectedMessage);
+                      Controller
+                          .to
+                          .all[Controller.to.selectedFolder.value]
+                          .directoryChildrens[
+                              Controller.to.selectedElementIndex.value]
+                          .messages
+                          .insert(widget.index, message);
+                      widget.moveMessage!.value = false;
+                    }
+                  : null
+              : null,
+          child: Container(
+              margin: const EdgeInsets.symmetric(vertical: 2),
+              decoration: BoxDecoration(
+                color: messageColors[5],
+                borderRadius: BorderRadius.circular(6),
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Obx(() => IconButton(
+                          onPressed: isPlay.value ? stop : play,
+                          icon: Icon(
+                              isPlay.value ? Icons.pause : Icons.play_arrow),
+                          splashRadius: 20)),
+                      widget.name.isNotEmpty
+                          ? Expanded(child: Text(widget.name))
+                          : const SizedBox(),
+                      widget.isTrash
+                          ? const SizedBox()
+                          : IconButton(
+                              splashRadius: 20,
+                              onPressed: () {
+                                var message = Controller
+                                    .to
+                                    .all[Controller.to.selectedFolder.value]
+                                    .directoryChildrens[Controller
+                                        .to.selectedElementIndex.value]
+                                    .messages
+                                    .removeAt(widget.index);
 
-                          Controller.to.trashElements.add(message);
-                          Controller.to.setData();
-                        },
-                        icon: const Icon(Icons.delete))
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    widget.showDate.value
-                        ? Padding(
-                            padding: const EdgeInsets.only(bottom: 8, right: 8),
-                            child: Text(
-                              '${time.hour}:${time.minute}',
-                              style: TextStyle(color: Colors.grey.shade600),
-                            ),
-                          )
-                        : Container(),
-                  ],
-                )
-              ],
-            )));
-
-    return Obx(() => widget.moveMessage != null
-        ? widget.moveMessage!.value && !widget.isTrash
-            ? GestureDetector(
-                onTap: () {
-                  var message = Controller
-                      .to
-                      .all[Controller.to.selectedFolder.value]
-                      .directoryChildrens[
-                          Controller.to.selectedElementIndex.value]
-                      .messages
-                      .removeAt(Controller.to.firstSelectedMessage);
-                  Controller
-                      .to
-                      .all[Controller.to.selectedFolder.value]
-                      .directoryChildrens[
-                          Controller.to.selectedElementIndex.value]
-                      .messages
-                      .insert(widget.index, message);
-                  widget.moveMessage!.value = false;
-                },
-                child: body)
-            : body
-        : body);
+                                Controller.to.trashElements.add(message);
+                                Controller.to.setData();
+                              },
+                              icon: const Icon(Icons.delete))
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      widget.showDate.value
+                          ? Padding(
+                              padding:
+                                  const EdgeInsets.only(bottom: 8, right: 8),
+                              child: Text(
+                                '${time.hour}:${time.minute}',
+                                style: TextStyle(color: Colors.grey.shade600),
+                              ),
+                            )
+                          : Container(),
+                    ],
+                  )
+                ],
+              )),
+        ));
   }
 }

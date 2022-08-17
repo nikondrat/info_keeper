@@ -13,6 +13,7 @@ class Message {
   bool isPinned;
   bool isLocked;
   bool isUnlocked;
+  bool isCollapsed;
   List? history;
 
   Message(
@@ -25,6 +26,7 @@ class Message {
       this.isSelected = false,
       this.isPinned = false,
       this.isLocked = false,
+      this.isCollapsed = false,
       this.isUnlocked = false,
       this.history,
       required this.dateTime});
@@ -37,6 +39,7 @@ class Message {
         isSelected = json['isSelected'],
         isPinned = json['isPinned'],
         isLocked = json['isLocked'],
+        isCollapsed = json['isCollapsed'],
         isUnlocked = json['isUnlocked'],
         selectedColorIndex = json['selectedColorIndex'],
         isFavorite = json['isFavorite'],
@@ -50,6 +53,7 @@ class Message {
         'messageText': messageText,
         'selectedColorIndex': selectedColorIndex,
         'isFavorite': isFavorite,
+        'isCollapsed': isCollapsed,
         'isSelected': isSelected,
         'isUnlocked': isUnlocked,
         'isPinned': isPinned,

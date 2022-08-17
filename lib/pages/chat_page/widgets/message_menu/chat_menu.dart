@@ -142,6 +142,22 @@ class ChatPageMenu extends StatelessWidget {
                   moveMessage.value = true;
                 }),
             ChatPageMenuItem(
+                icon: const Icon(Icons.open_in_full),
+                text: 'Collapse message',
+                function: () {
+                  Navigator.pop(context);
+
+                  List messages = Controller
+                      .to
+                      .all[Controller.to.selectedFolder.value]
+                      .directoryChildrens[
+                          Controller.to.selectedElementIndex.value]
+                      .messages;
+                  messages[selectedMessage.value].isCollapsed =
+                      !messages[selectedMessage.value].isCollapsed;
+                  Controller.to.change(Chat(messages: messages.obs));
+                }),
+            ChatPageMenuItem(
                 function: () {
                   Navigator.pop(context);
                   Get.to(() => ChatPageMessageInFullScreen(
