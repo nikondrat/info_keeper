@@ -3,6 +3,7 @@ import 'package:flutter_sound/flutter_sound.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/audio_note.dart';
+import 'package:info_keeper/pages/home_page/home_controller.dart';
 import 'package:info_keeper/pages/trash_page/trash_element.dart';
 import 'package:substring_highlight/substring_highlight.dart';
 
@@ -22,12 +23,13 @@ class HomeWidgetAudioNote extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isShowRestoreMenu = false.obs;
+    late final HomeController home = Get.find();
 
     return GestureDetector(
         onLongPress: isTrash != null
             ? () => isShowRestoreMenu.value = true
             : () {
-                Controller.to.isShowMenu.value = true;
+                home.isShowBottomMenu.value = true;
                 Controller.to.selectedElementIndex.value = index;
               },
         child: TrashElement(
@@ -42,7 +44,7 @@ class HomeWidgetAudioNote extends StatelessWidget {
                             : Colors.grey.shade600,
                         width: audioNote.animate ? 1.4 : 1)),
                 child: Row(children: [
-                  audioNote.pinned
+                  audioNote.isPinned
                       ? const Padding(
                           padding: EdgeInsets.only(left: 8),
                           child: Icon(Icons.push_pin_outlined),

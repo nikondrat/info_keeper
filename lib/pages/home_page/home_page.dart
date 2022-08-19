@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
+import 'package:info_keeper/pages/home_page/widgets/btm_bar/btm_bar.dart';
+import 'package:info_keeper/pages/home_page/widgets/btm_bar/btm_menu.dart';
 import 'package:info_keeper/pages/home_page/widgets/home_body.dart';
 import 'package:info_keeper/pages/home_page/widgets/home_btm_nav_bar.dart';
-import 'package:info_keeper/pages/home_page/widgets/home_float_btn.dart';
+import 'package:info_keeper/pages/home_page/widgets/fab_menu/home_float_btn.dart';
 import 'package:info_keeper/pages/home_page/home_search.dart';
 import 'package:info_keeper/pages/trash_page/trash_page.dart';
 import 'package:info_keeper/pages/vault_page/vault_page.dart';
@@ -19,8 +21,8 @@ class HomePage extends StatelessWidget {
     return Swipe(
       onSwipeRight: () {
         Get.to(() => VaultPage(
-              childrens: Controller.to.all[Controller.to.selectedFolder.value]
-                  .directoryChildrens,
+              childrens: Controller
+                  .to.all[Controller.to.selectedFolder.value].childrens,
               selectedElement: 0.obs,
             ));
       },
@@ -92,7 +94,7 @@ class HomePage extends StatelessWidget {
           body: HomePageBody(isGridView: isGridView),
           floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
           floatingActionButton: const HomePageFloatButton(),
-          bottomNavigationBar: const HomePageBottomNavigationBar()),
+          bottomNavigationBar: const HomeBottomBar()),
     );
   }
 }

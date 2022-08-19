@@ -43,7 +43,7 @@ class ChatPageReorderableBody extends StatelessWidget {
     return Obx(() => Controller
             .to
             .all[Controller.to.selectedFolder.value]
-            .directoryChildrens[Controller.to.selectedElementIndex.value]
+            .childrens[Controller.to.selectedElementIndex.value]
             .messages
             .isNotEmpty
         ? ReorderableListView.builder(
@@ -57,13 +57,13 @@ class ChatPageReorderableBody extends StatelessWidget {
               var message = Controller
                   .to
                   .all[Controller.to.selectedFolder.value]
-                  .directoryChildrens[Controller.to.selectedElementIndex.value]
+                  .childrens[Controller.to.selectedElementIndex.value]
                   .messages
                   .removeAt(oldIndex);
               List messages = Controller
                   .to
                   .all[Controller.to.selectedFolder.value]
-                  .directoryChildrens[Controller.to.selectedElementIndex.value]
+                  .childrens[Controller.to.selectedElementIndex.value]
                   .messages;
               messages.insert(newIndex, message);
               message.location.selectedMessageIndex = newIndex;
@@ -76,14 +76,14 @@ class ChatPageReorderableBody extends StatelessWidget {
             itemCount: Controller
                 .to
                 .all[Controller.to.selectedFolder.value]
-                .directoryChildrens[Controller.to.selectedElementIndex.value]
+                .childrens[Controller.to.selectedElementIndex.value]
                 .messages
                 .length,
             itemBuilder: (context, messageIndex) {
               Controller
                   .to
                   .all[Controller.to.selectedFolder.value]
-                  .directoryChildrens[Controller.to.selectedElementIndex.value]
+                  .childrens[Controller.to.selectedElementIndex.value]
                   .messages[messageIndex]
                   .location
                   .selectedMessageIndex = messageIndex;

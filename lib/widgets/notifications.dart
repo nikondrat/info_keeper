@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/location_element.dart';
+import 'package:info_keeper/pages/home_page/home_controller.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 // ignore: depend_on_referenced_packages
 import 'package:timezone/timezone.dart' as tz;
@@ -121,6 +123,7 @@ class _NotificationsState extends State<Notifications> {
         : IconButton(
             splashRadius: 20,
             onPressed: () async {
+              late final HomeController home = Get.find();
               DateTime? picker = await showOmniDateTimePicker(
                   context: context, is24HourMode: true);
               if (picker != null) {
@@ -128,7 +131,7 @@ class _NotificationsState extends State<Notifications> {
                 showNotification(selectedDateTime);
               }
 
-              Controller.to.isShowMenu.value = false;
+              home.isShowBottomMenu.value = false;
             },
             icon: const Icon(Icons.notifications_none));
   }

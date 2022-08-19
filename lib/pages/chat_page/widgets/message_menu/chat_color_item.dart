@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/chat/chat.dart';
-import 'package:info_keeper/theme.dart';
+import 'package:info_keeper/themes/default/default.dart';
 
 class ChatPageColorItem extends StatelessWidget {
   final int colorIndex;
@@ -23,7 +23,7 @@ class ChatPageColorItem extends StatelessWidget {
             List messages = Controller
                 .to
                 .all[Controller.to.selectedFolder.value]
-                .directoryChildrens[Controller.to.selectedElementIndex.value]
+                .childrens[Controller.to.selectedElementIndex.value]
                 .messages!;
             messages[selectedMessage.value].selectedColorIndex =
                 selectedIndex.value;

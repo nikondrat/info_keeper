@@ -19,21 +19,19 @@ class HomePageBody extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 crossAxisCount: isGridView.value ? 2 : 1,
                 itemCount: Controller.to.all[Controller.to.selectedFolder.value]
-                    .directoryChildrens.length,
+                    .getChildrens()
+                    .length,
                 itemBuilder: (context, index) {
-                  return Controller.to.all[Controller.to.selectedFolder.value]
-                          .directoryChildrens[index].isLocked
-                      ? const SizedBox.shrink()
-                      : Padding(
-                          padding: const EdgeInsets.all(5),
-                          child: HomeWidget(
-                            value: Controller
-                                .to
-                                .all[Controller.to.selectedFolder.value]
-                                .directoryChildrens[index],
-                            index: index,
-                          ),
-                        );
+                  return Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: HomeWidget(
+                      value: Controller
+                          .to
+                          .all[Controller.to.selectedFolder.value]
+                          .childrens[index],
+                      index: index,
+                    ),
+                  );
                 })
             : const Center(
                 child: Text('Empty'),

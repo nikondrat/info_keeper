@@ -6,16 +6,27 @@ import 'package:info_keeper/model/types/storage_file.dart';
 import 'package:info_keeper/model/types/todo.dart';
 
 class Folder {
-  String directoryName;
-  RxList<dynamic> directoryChildrens;
+  String name;
+  RxList<dynamic> childrens;
   Folder({
-    required this.directoryName,
-    required this.directoryChildrens,
+    required this.name,
+    required this.childrens,
   });
 
+  List getChildrens() {
+    List list = [];
+
+    for (int i = 0; i < childrens.length; i++) {
+      if (!childrens[i].isLocked) {
+        list.add(childrens[i]);
+      }
+    }
+    return list;
+  }
+
   Folder.fromJson(Map<String, dynamic> json)
-      : directoryName = json['directoryName'],
-        directoryChildrens = (json['directoryChildrens'] as List<dynamic>)
+      : name = json['name'],
+        childrens = (json['childrens'] as List<dynamic>)
             .map<dynamic>((dynamic e) {
               switch (AllType.values.elementAt(e['type'])) {
                 case AllType.chat:
@@ -40,8 +51,7 @@ class Folder {
             .obs;
 
   Map<String, dynamic> toJson() => {
-        'directoryName': directoryName,
-        'directoryChildrens':
-            directoryChildrens.map((e) => e.toJson()).toList(),
+        'name': name,
+        'childrens': childrens.map((e) => e.toJson()).toList(),
       };
 }

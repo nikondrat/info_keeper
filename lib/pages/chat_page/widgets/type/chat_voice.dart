@@ -3,7 +3,7 @@ import 'package:flutter_sound/flutter_sound.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/pages/trash_page/trash_element.dart';
-import 'package:info_keeper/theme.dart';
+import 'package:info_keeper/themes/default/default.dart';
 import 'package:intl/intl.dart';
 
 class ChatVoiceWidget extends StatefulWidget {
@@ -81,15 +81,13 @@ class _ChatVoiceWidgetState extends State<ChatVoiceWidget> {
                       var message = Controller
                           .to
                           .all[Controller.to.selectedFolder.value]
-                          .directoryChildrens[
-                              Controller.to.selectedElementIndex.value]
+                          .childrens[Controller.to.selectedElementIndex.value]
                           .messages
                           .removeAt(Controller.to.firstSelectedMessage);
                       Controller
                           .to
                           .all[Controller.to.selectedFolder.value]
-                          .directoryChildrens[
-                              Controller.to.selectedElementIndex.value]
+                          .childrens[Controller.to.selectedElementIndex.value]
                           .messages
                           .insert(widget.index, message);
                       widget.moveMessage!.value = false;
@@ -123,7 +121,7 @@ class _ChatVoiceWidgetState extends State<ChatVoiceWidget> {
                                 var message = Controller
                                     .to
                                     .all[Controller.to.selectedFolder.value]
-                                    .directoryChildrens[Controller
+                                    .childrens[Controller
                                         .to.selectedElementIndex.value]
                                     .messages
                                     .removeAt(widget.index);

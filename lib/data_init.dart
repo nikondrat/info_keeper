@@ -23,7 +23,7 @@ initData() async {
     if (prefs.getString('all')!.isNotEmpty) {
       String stringData = prefs.getString('all')!;
       Iterable data = jsonDecode(stringData);
-      List items = List.from(data.map((e) => Folder.fromJson(e)));
+      List<Folder> items = List.from(data.map((e) => Folder.fromJson(e)));
 
       Controller.to.all = items.obs;
     }

@@ -13,7 +13,7 @@ class Chat {
   bool animate;
   bool dublicated;
   bool link;
-  bool pinned;
+  bool isPinned;
   bool isLocked;
   RxList? messages;
   RxList? favorites;
@@ -25,7 +25,7 @@ class Chat {
       this.location,
       this.name,
       this.animate = false,
-      this.pinned = false,
+      this.isPinned = false,
       this.dublicated = false,
       this.link = false,
       this.isLocked = false,
@@ -34,13 +34,17 @@ class Chat {
       this.pathToImage = '',
       this.messages});
 
+  void pin() {
+    isPinned = !isPinned;
+  }
+
   Chat.fromJson(Map<String, dynamic> json)
       : type = AllType.values.elementAt(json['type']),
         location = LocationElement.fromJson(json['location']),
         name = json['name'],
         link = json['link'],
         isLocked = json['isLocked'],
-        pinned = json['pinned'],
+        isPinned = json['pinned'],
         dublicated = json['dublicated'],
         animate = json['animate'],
         messages = (json['messages'] as List<dynamic>)
@@ -120,7 +124,7 @@ class Chat {
       'location': location!.toJson(),
       'name': name,
       'link': link,
-      'pinned': pinned,
+      'pinned': isPinned,
       'animate': animate,
       'isLocked': isLocked,
       'dublicated': dublicated,

@@ -33,7 +33,7 @@ class StorageFilePageAction extends StatelessWidget {
                         index: Controller
                                 .to
                                 .all[Controller.to.selectedFolder.value]
-                                .directoryChildrens
+                                .childrens
                                 .length -
                             1),
                     name: titleController.text,
@@ -55,7 +55,7 @@ class StorageFilePageAction extends StatelessWidget {
                         index: Controller
                                 .to
                                 .all[Controller.to.selectedFolder.value]
-                                .directoryChildrens
+                                .childrens
                                 .length -
                             1),
                     name: titleController.text,

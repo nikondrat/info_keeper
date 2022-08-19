@@ -44,7 +44,7 @@ class ChatPageShownDateBody extends StatelessWidget {
     return Obx(() => Controller
             .to
             .all[Controller.to.selectedFolder.value]
-            .directoryChildrens[Controller.to.selectedElementIndex.value]
+            .childrens[Controller.to.selectedElementIndex.value]
             .messages
             .isNotEmpty
         ? GroupedListView(
@@ -109,11 +109,8 @@ class ChatPageShownDateBody extends StatelessWidget {
                 showDate: showDate,
                 splitMessages: splitMessages,
                 titleController: titleController),
-            elements: Controller
-                .to
-                .all[Controller.to.selectedFolder.value]
-                .directoryChildrens[Controller.to.selectedElementIndex.value]
-                .messages!,
+            elements: Controller.to.all[Controller.to.selectedFolder.value]
+                .childrens[Controller.to.selectedElementIndex.value].messages!,
             groupBy: (dynamic element) {
               late DateFormat format = DateFormat('yyyy-MM-dd HH:mm:ss');
               late DateTime item = format.parse(element.dateTime);

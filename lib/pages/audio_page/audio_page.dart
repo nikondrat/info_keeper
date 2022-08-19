@@ -73,8 +73,8 @@ class _AudioPageState extends State<AudioPage> {
       name: titleController.text,
       location: LocationElement(
           inDirectory: Controller.to.selectedFolder.value,
-          index: Controller.to.all[Controller.to.selectedFolder.value]
-                  .directoryChildrens.length -
+          index: Controller
+                  .to.all[Controller.to.selectedFolder.value].childrens.length -
               1),
     ));
     Get.back();

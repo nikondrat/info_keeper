@@ -9,13 +9,14 @@ import 'package:info_keeper/data_init.dart';
 import 'package:info_keeper/firebase_options.dart';
 import 'package:info_keeper/model/notification_init.dart';
 import 'package:info_keeper/pages/home_page/home_page.dart';
-import 'package:info_keeper/theme.dart';
+import 'package:info_keeper/themes/default/default.dart';
 import 'model/controller.dart';
 
 void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
 
   Get.put(Controller());
+
   // await clearData();
   await initData();
   if (Platform.isAndroid || Platform.isIOS) {
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ThemeProvider(
-        initTheme: theme,
+        initTheme: defaultLight,
         builder: (context, myTheme) => GetMaterialApp(
               defaultTransition: Transition.cupertino,
               debugShowCheckedModeBanner: false,

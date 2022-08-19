@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:info_keeper/theme.dart';
+import 'package:info_keeper/themes/default/default.dart';
 
 class ChatHistoryPage extends StatelessWidget {
   final List history;

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/pages/trash_page/trash_element.dart';
-import 'package:info_keeper/theme.dart';
+import 'package:info_keeper/themes/default/default.dart';
 import 'package:intl/intl.dart';
 import 'package:open_filex/open_filex.dart';
 
@@ -61,7 +61,7 @@ class ChatPageFile extends StatelessWidget {
                               var message = Controller
                                   .to
                                   .all[Controller.to.selectedFolder.value]
-                                  .directoryChildrens[
+                                  .childrens[
                                       Controller.to.selectedElementIndex.value]
                                   .messages
                                   .removeAt(index);

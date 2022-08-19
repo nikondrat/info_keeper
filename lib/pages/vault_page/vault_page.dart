@@ -80,8 +80,7 @@ class VaultPage extends StatelessWidget {
                     List messages = Controller
                         .to
                         .all[Controller.to.selectedFolder.value]
-                        .directoryChildrens[
-                            Controller.to.selectedElementIndex.value]
+                        .childrens[Controller.to.selectedElementIndex.value]
                         .messages;
                     if (passwordController.text ==
                         repeatPasswordController.text) {

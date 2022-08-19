@@ -8,7 +8,7 @@ class Todo {
   LocationElement? location;
   String? name;
   RxList<Task>? tasks;
-  bool pinned;
+  bool isPinned;
   bool animate;
   bool dublicated;
   bool link;
@@ -19,11 +19,15 @@ class Todo {
       this.location,
       this.name,
       this.tasks,
-      this.pinned = false,
+      this.isPinned = false,
       this.dublicated = false,
       this.animate = false,
       this.isLocked = false,
       this.link = false});
+
+  void pin() {
+    isPinned = !isPinned;
+  }
 
   Todo.fromJson(Map<String, dynamic> json)
       : type = AllType.values.elementAt(json['type']),
@@ -33,7 +37,7 @@ class Todo {
             .map((e) => Task.fromJson(e))
             .toList()
             .obs,
-        pinned = json['pinned'],
+        isPinned = json['pinned'],
         isLocked = json['isLocked'],
         dublicated = json['dublicated'],
         animate = json['animate'],
@@ -45,7 +49,7 @@ class Todo {
       'name': name,
       'location': location!.toJson(),
       'tasks': tasks!.map((e) => e.toJson()).toList(),
-      'pinned': pinned,
+      'pinned': isPinned,
       'isLocked': isLocked,
       'animate': animate,
       'dublicated': dublicated,

@@ -73,8 +73,7 @@ class ChatPageBottomTextField extends StatelessWidget {
                   selectedMessageIndex: Controller
                       .to
                       .all[Controller.to.selectedFolder.value]
-                      .directoryChildrens[
-                          Controller.to.selectedElementIndex.value]
+                      .childrens[Controller.to.selectedElementIndex.value]
                       .messages
                       .length)));
         } else if (musicFormat != null) {
@@ -110,8 +109,7 @@ class ChatPageBottomTextField extends StatelessWidget {
                   selectedMessageIndex: Controller
                       .to
                       .all[Controller.to.selectedFolder.value]
-                      .directoryChildrens[
-                          Controller.to.selectedElementIndex.value]
+                      .childrens[Controller.to.selectedElementIndex.value]
                       .messages
                       .length)));
         } else {
@@ -124,8 +122,7 @@ class ChatPageBottomTextField extends StatelessWidget {
                   selectedMessageIndex: Controller
                       .to
                       .all[Controller.to.selectedFolder.value]
-                      .directoryChildrens[
-                          Controller.to.selectedElementIndex.value]
+                      .childrens[Controller.to.selectedElementIndex.value]
                       .messages
                       .length),
               dateTime: dateTime));
@@ -152,7 +149,7 @@ class ChatPageBottomTextField extends StatelessWidget {
                           Controller
                                   .to
                                   .all[Controller.to.selectedFolder.value]
-                                  .directoryChildrens[
+                                  .childrens[
                                       Controller.to.selectedElementIndex.value]
                                   .messages![selectedMessage.value]
                                   .type ==
@@ -165,7 +162,7 @@ class ChatPageBottomTextField extends StatelessWidget {
                             Controller
                                 .to
                                 .all[Controller.to.selectedFolder.value]
-                                .directoryChildrens[
+                                .childrens[
                                     Controller.to.selectedElementIndex.value]
                                 .messages![selectedMessage.value]
                                 .messageText,
@@ -260,7 +257,7 @@ class ChatPageBottomTextField extends StatelessWidget {
                                               .to
                                               .all[Controller
                                                   .to.selectedFolder.value]
-                                              .directoryChildrens[Controller.to
+                                              .childrens[Controller.to
                                                   .selectedElementIndex.value]
                                               .messages![selectedMessage.value]
                                               .type ==
@@ -268,7 +265,7 @@ class ChatPageBottomTextField extends StatelessWidget {
                                     List messages = Controller
                                         .to
                                         .all[Controller.to.selectedFolder.value]
-                                        .directoryChildrens[Controller
+                                        .childrens[Controller
                                             .to.selectedElementIndex.value]
                                         .messages!;
 
@@ -303,7 +300,7 @@ class ChatPageBottomTextField extends StatelessWidget {
                                           .to
                                           .all[Controller
                                               .to.selectedFolder.value]
-                                          .directoryChildrens[Controller
+                                          .childrens[Controller
                                               .to.selectedElementIndex.value]
                                           .messages!;
                                       Controller.to.addMessage(Message(

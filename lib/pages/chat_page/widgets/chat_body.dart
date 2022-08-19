@@ -77,14 +77,14 @@ class ChatPageBody extends StatelessWidget {
               //       List messages = Controller
               //           .to
               //           .all[Controller.to.selectedFolder.value]
-              //           .directoryChildrens[
+              //           .childrens[
               //               Controller.to.selectedElementIndex.value]
               //           .messages;
 
               //       var message = Controller
               //           .to
               //           .all[Controller.to.selectedFolder.value]
-              //           .directoryChildrens[
+              //           .childrens[
               //               Controller.to.selectedElementIndex.value]
               //           .messages
               //           .removeAt(oldIndex);
@@ -96,7 +96,7 @@ class ChatPageBody extends StatelessWidget {
               //     itemCount: Controller
               //         .to
               //         .all[Controller.to.selectedFolder.value]
-              //         .directoryChildrens[chatIndex]
+              //         .childrens[chatIndex]
               //         .messages
               //         .length,
               //     itemBuilder: (context, messageIndex) {
@@ -105,7 +105,7 @@ class ChatPageBody extends StatelessWidget {
               //       DateTime dateTime = format.parse(Controller
               //           .to
               //           .all[Controller.to.selectedFolder.value]
-              //           .directoryChildrens[chatIndex]
+              //           .childrens[chatIndex]
               //           .messages[messageIndex]
               //           .dateTime);
 
@@ -133,14 +133,14 @@ class ChatPageBody extends StatelessWidget {
 
               //       if (messageIndex ==
               //           Controller.to.all[Controller.to.selectedFolder.value]
-              //                   .directoryChildrens[chatIndex].messages.length -
+              //                   .childrens[chatIndex].messages.length -
               //               1) {
               //         isSameDate = false;
               //       } else {
               //         final String prevDateString = Controller
               //             .to
               //             .all[Controller.to.selectedFolder.value]
-              //             .directoryChildrens[chatIndex]
+              //             .childrens[chatIndex]
               //             .messages[messageIndex]
               //             .dateTime
               //             .toString();
@@ -152,7 +152,7 @@ class ChatPageBody extends StatelessWidget {
               //               Controller
               //                       .to
               //                       .all[Controller.to.selectedFolder.value]
-              //                       .directoryChildrens[chatIndex]
+              //                       .childrens[chatIndex]
               //                       .messages
               //                       .length -
               //                   1 ||
@@ -275,7 +275,7 @@ class ChatPageBodyElement extends StatelessWidget {
     switch (Controller
         .to
         .all[Controller.to.selectedFolder.value]
-        .directoryChildrens[Controller.to.selectedElementIndex.value]
+        .childrens[Controller.to.selectedElementIndex.value]
         .messages[messageIndex]
         .type) {
       case AllType.chatImage:
@@ -286,14 +286,14 @@ class ChatPageBodyElement extends StatelessWidget {
             dateTime: Controller
                 .to
                 .all[Controller.to.selectedFolder.value]
-                .directoryChildrens[Controller.to.selectedElementIndex.value]
+                .childrens[Controller.to.selectedElementIndex.value]
                 .messages[messageIndex]
                 .dateTime,
             showDate: showDate,
             path: Controller
                 .to
                 .all[Controller.to.selectedFolder.value]
-                .directoryChildrens[Controller.to.selectedElementIndex.value]
+                .childrens[Controller.to.selectedElementIndex.value]
                 .messages[messageIndex]
                 .path);
       case AllType.chatVoice:
@@ -304,26 +304,26 @@ class ChatPageBodyElement extends StatelessWidget {
           name: Controller
               .to
               .all[Controller.to.selectedFolder.value]
-              .directoryChildrens[Controller.to.selectedElementIndex.value]
+              .childrens[Controller.to.selectedElementIndex.value]
               .messages[messageIndex]
               .name,
           codec: Controller
               .to
               .all[Controller.to.selectedFolder.value]
-              .directoryChildrens[Controller.to.selectedElementIndex.value]
+              .childrens[Controller.to.selectedElementIndex.value]
               .messages[messageIndex]
               .codec,
           dateTime: Controller
               .to
               .all[Controller.to.selectedFolder.value]
-              .directoryChildrens[Controller.to.selectedElementIndex.value]
+              .childrens[Controller.to.selectedElementIndex.value]
               .messages[messageIndex]
               .dateTime,
           showDate: showDate,
           path: Controller
               .to
               .all[Controller.to.selectedFolder.value]
-              .directoryChildrens[Controller.to.selectedElementIndex.value]
+              .childrens[Controller.to.selectedElementIndex.value]
               .messages[messageIndex]
               .path,
         );
@@ -350,13 +350,13 @@ class ChatPageBodyElement extends StatelessWidget {
             dateTime: Controller
                 .to
                 .all[Controller.to.selectedFolder.value]
-                .directoryChildrens[Controller.to.selectedElementIndex.value]
+                .childrens[Controller.to.selectedElementIndex.value]
                 .messages[messageIndex]
                 .dateTime,
             message: Controller
                 .to
                 .all[Controller.to.selectedFolder.value]
-                .directoryChildrens[Controller.to.selectedElementIndex.value]
+                .childrens[Controller.to.selectedElementIndex.value]
                 .messages[messageIndex],
             isShowColorSelector: isShowColorSelector,
           ),
@@ -368,19 +368,19 @@ class ChatPageBodyElement extends StatelessWidget {
             path: Controller
                 .to
                 .all[Controller.to.selectedFolder.value]
-                .directoryChildrens[Controller.to.selectedElementIndex.value]
+                .childrens[Controller.to.selectedElementIndex.value]
                 .messages[messageIndex]
                 .path,
             name: Controller
                 .to
                 .all[Controller.to.selectedFolder.value]
-                .directoryChildrens[Controller.to.selectedElementIndex.value]
+                .childrens[Controller.to.selectedElementIndex.value]
                 .messages[messageIndex]
                 .name,
             dateTime: Controller
                 .to
                 .all[Controller.to.selectedFolder.value]
-                .directoryChildrens[Controller.to.selectedElementIndex.value]
+                .childrens[Controller.to.selectedElementIndex.value]
                 .messages[messageIndex]
                 .dateTime,
             showDate: showDate);

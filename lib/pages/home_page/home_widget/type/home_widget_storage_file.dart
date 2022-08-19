@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/storage_file.dart';
+import 'package:info_keeper/pages/home_page/home_controller.dart';
 import 'package:info_keeper/pages/storage_file_page/storage_file_page.dart';
 import 'package:info_keeper/pages/trash_page/trash_element.dart';
 import 'package:substring_highlight/substring_highlight.dart';
@@ -24,6 +25,7 @@ class HomeWidgetStorageFile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isShowRestoreMenu = false.obs;
+    late final HomeController home = Get.find();
 
     return Theme(
         data: Theme.of(context).copyWith(
@@ -34,8 +36,8 @@ class HomeWidgetStorageFile extends StatelessWidget {
             onTap: isTrash != null
                 ? null
                 : () {
-                    Controller.to.isShowDial.value = false;
-                    Controller.to.isShowMenu.value = false;
+                    home.isShowBottomMenu.value = false;
+                    home.isShowDialMenu.value = false;
                     Controller.to.selectedElementIndex.value = index;
                     Get.to(
                         () => StorageFilePage(file: storageFile, change: true));
@@ -43,7 +45,7 @@ class HomeWidgetStorageFile extends StatelessWidget {
             onLongPress: isTrash != null
                 ? () => isShowRestoreMenu.value = true
                 : () {
-                    Controller.to.isShowMenu.value = true;
+                    home.isShowBottomMenu.value = true;
                     Controller.to.selectedElementIndex.value = index;
                   },
             child: TrashElement(
@@ -71,6 +73,12 @@ class HomeWidgetStorageFile extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          storageFile.isPinned
+                              ? const Padding(
+                                  padding: EdgeInsets.only(right: 8),
+                                  child: Icon(Icons.push_pin_outlined),
+                                )
+                              : SizedBox(),
                           storageFile.link
                               ? const Padding(
                                   padding: EdgeInsets.only(right: 8),

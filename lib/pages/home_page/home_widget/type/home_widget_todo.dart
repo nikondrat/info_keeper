@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/todo.dart';
+import 'package:info_keeper/pages/home_page/home_controller.dart';
 import 'package:info_keeper/pages/todo_page/todo_page.dart';
 import 'package:info_keeper/pages/todo_page/widgets/todo_task.dart';
 import 'package:info_keeper/pages/trash_page/trash_element.dart';
@@ -23,20 +24,19 @@ class HomeWidgetTodo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isShowRestoreMenu = false.obs;
+    late final HomeController home = Get.find();
 
     return GestureDetector(
       onTap: isTrash != null
           ? null
           : () {
-              Controller.to.isShowDial.value = false;
-              Controller.to.isShowMenu.value = false;
               Controller.to.selectedElementIndex.value = index;
               Get.to(() => TodoPage(todo: todo, change: true));
             },
       onLongPress: isTrash != null
           ? () => isShowRestoreMenu.value = true
           : () {
-              Controller.to.isShowMenu.value = true;
+              home.isShowBottomMenu.value = true;
               Controller.to.selectedElementIndex.value = index;
             },
       child: TrashElement(
@@ -56,7 +56,7 @@ class HomeWidgetTodo extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      todo.pinned
+                      todo.isPinned
                           ? const Padding(
                               padding: EdgeInsets.only(right: 8),
                               child: Icon(Icons.push_pin_outlined),

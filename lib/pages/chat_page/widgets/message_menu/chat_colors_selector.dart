@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/pages/chat_page/widgets/message_menu/chat_color_item.dart';
-import 'package:info_keeper/theme.dart';
+import 'package:info_keeper/themes/default/default.dart';
 
 class ChatPageColorSelector extends StatelessWidget {
   final RxBool isShowColorSelector;

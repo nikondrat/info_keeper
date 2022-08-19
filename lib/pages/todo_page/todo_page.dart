@@ -42,7 +42,7 @@ class TodoPage extends StatelessWidget {
                             index: Controller
                                     .to
                                     .all[Controller.to.selectedFolder.value]
-                                    .directoryChildrens
+                                    .childrens
                                     .length -
                                 1),
                       ))
@@ -54,7 +54,7 @@ class TodoPage extends StatelessWidget {
                             index: Controller
                                     .to
                                     .all[Controller.to.selectedFolder.value]
-                                    .directoryChildrens
+                                    .childrens
                                     .length -
                                 1),
                       ));
@@ -78,7 +78,7 @@ class TodoPage extends StatelessWidget {
                                           .to
                                           .all[Controller
                                               .to.selectedFolder.value]
-                                          .directoryChildrens
+                                          .childrens
                                           .length -
                                       1),
                               tasks: tasks));
@@ -101,7 +101,7 @@ class TodoPage extends StatelessWidget {
                                           .to
                                           .all[Controller
                                               .to.selectedFolder.value]
-                                          .directoryChildrens
+                                          .childrens
                                           .length -
                                       1),
                               name: titleController.text,

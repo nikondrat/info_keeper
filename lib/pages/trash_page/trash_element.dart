@@ -36,7 +36,7 @@ class TrashElement extends StatelessWidget {
                                 .to
                                 .all[Controller.to.trashElements[index!]
                                     .location.inDirectory]
-                                .directoryChildrens[Controller
+                                .childrens[Controller
                                     .to.trashElements[index!].location.index]
                                 .messages
                                 .insert(
@@ -47,7 +47,7 @@ class TrashElement extends StatelessWidget {
                                 .to
                                 .all[Controller.to.trashElements[index!]
                                     .location.inDirectory]
-                                .directoryChildrens
+                                .childrens
                                 .insert(
                                     Controller.to.trashElements[index!].location
                                         .index,

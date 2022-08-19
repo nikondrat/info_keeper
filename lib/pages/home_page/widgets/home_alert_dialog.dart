@@ -56,7 +56,7 @@ class HomePageAlertDialog extends StatelessWidget {
                       index: Controller
                               .to
                               .all[Controller.to.selectedFolder.value]
-                              .directoryChildrens
+                              .childrens
                               .length -
                           1),
                   name: value,
@@ -80,7 +80,7 @@ class HomePageAlertDialog extends StatelessWidget {
                       index: Controller
                               .to
                               .all[Controller.to.selectedFolder.value]
-                              .directoryChildrens
+                              .childrens
                               .length -
                           1),
                   name: controller.text,

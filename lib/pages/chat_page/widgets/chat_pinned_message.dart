@@ -58,8 +58,7 @@ class ChatPagePinnedMessage extends StatelessWidget {
                   final messages = Controller
                       .to
                       .all[Controller.to.selectedFolder.value]
-                      .directoryChildrens[
-                          Controller.to.selectedElementIndex.value]
+                      .childrens[Controller.to.selectedElementIndex.value]
                       .messages;
                   messages[pinnedMessages[0].location.selectedMessageIndex]
                           .isPinned =

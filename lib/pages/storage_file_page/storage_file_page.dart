@@ -54,7 +54,7 @@ class StorageFilePage extends StatelessWidget {
             location: LocationElement(
                 inDirectory: Controller.to.selectedFolder.value,
                 index: Controller.to.all[Controller.to.selectedFolder.value]
-                        .directoryChildrens.length -
+                        .childrens.length -
                     1),
           ),
         );
@@ -135,10 +135,9 @@ class StorageFilePage extends StatelessWidget {
               onTap: () {
                 Get.back();
                 Controller.to.delete(Controller
-                        .to
-                        .all[Controller.to.selectedFolder.value]
-                        .directoryChildrens[
-                    Controller.to.selectedElementIndex.value]);
+                    .to
+                    .all[Controller.to.selectedFolder.value]
+                    .childrens[Controller.to.selectedElementIndex.value]);
                 Controller.to.setData();
               },
               child: Row(
@@ -231,7 +230,7 @@ class StorageFilePage extends StatelessWidget {
                                 index: Controller
                                         .to
                                         .all[Controller.to.selectedFolder.value]
-                                        .directoryChildrens
+                                        .childrens
                                         .length -
                                     1),
                             data: data.value.text))
@@ -243,7 +242,7 @@ class StorageFilePage extends StatelessWidget {
                                 index: Controller
                                         .to
                                         .all[Controller.to.selectedFolder.value]
-                                        .directoryChildrens
+                                        .childrens
                                         .length -
                                     1),
                             pathToImage: pathToImage.value,

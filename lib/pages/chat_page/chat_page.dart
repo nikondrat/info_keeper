@@ -42,21 +42,18 @@ class ChatPage extends StatelessWidget {
     final RxList pinnedMessages = Controller
         .to
         .all[Controller.to.selectedFolder.value]
-        .directoryChildrens[Controller.to.selectedElementIndex.value]
+        .childrens[Controller.to.selectedElementIndex.value]
         .pinnedMessages;
     final pathToImage = ''.obs;
 
     if (Controller
         .to
         .all[Controller.to.selectedFolder.value]
-        .directoryChildrens[Controller.to.selectedElementIndex.value]
+        .childrens[Controller.to.selectedElementIndex.value]
         .pathToImage
         .isNotEmpty) {
-      pathToImage.value = Controller
-          .to
-          .all[Controller.to.selectedFolder.value]
-          .directoryChildrens[Controller.to.selectedElementIndex.value]
-          .pathToImage;
+      pathToImage.value = Controller.to.all[Controller.to.selectedFolder.value]
+          .childrens[Controller.to.selectedElementIndex.value].pathToImage;
     }
 
     TextEditingController titleController = TextEditingController();
@@ -106,7 +103,7 @@ class ChatPage extends StatelessWidget {
                                 List messages = Controller
                                     .to
                                     .all[Controller.to.selectedFolder.value]
-                                    .directoryChildrens[Controller
+                                    .childrens[Controller
                                         .to.selectedElementIndex.value]
                                     .messages;
 
@@ -281,8 +278,7 @@ class ChatPage extends StatelessWidget {
                     messageColorValue: Controller
                         .to
                         .all[Controller.to.selectedFolder.value]
-                        .directoryChildrens[
-                            Controller.to.selectedElementIndex.value]
+                        .childrens[Controller.to.selectedElementIndex.value]
                         .messages![selectedMessage.value]
                         .selectedColorIndex,
                     isShowColorSelector: isShowColorSelector)

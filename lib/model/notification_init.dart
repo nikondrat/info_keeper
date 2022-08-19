@@ -56,8 +56,8 @@ notificationInit() async {
       final Map<String, dynamic> element = jsonDecode(payload);
       final LocationElement elementData = LocationElement.fromJson(element);
 
-      var item = Controller.to.all[elementData.inDirectory]
-          .directoryChildrens[elementData.index];
+      var item = Controller
+          .to.all[elementData.inDirectory].childrens[elementData.index];
 
       switch (item.type) {
         case AllType.chat:

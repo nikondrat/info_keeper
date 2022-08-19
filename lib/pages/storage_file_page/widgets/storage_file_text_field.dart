@@ -57,7 +57,7 @@ class StorageFilePageTextField extends StatelessWidget {
               location: LocationElement(
                   inDirectory: Controller.to.selectedFolder.value,
                   index: Controller.to.all[Controller.to.selectedFolder.value]
-                          .directoryChildrens.length -
+                          .childrens.length -
                       1),
               name: titleController.text,
               data: dataController.text));

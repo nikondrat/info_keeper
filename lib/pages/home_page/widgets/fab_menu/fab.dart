@@ -1,18 +1,17 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:info_keeper/model/controller.dart';
+import 'package:get/get.dart';
+import 'package:info_keeper/pages/home_page/home_controller.dart';
 
 @immutable
 class ExpandableFab extends StatefulWidget {
   const ExpandableFab(
       {super.key,
-      this.initialOpen,
       required this.distance,
       required this.children,
       required this.controller});
 
-  final bool? initialOpen;
   final double distance;
   final List<Widget> children;
   final AnimationController controller;
@@ -24,11 +23,11 @@ class ExpandableFab extends StatefulWidget {
 class _ExpandableFabState extends State<ExpandableFab>
     with SingleTickerProviderStateMixin {
   late final Animation<double> _expandAnimation;
+  late final HomeController home = Get.put(HomeController());
 
   @override
   void initState() {
     super.initState();
-    Controller.to.isShowDial.value = widget.initialOpen ?? false;
     _expandAnimation = CurvedAnimation(
       curve: Curves.fastOutSlowIn,
       reverseCurve: Curves.easeOutQuad,
@@ -37,14 +36,14 @@ class _ExpandableFabState extends State<ExpandableFab>
   }
 
   void _toggle() {
-    setState(() {
-      Controller.to.isShowDial.value = !Controller.to.isShowDial.value;
-      if (Controller.to.isShowDial.value) {
-        widget.controller.forward();
-      } else {
-        widget.controller.reverse();
-      }
-    });
+    home.isShowDialMenu.value = !home.isShowDialMenu.value;
+    // Controller.to.isShowDial.value = !Controller.to.isShowDial.value;
+    if (home.isShowDialMenu.value) {
+      // if (Controller.to.isShowDial.value) {
+      widget.controller.forward();
+    } else {
+      widget.controller.reverse();
+    }
   }
 
   @override
@@ -88,13 +87,15 @@ class _ExpandableFabState extends State<ExpandableFab>
       transformAlignment: Alignment.center,
       duration: const Duration(milliseconds: 250),
       curve: const Interval(0.0, 0.5, curve: Curves.easeOut),
-      child: FloatingActionButton(
-        heroTag: Controller.to.isShowDial.value ? 'open' : 'close',
-        onPressed: () {
-          _toggle();
-        },
-        child: Icon(Controller.to.isShowDial.value ? Icons.close : Icons.add),
-      ),
+      child: Obx(() => FloatingActionButton(
+          heroTag: home.isShowDialMenu.value ? 'open' : 'close',
+          // heroTag: Controller.to.isShowDial.value ? 'open' : 'close',
+          onPressed: () {
+            _toggle();
+          },
+          child: Icon(home.isShowDialMenu.value ? Icons.close : Icons.add)
+          // Icon(Controller.to.isShowDial.value ? Icons.close : Icons.add),
+          )),
     );
   }
 }

@@ -38,12 +38,12 @@ class SearchPage extends StatelessWidget {
             onChanged: (text) {
               searchResult.clear();
               for (var allList in Controller.to.all) {
-                for (var element in allList.directoryChildrens) {
+                for (var element in allList.childrens) {
                   if (searchQueryController.text.isNotEmpty) {
                     if (element.name.toLowerCase().contains(text) &&
                         !element.isLocked) {
                       searchResult.add(SearchElement(
-                          index: allList.directoryChildrens.indexOf(element),
+                          index: allList.childrens.indexOf(element),
                           directoryIndex: Controller.to.all.indexOf(allList),
                           element: element));
                     }

@@ -6,18 +6,22 @@ class AudioNote {
   LocationElement? location;
   String? name;
   String? path;
-  bool pinned;
+  bool isPinned;
   bool animate;
   bool dublicated;
   bool link;
   bool isLocked;
+
+  void pin() {
+    isPinned = !isPinned;
+  }
 
   AudioNote(
       {this.type = AllType.audioNote,
       this.location,
       this.name,
       this.path,
-      this.pinned = false,
+      this.isPinned = false,
       this.dublicated = false,
       this.animate = false,
       this.isLocked = false,
@@ -28,7 +32,7 @@ class AudioNote {
         location = LocationElement.fromJson(json['location']),
         name = json['name'],
         path = json['path'],
-        pinned = json['pinned'],
+        isPinned = json['pinned'],
         dublicated = json['dublicated'],
         isLocked = json['isLocked'],
         animate = json['animate'],
@@ -42,7 +46,7 @@ class AudioNote {
         'isLocked': isLocked,
         'animate': animate,
         'dublicated': dublicated,
-        'pinned': pinned,
+        'pinned': isPinned,
         'link': link
       };
 }

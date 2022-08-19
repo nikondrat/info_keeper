@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/pages/chat_page/chat_page.dart';
+import 'package:info_keeper/pages/home_page/home_controller.dart';
 import 'package:info_keeper/pages/trash_page/trash_element.dart';
 import 'package:substring_highlight/substring_highlight.dart';
 
@@ -16,13 +17,14 @@ class HomeWidgetChat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isShowRestoreMenu = false.obs;
+    late final HomeController home = Get.find();
 
     return GestureDetector(
       onTap: isTrash != null
           ? null
           : () {
-              Controller.to.isShowDial.value = false;
-              Controller.to.isShowMenu.value = false;
+              home.isShowDialMenu.value = false;
+              home.isShowBottomMenu.value = false;
               Controller.to.selectedElementIndex.value = index;
               Get.to(() => ChatPage(
                     chatIndex: index,
@@ -31,7 +33,7 @@ class HomeWidgetChat extends StatelessWidget {
       onLongPress: isTrash != null
           ? () => isShowRestoreMenu.value = true
           : () {
-              Controller.to.isShowMenu.value = true;
+              home.isShowBottomMenu.value = true;
               Controller.to.selectedElementIndex.value = index;
             },
       child: TrashElement(
@@ -47,7 +49,7 @@ class HomeWidgetChat extends StatelessWidget {
                             ? const Color(0xFFB9DFBB)
                             : Colors.grey.shade600
                         : Controller.to.all[Controller.to.selectedFolder.value]
-                                .directoryChildrens[index].animate
+                                .childrens[index].animate
                             ? const Color(0xFFB9DFBB)
                             : Colors.grey.shade600,
                     width: isTrash != null
@@ -55,20 +57,20 @@ class HomeWidgetChat extends StatelessWidget {
                             ? 1.4
                             : 1
                         : Controller.to.all[Controller.to.selectedFolder.value]
-                                .directoryChildrens[index].animate
+                                .childrens[index].animate
                             ? 1.4
                             : 1)),
             child: Row(
               children: [
                 isTrash != null
-                    ? Controller.to.trashElements[index].pinned
+                    ? Controller.to.trashElements[index].isPinned
                         ? const Padding(
                             padding: EdgeInsets.only(right: 8),
                             child: Icon(Icons.push_pin_outlined),
                           )
                         : Container()
                     : Controller.to.all[Controller.to.selectedFolder.value]
-                            .directoryChildrens[index].pinned
+                            .childrens[index].isPinned
                         ? const Padding(
                             padding: EdgeInsets.only(right: 8),
                             child: Icon(Icons.push_pin_outlined),
@@ -82,7 +84,7 @@ class HomeWidgetChat extends StatelessWidget {
                           )
                         : Container()
                     : Controller.to.all[Controller.to.selectedFolder.value]
-                            .directoryChildrens[index].link
+                            .childrens[index].link
                         ? const Padding(
                             padding: EdgeInsets.only(right: 8),
                             child: Icon(Icons.subdirectory_arrow_left),
@@ -96,7 +98,7 @@ class HomeWidgetChat extends StatelessWidget {
                           )
                         : Container()
                     : Controller.to.all[Controller.to.selectedFolder.value]
-                            .directoryChildrens[index].dublicated
+                            .childrens[index].dublicated
                         ? const Padding(
                             padding: EdgeInsets.only(right: 8),
                             child: Icon(Icons.copy_all),
@@ -110,7 +112,7 @@ class HomeWidgetChat extends StatelessWidget {
                     text: isTrash != null
                         ? Controller.to.trashElements[index].name
                         : Controller.to.all[Controller.to.selectedFolder.value]
-                            .directoryChildrens[index].name!,
+                            .childrens[index].name!,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),

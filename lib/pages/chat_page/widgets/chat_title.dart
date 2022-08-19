@@ -12,8 +12,8 @@ class ChatPageTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextEditingController titleController = TextEditingController(
-        text: Controller.to.all[Controller.to.selectedFolder.value]
-            .directoryChildrens[index].name);
+        text: Controller
+            .to.all[Controller.to.selectedFolder.value].childrens[index].name);
 
     return Obx(() => renameChat.value
         ? TextField(
@@ -57,23 +57,20 @@ class ChatPageTitle extends StatelessWidget {
                 //     favorites: Controller
                 //         .to
                 //         .all[Controller.to.selectedFolder.value]
-                //         .directoryChildrens[
+                //         .childrens[
                 //             Controller.to.selectedElementIndex.value]
                 //         .favorites,
                 //     messages: Controller
                 //         .to
                 //         .all[Controller.to.selectedFolder.value]
-                //         .directoryChildrens[
+                //         .childrens[
                 //             Controller.to.selectedElementIndex.value]
                 //         .messages));
                 renameChat.value = false;
               }
             },
           )
-        : Text(Controller
-            .to
-            .all[Controller.to.selectedFolder.value]
-            .directoryChildrens[Controller.to.selectedElementIndex.value]
-            .name!));
+        : Text(Controller.to.all[Controller.to.selectedFolder.value]
+            .childrens[Controller.to.selectedElementIndex.value].name!));
   }
 }
