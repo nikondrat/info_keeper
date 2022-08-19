@@ -23,7 +23,7 @@ class HomeBodyItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return homeItem.isAnimated
-        ? HomeBodyItemAnimation(bodyItem: HomeBodyItemChild(homeItem: homeItem))
-        : HomeBodyItemChild(homeItem: homeItem);
+        ? HomeBodyItemAnimation(bodyItem: HomeBodyItemChild(homeItem: homeItem, term: term))
+        : HomeBodyItemChild(homeItem: homeItem, term: term);
   }
 }

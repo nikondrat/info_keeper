@@ -8,23 +8,24 @@ import 'package:info_keeper/pages/home_page/widgets/body/body_item/item_type/tod
 
 class HomeBodyItemChild extends StatelessWidget {
   final HomeItem homeItem;
-  const HomeBodyItemChild({Key? key, required this.homeItem}) : super(key: key);
+  final String term;
+  const HomeBodyItemChild(
+      {Key? key, required this.homeItem, required this.term})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     switch (homeItem.child.type as HomeType) {
       case HomeType.chat:
-        return ChatItem(homeItem: homeItem);
+        return ChatItem(homeItem: homeItem, term: term);
       case HomeType.storageFile:
-        return StorageFileItem(homeItem: homeItem);
+        return StorageFileItem(homeItem: homeItem, term: term);
       case HomeType.todo:
-        return TodoItem(homeItem: homeItem);
+        return TodoItem(homeItem: homeItem, term: term);
       case HomeType.audioNote:
-        return AudioNoteItem(homeItem: homeItem);
+        return AudioNoteItem(homeItem: homeItem, term: term);
       default:
-        return Container(
-          child: Text('hello'),
-        );
+        return const SizedBox();
     }
   }
 }
