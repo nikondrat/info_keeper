@@ -64,8 +64,9 @@ class FolderItem extends StatelessWidget {
                                 ? IconButton(
                                     onPressed: () {
                                       Controller.to.all.removeAt(index);
-                                      //
                                       Controller.to.selectedFolder.value = 0;
+                                      Navigator.pop(context);
+                                      delete.value = !delete.value;
                                     },
                                     icon: const Icon(Icons.delete_outline),
                                     splashRadius: 20,

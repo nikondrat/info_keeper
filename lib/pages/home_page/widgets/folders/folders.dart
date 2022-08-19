@@ -30,7 +30,7 @@ class HomeFolders extends StatelessWidget {
         )
       ]),
       Expanded(
-          child: GridView.builder(
+          child: Obx(() => GridView.builder(
               physics: const BouncingScrollPhysics(),
               padding: const EdgeInsets.all(8),
               itemCount: Controller.to.all.length,
@@ -40,7 +40,7 @@ class HomeFolders extends StatelessWidget {
                   mainAxisSpacing: 8,
                   crossAxisSpacing: 8),
               itemBuilder: (context, index) => FolderItem(
-                  index: index, delete: isDelete, isSelect: isSelect)))
+                  index: index, delete: isDelete, isSelect: isSelect))))
     ]);
   }
 }

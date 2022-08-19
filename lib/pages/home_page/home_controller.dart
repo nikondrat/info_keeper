@@ -6,7 +6,7 @@ class HomeController extends GetxController {
   final RxBool isShowBottomMenu = false.obs;
 
   void pinItem(dynamic item) {
-    List childrens =
+    final List childrens =
         Controller.to.all[Controller.to.selectedFolder.value].childrens;
     final itemIndex = childrens.indexOf(item);
     childrens[itemIndex].pin();
