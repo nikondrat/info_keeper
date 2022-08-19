@@ -5,7 +5,7 @@ import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/all.dart';
-import 'package:info_keeper/model/types/location_element.dart';
+import 'package:info_keeper/model/types/item_location.dart';
 import 'package:info_keeper/pages/chat_page/chat_page.dart';
 import 'package:info_keeper/pages/home_page/home_page.dart';
 import 'package:info_keeper/pages/storage_file_page/storage_file_page.dart';
@@ -54,24 +54,24 @@ notificationInit() async {
       onSelectNotification: (String? payload) async {
     if (payload != null) {
       final Map<String, dynamic> element = jsonDecode(payload);
-      final LocationElement elementData = LocationElement.fromJson(element);
+      final ItemLocation elementData = ItemLocation.fromJson(element);
 
       var item = Controller
           .to.all[elementData.inDirectory].childrens[elementData.index];
 
-      switch (item.type) {
-        case AllType.chat:
-          return Get.to(() => ChatPage(
-              chatIndex: elementData.index,
-              messageIndex: elementData.selectedMessageIndex));
-        case AllType.storageFile:
-          return Get.to(() => StorageFilePage(file: item, change: true));
-        case AllType.todo:
-          return Get.to(() => TodoPage(todo: item, change: true));
-        case AllType.audioNote:
-          Controller.to.selectedFolder.value = elementData.inDirectory;
-          return Get.to(() => const HomePage());
-      }
+      // switch (item.type) {
+      //   case AllType.chat:
+      //     return Get.to(() => ChatPage(
+      //         chatIndex: elementData.index,
+      //         messageIndex: elementData.selectedMessageIndex));
+      //   case AllType.storageFile:
+      //     return Get.to(() => StorageFilePage(homeItem: item, change: true));
+      //   case AllType.todo:
+      //     return Get.to(() => TodoPage(todo: item, change: true));
+      //   case AllType.audioNote:
+      //     Controller.to.selectedFolder.value = elementData.inDirectory;
+      //     return Get.to(() => const HomePage());
+      // }
     }
   });
 }

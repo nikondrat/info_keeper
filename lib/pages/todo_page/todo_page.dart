@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/location_element.dart';
-import 'package:info_keeper/model/types/task.dart';
-import 'package:info_keeper/model/types/todo.dart';
+import 'package:info_keeper/model/types/home_item.dart';
+import 'package:info_keeper/model/types/item_location.dart';
+import 'package:info_keeper/model/types/home/todo/task.dart';
+import 'package:info_keeper/model/types/home/todo/todo.dart';
 import 'package:info_keeper/pages/todo_page/widgets/todo_body.dart';
 import 'package:info_keeper/pages/todo_page/widgets/todo_text_field.dart';
 
 class TodoPage extends StatelessWidget {
-  final Todo? todo;
+  final HomeItem? homeItem;
   final bool change;
-  const TodoPage({Key? key, this.todo, this.change = false}) : super(key: key);
+  const TodoPage({Key? key, this.homeItem, this.change = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final TextEditingController titleController =
-        TextEditingController(text: todo != null ? todo!.name : '');
+        TextEditingController(text: homeItem != null ? homeItem!.name : '');
     final tasks = [Task(title: '')].obs;
 
-    if (todo != null) {
-      tasks.value = todo!.tasks!;
+    if (homeItem != null) {
+      tasks.value = homeItem!.child.tasks!;
       if (!change) {
         tasks.insert(0, Task(title: ''));
       }
@@ -34,30 +36,26 @@ class TodoPage extends StatelessWidget {
             onPressed: () {
               if (titleController.text.isNotEmpty) {
                 change
-                    ? Controller.to.change(Todo(
-                        name: titleController.text,
-                        tasks: tasks,
-                        location: LocationElement(
+                    ? Controller.to.change(HomeItem(
+                        child: Todo(tasks: tasks),
+                        location: ItemLocation(
                             inDirectory: Controller.to.selectedFolder.value,
                             index: Controller
                                     .to
                                     .all[Controller.to.selectedFolder.value]
                                     .childrens
                                     .length -
-                                1),
-                      ))
-                    : Controller.to.add(Todo(
-                        name: titleController.text,
-                        tasks: tasks,
-                        location: LocationElement(
+                                1)))
+                    : Controller.to.add(HomeItem(
+                        child: Todo(tasks: tasks),
+                        location: ItemLocation(
                             inDirectory: Controller.to.selectedFolder.value,
                             index: Controller
                                     .to
                                     .all[Controller.to.selectedFolder.value]
                                     .childrens
                                     .length -
-                                1),
-                      ));
+                                1)));
               }
               Get.back();
             }),
@@ -69,9 +67,10 @@ class TodoPage extends StatelessWidget {
                       splashRadius: 20,
                       onPressed: () {
                         if (titleController.text.isNotEmpty) {
-                          Controller.to.change(Todo(
+                          Controller.to.change(HomeItem(
                               name: titleController.text,
-                              location: LocationElement(
+                              child: Todo(tasks: tasks),
+                              location: ItemLocation(
                                   inDirectory:
                                       Controller.to.selectedFolder.value,
                                   index: Controller
@@ -80,8 +79,7 @@ class TodoPage extends StatelessWidget {
                                               .to.selectedFolder.value]
                                           .childrens
                                           .length -
-                                      1),
-                              tasks: tasks));
+                                      1)));
                           Get.back();
                         }
                       },
@@ -93,8 +91,10 @@ class TodoPage extends StatelessWidget {
                       splashRadius: 20,
                       onPressed: () {
                         if (titleController.text.isNotEmpty) {
-                          Controller.to.add(Todo(
-                              location: LocationElement(
+                          Controller.to.add(HomeItem(
+                              name: titleController.text,
+                              child: Todo(tasks: tasks),
+                              location: ItemLocation(
                                   inDirectory:
                                       Controller.to.selectedFolder.value,
                                   index: Controller
@@ -103,9 +103,8 @@ class TodoPage extends StatelessWidget {
                                               .to.selectedFolder.value]
                                           .childrens
                                           .length -
-                                      1),
-                              name: titleController.text,
-                              tasks: tasks));
+                                      1)));
+
                           Get.back();
                         }
                       },

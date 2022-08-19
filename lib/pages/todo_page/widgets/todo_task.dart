@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/task.dart';
+import 'package:info_keeper/model/types/home/todo/task.dart';
 
 class TodoPageTaskWidget extends StatelessWidget {
   final List<Task> tasks;

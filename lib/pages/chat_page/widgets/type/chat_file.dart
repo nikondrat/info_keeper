@@ -63,6 +63,7 @@ class ChatPageFile extends StatelessWidget {
                                   .all[Controller.to.selectedFolder.value]
                                   .childrens[
                                       Controller.to.selectedElementIndex.value]
+                                  .child
                                   .messages
                                   .removeAt(index);
 

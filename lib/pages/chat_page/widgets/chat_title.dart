@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/chat/chat.dart';
+import 'package:info_keeper/model/types/home/chat/chat.dart';
+import 'package:info_keeper/model/types/home_item.dart';
+import 'package:info_keeper/model/types/item_location.dart';
 
 class ChatPageTitle extends StatelessWidget {
   final int index;
@@ -49,7 +51,17 @@ class ChatPageTitle extends StatelessWidget {
                 )),
             onSubmitted: (value) {
               if (value.isNotEmpty) {
-                Controller.to.change(Chat(name: titleController.text));
+                Controller.to.change(HomeItem(
+                    name: titleController.text,
+                    child: Chat(),
+                    location: ItemLocation(
+                        inDirectory: Controller.to.selectedFolder.value,
+                        index: Controller
+                                .to
+                                .all[Controller.to.selectedFolder.value]
+                                .childrens
+                                .length -
+                            1)));
                 // Controller.to.change(Chat(
                 //     type: AllType.chat,
                 //     name: titleController.text,
@@ -71,6 +83,6 @@ class ChatPageTitle extends StatelessWidget {
             },
           )
         : Text(Controller.to.all[Controller.to.selectedFolder.value]
-            .childrens[Controller.to.selectedElementIndex.value].name!));
+            .childrens[Controller.to.selectedElementIndex.value].name));
   }
 }

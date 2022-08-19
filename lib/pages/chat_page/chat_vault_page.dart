@@ -22,6 +22,7 @@ class ChatPageVault extends StatelessWidget {
                 .to
                 .all[Controller.to.selectedFolder.value]
                 .childrens[Controller.to.selectedElementIndex.value]
+                .child
                 .messages!
                 .length;
         i++) {
@@ -29,6 +30,7 @@ class ChatPageVault extends StatelessWidget {
                   .to
                   .all[Controller.to.selectedFolder.value]
                   .childrens[Controller.to.selectedElementIndex.value]
+                  .child
                   .messages![i]
                   .type ==
               AllType.chatMessage &&
@@ -36,10 +38,15 @@ class ChatPageVault extends StatelessWidget {
               .to
               .all[Controller.to.selectedFolder.value]
               .childrens[Controller.to.selectedElementIndex.value]
+              .child
               .messages![i]
               .isLocked) {
-        lockedMessages.add(Controller.to.all[Controller.to.selectedFolder.value]
-            .childrens[Controller.to.selectedElementIndex.value].messages![i]);
+        lockedMessages.add(Controller
+            .to
+            .all[Controller.to.selectedFolder.value]
+            .childrens[Controller.to.selectedElementIndex.value]
+            .child
+            .messages![i]);
       }
     }
 
@@ -63,6 +70,7 @@ class ChatPageVault extends StatelessWidget {
                         .to
                         .all[Controller.to.selectedFolder.value]
                         .childrens[Controller.to.selectedElementIndex.value]
+                        .child
                         .messages![index]
                         .dateTime,
                     message: lockedMessages[index]))

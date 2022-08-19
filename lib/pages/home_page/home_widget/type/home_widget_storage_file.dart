@@ -3,20 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/storage_file.dart';
+import 'package:info_keeper/model/types/home_item.dart';
+import 'package:info_keeper/model/types/home/storage_file/storage_file.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
 import 'package:info_keeper/pages/storage_file_page/storage_file_page.dart';
 import 'package:info_keeper/pages/trash_page/trash_element.dart';
 import 'package:substring_highlight/substring_highlight.dart';
 
 class HomeWidgetStorageFile extends StatelessWidget {
-  final StorageFile storageFile;
+  final HomeItem homeItem;
   final int index;
   final String term;
   final bool? isTrash;
   const HomeWidgetStorageFile(
       {Key? key,
-      required this.storageFile,
+      required this.homeItem,
       required this.index,
       this.isTrash,
       this.term = ''})
@@ -39,8 +40,8 @@ class HomeWidgetStorageFile extends StatelessWidget {
                     home.isShowBottomMenu.value = false;
                     home.isShowDialMenu.value = false;
                     Controller.to.selectedElementIndex.value = index;
-                    Get.to(
-                        () => StorageFilePage(file: storageFile, change: true));
+                    Get.to(() =>
+                        StorageFilePage(homeItem: homeItem, change: true));
                   },
             onLongPress: isTrash != null
                 ? () => isShowRestoreMenu.value = true
@@ -55,15 +56,15 @@ class HomeWidgetStorageFile extends StatelessWidget {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(6),
                       border: Border.all(
-                          color: storageFile.animate
+                          color: homeItem.child.isAnimated
                               ? const Color(0xFFB9DFBB)
                               : Colors.grey.shade600,
-                          width: storageFile.animate ? 1.4 : 1)),
+                          width: homeItem.isAnimated ? 1.4 : 1)),
                   child: ExpansionWidget(
                     content: Padding(
                       padding:
                           const EdgeInsets.only(left: 8, right: 8, bottom: 8),
-                      child: Text(storageFile.data!, maxLines: 6),
+                      child: Text(homeItem.child.data!, maxLines: 6),
                     ),
                     titleBuilder: (animationValue, easeInValue, isExpanded,
                             toggleFunction) =>
@@ -73,31 +74,31 @@ class HomeWidgetStorageFile extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          storageFile.isPinned
+                          homeItem.isPinned
                               ? const Padding(
                                   padding: EdgeInsets.only(right: 8),
                                   child: Icon(Icons.push_pin_outlined),
                                 )
                               : SizedBox(),
-                          storageFile.link
+                          homeItem.isLink
                               ? const Padding(
                                   padding: EdgeInsets.only(right: 8),
                                   child: Icon(Icons.subdirectory_arrow_left),
                                 )
-                              : Container(),
-                          storageFile.dublicated
+                              : SizedBox(),
+                          homeItem.isDublicated
                               ? const Padding(
                                   padding: EdgeInsets.only(right: 8),
                                   child: Icon(Icons.copy_all),
                                 )
-                              : Container(),
+                              : SizedBox(),
                           Expanded(
                             child: SubstringHighlight(
                               term: term,
                               textStyle: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black),
-                              text: storageFile.name!,
+                              text: homeItem.name,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                             ),

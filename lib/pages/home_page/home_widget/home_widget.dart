@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/pages/home_page/home_widget/home_widget_animation.dart';
 import 'package:info_keeper/pages/home_page/home_widget/home_widget_child.dart';
 
 class HomeWidget extends StatelessWidget {
-  final dynamic value;
+  final HomeItem homeItem;
   final String term;
   final int index;
   final bool? isVault;
   final bool? isTrash;
   const HomeWidget(
       {Key? key,
-      required this.value,
+      required this.homeItem,
       required this.index,
       this.term = '',
       this.isTrash,
@@ -19,18 +20,18 @@ class HomeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return value.animate
+    return homeItem.isAnimated
         ? HomeWidgetAnimation(
             child: HomeWidgetChild(
             index: index,
-            value: value,
+            homeItem: homeItem,
             term: term,
             isVault: isVault,
             isTrash: isTrash,
           ))
         : HomeWidgetChild(
             index: index,
-            value: value,
+            homeItem: homeItem,
             term: term,
             isVault: isVault,
             isTrash: isTrash,

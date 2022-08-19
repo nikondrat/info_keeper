@@ -3,7 +3,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/chat/chat.dart';
+import 'package:info_keeper/model/types/home/chat/chat.dart';
 import 'package:info_keeper/pages/chat_page/chat_favorites_page.dart';
 import 'package:info_keeper/pages/chat_page/chat_media.dart';
 import 'package:info_keeper/pages/chat_page/chat_search.dart';
@@ -43,6 +43,7 @@ class ChatPage extends StatelessWidget {
         .to
         .all[Controller.to.selectedFolder.value]
         .childrens[Controller.to.selectedElementIndex.value]
+        .child
         .pinnedMessages;
     final pathToImage = ''.obs;
 
@@ -50,10 +51,15 @@ class ChatPage extends StatelessWidget {
         .to
         .all[Controller.to.selectedFolder.value]
         .childrens[Controller.to.selectedElementIndex.value]
+        .child
         .pathToImage
         .isNotEmpty) {
-      pathToImage.value = Controller.to.all[Controller.to.selectedFolder.value]
-          .childrens[Controller.to.selectedElementIndex.value].pathToImage;
+      pathToImage.value = Controller
+          .to
+          .all[Controller.to.selectedFolder.value]
+          .childrens[Controller.to.selectedElementIndex.value]
+          .child
+          .pathToImage;
     }
 
     TextEditingController titleController = TextEditingController();
@@ -105,6 +111,7 @@ class ChatPage extends StatelessWidget {
                                     .all[Controller.to.selectedFolder.value]
                                     .childrens[Controller
                                         .to.selectedElementIndex.value]
+                                    .child
                                     .messages;
 
                                 messages.remove(selectedMessages[i]);
@@ -279,6 +286,7 @@ class ChatPage extends StatelessWidget {
                         .to
                         .all[Controller.to.selectedFolder.value]
                         .childrens[Controller.to.selectedElementIndex.value]
+                        .child
                         .messages![selectedMessage.value]
                         .selectedColorIndex,
                     isShowColorSelector: isShowColorSelector)

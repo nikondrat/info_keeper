@@ -1,19 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/location_element.dart';
+import 'package:info_keeper/model/types/home_item.dart';
+import 'package:info_keeper/model/types/item_location.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
+import 'package:info_keeper/pages/home_page/widgets/btm_bar/btm_menu_controller.dart';
 import 'package:info_keeper/widgets/notifications.dart';
 
-class HomeBottomMenu extends StatelessWidget {
+class HomeBottomMenu extends StatefulWidget {
   const HomeBottomMenu({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    late final HomeController home = Get.find();
-    late final item = Controller.to.all[Controller.to.selectedFolder.value]
-        .childrens[Controller.to.selectedElementIndex.value];
+  State<HomeBottomMenu> createState() => _HomeBottomMenuState();
+}
 
+class _HomeBottomMenuState extends State<HomeBottomMenu> {
+  late final HomeController home;
+  late final BottomMenuController menu;
+  late HomeItem item = Controller.to.all[Controller.to.selectedFolder.value]
+      .childrens[Controller.to.selectedElementIndex.value];
+
+  @override
+  void initState() {
+    home = Get.find();
+    menu = Get.put(BottomMenuController());
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    home.dispose();
+    menu.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -26,14 +48,14 @@ class HomeBottomMenu extends StatelessWidget {
             IconButton(
                 splashRadius: 20,
                 onPressed: () {
-                  home.pinItem(item);
+                  menu.pinItem(item);
                   home.isShowBottomMenu.value = false;
                 },
                 icon: const Icon(Icons.push_pin_outlined)),
             IconButton(
               splashRadius: 20,
               onPressed: () {
-                // animate();
+                menu.animateItem(item);
                 home.isShowBottomMenu.value = false;
               },
               icon: const Icon(
@@ -43,7 +65,7 @@ class HomeBottomMenu extends StatelessWidget {
             Notifications(
               name: Controller.to.all[Controller.to.selectedFolder.value]
                   .childrens[Controller.to.selectedElementIndex.value].name,
-              locElement: LocationElement(
+              locElement: ItemLocation(
                   inDirectory: Controller.to.selectedFolder.value,
                   index: Controller.to.selectedElementIndex.value),
             ),

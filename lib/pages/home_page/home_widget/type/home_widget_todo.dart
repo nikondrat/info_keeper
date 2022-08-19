@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/todo.dart';
+import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
 import 'package:info_keeper/pages/todo_page/todo_page.dart';
 import 'package:info_keeper/pages/todo_page/widgets/todo_task.dart';
@@ -9,14 +9,14 @@ import 'package:info_keeper/pages/trash_page/trash_element.dart';
 import 'package:substring_highlight/substring_highlight.dart';
 
 class HomeWidgetTodo extends StatelessWidget {
-  final Todo todo;
+  final HomeItem homeItem;
   final String term;
   final int index;
   final bool? isTrash;
   const HomeWidgetTodo(
       {Key? key,
       required this.index,
-      required this.todo,
+      required this.homeItem,
       this.term = '',
       this.isTrash})
       : super(key: key);
@@ -31,7 +31,7 @@ class HomeWidgetTodo extends StatelessWidget {
           ? null
           : () {
               Controller.to.selectedElementIndex.value = index;
-              Get.to(() => TodoPage(todo: todo, change: true));
+              Get.to(() => TodoPage(homeItem: homeItem, change: true));
             },
       onLongPress: isTrash != null
           ? () => isShowRestoreMenu.value = true
@@ -47,22 +47,22 @@ class HomeWidgetTodo extends StatelessWidget {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(6),
                 border: Border.all(
-                    color: todo.animate
+                    color: homeItem.isAnimated
                         ? const Color(0xFFB9DFBB)
                         : Colors.grey.shade600,
-                    width: todo.animate ? 1.4 : 1)),
+                    width: homeItem.isAnimated ? 1.4 : 1)),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Row(
                     children: [
-                      todo.isPinned
+                      homeItem.isPinned
                           ? const Padding(
                               padding: EdgeInsets.only(right: 8),
                               child: Icon(Icons.push_pin_outlined),
                             )
                           : Container(),
-                      todo.dublicated
+                      homeItem.isDublicated
                           ? const Padding(
                               padding: EdgeInsets.only(right: 8),
                               child: Icon(Icons.copy_all),
@@ -71,7 +71,7 @@ class HomeWidgetTodo extends StatelessWidget {
                       Expanded(
                         child: SubstringHighlight(
                           term: term,
-                          text: todo.name!,
+                          text: homeItem.name,
                           textStyle: const TextStyle(
                               color: Colors.black,
                               decoration: TextDecoration.underline,
@@ -84,12 +84,13 @@ class HomeWidgetTodo extends StatelessWidget {
                       shrinkWrap: true,
                       reverse: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount:
-                          todo.tasks!.length < 11 ? todo.tasks!.length : 11,
+                      itemCount: homeItem.child.tasks!.length < 11
+                          ? homeItem.child.tasks!.length
+                          : 11,
                       itemBuilder: (context, index) {
-                        return todo.tasks![index].title.isNotEmpty
+                        return homeItem.child.tasks![index].title.isNotEmpty
                             ? TodoPageTaskWidget(
-                                tasks: todo.tasks!,
+                                tasks: homeItem.child.tasks!,
                                 index: index,
                                 change: false,
                               )

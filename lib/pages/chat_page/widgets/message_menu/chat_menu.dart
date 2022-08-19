@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/chat/chat.dart';
-import 'package:info_keeper/model/types/location_element.dart';
+import 'package:info_keeper/model/types/home/chat/chat.dart';
+import 'package:info_keeper/model/types/item_location.dart';
 import 'package:info_keeper/pages/chat_page/chat_history_page.dart';
 import 'package:info_keeper/pages/chat_page/widgets/message_menu/chat_menu_item.dart';
 import 'package:info_keeper/pages/chat_page/widgets/message_menu/chat_message_full_screen.dart';
@@ -65,6 +65,7 @@ class ChatPageMenu extends StatelessWidget {
                           .to
                           .all[Controller.to.selectedFolder.value]
                           .childrens[Controller.to.selectedElementIndex.value]
+                          .child
                           .messages[selectedMessage.value]
                           .messageText));
                   Navigator.pop(context);
@@ -88,6 +89,7 @@ class ChatPageMenu extends StatelessWidget {
                           .to
                           .all[Controller.to.selectedFolder.value]
                           .childrens[Controller.to.selectedElementIndex.value]
+                          .child
                           .messages[selectedMessage.value]
                           .messageText);
                   titleController.value = TextEditingValue(
@@ -95,6 +97,7 @@ class ChatPageMenu extends StatelessWidget {
                           .to
                           .all[Controller.to.selectedFolder.value]
                           .childrens[Controller.to.selectedElementIndex.value]
+                          .child
                           .messages[selectedMessage.value]
                           .title);
                   textFieldFocusNode.requestFocus();
@@ -116,6 +119,7 @@ class ChatPageMenu extends StatelessWidget {
                             .to
                             .all[Controller.to.selectedFolder.value]
                             .childrens[Controller.to.selectedElementIndex.value]
+                            .child
                             .messages[selectedMessage.value]
                             .history,
                       ));
@@ -147,6 +151,7 @@ class ChatPageMenu extends StatelessWidget {
                       .to
                       .all[Controller.to.selectedFolder.value]
                       .childrens[Controller.to.selectedElementIndex.value]
+                      .child
                       .messages;
                   messages[selectedMessage.value].isCollapsed =
                       !messages[selectedMessage.value].isCollapsed;
@@ -167,12 +172,14 @@ class ChatPageMenu extends StatelessWidget {
                           .to
                           .all[Controller.to.selectedFolder.value]
                           .childrens[Controller.to.selectedElementIndex.value]
+                          .child
                           .messages[selectedMessage.value]
                           .dateTime,
                       message: Controller
                           .to
                           .all[Controller.to.selectedFolder.value]
                           .childrens[Controller.to.selectedElementIndex.value]
+                          .child
                           .messages[selectedMessage.value],
                       isShowColorSelector: isShowColorSelector));
                 },
@@ -186,6 +193,7 @@ class ChatPageMenu extends StatelessWidget {
                       .to
                       .all[Controller.to.selectedFolder.value]
                       .childrens[Controller.to.selectedElementIndex.value]
+                      .child
                       .messages;
 
                   messages[selectedMessage.value].isPinned =
@@ -203,6 +211,7 @@ class ChatPageMenu extends StatelessWidget {
                         .to
                         .all[Controller.to.selectedFolder.value]
                         .childrens[Controller.to.selectedElementIndex.value]
+                        .child
                         .messages[selectedMessage.value]
                         .isPinned
                     ? 'Unpin'
@@ -215,6 +224,7 @@ class ChatPageMenu extends StatelessWidget {
                       .to
                       .all[Controller.to.selectedFolder.value]
                       .childrens[Controller.to.selectedElementIndex.value]
+                      .child
                       .messages;
 
                   messages[selectedMessage.value].isFavorite =
@@ -224,6 +234,7 @@ class ChatPageMenu extends StatelessWidget {
                       .to
                       .all[Controller.to.selectedFolder.value]
                       .childrens[Controller.to.selectedElementIndex.value]
+                      .child
                       .favorites;
 
                   messages[selectedMessage.value].isFavorite
@@ -238,6 +249,7 @@ class ChatPageMenu extends StatelessWidget {
                         .to
                         .all[Controller.to.selectedFolder.value]
                         .childrens[Controller.to.selectedElementIndex.value]
+                        .child
                         .messages[selectedMessage.value]
                         .isFavorite
                     ? 'Remove from favorites'
@@ -251,6 +263,7 @@ class ChatPageMenu extends StatelessWidget {
                         .to
                         .all[Controller.to.selectedFolder.value]
                         .childrens[Controller.to.selectedElementIndex.value]
+                        .child
                         .messages;
 
                     messages[selectedMessage.value].isLocked = true;
@@ -271,9 +284,10 @@ class ChatPageMenu extends StatelessWidget {
                   .to
                   .all[Controller.to.selectedFolder.value]
                   .childrens[Controller.to.selectedElementIndex.value]
+                  .child
                   .messages[selectedMessage.value]
                   .messageText,
-              locElement: LocationElement(
+              locElement: ItemLocation(
                   inDirectory: Controller.to.selectedFolder.value,
                   selectedMessageIndex: selectedMessage.value,
                   index: Controller.to.selectedElementIndex.value),
@@ -292,6 +306,7 @@ class ChatPageMenu extends StatelessWidget {
                       .to
                       .all[Controller.to.selectedFolder.value]
                       .childrens[Controller.to.selectedElementIndex.value]
+                      .child
                       .messages
                       .removeAt(selectedMessage.value);
 

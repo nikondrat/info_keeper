@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/location_element.dart';
-import 'package:info_keeper/model/types/storage_file.dart';
+import 'package:info_keeper/model/types/home_item.dart';
+import 'package:info_keeper/model/types/item_location.dart';
+import 'package:info_keeper/model/types/home/storage_file/storage_file.dart';
 
 class StorageFilePageTextField extends StatelessWidget {
   final TextEditingController titleController;
@@ -50,17 +51,18 @@ class StorageFilePageTextField extends StatelessWidget {
               width: 1,
             ),
           )),
-      onSubmitted: (value) {
+      onSubmitted: (String value) {
         if (value.isNotEmpty) {
-          Controller.to.add(StorageFile(
-              history: history,
-              location: LocationElement(
-                  inDirectory: Controller.to.selectedFolder.value,
-                  index: Controller.to.all[Controller.to.selectedFolder.value]
-                          .childrens.length -
-                      1),
-              name: titleController.text,
-              data: dataController.text));
+          Controller.to.all[Controller.to.selectedFolder.value].childrens
+              .add(HomeItem(
+            name: value,
+            child: StorageFile(),
+            location: ItemLocation(
+                inDirectory: Controller.to.selectedFolder.value,
+                index: Controller.to.all[Controller.to.selectedFolder.value]
+                        .childrens.length -
+                    1),
+          ));
         }
       },
     );

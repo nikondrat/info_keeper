@@ -7,14 +7,14 @@ import 'package:info_keeper/pages/storage_file_page/storage_file_page.dart';
 import 'package:info_keeper/pages/todo_page/todo_page.dart';
 import 'package:info_keeper/pages/home_page/widgets/fab_menu/fab.dart';
 
-class HomePageFloatButton extends StatefulWidget {
-  const HomePageFloatButton({Key? key}) : super(key: key);
+class HomeFloatButtons extends StatefulWidget {
+  const HomeFloatButtons({Key? key}) : super(key: key);
 
   @override
-  State<HomePageFloatButton> createState() => _HomePageFloatButtonState();
+  State<HomeFloatButtons> createState() => _HomeFloatButtonsState();
 }
 
-class _HomePageFloatButtonState extends State<HomePageFloatButton>
+class _HomeFloatButtonsState extends State<HomeFloatButtons>
     with SingleTickerProviderStateMixin {
   late final AnimationController controller;
   late final HomeController home = Get.find();
@@ -31,6 +31,7 @@ class _HomePageFloatButtonState extends State<HomePageFloatButton>
 
   @override
   void dispose() {
+    home.dispose();
     controller.dispose();
     super.dispose();
   }

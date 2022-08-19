@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/types/all.dart';
-import 'package:info_keeper/model/types/audio_note.dart';
-import 'package:info_keeper/model/types/chat/chat.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/location_element.dart';
-import 'package:info_keeper/model/types/storage_file.dart';
-import 'package:info_keeper/model/types/todo.dart';
+import 'package:info_keeper/model/types/item_location.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
 import 'package:info_keeper/pages/home_page/widgets/folders/folders.dart';
 import 'package:info_keeper/pages/vault_page/vault_page.dart';
@@ -19,43 +15,61 @@ class HomePageBottomNavigationBar extends StatelessWidget {
 
   animate() {
     switch (Controller.to.all[Controller.to.selectedFolder.value]
-        .childrens[Controller.to.selectedElementIndex.value].type) {
+        .childrens[Controller.to.selectedElementIndex.value].child.type) {
       case AllType.chat:
-        Controller.to.change(Chat(
-          animate: Controller.to.all[Controller.to.selectedFolder.value]
-                  .childrens[Controller.to.selectedElementIndex.value].animate =
-              !Controller.to.all[Controller.to.selectedFolder.value]
-                  .childrens[Controller.to.selectedElementIndex.value].animate,
-        ));
+        // Controller.to.change(Chat(
+        //   isAnimated: Controller
+        //           .to
+        //           .all[Controller.to.selectedFolder.value]
+        //           .childrens[Controller.to.selectedElementIndex.value]
+        //           .isAnimated =
+        //       !Controller
+        //           .to
+        //           .all[Controller.to.selectedFolder.value]
+        //           .childrens[Controller.to.selectedElementIndex.value]
+        //           .isAnimated,
+        // ));
         break;
       case AllType.storageFile:
-        Controller.to.change(StorageFile(
-          animate: Controller.to.all[Controller.to.selectedFolder.value]
-                  .childrens[Controller.to.selectedElementIndex.value].animate =
-              !Controller.to.all[Controller.to.selectedFolder.value]
-                  .childrens[Controller.to.selectedElementIndex.value].animate,
-        ));
+        // Controller.to.change(StorageFile(
+        //   isAnimated: Controller
+        //           .to
+        //           .all[Controller.to.selectedFolder.value]
+        //           .childrens[Controller.to.selectedElementIndex.value]
+        //           .isAnimated =
+        //       !Controller
+        //           .to
+        //           .all[Controller.to.selectedFolder.value]
+        //           .childrens[Controller.to.selectedElementIndex.value]
+        //           .isAnimated,
+        // ));
         break;
       case AllType.todo:
-        Controller.to.change(Todo(
-          animate: Controller.to.all[Controller.to.selectedFolder.value]
-                  .childrens[Controller.to.selectedElementIndex.value].animate =
-              !Controller.to.all[Controller.to.selectedFolder.value]
-                  .childrens[Controller.to.selectedElementIndex.value].animate,
-        ));
+        // Controller.to.change(Todo(
+        //   isAnimated: Controller
+        //           .to
+        //           .all[Controller.to.selectedFolder.value]
+        //           .childrens[Controller.to.selectedElementIndex.value]
+        //           .isAnimated =
+        //       !Controller
+        //           .to
+        //           .all[Controller.to.selectedFolder.value]
+        //           .childrens[Controller.to.selectedElementIndex.value]
+        //           .isAnimated,
+        // ));
         break;
       case AllType.audioNote:
-        Controller.to.change(AudioNote(
-            animate: Controller
-                    .to
-                    .all[Controller.to.selectedFolder.value]
-                    .childrens[Controller.to.selectedElementIndex.value]
-                    .animate =
-                !Controller
-                    .to
-                    .all[Controller.to.selectedFolder.value]
-                    .childrens[Controller.to.selectedElementIndex.value]
-                    .animate));
+        // Controller.to.change(AudioNote(
+        //     isAnimated: Controller
+        //             .to
+        //             .all[Controller.to.selectedFolder.value]
+        //             .childrens[Controller.to.selectedElementIndex.value]
+        //             .isAnimated =
+        //         !Controller
+        //             .to
+        //             .all[Controller.to.selectedFolder.value]
+        //             .childrens[Controller.to.selectedElementIndex.value]
+        //             .isAnimated));
         break;
       default:
     }
@@ -64,61 +78,61 @@ class HomePageBottomNavigationBar extends StatelessWidget {
   lock() {
     if (Controller.to.password.isNotEmpty) {
       switch (Controller.to.all[Controller.to.selectedFolder.value]
-          .childrens[Controller.to.selectedElementIndex.value].type) {
+          .childrens[Controller.to.selectedElementIndex.value].child.type) {
         case AllType.chat:
-          Controller.to.change(Chat(
-            isLocked: Controller
-                    .to
-                    .all[Controller.to.selectedFolder.value]
-                    .childrens[Controller.to.selectedElementIndex.value]
-                    .isLocked =
-                !Controller
-                    .to
-                    .all[Controller.to.selectedFolder.value]
-                    .childrens[Controller.to.selectedElementIndex.value]
-                    .isLocked,
-          ));
+          // Controller.to.change(Chat(
+          //   isLocked: Controller
+          //           .to
+          //           .all[Controller.to.selectedFolder.value]
+          //           .childrens[Controller.to.selectedElementIndex.value]
+          //           .isLocked =
+          //       !Controller
+          //           .to
+          //           .all[Controller.to.selectedFolder.value]
+          //           .childrens[Controller.to.selectedElementIndex.value]
+          //           .isLocked,
+          // ));
           break;
         case AllType.storageFile:
-          Controller.to.change(StorageFile(
-            isLocked: Controller
-                    .to
-                    .all[Controller.to.selectedFolder.value]
-                    .childrens[Controller.to.selectedElementIndex.value]
-                    .isLocked =
-                !Controller
-                    .to
-                    .all[Controller.to.selectedFolder.value]
-                    .childrens[Controller.to.selectedElementIndex.value]
-                    .isLocked,
-          ));
+          // Controller.to.change(StorageFile(
+          //   isLocked: Controller
+          //           .to
+          //           .all[Controller.to.selectedFolder.value]
+          //           .childrens[Controller.to.selectedElementIndex.value]
+          //           .isLocked =
+          //       !Controller
+          //           .to
+          //           .all[Controller.to.selectedFolder.value]
+          //           .childrens[Controller.to.selectedElementIndex.value]
+          //           .isLocked,
+          // ));
           break;
         case AllType.todo:
-          Controller.to.change(Todo(
-            isLocked: Controller
-                    .to
-                    .all[Controller.to.selectedFolder.value]
-                    .childrens[Controller.to.selectedElementIndex.value]
-                    .isLocked =
-                !Controller
-                    .to
-                    .all[Controller.to.selectedFolder.value]
-                    .childrens[Controller.to.selectedElementIndex.value]
-                    .isLocked,
-          ));
+          // Controller.to.change(Todo(
+          //   isLocked: Controller
+          //           .to
+          //           .all[Controller.to.selectedFolder.value]
+          //           .childrens[Controller.to.selectedElementIndex.value]
+          //           .isLocked =
+          //       !Controller
+          //           .to
+          //           .all[Controller.to.selectedFolder.value]
+          //           .childrens[Controller.to.selectedElementIndex.value]
+          //           .isLocked,
+          // ));
           break;
         case AllType.audioNote:
-          Controller.to.change(AudioNote(
-              isLocked: Controller
-                      .to
-                      .all[Controller.to.selectedFolder.value]
-                      .childrens[Controller.to.selectedElementIndex.value]
-                      .isLocked =
-                  !Controller
-                      .to
-                      .all[Controller.to.selectedFolder.value]
-                      .childrens[Controller.to.selectedElementIndex.value]
-                      .isLocked));
+          // Controller.to.change(AudioNote(
+          //     isLocked: Controller
+          //             .to
+          //             .all[Controller.to.selectedFolder.value]
+          //             .childrens[Controller.to.selectedElementIndex.value]
+          //             .isLocked =
+          //         !Controller
+          //             .to
+          //             .all[Controller.to.selectedFolder.value]
+          //             .childrens[Controller.to.selectedElementIndex.value]
+          //             .isLocked));
           break;
         default:
       }
@@ -130,77 +144,100 @@ class HomePageBottomNavigationBar extends StatelessWidget {
 
   dublicate() {
     switch (Controller.to.all[Controller.to.selectedFolder.value]
-        .childrens[Controller.to.selectedElementIndex.value].type) {
+        .childrens[Controller.to.selectedElementIndex.value].child.type) {
       case AllType.chat:
-        Controller.to.add(Chat(
-            name: Controller.to.all[Controller.to.selectedFolder.value]
-                .childrens[Controller.to.selectedElementIndex.value].name,
-            messages: Controller.to.all[Controller.to.selectedFolder.value]
-                .childrens[Controller.to.selectedElementIndex.value].messages,
-            favorites: Controller.to.all[Controller.to.selectedFolder.value]
-                .childrens[Controller.to.selectedElementIndex.value].favorites,
-            isPinned: Controller.to.all[Controller.to.selectedFolder.value]
-                .childrens[Controller.to.selectedElementIndex.value].isPinned,
-            animate: Controller.to.all[Controller.to.selectedFolder.value]
-                .childrens[Controller.to.selectedElementIndex.value].animate,
-            dublicated: true,
-            pathToImage: Controller
-                .to
-                .all[Controller.to.selectedFolder.value]
-                .childrens[Controller.to.selectedElementIndex.value]
-                .pathToImage,
-            link: Controller.to.all[Controller.to.selectedFolder.value]
-                .childrens[Controller.to.selectedElementIndex.value].link,
-            pinnedMessages: Controller
-                .to
-                .all[Controller.to.selectedFolder.value]
-                .childrens[Controller.to.selectedElementIndex.value]
-                .pinnedMessages));
+        // Controller.to.add(Chat(
+        //     name: Controller.to.all[Controller.to.selectedFolder.value]
+        //         .childrens[Controller.to.selectedElementIndex.value].name,
+        //     messages: Controller
+        //         .to
+        //         .all[Controller.to.selectedFolder.value]
+        //         .childrens[Controller.to.selectedElementIndex.value]
+        //         .item
+        //         .messages,
+        //     favorites: Controller
+        //         .to
+        //         .all[Controller.to.selectedFolder.value]
+        //         .childrens[Controller.to.selectedElementIndex.value]
+        //         .item
+        //         .favorites,
+        //     isPinned: Controller.to.all[Controller.to.selectedFolder.value]
+        //         .childrens[Controller.to.selectedElementIndex.value].isPinned,
+        //     isAnimated: Controller.to.all[Controller.to.selectedFolder.value]
+        //         .childrens[Controller.to.selectedElementIndex.value].isAnimated,
+        //     dublicated: true,
+        //     pathToImage: Controller
+        //         .to
+        //         .all[Controller.to.selectedFolder.value]
+        //         .childrens[Controller.to.selectedElementIndex.value]
+        //         .item
+        //         .pathToImage,
+        //     link: Controller.to.all[Controller.to.selectedFolder.value]
+        //         .childrens[Controller.to.selectedElementIndex.value].item.link,
+        //     pinnedMessages: Controller
+        //         .to
+        //         .all[Controller.to.selectedFolder.value]
+        //         .childrens[Controller.to.selectedElementIndex.value]
+        //         .item
+        //         .pinnedMessages));
         break;
       case AllType.storageFile:
-        Controller.to.add(StorageFile(
-            name: Controller.to.all[Controller.to.selectedFolder.value]
-                .childrens[Controller.to.selectedElementIndex.value].name,
-            dublicated: true,
-            history: Controller.to.all[Controller.to.selectedFolder.value]
-                .childrens[Controller.to.selectedElementIndex.value].history,
-            link: Controller.to.all[Controller.to.selectedFolder.value]
-                .childrens[Controller.to.selectedElementIndex.value].link,
-            data: Controller.to.all[Controller.to.selectedFolder.value]
-                .childrens[Controller.to.selectedElementIndex.value].data,
-            pathToImage: Controller
-                .to
-                .all[Controller.to.selectedFolder.value]
-                .childrens[Controller.to.selectedElementIndex.value]
-                .pathToImage,
-            animate: Controller.to.all[Controller.to.selectedFolder.value]
-                .childrens[Controller.to.selectedElementIndex.value].animate));
+        // Controller.to.add(StorageFile(
+        //     name: Controller.to.all[Controller.to.selectedFolder.value]
+        //         .childrens[Controller.to.selectedElementIndex.value].name,
+        //     dublicated: true,
+        //     history: Controller.to.all[Controller.to.selectedFolder.value]
+        //         .childrens[Controller.to.selectedElementIndex.value].history,
+        //     link: Controller.to.all[Controller.to.selectedFolder.value]
+        //         .childrens[Controller.to.selectedElementIndex.value].link,
+        //     data: Controller.to.all[Controller.to.selectedFolder.value]
+        //         .childrens[Controller.to.selectedElementIndex.value].data,
+        //     pathToImage: Controller
+        //         .to
+        //         .all[Controller.to.selectedFolder.value]
+        //         .childrens[Controller.to.selectedElementIndex.value]
+        //         .pathToImage,
+        //     isAnimated: Controller
+        //         .to
+        //         .all[Controller.to.selectedFolder.value]
+        //         .childrens[Controller.to.selectedElementIndex.value]
+        //         .isAnimated));
         break;
       case AllType.todo:
-        Controller.to.add(Todo(
-            name: Controller.to.all[Controller.to.selectedFolder.value]
-                .childrens[Controller.to.selectedElementIndex.value].name,
-            dublicated: true,
-            isPinned: Controller.to.all[Controller.to.selectedFolder.value]
-                .childrens[Controller.to.selectedElementIndex.value].isPinned,
-            tasks: Controller.to.all[Controller.to.selectedFolder.value]
-                .childrens[Controller.to.selectedElementIndex.value].tasks,
-            animate: Controller.to.all[Controller.to.selectedFolder.value]
-                .childrens[Controller.to.selectedElementIndex.value].animate));
+        // Controller.to.add(Todo(
+        //     name: Controller.to.all[Controller.to.selectedFolder.value]
+        //         .childrens[Controller.to.selectedElementIndex.value].name,
+        //     dublicated: true,
+        //     isPinned: Controller.to.all[Controller.to.selectedFolder.value]
+        //         .childrens[Controller.to.selectedElementIndex.value].isPinned,
+        //     tasks: Controller.to.all[Controller.to.selectedFolder.value]
+        //         .childrens[Controller.to.selectedElementIndex.value].item.tasks,
+        //     isAnimated: Controller
+        //         .to
+        //         .all[Controller.to.selectedFolder.value]
+        //         .childrens[Controller.to.selectedElementIndex.value]
+        //         .isAnimated));
         break;
       case AllType.audioNote:
-        Controller.to.add(
-          AudioNote(
-              name: Controller.to.all[Controller.to.selectedFolder.value]
-                  .childrens[Controller.to.selectedElementIndex.value].name,
-              path: Controller.to.all[Controller.to.selectedFolder.value]
-                  .childrens[Controller.to.selectedElementIndex.value].path,
-              dublicated: true,
-              isPinned: Controller.to.all[Controller.to.selectedFolder.value]
-                  .childrens[Controller.to.selectedElementIndex.value].isPinned,
-              animate: Controller.to.all[Controller.to.selectedFolder.value]
-                  .childrens[Controller.to.selectedElementIndex.value].animate),
-        );
+        // Controller.to.add(
+        //   AudioNote(
+        //       name: Controller.to.all[Controller.to.selectedFolder.value]
+        //           .childrens[Controller.to.selectedElementIndex.value].name,
+        //       path: Controller
+        //           .to
+        //           .all[Controller.to.selectedFolder.value]
+        //           .childrens[Controller.to.selectedElementIndex.value]
+        //           .item
+        //           .path,
+        //       dublicated: true,
+        //       isPinned: Controller.to.all[Controller.to.selectedFolder.value]
+        //           .childrens[Controller.to.selectedElementIndex.value].isPinned,
+        //       isAnimated: Controller
+        //           .to
+        //           .all[Controller.to.selectedFolder.value]
+        //           .childrens[Controller.to.selectedElementIndex.value]
+        //           .isAnimated),
+        // );
         break;
       default:
     }
@@ -208,54 +245,54 @@ class HomePageBottomNavigationBar extends StatelessWidget {
 
   pin() {
     switch (Controller.to.all[Controller.to.selectedFolder.value]
-        .childrens[Controller.to.selectedElementIndex.value].type) {
+        .childrens[Controller.to.selectedElementIndex.value].child.type) {
       case AllType.chat:
-        Controller.to.change(Chat(
-            isPinned: Controller
-                    .to
-                    .all[Controller.to.selectedFolder.value]
-                    .childrens[Controller.to.selectedElementIndex.value]
-                    .isPinned =
-                !Controller
-                    .to
-                    .all[Controller.to.selectedFolder.value]
-                    .childrens[Controller.to.selectedElementIndex.value]
-                    .isPinned));
+        // Controller.to.change(Chat(
+        //     isPinned: Controller
+        //             .to
+        //             .all[Controller.to.selectedFolder.value]
+        //             .childrens[Controller.to.selectedElementIndex.value]
+        //             .isPinned =
+        //         !Controller
+        //             .to
+        //             .all[Controller.to.selectedFolder.value]
+        //             .childrens[Controller.to.selectedElementIndex.value]
+        //             .isPinned));
         break;
       case AllType.storageFile:
-        Controller.to.change(StorageFile(
-            isPinned: Controller
-                    .to
-                    .all[Controller.to.selectedFolder.value]
-                    .childrens[Controller.to.selectedElementIndex.value]
-                    .isPinned =
-                !Controller
-                    .to
-                    .all[Controller.to.selectedFolder.value]
-                    .childrens[Controller.to.selectedElementIndex.value]
-                    .isPinned));
+        // Controller.to.change(StorageFile(
+        //     isPinned: Controller
+        //             .to
+        //             .all[Controller.to.selectedFolder.value]
+        //             .childrens[Controller.to.selectedElementIndex.value]
+        //             .isPinned =
+        //         !Controller
+        //             .to
+        //             .all[Controller.to.selectedFolder.value]
+        //             .childrens[Controller.to.selectedElementIndex.value]
+        //             .isPinned));
         break;
       case AllType.todo:
-        Controller.to.change(Todo(
-          isPinned: Controller
-                  .to
-                  .all[Controller.to.selectedFolder.value]
-                  .childrens[Controller.to.selectedElementIndex.value]
-                  .isPinned =
-              !Controller.to.all[Controller.to.selectedFolder.value]
-                  .childrens[Controller.to.selectedElementIndex.value].isPinned,
-        ));
+        // Controller.to.change(Todo(
+        //   isPinned: Controller
+        //           .to
+        //           .all[Controller.to.selectedFolder.value]
+        //           .childrens[Controller.to.selectedElementIndex.value]
+        //           .isPinned =
+        //       !Controller.to.all[Controller.to.selectedFolder.value]
+        //           .childrens[Controller.to.selectedElementIndex.value].isPinned,
+        // ));
         break;
       case AllType.audioNote:
-        Controller.to.change(AudioNote(
-          isPinned: Controller
-                  .to
-                  .all[Controller.to.selectedFolder.value]
-                  .childrens[Controller.to.selectedElementIndex.value]
-                  .isPinned =
-              !Controller.to.all[Controller.to.selectedFolder.value]
-                  .childrens[Controller.to.selectedElementIndex.value].isPinned,
-        ));
+        // Controller.to.change(AudioNote(
+        //   isPinned: Controller
+        //           .to
+        //           .all[Controller.to.selectedFolder.value]
+        //           .childrens[Controller.to.selectedElementIndex.value]
+        //           .isPinned =
+        //       !Controller.to.all[Controller.to.selectedFolder.value]
+        //           .childrens[Controller.to.selectedElementIndex.value].isPinned,
+        // ));
         break;
       default:
     }
@@ -409,7 +446,7 @@ class HomePageBottomNavigationBar extends StatelessWidget {
                                   .childrens[
                                       Controller.to.selectedElementIndex.value]
                                   .name,
-                              locElement: LocationElement(
+                              locElement: ItemLocation(
                                   inDirectory:
                                       Controller.to.selectedFolder.value,
                                   index:

@@ -85,7 +85,7 @@ class TrashPage extends StatelessWidget {
                       }
                       return HomeWidget(
                         isTrash: true,
-                        value: Controller.to.trashElements[index],
+                        homeItem: Controller.to.trashElements[index],
                         index: index,
                       );
                     })

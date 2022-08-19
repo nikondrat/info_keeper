@@ -71,6 +71,7 @@ class ChatPageFavoritesBody extends StatelessWidget {
                 .to
                 .all[Controller.to.selectedFolder.value]
                 .childrens[Controller.to.selectedElementIndex.value]
+                .child
                 .favorites!
                 .length;
         i++) {
@@ -78,10 +79,15 @@ class ChatPageFavoritesBody extends StatelessWidget {
           .to
           .all[Controller.to.selectedFolder.value]
           .childrens[Controller.to.selectedElementIndex.value]
+          .child
           .favorites![i]
           .isLocked) {
-        messages.add(Controller.to.all[Controller.to.selectedFolder.value]
-            .childrens[Controller.to.selectedElementIndex.value].favorites![i]);
+        messages.add(Controller
+            .to
+            .all[Controller.to.selectedFolder.value]
+            .childrens[Controller.to.selectedElementIndex.value]
+            .child
+            .favorites![i]);
       }
     }
     return ListView.builder(

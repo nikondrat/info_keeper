@@ -1,10 +1,10 @@
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:info_keeper/model/types/all.dart';
-import 'package:info_keeper/model/types/location_element.dart';
+import 'package:info_keeper/model/types/item_location.dart';
 
 class ChatVoice {
   AllType type;
-  LocationElement location;
+  ItemLocation location;
   String name;
   String path;
   String dateTime;
@@ -25,7 +25,7 @@ class ChatVoice {
   ChatVoice.fromJson(Map<String, dynamic> json)
       : name = json['name'],
         type = AllType.values.elementAt(json['type']),
-        location = LocationElement.fromJson(json['location']),
+        location = ItemLocation.fromJson(json['location']),
         dateTime = json['dateTime'],
         isLocked = json['isLocked'],
         isUnlocked = json['isUnlocked'],

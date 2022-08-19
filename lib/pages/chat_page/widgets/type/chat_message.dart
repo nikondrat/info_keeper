@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/all.dart';
-import 'package:info_keeper/model/types/chat/chat.dart';
-import 'package:info_keeper/model/types/chat/message.dart';
+import 'package:info_keeper/model/types/home/chat/chat.dart';
+import 'package:info_keeper/model/types/home/chat/message.dart';
 import 'package:info_keeper/pages/chat_page/widgets/message_menu/chat_menu.dart';
 import 'package:info_keeper/pages/trash_page/trash_element.dart';
 import 'package:info_keeper/pages/vault_page/vault_page.dart';
@@ -63,12 +63,14 @@ class MessageWidget extends StatelessWidget {
                 .to
                 .all[Controller.to.selectedFolder.value]
                 .childrens[Controller.to.selectedElementIndex.value]
+                .child
                 .messages[message.location.selectedMessageIndex!]
                 .isLocked &&
             !Controller
                 .to
                 .all[Controller.to.selectedFolder.value]
                 .childrens[Controller.to.selectedElementIndex.value]
+                .child
                 .messages[message.location.selectedMessageIndex!]
                 .isUnlocked
         ? GestureDetector(
@@ -80,12 +82,14 @@ class MessageWidget extends StatelessWidget {
                     .to
                     .all[Controller.to.selectedFolder.value]
                     .childrens[Controller.to.selectedElementIndex.value]
+                    .child
                     .messages
                     .removeAt(Controller.to.firstSelectedMessage);
                 Controller
                     .to
                     .all[Controller.to.selectedFolder.value]
                     .childrens[Controller.to.selectedElementIndex.value]
+                    .child
                     .messages
                     .insert(selected.value, message);
                 moveMessage.value = false;
@@ -146,6 +150,7 @@ class MessageWidget extends StatelessWidget {
                           .to
                           .all[Controller.to.selectedFolder.value]
                           .childrens[Controller.to.selectedElementIndex.value]
+                          .child
                           .messages[selectedMessage!.value]
                           .messageText);
                   titleController!.value = TextEditingValue(
@@ -153,6 +158,7 @@ class MessageWidget extends StatelessWidget {
                           .to
                           .all[Controller.to.selectedFolder.value]
                           .childrens[Controller.to.selectedElementIndex.value]
+                          .child
                           .messages[selectedMessage!.value]
                           .title);
                   textFieldFocusNode!.requestFocus();
@@ -249,18 +255,30 @@ class MessageWidgetChild extends StatelessWidget {
         }
         selected.value = message.location.selectedMessageIndex!;
         if (moveMessage.value) {
-          var message = Controller.to.all[Controller.to.selectedFolder.value]
-              .childrens[Controller.to.selectedElementIndex.value].messages
+          var message = Controller
+              .to
+              .all[Controller.to.selectedFolder.value]
+              .childrens[Controller.to.selectedElementIndex.value]
+              .child
+              .messages
               .removeAt(Controller.to.firstSelectedMessage);
-          Controller.to.all[Controller.to.selectedFolder.value]
-              .childrens[Controller.to.selectedElementIndex.value].messages
+          Controller
+              .to
+              .all[Controller.to.selectedFolder.value]
+              .childrens[Controller.to.selectedElementIndex.value]
+              .child
+              .messages
               .insert(selected.value, message);
           moveMessage.value = false;
         }
 
         if (splitMessages.value) {
-          List messages = Controller.to.all[Controller.to.selectedFolder.value]
-              .childrens[Controller.to.selectedElementIndex.value].messages;
+          List messages = Controller
+              .to
+              .all[Controller.to.selectedFolder.value]
+              .childrens[Controller.to.selectedElementIndex.value]
+              .child
+              .messages;
           message.isSelected = !message.isSelected;
           if (message.isSelected) {
             selectedMessages.add(message);
@@ -376,6 +394,7 @@ class MessageWidgetBody extends StatelessWidget {
                                                   .to.selectedFolder.value]
                                               .childrens[Controller.to
                                                   .selectedElementIndex.value]
+                                              .child
                                               .messages[selected!.value]
                                               .type ==
                                           AllType.chatMessage
@@ -385,6 +404,7 @@ class MessageWidgetBody extends StatelessWidget {
                                               .to.selectedFolder.value]
                                           .childrens[Controller
                                               .to.selectedElementIndex.value]
+                                          .child
                                           .messages[selected!.value]
                                           .isCollapsed
                                       ? 6

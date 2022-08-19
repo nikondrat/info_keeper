@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/chat/chat_voice.dart';
-import 'package:info_keeper/model/types/location_element.dart';
+import 'package:info_keeper/model/types/home/chat/chat_voice.dart';
+import 'package:info_keeper/model/types/item_location.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -43,13 +43,14 @@ class _ChatPageRecordVoiceState extends State<ChatPageRecordVoice> {
     Controller.to.addChatVoice(ChatVoice(
         path: mPath,
         dateTime: dateTime,
-        location: LocationElement(
+        location: ItemLocation(
             inDirectory: Controller.to.selectedFolder.value,
             index: Controller.to.selectedElementIndex.value,
             selectedMessageIndex: Controller
                 .to
                 .all[Controller.to.selectedFolder.value]
                 .childrens[Controller.to.selectedElementIndex.value]
+                .child
                 .messages
                 .length)));
   }

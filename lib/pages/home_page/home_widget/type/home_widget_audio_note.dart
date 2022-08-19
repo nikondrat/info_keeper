@@ -2,19 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/audio_note.dart';
+import 'package:info_keeper/model/types/home/audio/audio_note.dart';
+import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
 import 'package:info_keeper/pages/trash_page/trash_element.dart';
 import 'package:substring_highlight/substring_highlight.dart';
 
 class HomeWidgetAudioNote extends StatelessWidget {
-  final AudioNote audioNote;
+  final HomeItem homeItem;
   final String term;
   final int index;
   final bool? isTrash;
   const HomeWidgetAudioNote(
       {Key? key,
-      required this.audioNote,
+      required this.homeItem,
       required this.index,
       this.term = '',
       this.isTrash})
@@ -39,26 +40,26 @@ class HomeWidgetAudioNote extends StatelessWidget {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(6),
                     border: Border.all(
-                        color: audioNote.animate
+                        color: homeItem.isAnimated
                             ? const Color(0xFFB9DFBB)
                             : Colors.grey.shade600,
-                        width: audioNote.animate ? 1.4 : 1)),
+                        width: homeItem.isAnimated ? 1.4 : 1)),
                 child: Row(children: [
-                  audioNote.isPinned
+                  homeItem.isPinned
                       ? const Padding(
                           padding: EdgeInsets.only(left: 8),
                           child: Icon(Icons.push_pin_outlined),
                         )
                       : Container(),
-                  audioNote.dublicated
+                  homeItem.isDublicated
                       ? const Padding(
                           padding: EdgeInsets.only(left: 8),
                           child: Icon(Icons.copy_all))
                       : Container(),
-                  HomeWidgetAudioNoteBody(audioNote: audioNote),
+                  HomeWidgetAudioNoteBody(homeItem: homeItem),
                   Expanded(
                       child: SubstringHighlight(
-                    text: audioNote.name!,
+                    text: homeItem.name,
                     term: term,
                     textStyle: const TextStyle(
                         fontWeight: FontWeight.bold, color: Colors.black),
@@ -68,8 +69,8 @@ class HomeWidgetAudioNote extends StatelessWidget {
 }
 
 class HomeWidgetAudioNoteBody extends StatefulWidget {
-  final AudioNote audioNote;
-  const HomeWidgetAudioNoteBody({Key? key, required this.audioNote})
+  final HomeItem homeItem;
+  const HomeWidgetAudioNoteBody({Key? key, required this.homeItem})
       : super(key: key);
 
   @override
@@ -98,7 +99,7 @@ class _HomeWidgetAudioNoteBodyState extends State<HomeWidgetAudioNoteBody> {
     isPlay.value = true;
     mPlayer!.startPlayer(
         codec: Codec.aacMP4,
-        fromURI: widget.audioNote.path,
+        fromURI: widget.homeItem.child.path,
         whenFinished: () {
           isPlay.value = false;
         });

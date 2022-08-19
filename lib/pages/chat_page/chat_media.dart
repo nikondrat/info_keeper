@@ -85,6 +85,7 @@ class ChatMediaBodyImages extends StatelessWidget {
                 .to
                 .all[Controller.to.selectedFolder.value]
                 .childrens[Controller.to.selectedElementIndex.value]
+                .child
                 .messages
                 .length;
         i++) {
@@ -92,11 +93,16 @@ class ChatMediaBodyImages extends StatelessWidget {
               .to
               .all[Controller.to.selectedFolder.value]
               .childrens[Controller.to.selectedElementIndex.value]
+              .child
               .messages[i]
               .type ==
           AllType.chatImage) {
-        images.add(Controller.to.all[Controller.to.selectedFolder.value]
-            .childrens[Controller.to.selectedElementIndex.value].messages[i]);
+        images.add(Controller
+            .to
+            .all[Controller.to.selectedFolder.value]
+            .childrens[Controller.to.selectedElementIndex.value]
+            .child
+            .messages[i]);
       }
     }
 
@@ -126,6 +132,7 @@ class ChatMediaBodyFiles extends StatelessWidget {
                 .to
                 .all[Controller.to.selectedFolder.value]
                 .childrens[Controller.to.selectedElementIndex.value]
+                .child
                 .messages
                 .length;
         i++) {
@@ -133,11 +140,16 @@ class ChatMediaBodyFiles extends StatelessWidget {
               .to
               .all[Controller.to.selectedFolder.value]
               .childrens[Controller.to.selectedElementIndex.value]
+              .child
               .messages[i]
               .type ==
           AllType.chatFile) {
-        files.add(Controller.to.all[Controller.to.selectedFolder.value]
-            .childrens[Controller.to.selectedElementIndex.value].messages[i]);
+        files.add(Controller
+            .to
+            .all[Controller.to.selectedFolder.value]
+            .childrens[Controller.to.selectedElementIndex.value]
+            .child
+            .messages[i]);
       }
     }
     return ListView.builder(
@@ -165,6 +177,7 @@ class ChatMediaBodyLinks extends StatelessWidget {
                 .to
                 .all[Controller.to.selectedFolder.value]
                 .childrens[Controller.to.selectedElementIndex.value]
+                .child
                 .messages
                 .length;
         i++) {
@@ -172,6 +185,7 @@ class ChatMediaBodyLinks extends StatelessWidget {
                   .to
                   .all[Controller.to.selectedFolder.value]
                   .childrens[Controller.to.selectedElementIndex.value]
+                  .child
                   .messages[i]
                   .type ==
               AllType.chatMessage &&
@@ -179,17 +193,23 @@ class ChatMediaBodyLinks extends StatelessWidget {
               .to
               .all[Controller.to.selectedFolder.value]
               .childrens[Controller.to.selectedElementIndex.value]
+              .child
               .messages[i]
               .isLocked &&
           Controller
               .to
               .all[Controller.to.selectedFolder.value]
               .childrens[Controller.to.selectedElementIndex.value]
+              .child
               .messages[i]
               .messageText
               .contains(RegExp(r'(https?://[^\s]+)'))) {
-        links.add(Controller.to.all[Controller.to.selectedFolder.value]
-            .childrens[Controller.to.selectedElementIndex.value].messages[i]);
+        links.add(Controller
+            .to
+            .all[Controller.to.selectedFolder.value]
+            .childrens[Controller.to.selectedElementIndex.value]
+            .child
+            .messages[i]);
       }
     }
 
@@ -217,6 +237,7 @@ class ChatMediaBodySounds extends StatelessWidget {
                 .to
                 .all[Controller.to.selectedFolder.value]
                 .childrens[Controller.to.selectedElementIndex.value]
+                .child
                 .messages
                 .length;
         i++) {
@@ -224,11 +245,16 @@ class ChatMediaBodySounds extends StatelessWidget {
               .to
               .all[Controller.to.selectedFolder.value]
               .childrens[Controller.to.selectedElementIndex.value]
+              .child
               .messages[i]
               .type ==
           AllType.chatVoice) {
-        sounds.add(Controller.to.all[Controller.to.selectedFolder.value]
-            .childrens[Controller.to.selectedElementIndex.value].messages[i]);
+        sounds.add(Controller
+            .to
+            .all[Controller.to.selectedFolder.value]
+            .childrens[Controller.to.selectedElementIndex.value]
+            .child
+            .messages[i]);
       }
     }
     return ListView.builder(

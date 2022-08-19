@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/location_element.dart';
+import 'package:info_keeper/model/types/item_location.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 // ignore: depend_on_referenced_packages
@@ -13,7 +13,7 @@ class Notifications extends StatefulWidget {
   final String name;
   final String? messageText;
   final bool isStorageFile;
-  final LocationElement locElement;
+  final ItemLocation locElement;
   const Notifications(
       {Key? key,
       required this.locElement,

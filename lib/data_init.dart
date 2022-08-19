@@ -3,15 +3,15 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/all.dart';
-import 'package:info_keeper/model/types/audio_note.dart';
-import 'package:info_keeper/model/types/chat/chat.dart';
-import 'package:info_keeper/model/types/chat/chat_file.dart';
-import 'package:info_keeper/model/types/chat/chat_image.dart';
-import 'package:info_keeper/model/types/chat/chat_voice.dart';
-import 'package:info_keeper/model/types/chat/message.dart';
 import 'package:info_keeper/model/types/folder.dart';
-import 'package:info_keeper/model/types/storage_file.dart';
-import 'package:info_keeper/model/types/todo.dart';
+import 'package:info_keeper/model/types/home/audio/audio_note.dart';
+import 'package:info_keeper/model/types/home/chat/chat.dart';
+import 'package:info_keeper/model/types/home/chat/chat_file.dart';
+import 'package:info_keeper/model/types/home/chat/chat_image.dart';
+import 'package:info_keeper/model/types/home/chat/chat_voice.dart';
+import 'package:info_keeper/model/types/home/chat/message.dart';
+import 'package:info_keeper/model/types/home/storage_file/storage_file.dart';
+import 'package:info_keeper/model/types/home/todo/todo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 initData() async {

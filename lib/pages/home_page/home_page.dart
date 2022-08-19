@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
+import 'package:info_keeper/pages/home_page/widgets/body/body.dart';
 import 'package:info_keeper/pages/home_page/widgets/btm_bar/btm_bar.dart';
-import 'package:info_keeper/pages/home_page/widgets/btm_bar/btm_menu.dart';
-import 'package:info_keeper/pages/home_page/widgets/home_body.dart';
-import 'package:info_keeper/pages/home_page/widgets/home_btm_nav_bar.dart';
-import 'package:info_keeper/pages/home_page/widgets/fab_menu/home_float_btn.dart';
+import 'package:info_keeper/pages/home_page/widgets/fab_menu/float_btns.dart';
 import 'package:info_keeper/pages/home_page/home_search.dart';
 import 'package:info_keeper/pages/trash_page/trash_page.dart';
 import 'package:info_keeper/pages/vault_page/vault_page.dart';
@@ -91,9 +89,9 @@ class HomePage extends StatelessWidget {
             ),
             title: const Text('Info Keeper'),
           ),
-          body: HomePageBody(isGridView: isGridView),
+          body: HomeBody(isGridView: isGridView),
           floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-          floatingActionButton: const HomePageFloatButton(),
+          floatingActionButton: const HomeFloatButtons(),
           bottomNavigationBar: const HomeBottomBar()),
     );
   }

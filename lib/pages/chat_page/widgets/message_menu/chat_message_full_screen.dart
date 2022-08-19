@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:info_keeper/model/types/chat/message.dart';
+import 'package:info_keeper/model/types/home/chat/message.dart';
 import 'package:info_keeper/pages/chat_page/widgets/type/chat_message.dart';
 
 class ChatPageMessageInFullScreen extends StatelessWidget {

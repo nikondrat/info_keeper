@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:info_keeper/model/types/chat/chat.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/location_element.dart';
+import 'package:info_keeper/model/types/home/chat/chat.dart';
+import 'package:info_keeper/model/types/home_item.dart';
+import 'package:info_keeper/model/types/item_location.dart';
 
 class HomePageAlertDialog extends StatelessWidget {
   const HomePageAlertDialog({Key? key}) : super(key: key);
@@ -47,22 +48,23 @@ class HomePageAlertDialog extends StatelessWidget {
                   width: 1,
                 ),
               )),
-          onSubmitted: (value) {
+          onSubmitted: (String value) {
             if (value.isNotEmpty) {
               validate.value = false;
-              Controller.to.add(Chat(
-                  location: LocationElement(
+              Controller.to.add(HomeItem(
+                  name: value,
+                  child: Chat(
+                      favorites: [].obs,
+                      pinnedMessages: [].obs,
+                      messages: [].obs),
+                  location: ItemLocation(
                       inDirectory: Controller.to.selectedFolder.value,
                       index: Controller
                               .to
                               .all[Controller.to.selectedFolder.value]
                               .childrens
                               .length -
-                          1),
-                  name: value,
-                  favorites: [].obs,
-                  pinnedMessages: [].obs,
-                  messages: [].obs));
+                          1)));
               Navigator.pop(context, 'Create');
             }
             validate.value = true;
@@ -74,19 +76,20 @@ class HomePageAlertDialog extends StatelessWidget {
           onPressed: () {
             if (controller.text.isNotEmpty) {
               validate.value = false;
-              Controller.to.add(Chat(
-                  location: LocationElement(
+              Controller.to.add(HomeItem(
+                  name: controller.text,
+                  child: Chat(
+                      favorites: [].obs,
+                      pinnedMessages: [].obs,
+                      messages: [].obs),
+                  location: ItemLocation(
                       inDirectory: Controller.to.selectedFolder.value,
                       index: Controller
                               .to
                               .all[Controller.to.selectedFolder.value]
                               .childrens
                               .length -
-                          1),
-                  name: controller.text,
-                  pinnedMessages: [].obs,
-                  favorites: [].obs,
-                  messages: [].obs));
+                          1)));
 
               Navigator.pop(context, 'Create');
             }

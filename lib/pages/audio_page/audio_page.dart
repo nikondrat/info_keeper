@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/audio_note.dart';
-import 'package:info_keeper/model/types/location_element.dart';
+import 'package:info_keeper/model/types/home/audio/audio_note.dart';
+import 'package:info_keeper/model/types/home_item.dart';
+import 'package:info_keeper/model/types/item_location.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -68,15 +69,15 @@ class _AudioPageState extends State<AudioPage> {
 
   void closeRecorder() {
     _mRecorder!.closeRecorder();
-    Controller.to.add(AudioNote(
-      path: mPath,
-      name: titleController.text,
-      location: LocationElement(
-          inDirectory: Controller.to.selectedFolder.value,
-          index: Controller
-                  .to.all[Controller.to.selectedFolder.value].childrens.length -
-              1),
-    ));
+    Controller.to.add(HomeItem(
+        child: AudioNote(
+          path: mPath,
+        ),
+        location: ItemLocation(
+            inDirectory: Controller.to.selectedFolder.value,
+            index: Controller.to.all[Controller.to.selectedFolder.value]
+                    .childrens.length -
+                1)));
     Get.back();
   }
 

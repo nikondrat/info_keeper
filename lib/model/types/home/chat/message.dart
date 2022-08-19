@@ -1,8 +1,8 @@
 import 'package:info_keeper/model/types/all.dart';
-import 'package:info_keeper/model/types/location_element.dart';
+import 'package:info_keeper/model/types/item_location.dart';
 
 class Message {
-  LocationElement location;
+  ItemLocation location;
   AllType type;
   String title;
   String messageText;
@@ -33,7 +33,7 @@ class Message {
 
   Message.fromJson(Map<String, dynamic> json)
       : type = AllType.values.elementAt(json['type']),
-        location = LocationElement.fromJson(json['location']),
+        location = ItemLocation.fromJson(json['location']),
         title = json['title'],
         messageText = json['messageText'],
         isSelected = json['isSelected'],

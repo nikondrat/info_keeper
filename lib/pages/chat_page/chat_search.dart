@@ -19,6 +19,7 @@ class ChatPageSearch extends StatelessWidget {
                 .to
                 .all[Controller.to.selectedFolder.value]
                 .childrens[Controller.to.selectedElementIndex.value]
+                .child
                 .messages!
                 .length;
         i++) {
@@ -26,6 +27,7 @@ class ChatPageSearch extends StatelessWidget {
                   .to
                   .all[Controller.to.selectedFolder.value]
                   .childrens[Controller.to.selectedElementIndex.value]
+                  .child
                   .messages![i]
                   .type ==
               AllType.chatMessage &&
@@ -33,10 +35,15 @@ class ChatPageSearch extends StatelessWidget {
               .to
               .all[Controller.to.selectedFolder.value]
               .childrens[Controller.to.selectedElementIndex.value]
+              .child
               .messages![i]
               .isLocked) {
-        list.add(Controller.to.all[Controller.to.selectedFolder.value]
-            .childrens[Controller.to.selectedElementIndex.value].messages![i]);
+        list.add(Controller
+            .to
+            .all[Controller.to.selectedFolder.value]
+            .childrens[Controller.to.selectedElementIndex.value]
+            .child
+            .messages![i]);
       }
     }
 
@@ -89,6 +96,7 @@ class ChatPageSearch extends StatelessWidget {
                           .to
                           .all[Controller.to.selectedFolder.value]
                           .childrens[Controller.to.selectedElementIndex.value]
+                          .child
                           .messages![index]
                           .dateTime,
                       term: searchQueryController.text,

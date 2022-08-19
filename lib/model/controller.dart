@@ -2,15 +2,14 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:info_keeper/model/types/all.dart';
-import 'package:info_keeper/model/types/audio_note.dart';
-import 'package:info_keeper/model/types/chat/chat.dart';
-import 'package:info_keeper/model/types/chat/chat_file.dart';
-import 'package:info_keeper/model/types/chat/chat_image.dart';
-import 'package:info_keeper/model/types/chat/chat_voice.dart';
 import 'package:info_keeper/model/types/folder.dart';
-import 'package:info_keeper/model/types/chat/message.dart';
-import 'package:info_keeper/model/types/storage_file.dart';
-import 'package:info_keeper/model/types/todo.dart';
+import 'package:info_keeper/model/types/home/chat/chat.dart';
+import 'package:info_keeper/model/types/home/chat/chat_file.dart';
+import 'package:info_keeper/model/types/home/chat/chat_image.dart';
+import 'package:info_keeper/model/types/home/chat/chat_voice.dart';
+import 'package:info_keeper/model/types/home/chat/message.dart';
+import 'package:info_keeper/model/types/home_item.dart';
+import 'package:info_keeper/model/types/home/storage_file/storage_file.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Controller extends GetxController {
@@ -24,7 +23,7 @@ class Controller extends GetxController {
   var password = ''.obs;
 
   RxList<Folder> all = [
-    Folder(name: 'Main screen', childrens: [].obs),
+    Folder(name: 'Main screen', childrens: <HomeItem>[].obs),
   ].obs;
 
   RxList trashElements = [].obs;
@@ -51,140 +50,116 @@ class Controller extends GetxController {
   }
 
   void change(dynamic value) {
+    HomeItem homeItem =
+        HomeItem(child: StorageFile(), location: value.location);
+
     chat() {
       Chat chat = Chat();
-      chat.location = value.location ??
-          all[selectedFolder.value]
-              .childrens[selectedElementIndex.value]
-              .location;
-      chat.name = value.name ??
-          all[selectedFolder.value].childrens[selectedElementIndex.value].name;
       chat.messages = value.messages ??
           all[selectedFolder.value]
               .childrens[selectedElementIndex.value]
+              .child
               .messages;
       chat.favorites = value.favorites ??
           all[selectedFolder.value]
               .childrens[selectedElementIndex.value]
+              .child
               .favorites;
-      chat.isPinned = all[selectedFolder.value]
-          .childrens[selectedElementIndex.value]
-          .isPinned;
-      chat.animate = all[selectedFolder.value]
-          .childrens[selectedElementIndex.value]
-          .animate;
-      chat.dublicated = all[selectedFolder.value]
-          .childrens[selectedElementIndex.value]
-          .dublicated;
       chat.pathToImage = value.pathToImage ??
           all[selectedFolder.value]
               .childrens[selectedElementIndex.value]
+              .child
               .pathToImage;
-      chat.link =
-          all[selectedFolder.value].childrens[selectedElementIndex.value].link;
-      chat.isLocked = all[selectedFolder.value]
-          .childrens[selectedElementIndex.value]
-          .isLocked;
       chat.pinnedMessages = value.pinnedMessages ??
           all[selectedFolder.value]
               .childrens[selectedElementIndex.value]
+              .child
               .pinnedMessages;
 
-      all[selectedFolder.value].childrens[selectedElementIndex.value] = chat;
+      homeItem.child = chat;
+      all[selectedFolder.value].childrens[selectedElementIndex.value] =
+          homeItem;
     }
 
     storageFile() {
       StorageFile storageFile = StorageFile();
-      storageFile.location = value.location ??
+      storageFile.data = value.data ??
           all[selectedFolder.value]
               .childrens[selectedElementIndex.value]
-              .location;
-      storageFile.name = value.name ??
-          all[selectedFolder.value].childrens[selectedElementIndex.value].name;
-      storageFile.data = value.data ??
-          all[selectedFolder.value].childrens[selectedElementIndex.value].data;
+              .child
+              .data;
       storageFile.history = value.history ??
           all[selectedFolder.value]
               .childrens[selectedElementIndex.value]
+              .child
               .history;
-      storageFile.animate = all[selectedFolder.value]
-          .childrens[selectedElementIndex.value]
-          .animate;
-      storageFile.isPinned = all[selectedFolder.value]
-          .childrens[selectedElementIndex.value]
-          .isPinned;
-      storageFile.dublicated = all[selectedFolder.value]
-          .childrens[selectedElementIndex.value]
-          .dublicated;
       storageFile.pathToImage = all[selectedFolder.value]
           .childrens[selectedElementIndex.value]
+          .child
           .pathToImage;
-      storageFile.link =
-          all[selectedFolder.value].childrens[selectedElementIndex.value].link;
-      storageFile.isLocked = all[selectedFolder.value]
-          .childrens[selectedElementIndex.value]
-          .isLocked;
+
+      homeItem.child = storageFile;
 
       all[selectedFolder.value].childrens[selectedElementIndex.value] =
-          storageFile;
+          homeItem;
     }
 
-    todo() {
-      Todo todo = Todo();
-      todo.location = value.location ??
-          all[selectedFolder.value]
-              .childrens[selectedElementIndex.value]
-              .location;
-      todo.name = value.name ??
-          all[selectedFolder.value].childrens[selectedElementIndex.value].name;
-      todo.tasks = value.tasks ??
-          all[selectedFolder.value].childrens[selectedElementIndex.value].tasks;
-      todo.animate = all[selectedFolder.value]
-          .childrens[selectedElementIndex.value]
-          .animate;
-      todo.dublicated = all[selectedFolder.value]
-          .childrens[selectedElementIndex.value]
-          .dublicated;
-      todo.isPinned = all[selectedFolder.value]
-          .childrens[selectedElementIndex.value]
-          .isPinned;
-      todo.isLocked = all[selectedFolder.value]
-          .childrens[selectedElementIndex.value]
-          .isLocked;
-      todo.link =
-          all[selectedFolder.value].childrens[selectedElementIndex.value].link;
+    // todo() {
+    //   Todo todo = Todo();
+    //   todo.location = value.location ??
+    //       all[selectedFolder.value]
+    //           .childrens[selectedElementIndex.value]
+    //           .location;
+    //   todo.name = value.name ??
+    //       all[selectedFolder.value].childrens[selectedElementIndex.value].name;
+    //   todo.tasks = value.tasks ??
+    //       all[selectedFolder.value].childrens[selectedElementIndex.value].tasks;
+    //   todo.isAnimated = all[selectedFolder.value]
+    //       .childrens[selectedElementIndex.value]
+    //       .isAnimated;
+    //   todo.dublicated = all[selectedFolder.value]
+    //       .childrens[selectedElementIndex.value]
+    //       .dublicated;
+    //   todo.isPinned = all[selectedFolder.value]
+    //       .childrens[selectedElementIndex.value]
+    //       .isPinned;
+    //   todo.isLocked = all[selectedFolder.value]
+    //       .childrens[selectedElementIndex.value]
+    //       .isLocked;
+    //   todo.link =
+    //       all[selectedFolder.value].childrens[selectedElementIndex.value].link;
 
-      all[selectedFolder.value].childrens[selectedElementIndex.value] = todo;
-    }
+    //   all[selectedFolder.value].childrens[selectedElementIndex.value] = todo;
+    // }
 
-    audioNote() {
-      AudioNote audioNote = AudioNote();
-      audioNote.location = value.location ??
-          all[selectedFolder.value]
-              .childrens[selectedElementIndex.value]
-              .location;
-      audioNote.name = value.name ??
-          all[selectedFolder.value].childrens[selectedElementIndex.value].name;
-      audioNote.path = value.path ??
-          all[selectedFolder.value].childrens[selectedElementIndex.value].path;
-      audioNote.dublicated = all[selectedFolder.value]
-          .childrens[selectedElementIndex.value]
-          .dublicated;
-      audioNote.animate = all[selectedFolder.value]
-          .childrens[selectedElementIndex.value]
-          .animate;
-      audioNote.isLocked = all[selectedFolder.value]
-          .childrens[selectedElementIndex.value]
-          .isLocked;
-      audioNote.isPinned = all[selectedFolder.value]
-          .childrens[selectedElementIndex.value]
-          .isPinned;
-      audioNote.link =
-          all[selectedFolder.value].childrens[selectedElementIndex.value].link;
+    // audioNote() {
+    //   AudioNote audioNote = AudioNote();
+    //   audioNote.location = value.location ??
+    //       all[selectedFolder.value]
+    //           .childrens[selectedElementIndex.value]
+    //           .location;
+    //   audioNote.name = value.name ??
+    //       all[selectedFolder.value].childrens[selectedElementIndex.value].name;
+    //   audioNote.path = value.path ??
+    //       all[selectedFolder.value].childrens[selectedElementIndex.value].path;
+    //   audioNote.dublicated = all[selectedFolder.value]
+    //       .childrens[selectedElementIndex.value]
+    //       .dublicated;
+    //   audioNote.isAnimated = all[selectedFolder.value]
+    //       .childrens[selectedElementIndex.value]
+    //       .isAnimated;
+    //   audioNote.isLocked = all[selectedFolder.value]
+    //       .childrens[selectedElementIndex.value]
+    //       .isLocked;
+    //   audioNote.isPinned = all[selectedFolder.value]
+    //       .childrens[selectedElementIndex.value]
+    //       .isPinned;
+    //   audioNote.link =
+    //       all[selectedFolder.value].childrens[selectedElementIndex.value].link;
 
-      all[selectedFolder.value].childrens[selectedElementIndex.value] =
-          audioNote;
-    }
+    //   all[selectedFolder.value].childrens[selectedElementIndex.value] =
+    //       audioNote;
+    // }
 
     switch (value.type) {
       case AllType.chat:
@@ -194,10 +169,10 @@ class Controller extends GetxController {
         storageFile();
         break;
       case AllType.todo:
-        todo();
+        // todo();
         break;
       case AllType.audioNote:
-        audioNote();
+        // audioNote();
         break;
       default:
     }
@@ -205,133 +180,114 @@ class Controller extends GetxController {
   }
 
   void addLink(dynamic value, int folderIndex) {
+    HomeItem homeItem =
+        HomeItem(child: StorageFile(), location: value.location);
+
     chat() {
       Chat chat = Chat();
-      chat.location = value.location ??
-          all[selectedFolder.value]
-              .childrens[selectedElementIndex.value]
-              .location;
-      chat.name = value.name ??
-          all[selectedFolder.value].childrens[selectedElementIndex.value].name;
       chat.messages = value.messages ??
           all[selectedFolder.value]
               .childrens[selectedElementIndex.value]
+              .child
               .messages;
       chat.favorites = value.favorites ??
           all[selectedFolder.value]
               .childrens[selectedElementIndex.value]
+              .child
               .favorites;
-      chat.isPinned = all[selectedFolder.value]
-          .childrens[selectedElementIndex.value]
-          .isPinned;
-      chat.animate = all[selectedFolder.value]
-          .childrens[selectedElementIndex.value]
-          .animate;
-      chat.dublicated = all[selectedFolder.value]
-          .childrens[selectedElementIndex.value]
-          .dublicated;
       chat.pathToImage = value.pathToImage ??
           all[selectedFolder.value]
               .childrens[selectedElementIndex.value]
+              .child
               .pathToImage;
-      chat.link = true;
-      chat.isLocked = all[selectedFolder.value]
-          .childrens[selectedElementIndex.value]
-          .isLocked;
       chat.pinnedMessages = value.pinnedMessages ??
           all[selectedFolder.value]
               .childrens[selectedElementIndex.value]
+              .child
               .pinnedMessages;
 
-      all[folderIndex].childrens.add(chat);
+      homeItem.child = chat;
+      homeItem.isLink = true;
+
+      all[folderIndex].childrens.add(homeItem);
     }
 
     storageFile() {
       StorageFile storageFile = StorageFile();
-      storageFile.location = value.location ??
+
+      storageFile.data = value.data ??
           all[selectedFolder.value]
               .childrens[selectedElementIndex.value]
-              .location;
-      storageFile.name = value.name ??
-          all[selectedFolder.value].childrens[selectedElementIndex.value].name;
-      storageFile.data = value.data ??
-          all[selectedFolder.value].childrens[selectedElementIndex.value].data;
+              .child
+              .data;
       storageFile.history = value.history ??
           all[selectedFolder.value]
               .childrens[selectedElementIndex.value]
+              .child
               .history;
-      storageFile.animate = all[selectedFolder.value]
-          .childrens[selectedElementIndex.value]
-          .animate;
-      storageFile.isPinned = all[selectedFolder.value]
-          .childrens[selectedElementIndex.value]
-          .isPinned;
-      storageFile.dublicated = all[selectedFolder.value]
-          .childrens[selectedElementIndex.value]
-          .dublicated;
       storageFile.pathToImage = all[selectedFolder.value]
           .childrens[selectedElementIndex.value]
+          .child
           .pathToImage;
-      storageFile.link = true;
-      storageFile.isLocked = all[selectedFolder.value]
-          .childrens[selectedElementIndex.value]
-          .isLocked;
 
-      all[folderIndex].childrens.add(storageFile);
+      homeItem.child = storageFile;
+      homeItem.isLink = true;
+
+      all[folderIndex].childrens.add(homeItem);
     }
 
-    todo() {
-      Todo todo = Todo();
-      todo.location = value.location ??
-          all[selectedFolder.value]
-              .childrens[selectedElementIndex.value]
-              .location;
-      todo.name = value.name ??
-          all[selectedFolder.value].childrens[selectedElementIndex.value].name;
-      todo.tasks = value.tasks ??
-          all[selectedFolder.value].childrens[selectedElementIndex.value].tasks;
-      todo.animate = all[selectedFolder.value]
-          .childrens[selectedElementIndex.value]
-          .animate;
-      todo.dublicated = all[selectedFolder.value]
-          .childrens[selectedElementIndex.value]
-          .dublicated;
-      todo.isPinned = all[selectedFolder.value]
-          .childrens[selectedElementIndex.value]
-          .isPinned;
-      todo.isLocked = all[selectedFolder.value]
-          .childrens[selectedElementIndex.value]
-          .isLocked;
-      todo.link = true;
-      all[folderIndex].childrens.add(todo);
-    }
+    // todo() {
+    //   Todo todo = Todo();
+    //   todo.location = value.location ??
+    //       all[selectedFolder.value]
+    //           .childrens[selectedElementIndex.value]
+    //           .location;
+    //   todo.name = value.name ??
+    //       all[selectedFolder.value].childrens[selectedElementIndex.value].name;
+    //   todo.tasks = value.tasks ??
+    //       all[selectedFolder.value].childrens[selectedElementIndex.value].tasks;
+    //   todo.isAnimated = all[selectedFolder.value]
+    //       .childrens[selectedElementIndex.value]
+    //       .isAnimated;
+    //   todo.dublicated = all[selectedFolder.value]
+    //       .childrens[selectedElementIndex.value]
+    //       .dublicated;
+    //   todo.isPinned = all[selectedFolder.value]
+    //       .childrens[selectedElementIndex.value]
+    //       .isPinned;
+    //   todo.isLocked = all[selectedFolder.value]
+    //       .childrens[selectedElementIndex.value]
+    //       .isLocked;
+    //   todo.link = true;
+    //   all[folderIndex].childrens.add(todo);
+    // }
 
-    audioNote() {
-      AudioNote audioNote = AudioNote();
-      audioNote.location = value.location ??
-          all[selectedFolder.value]
-              .childrens[selectedElementIndex.value]
-              .location;
-      audioNote.name = value.name ??
-          all[selectedFolder.value].childrens[selectedElementIndex.value].name;
-      audioNote.path = value.path ??
-          all[selectedFolder.value].childrens[selectedElementIndex.value].path;
-      audioNote.dublicated = all[selectedFolder.value]
-          .childrens[selectedElementIndex.value]
-          .dublicated;
-      audioNote.animate = all[selectedFolder.value]
-          .childrens[selectedElementIndex.value]
-          .animate;
-      audioNote.isLocked = all[selectedFolder.value]
-          .childrens[selectedElementIndex.value]
-          .isLocked;
-      audioNote.isPinned = all[selectedFolder.value]
-          .childrens[selectedElementIndex.value]
-          .isPinned;
-      audioNote.link = true;
+    // audioNote() {
+    //   AudioNote audioNote = AudioNote();
+    //   audioNote.location = value.location ??
+    //       all[selectedFolder.value]
+    //           .childrens[selectedElementIndex.value]
+    //           .location;
+    //   audioNote.name = value.name ??
+    //       all[selectedFolder.value].childrens[selectedElementIndex.value].name;
+    //   audioNote.path = value.path ??
+    //       all[selectedFolder.value].childrens[selectedElementIndex.value].path;
+    //   audioNote.dublicated = all[selectedFolder.value]
+    //       .childrens[selectedElementIndex.value]
+    //       .dublicated;
+    //   audioNote.isAnimated = all[selectedFolder.value]
+    //       .childrens[selectedElementIndex.value]
+    //       .isAnimated;
+    //   audioNote.isLocked = all[selectedFolder.value]
+    //       .childrens[selectedElementIndex.value]
+    //       .isLocked;
+    //   audioNote.isPinned = all[selectedFolder.value]
+    //       .childrens[selectedElementIndex.value]
+    //       .isPinned;
+    //   audioNote.link = true;
 
-      all[folderIndex].childrens.add(audioNote);
-    }
+    //   all[folderIndex].childrens.add(audioNote);
+    // }
 
     switch (value.type) {
       case AllType.chat:
@@ -341,10 +297,10 @@ class Controller extends GetxController {
         storageFile();
         break;
       case AllType.todo:
-        todo();
+        // todo();
         break;
       case AllType.audioNote:
-        audioNote();
+        // audioNote();
         break;
       default:
     }
@@ -354,6 +310,7 @@ class Controller extends GetxController {
   void addMessage(Message message) {
     all[selectedFolder.value]
         .childrens[selectedElementIndex.value]
+        .child
         .messages
         .insert(0, message);
     setData();
@@ -362,6 +319,7 @@ class Controller extends GetxController {
   void addChatImage(ChatImage image) {
     all[selectedFolder.value]
         .childrens[selectedElementIndex.value]
+        .child
         .messages
         .insert(0, image);
     setData();
@@ -370,6 +328,7 @@ class Controller extends GetxController {
   void addChatVoice(ChatVoice voice) {
     all[selectedFolder.value]
         .childrens[selectedElementIndex.value]
+        .child
         .messages
         .insert(0, voice);
     setData();
@@ -378,6 +337,7 @@ class Controller extends GetxController {
   void addChatFile(ChatFile file) {
     all[selectedFolder.value]
         .childrens[selectedElementIndex.value]
+        .child
         .messages
         .insert(0, file);
     setData();

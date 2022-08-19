@@ -1,52 +1,28 @@
 import 'package:get/get.dart';
 import 'package:info_keeper/model/types/all.dart';
-import 'package:info_keeper/model/types/chat/chat_file.dart';
-import 'package:info_keeper/model/types/chat/chat_image.dart';
-import 'package:info_keeper/model/types/chat/chat_voice.dart';
-import 'package:info_keeper/model/types/chat/message.dart';
-import 'package:info_keeper/model/types/location_element.dart';
+import 'package:info_keeper/model/types/home/chat/chat_file.dart';
+import 'package:info_keeper/model/types/home/chat/chat_image.dart';
+import 'package:info_keeper/model/types/home/chat/chat_voice.dart';
+import 'package:info_keeper/model/types/home/chat/message.dart';
+import 'package:info_keeper/model/types/home/home.dart';
 
 class Chat {
-  AllType type;
-  LocationElement? location;
-  String? name;
-  bool animate;
-  bool dublicated;
-  bool link;
-  bool isPinned;
-  bool isLocked;
+  HomeType type;
+
   RxList? messages;
   RxList? favorites;
   RxList? pinnedMessages;
   String pathToImage;
 
   Chat(
-      {this.type = AllType.chat,
-      this.location,
-      this.name,
-      this.animate = false,
-      this.isPinned = false,
-      this.dublicated = false,
-      this.link = false,
-      this.isLocked = false,
+      {this.type = HomeType.chat,
       this.favorites,
       this.pinnedMessages,
       this.pathToImage = '',
       this.messages});
 
-  void pin() {
-    isPinned = !isPinned;
-  }
-
   Chat.fromJson(Map<String, dynamic> json)
-      : type = AllType.values.elementAt(json['type']),
-        location = LocationElement.fromJson(json['location']),
-        name = json['name'],
-        link = json['link'],
-        isLocked = json['isLocked'],
-        isPinned = json['pinned'],
-        dublicated = json['dublicated'],
-        animate = json['animate'],
+      : type = HomeType.values.elementAt(json['type']),
         messages = (json['messages'] as List<dynamic>)
             .map<dynamic>((dynamic e) {
               switch (AllType.values.elementAt(e['type'])) {
@@ -121,13 +97,6 @@ class Chat {
   Map<String, dynamic> toJson() {
     return {
       'type': type.index,
-      'location': location!.toJson(),
-      'name': name,
-      'link': link,
-      'pinned': isPinned,
-      'animate': animate,
-      'isLocked': isLocked,
-      'dublicated': dublicated,
       'pathToImage': pathToImage,
       'pinnedMessages': pinnedMessages!.map((e) => e.toJson()).toList(),
       'messages': messages!.map((e) => e.toJson()).toList(),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/folder.dart';
+import 'package:info_keeper/model/types/home_item.dart';
 
 class AddFolderPage extends StatelessWidget {
   const AddFolderPage({Key? key}) : super(key: key);
@@ -23,7 +24,8 @@ class AddFolderPage extends StatelessWidget {
             onPressed: () {
               if (folderTitleController.text.isNotEmpty) {
                 Controller.to.all.add(Folder(
-                    name: folderTitleController.text, childrens: [].obs));
+                    name: folderTitleController.text,
+                    childrens: <HomeItem>[].obs));
                 Controller.to.selectedFolder.value =
                     Controller.to.all.length - 1;
                 Controller.to.setData();

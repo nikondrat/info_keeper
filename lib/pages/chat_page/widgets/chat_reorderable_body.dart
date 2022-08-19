@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/chat/chat.dart';
+import 'package:info_keeper/model/types/home/chat/chat.dart';
 import 'package:info_keeper/pages/chat_page/widgets/chat_body.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
@@ -44,6 +44,7 @@ class ChatPageReorderableBody extends StatelessWidget {
             .to
             .all[Controller.to.selectedFolder.value]
             .childrens[Controller.to.selectedElementIndex.value]
+            .child
             .messages
             .isNotEmpty
         ? ReorderableListView.builder(
@@ -58,12 +59,14 @@ class ChatPageReorderableBody extends StatelessWidget {
                   .to
                   .all[Controller.to.selectedFolder.value]
                   .childrens[Controller.to.selectedElementIndex.value]
+                  .child
                   .messages
                   .removeAt(oldIndex);
               List messages = Controller
                   .to
                   .all[Controller.to.selectedFolder.value]
                   .childrens[Controller.to.selectedElementIndex.value]
+                  .child
                   .messages;
               messages.insert(newIndex, message);
               message.location.selectedMessageIndex = newIndex;
@@ -77,6 +80,7 @@ class ChatPageReorderableBody extends StatelessWidget {
                 .to
                 .all[Controller.to.selectedFolder.value]
                 .childrens[Controller.to.selectedElementIndex.value]
+                .child
                 .messages
                 .length,
             itemBuilder: (context, messageIndex) {
@@ -84,6 +88,7 @@ class ChatPageReorderableBody extends StatelessWidget {
                   .to
                   .all[Controller.to.selectedFolder.value]
                   .childrens[Controller.to.selectedElementIndex.value]
+                  .child
                   .messages[messageIndex]
                   .location
                   .selectedMessageIndex = messageIndex;

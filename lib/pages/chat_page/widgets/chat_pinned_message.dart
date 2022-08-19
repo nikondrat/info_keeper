@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/chat/chat.dart';
+import 'package:info_keeper/model/types/home/chat/chat.dart';
 import 'package:info_keeper/pages/chat_page/chat_pinned_messages.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
@@ -59,6 +59,7 @@ class ChatPagePinnedMessage extends StatelessWidget {
                       .to
                       .all[Controller.to.selectedFolder.value]
                       .childrens[Controller.to.selectedElementIndex.value]
+                      .child
                       .messages;
                   messages[pinnedMessages[0].location.selectedMessageIndex]
                           .isPinned =

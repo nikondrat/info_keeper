@@ -63,7 +63,7 @@ class SearchPage extends StatelessWidget {
             itemCount: searchResult.length,
             itemBuilder: (context, searchResultIndex) {
               return HomeWidget(
-                value: searchResult[searchResultIndex].element,
+                homeItem: searchResult[searchResultIndex].element,
                 index: searchResult[searchResultIndex].index,
                 term: searchQueryController.text,
               );

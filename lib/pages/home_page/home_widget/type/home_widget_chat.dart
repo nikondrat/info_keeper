@@ -45,19 +45,19 @@ class HomeWidgetChat extends StatelessWidget {
                 borderRadius: BorderRadius.circular(6),
                 border: Border.all(
                     color: isTrash != null
-                        ? Controller.to.trashElements[index].animate
+                        ? Controller.to.trashElements[index].isAnimated
                             ? const Color(0xFFB9DFBB)
                             : Colors.grey.shade600
                         : Controller.to.all[Controller.to.selectedFolder.value]
-                                .childrens[index].animate
+                                .childrens[index].isAnimated
                             ? const Color(0xFFB9DFBB)
                             : Colors.grey.shade600,
                     width: isTrash != null
-                        ? Controller.to.trashElements[index].animate
+                        ? Controller.to.trashElements[index].isAnimated
                             ? 1.4
                             : 1
                         : Controller.to.all[Controller.to.selectedFolder.value]
-                                .childrens[index].animate
+                                .childrens[index].isAnimated
                             ? 1.4
                             : 1)),
             child: Row(
@@ -84,7 +84,7 @@ class HomeWidgetChat extends StatelessWidget {
                           )
                         : Container()
                     : Controller.to.all[Controller.to.selectedFolder.value]
-                            .childrens[index].link
+                            .childrens[index].child.link
                         ? const Padding(
                             padding: EdgeInsets.only(right: 8),
                             child: Icon(Icons.subdirectory_arrow_left),
@@ -98,7 +98,7 @@ class HomeWidgetChat extends StatelessWidget {
                           )
                         : Container()
                     : Controller.to.all[Controller.to.selectedFolder.value]
-                            .childrens[index].dublicated
+                            .childrens[index].child.dublicated
                         ? const Padding(
                             padding: EdgeInsets.only(right: 8),
                             child: Icon(Icons.copy_all),
@@ -112,7 +112,7 @@ class HomeWidgetChat extends StatelessWidget {
                     text: isTrash != null
                         ? Controller.to.trashElements[index].name
                         : Controller.to.all[Controller.to.selectedFolder.value]
-                            .childrens[index].name!,
+                            .childrens[index].name,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),

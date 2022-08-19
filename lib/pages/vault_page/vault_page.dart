@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/chat/chat.dart';
+import 'package:info_keeper/model/types/home/chat/chat.dart';
 import 'package:info_keeper/pages/home_page/home_widget/home_widget.dart';
 import 'package:info_keeper/pages/home_page/widgets/home_btm_nav_bar.dart';
 import 'package:info_keeper/pages/vault_page/vault_password.dart';
@@ -61,7 +61,7 @@ class VaultPage extends StatelessWidget {
                       ? Padding(
                           padding: const EdgeInsets.all(5),
                           child: HomeWidget(
-                            value: childrens![index],
+                            homeItem: childrens![index],
                             isVault: true,
                             index: index,
                           ),
@@ -81,6 +81,7 @@ class VaultPage extends StatelessWidget {
                         .to
                         .all[Controller.to.selectedFolder.value]
                         .childrens[Controller.to.selectedElementIndex.value]
+                        .child
                         .messages;
                     if (passwordController.text ==
                         repeatPasswordController.text) {

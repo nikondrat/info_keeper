@@ -44,12 +44,14 @@ class ChatImageWidget extends StatelessWidget {
                       .to
                       .all[Controller.to.selectedFolder.value]
                       .childrens[Controller.to.selectedElementIndex.value]
+                      .child
                       .messages
                       .removeAt(Controller.to.firstSelectedMessage);
                   Controller
                       .to
                       .all[Controller.to.selectedFolder.value]
                       .childrens[Controller.to.selectedElementIndex.value]
+                      .child
                       .messages
                       .insert(index, message);
                   moveMessage!.value = false;

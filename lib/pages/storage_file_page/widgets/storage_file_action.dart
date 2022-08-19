@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/location_element.dart';
-import 'package:info_keeper/model/types/storage_file.dart';
+import 'package:info_keeper/model/types/home_item.dart';
+import 'package:info_keeper/model/types/item_location.dart';
+import 'package:info_keeper/model/types/home/storage_file/storage_file.dart';
 
 class StorageFilePageAction extends StatelessWidget {
   final RxList history;
@@ -26,19 +27,21 @@ class StorageFilePageAction extends StatelessWidget {
             onPressed: () {
               if (titleController.text.isNotEmpty) {
                 history.add(dataController.text);
-                Controller.to.change(StorageFile(
-                    history: history,
-                    location: LocationElement(
-                        inDirectory: Controller.to.selectedFolder.value,
-                        index: Controller
-                                .to
-                                .all[Controller.to.selectedFolder.value]
-                                .childrens
-                                .length -
-                            1),
-                    name: titleController.text,
-                    pathToImage: pathToImage.value,
-                    data: dataController.text));
+                Controller.to.change(HomeItem(
+                  name: titleController.text,
+                  child: StorageFile(
+                      pathToImage: pathToImage.value,
+                      history: history,
+                      data: dataController.text),
+                  location: ItemLocation(
+                      inDirectory: Controller.to.selectedFolder.value,
+                      index: Controller
+                              .to
+                              .all[Controller.to.selectedFolder.value]
+                              .childrens
+                              .length -
+                          1),
+                ));
                 Get.back();
               }
             },
@@ -48,19 +51,19 @@ class StorageFilePageAction extends StatelessWidget {
         : IconButton(
             onPressed: () {
               if (titleController.text.isNotEmpty) {
-                Controller.to.add(StorageFile(
-                    history: history,
-                    location: LocationElement(
-                        inDirectory: Controller.to.selectedFolder.value,
-                        index: Controller
-                                .to
-                                .all[Controller.to.selectedFolder.value]
-                                .childrens
-                                .length -
-                            1),
-                    name: titleController.text,
-                    pathToImage: pathToImage.value,
-                    data: dataController.text));
+                Controller.to.all[Controller.to.selectedFolder.value].childrens
+                    .add(HomeItem(
+                  name: titleController.text,
+                  child: StorageFile(),
+                  location: ItemLocation(
+                      inDirectory: Controller.to.selectedFolder.value,
+                      index: Controller
+                              .to
+                              .all[Controller.to.selectedFolder.value]
+                              .childrens
+                              .length -
+                          1),
+                ));
                 changeFile.value = true;
                 Get.back();
               }

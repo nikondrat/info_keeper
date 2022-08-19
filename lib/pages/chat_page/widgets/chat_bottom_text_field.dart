@@ -5,12 +5,12 @@ import 'package:flutter_sound/flutter_sound.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/all.dart';
-import 'package:info_keeper/model/types/chat/chat.dart';
-import 'package:info_keeper/model/types/chat/chat_file.dart';
-import 'package:info_keeper/model/types/chat/chat_image.dart';
-import 'package:info_keeper/model/types/chat/chat_voice.dart';
-import 'package:info_keeper/model/types/chat/message.dart';
-import 'package:info_keeper/model/types/location_element.dart';
+import 'package:info_keeper/model/types/home/chat/chat.dart';
+import 'package:info_keeper/model/types/home/chat/chat_file.dart';
+import 'package:info_keeper/model/types/home/chat/chat_image.dart';
+import 'package:info_keeper/model/types/home/chat/chat_voice.dart';
+import 'package:info_keeper/model/types/home/chat/message.dart';
+import 'package:info_keeper/model/types/item_location.dart';
 import 'package:info_keeper/pages/chat_page/widgets/chat_record_voice.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
@@ -67,13 +67,14 @@ class ChatPageBottomTextField extends StatelessWidget {
           Controller.to.addChatImage(ChatImage(
               path: path,
               dateTime: dateTime,
-              location: LocationElement(
+              location: ItemLocation(
                   inDirectory: Controller.to.selectedFolder.value,
                   index: Controller.to.selectedElementIndex.value,
                   selectedMessageIndex: Controller
                       .to
                       .all[Controller.to.selectedFolder.value]
                       .childrens[Controller.to.selectedElementIndex.value]
+                      .child
                       .messages
                       .length)));
         } else if (musicFormat != null) {
@@ -103,26 +104,28 @@ class ChatPageBottomTextField extends StatelessWidget {
               path: path,
               codec: codec,
               dateTime: dateTime,
-              location: LocationElement(
+              location: ItemLocation(
                   inDirectory: Controller.to.selectedFolder.value,
                   index: Controller.to.selectedElementIndex.value,
                   selectedMessageIndex: Controller
                       .to
                       .all[Controller.to.selectedFolder.value]
                       .childrens[Controller.to.selectedElementIndex.value]
+                      .child
                       .messages
                       .length)));
         } else {
           Controller.to.addChatFile(ChatFile(
               name: name,
               path: path,
-              location: LocationElement(
+              location: ItemLocation(
                   inDirectory: Controller.to.selectedFolder.value,
                   index: Controller.to.selectedElementIndex.value,
                   selectedMessageIndex: Controller
                       .to
                       .all[Controller.to.selectedFolder.value]
                       .childrens[Controller.to.selectedElementIndex.value]
+                      .child
                       .messages
                       .length),
               dateTime: dateTime));
@@ -151,6 +154,7 @@ class ChatPageBottomTextField extends StatelessWidget {
                                   .all[Controller.to.selectedFolder.value]
                                   .childrens[
                                       Controller.to.selectedElementIndex.value]
+                                  .child
                                   .messages![selectedMessage.value]
                                   .type ==
                               AllType.chatMessage
@@ -164,6 +168,7 @@ class ChatPageBottomTextField extends StatelessWidget {
                                 .all[Controller.to.selectedFolder.value]
                                 .childrens[
                                     Controller.to.selectedElementIndex.value]
+                                .child
                                 .messages![selectedMessage.value]
                                 .messageText,
                             maxLines: 1,
@@ -259,6 +264,7 @@ class ChatPageBottomTextField extends StatelessWidget {
                                                   .to.selectedFolder.value]
                                               .childrens[Controller.to
                                                   .selectedElementIndex.value]
+                                              .child
                                               .messages![selectedMessage.value]
                                               .type ==
                                           AllType.chatMessage) {
@@ -267,6 +273,7 @@ class ChatPageBottomTextField extends StatelessWidget {
                                         .all[Controller.to.selectedFolder.value]
                                         .childrens[Controller
                                             .to.selectedElementIndex.value]
+                                        .child
                                         .messages!;
 
                                     final List history = [];
@@ -302,9 +309,10 @@ class ChatPageBottomTextField extends StatelessWidget {
                                               .to.selectedFolder.value]
                                           .childrens[Controller
                                               .to.selectedElementIndex.value]
+                                          .child
                                           .messages!;
                                       Controller.to.addMessage(Message(
-                                          location: LocationElement(
+                                          location: ItemLocation(
                                               inDirectory: Controller
                                                   .to.selectedFolder.value,
                                               index: Controller.to
