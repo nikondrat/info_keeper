@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:info_keeper/model/types/home_item.dart';
-import 'package:info_keeper/pages/home_page/widgets/body/body_item/body_item_child_body.dart';
 
 class BodyItemDecoration extends StatelessWidget {
+  final Widget child;
   final HomeItem homeItem;
-  final String term;
   const BodyItemDecoration({
     Key? key,
     required this.homeItem,
-    required this.term,
+    required this.child,
   }) : super(key: key);
 
   @override
@@ -22,7 +21,7 @@ class BodyItemDecoration extends StatelessWidget {
                   ? const Color(0xFFB9DFBB)
                   : Colors.grey.shade600,
               width: homeItem.isAnimated ? 1.4 : 1)),
-      child: HomeBodyItemChildBody(homeItem: homeItem, term: term),
+      child: child,
     );
   }
 }

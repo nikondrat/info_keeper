@@ -161,7 +161,7 @@ class Controller extends GetxController {
     //       audioNote;
     // }
 
-    switch (value.type) {
+    switch (value.child.type) {
       case AllType.chat:
         chat();
         break;
@@ -289,7 +289,7 @@ class Controller extends GetxController {
     //   all[folderIndex].childrens.add(audioNote);
     // }
 
-    switch (value.type) {
+    switch (value.child.type) {
       case AllType.chat:
         chat();
         break;

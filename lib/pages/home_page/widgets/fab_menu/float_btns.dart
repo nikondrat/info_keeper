@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:info_keeper/model/controller.dart';
+import 'package:info_keeper/model/types/home/storage_file/storage_file.dart';
+import 'package:info_keeper/model/types/home/todo/task.dart';
+import 'package:info_keeper/model/types/home/todo/todo.dart';
+import 'package:info_keeper/model/types/home_item.dart';
+import 'package:info_keeper/model/types/item_location.dart';
 import 'package:info_keeper/pages/audio_page/audio_page.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
 import 'package:info_keeper/pages/home_page/widgets/home_alert_dialog.dart';
@@ -22,7 +28,7 @@ class _HomeFloatButtonsState extends State<HomeFloatButtons>
   @override
   void initState() {
     controller = AnimationController(
-      value: home.isShowDialMenu.value ? 1.0 : 0.0,
+      value: home.isShowDialMenu.value && !home.isShowBottomMenu.value ? 1 : 0,
       duration: const Duration(milliseconds: 250),
       vsync: this,
     );
@@ -31,13 +37,13 @@ class _HomeFloatButtonsState extends State<HomeFloatButtons>
 
   @override
   void dispose() {
-    home.dispose();
     controller.dispose();
     super.dispose();
   }
 
   void _toggle() {
     home.isShowDialMenu.value = !home.isShowDialMenu.value;
+    home.isShowBottomMenu.value = false;
     controller.reverse();
   }
 
@@ -57,7 +63,18 @@ class _HomeFloatButtonsState extends State<HomeFloatButtons>
             ActionButton(
               onPressed: () {
                 _toggle();
-                Get.to(() => const TodoPage());
+                Get.to(() => TodoPage(
+                      homeItem: HomeItem(
+                          child: Todo(tasks: <Task>[].obs),
+                          location: ItemLocation(
+                              inDirectory: Controller.to.selectedFolder.value,
+                              index: Controller
+                                      .to
+                                      .all[Controller.to.selectedFolder.value]
+                                      .childrens
+                                      .length -
+                                  1)),
+                    ));
               },
               icon: const Icon(Icons.add_task),
               heroTag: 'floatbtn2',

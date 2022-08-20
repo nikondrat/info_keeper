@@ -9,27 +9,21 @@ import 'package:info_keeper/pages/todo_page/widgets/todo_body.dart';
 import 'package:info_keeper/pages/todo_page/widgets/todo_text_field.dart';
 
 class TodoPage extends StatelessWidget {
-  final HomeItem? homeItem;
+  final HomeItem homeItem;
   final bool change;
-  const TodoPage({Key? key, this.homeItem, this.change = false})
+  const TodoPage({Key? key, required this.homeItem, this.change = false})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    RxList<Task> tasks = homeItem.child.tasks;
     final TextEditingController titleController =
-        TextEditingController(text: homeItem != null ? homeItem!.name : '');
-    final tasks = [Task(title: '')].obs;
-
-    if (homeItem != null) {
-      tasks.value = homeItem!.child.tasks!;
-      if (!change) {
-        tasks.insert(0, Task(title: ''));
-      }
-    }
+        TextEditingController(text: homeItem.name);
 
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 0,
+        centerTitle: false,
         leading: IconButton(
             splashRadius: 20,
             icon: const Icon(Icons.arrow_back),
@@ -116,6 +110,10 @@ class TodoPage extends StatelessWidget {
         ),
       ),
       body: TodoPageBody(tasks: tasks),
+      // bottomSheet: TodoPageTaskWidget(
+      //   index: 0,
+      //   tasks: tasks,
+      // ),
     );
   }
 }

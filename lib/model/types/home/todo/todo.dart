@@ -4,11 +4,11 @@ import 'package:info_keeper/model/types/home/todo/task.dart';
 
 class Todo {
   HomeType type;
-  RxList<Task>? tasks;
+  RxList<Task> tasks;
 
   Todo({
     this.type = HomeType.todo,
-    this.tasks,
+    required this.tasks,
   });
 
   Todo.fromJson(Map<String, dynamic> json)
@@ -21,7 +21,7 @@ class Todo {
   Map<String, dynamic> toJson() {
     return {
       'type': type.index,
-      'tasks': tasks!.map((e) => e.toJson()).toList(),
+      'tasks': tasks.map((e) => e.toJson()).toList(),
     };
   }
 }

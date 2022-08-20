@@ -3,6 +3,7 @@ import 'package:flutter_sound/flutter_sound.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home/audio/audio_note.dart';
+import 'package:info_keeper/model/types/home/home.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/model/types/item_location.dart';
 import 'package:intl/intl.dart';

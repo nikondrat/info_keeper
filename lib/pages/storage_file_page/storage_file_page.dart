@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
+import 'package:info_keeper/model/types/home/home.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/model/types/item_location.dart';
 import 'package:info_keeper/model/types/home/storage_file/storage_file.dart';
@@ -239,9 +240,7 @@ class StorageFilePage extends StatelessWidget {
                                         .length -
                                     1),
                           ))
-                        : Controller.to.all[Controller.to.selectedFolder.value]
-                            .childrens
-                            .add(HomeItem(
+                        : Controller.to.add(HomeItem(
                             name: title.text,
                             child: StorageFile(
                                 history: history,

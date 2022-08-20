@@ -37,9 +37,7 @@ class _ExpandableFabState extends State<ExpandableFab>
 
   void _toggle() {
     home.isShowDialMenu.value = !home.isShowDialMenu.value;
-    // Controller.to.isShowDial.value = !Controller.to.isShowDial.value;
     if (home.isShowDialMenu.value) {
-      // if (Controller.to.isShowDial.value) {
       widget.controller.forward();
     } else {
       widget.controller.reverse();
@@ -89,13 +87,10 @@ class _ExpandableFabState extends State<ExpandableFab>
       curve: const Interval(0.0, 0.5, curve: Curves.easeOut),
       child: Obx(() => FloatingActionButton(
           heroTag: home.isShowDialMenu.value ? 'open' : 'close',
-          // heroTag: Controller.to.isShowDial.value ? 'open' : 'close',
           onPressed: () {
             _toggle();
           },
-          child: Icon(home.isShowDialMenu.value ? Icons.close : Icons.add)
-          // Icon(Controller.to.isShowDial.value ? Icons.close : Icons.add),
-          )),
+          child: Icon(home.isShowDialMenu.value ? Icons.close : Icons.add))),
     );
   }
 }

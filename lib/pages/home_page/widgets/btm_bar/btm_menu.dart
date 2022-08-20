@@ -7,41 +7,24 @@ import 'package:info_keeper/pages/home_page/home_controller.dart';
 import 'package:info_keeper/pages/home_page/widgets/btm_bar/btm_menu_controller.dart';
 import 'package:info_keeper/widgets/notifications.dart';
 
-class HomeBottomMenu extends StatefulWidget {
+class HomeBottomMenu extends StatelessWidget {
   const HomeBottomMenu({Key? key}) : super(key: key);
 
   @override
-  State<HomeBottomMenu> createState() => _HomeBottomMenuState();
-}
-
-class _HomeBottomMenuState extends State<HomeBottomMenu> {
-  late final HomeController home;
-  late final BottomMenuController menu;
-  late HomeItem item = Controller.to.all[Controller.to.selectedFolder.value]
-      .childrens[Controller.to.selectedElementIndex.value];
-
-  @override
-  void initState() {
-    home = Get.find();
-    menu = Get.put(BottomMenuController());
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    home.dispose();
-    menu.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    late final HomeController home = Get.find();
+    late final BottomMenuController menu = Get.put(BottomMenuController());
+    late HomeItem item = Controller.to.all[Controller.to.selectedFolder.value]
+        .childrens[Controller.to.selectedElementIndex.value];
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         IconButton(
             splashRadius: 20,
-            onPressed: () => home.isShowBottomMenu.value = false,
+            onPressed: () {
+              home.isShowBottomMenu.value = false;
+            },
             icon: const Icon(Icons.close)),
         Row(
           children: [

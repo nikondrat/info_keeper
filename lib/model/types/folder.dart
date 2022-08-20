@@ -22,8 +22,10 @@ class Folder {
 
   Folder.fromJson(Map<String, dynamic> json)
       : name = json['name'],
-        childrens = List<HomeItem>.from(
-            json['childrens'].map((e) => HomeItem.fromJson(e))).toList().obs;
+        childrens = (json['childrens'] as List)
+            .map((e) => HomeItem.fromJson(e))
+            .toList()
+            .obs;
 
   // HomeItem.fromJson(json['childrens'])
   //   childrens = (json['childrens'] as List<dynamic>)

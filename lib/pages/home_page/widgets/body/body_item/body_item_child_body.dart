@@ -5,13 +5,19 @@ import 'package:substring_highlight/substring_highlight.dart';
 class HomeBodyItemChildBody extends StatelessWidget {
   final HomeItem homeItem;
   final String term;
+  final Widget? verticalChild;
+  final Widget? horizontalChild;
   const HomeBodyItemChildBody(
-      {Key? key, required this.homeItem, required this.term})
+      {Key? key,
+      required this.homeItem,
+      required this.term,
+      this.verticalChild,
+      this.horizontalChild})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    Row horizontal = Row(
       children: [
         homeItem.isPinned
             ? const Padding(
@@ -41,7 +47,15 @@ class HomeBodyItemChildBody extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
         ),
+        horizontalChild ?? const SizedBox()
       ],
     );
+
+    return verticalChild != null
+        ? Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [horizontal, verticalChild!],
+          )
+        : horizontal;
   }
 }

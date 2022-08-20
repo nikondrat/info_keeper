@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:info_keeper/model/types/home/todo/task.dart';
 
 class TodoBottomField extends StatelessWidget {
-  final List tasks;
+  final RxList<Task> tasks;
   const TodoBottomField({Key? key, required this.tasks}) : super(key: key);
 
   @override
@@ -28,7 +29,7 @@ class TodoBottomField extends StatelessWidget {
             splashRadius: 20,
             onPressed: () {
               if (controller.text.isNotEmpty) {
-                tasks.add(Task(title: controller.text, taskIsCompleted: false));
+                tasks.add(Task(title: controller.text, isCompleted: false.obs));
               }
             },
             icon: const Icon(Icons.done))

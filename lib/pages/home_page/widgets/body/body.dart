@@ -28,9 +28,8 @@ class HomeBody extends StatelessWidget {
                       padding: const EdgeInsets.all(5),
                       child: HomeBodyItem(
                           homeItem: Controller
-                              .to
-                              .all[Controller.to.selectedFolder.value]
-                              .childrens[index],
+                              .to.all[Controller.to.selectedFolder.value]
+                              .getChildrens()[index],
                           index: index));
                 })
             : const Center(

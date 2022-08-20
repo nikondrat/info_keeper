@@ -2,13 +2,13 @@ import 'package:info_keeper/model/types/home/home.dart';
 
 class StorageFile {
   HomeType type;
-  String? data;
+  String data;
   List? history;
   String pathToImage;
 
   StorageFile({
     this.type = HomeType.storageFile,
-    this.data,
+    this.data = '',
     this.pathToImage = '',
     this.history,
   });

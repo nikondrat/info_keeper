@@ -1,14 +1,20 @@
+import 'package:get/get.dart';
+
 class Task {
   String title;
-  bool taskIsCompleted;
-  Task({required this.title, this.taskIsCompleted = false});
+  RxBool isCompleted;
+  Task({required this.title, required this.isCompleted});
+
+  void completed() {
+    isCompleted.value = !isCompleted.value;
+  }
 
   Task.fromJson(Map<String, dynamic> json)
-      : title = json['title'],
-        taskIsCompleted = json['taskIsCompleted'];
+      : title = json['title'] ?? '',
+        isCompleted = json['isCompleted'] ?? false.obs;
 
   Map<String, dynamic> toJson() => {
         'title': title,
-        'taskIsCompleted': taskIsCompleted,
+        'isCompleted': isCompleted,
       };
 }

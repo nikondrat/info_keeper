@@ -24,7 +24,10 @@ AppBarTheme appBarTheme = const AppBarTheme(
 TextButtonThemeData textButtonTheme = TextButtonThemeData(
     style: ButtonStyle(
         foregroundColor: MaterialStateProperty.all(Colors.black),
-        overlayColor: MaterialStateProperty.all(Colors.grey.shade200),
+        overlayColor: MaterialStateProperty.all(
+            Platform.isAndroid || Platform.isIOS
+                ? Colors.grey.shade200
+                : Colors.grey.shade300),
         splashFactory: NoSplash.splashFactory));
 
 FloatingActionButtonThemeData floatingActionButtonThemeData =
@@ -38,7 +41,6 @@ FloatingActionButtonThemeData floatingActionButtonThemeData =
         foregroundColor: Colors.black,
         shape: RoundedRectangleBorder(
             side: BorderSide(
-                width: Platform.isAndroid || Platform.isIOS ? 1 : 1,
                 color: Platform.isAndroid || Platform.isIOS
                     ? Colors.grey.shade300
                     : Colors.black54),

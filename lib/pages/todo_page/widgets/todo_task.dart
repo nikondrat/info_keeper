@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home/todo/task.dart';
+import 'package:info_keeper/pages/todo_page/todo_controller.dart';
 
 class TodoPageTaskWidget extends StatelessWidget {
-  final List<Task> tasks;
+  final RxList<Task> tasks;
   final int index;
   final bool change;
   const TodoPageTaskWidget(
@@ -13,20 +14,17 @@ class TodoPageTaskWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController controller = TextEditingController(
-        text: tasks[index].title.isNotEmpty ? tasks[index].title : '');
+    TextEditingController controller =
+        TextEditingController(text: tasks[index].title);
 
     return Row(
       children: [
         Obx(() => Checkbox(
             fillColor: MaterialStateProperty.all(Colors.grey.shade600),
-            value: tasks[index].taskIsCompleted,
+            value: tasks[index].isCompleted.value,
             onChanged: (value) {
-              if (index != 0) {
-                tasks[index] =
-                    Task(title: tasks[index].title, taskIsCompleted: value!);
-                Controller.to.setData();
-              }
+              tasks[index].completed();
+              Controller.to.setData();
             })),
         change
             ? Expanded(
@@ -40,9 +38,13 @@ class TodoPageTaskWidget extends StatelessWidget {
                       if (change && index != 0) {
                         tasks[index] = Task(
                             title: controller.text,
-                            taskIsCompleted: tasks[index].taskIsCompleted);
+                            isCompleted: tasks[index].isCompleted);
                       } else {
-                        tasks.insert(1, Task(title: controller.text));
+                        tasks.insert(
+                            1,
+                            Task(
+                                title: controller.text,
+                                isCompleted: false.obs));
                       }
                     }
                   },
