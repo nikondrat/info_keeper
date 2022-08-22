@@ -52,7 +52,6 @@ class HomeItem {
         child = Task.fromJson(json['child']),
 
         // child = json['child'].values.map((e) {
-        //   // child = (json['child']).values.map((e) {
         //   switch (HomeType.values.elementAt(e['type'])) {
         //     case HomeType.chat:
         //       return Chat.fromJson(e);
@@ -63,8 +62,7 @@ class HomeItem {
         //     case HomeType.audioNote:
         //       return AudioNote.fromJson(e);
         //     default:
-        //   }
-        // }),
+        // }}),
 
         isLink = json['isLink'] ?? false,
         isLocked = json['isLocked'] ?? false,
