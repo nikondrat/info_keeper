@@ -24,13 +24,13 @@ class StorageFileItem extends StatelessWidget {
           splashFactory: NoSplash.splashFactory,
           highlightColor: Colors.transparent),
       child: HomeBodyItemGesture(
-        index: index,
+        homeItemIndex: index,
         homeItem: homeItem,
         child: BodyItemDecoration(
           homeItem: homeItem,
           child: ExpansionWidget(
             content: Text(
-              homeItem.child.data,
+              homeItem.child.value.data,
               maxLines: 6,
               overflow: TextOverflow.ellipsis,
             ),
@@ -39,7 +39,7 @@ class StorageFileItem extends StatelessWidget {
                     HomeBodyItemChildBody(
               homeItem: homeItem,
               term: term,
-              horizontalChild: homeItem.child.data.isNotEmpty
+              horizontalChild: homeItem.child.value.data.isNotEmpty
                   ? IconButton(
                       onPressed: () => toggleFunction(animated: true),
                       icon: Icon(isExpanded

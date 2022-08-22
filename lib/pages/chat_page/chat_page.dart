@@ -44,6 +44,7 @@ class ChatPage extends StatelessWidget {
         .all[Controller.to.selectedFolder.value]
         .childrens[Controller.to.selectedElementIndex.value]
         .child
+        .value
         .pinnedMessages;
     final pathToImage = ''.obs;
 
@@ -52,6 +53,7 @@ class ChatPage extends StatelessWidget {
         .all[Controller.to.selectedFolder.value]
         .childrens[Controller.to.selectedElementIndex.value]
         .child
+        .value
         .pathToImage
         .isNotEmpty) {
       pathToImage.value = Controller
@@ -59,6 +61,7 @@ class ChatPage extends StatelessWidget {
           .all[Controller.to.selectedFolder.value]
           .childrens[Controller.to.selectedElementIndex.value]
           .child
+          .value
           .pathToImage;
     }
 
@@ -112,6 +115,7 @@ class ChatPage extends StatelessWidget {
                                     .childrens[Controller
                                         .to.selectedElementIndex.value]
                                     .child
+                                    .value
                                     .messages;
 
                                 messages.remove(selectedMessages[i]);
@@ -287,6 +291,7 @@ class ChatPage extends StatelessWidget {
                         .all[Controller.to.selectedFolder.value]
                         .childrens[Controller.to.selectedElementIndex.value]
                         .child
+                        .value
                         .messages![selectedMessage.value]
                         .selectedColorIndex,
                     isShowColorSelector: isShowColorSelector)

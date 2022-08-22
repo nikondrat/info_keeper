@@ -83,6 +83,7 @@ class _ChatVoiceWidgetState extends State<ChatVoiceWidget> {
                           .all[Controller.to.selectedFolder.value]
                           .childrens[Controller.to.selectedElementIndex.value]
                           .child
+                          .value
                           .messages
                           .removeAt(Controller.to.firstSelectedMessage);
                       Controller
@@ -90,6 +91,7 @@ class _ChatVoiceWidgetState extends State<ChatVoiceWidget> {
                           .all[Controller.to.selectedFolder.value]
                           .childrens[Controller.to.selectedElementIndex.value]
                           .child
+                          .value
                           .messages
                           .insert(widget.index, message);
                       widget.moveMessage!.value = false;
@@ -126,6 +128,7 @@ class _ChatVoiceWidgetState extends State<ChatVoiceWidget> {
                                     .childrens[Controller
                                         .to.selectedElementIndex.value]
                                     .child
+                                    .value
                                     .messages
                                     .removeAt(widget.index);
 

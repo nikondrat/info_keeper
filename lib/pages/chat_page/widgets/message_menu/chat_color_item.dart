@@ -25,6 +25,7 @@ class ChatPageColorItem extends StatelessWidget {
                 .all[Controller.to.selectedFolder.value]
                 .childrens[Controller.to.selectedElementIndex.value]
                 .child
+                .value
                 .messages!;
             messages[selectedMessage.value].selectedColorIndex =
                 selectedIndex.value;

@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
-import 'package:info_keeper/pages/todo_page/todo_page.dart';
-import 'package:info_keeper/pages/todo_page/widgets/todo_task.dart';
+import 'package:info_keeper/pages/task_page/task_page.dart';
+import 'package:info_keeper/pages/task_page/widgets/todo.dart';
 import 'package:info_keeper/pages/trash_page/trash_element.dart';
 import 'package:substring_highlight/substring_highlight.dart';
 
@@ -31,7 +31,7 @@ class HomeWidgetTodo extends StatelessWidget {
           ? null
           : () {
               Controller.to.selectedElementIndex.value = index;
-              Get.to(() => TodoPage(homeItem: homeItem, change: true));
+              Get.to(() => TaskPage(homeItem: homeItem, change: true));
             },
       onLongPress: isTrash != null
           ? () => isShowRestoreMenu.value = true
@@ -84,13 +84,14 @@ class HomeWidgetTodo extends StatelessWidget {
                       shrinkWrap: true,
                       reverse: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: homeItem.child.tasks!.length < 11
-                          ? homeItem.child.tasks!.length
+                      itemCount: homeItem.child.value.tasks!.length < 11
+                          ? homeItem.child.value.tasks!.length
                           : 11,
                       itemBuilder: (context, index) {
-                        return homeItem.child.tasks![index].title.isNotEmpty
-                            ? TodoPageTaskWidget(
-                                tasks: homeItem.child.tasks!,
+                        return homeItem
+                                .child.value.tasks![index].title.isNotEmpty
+                            ? TodoWidget(
+                                task: homeItem.child,
                                 index: index,
                                 change: false,
                               )

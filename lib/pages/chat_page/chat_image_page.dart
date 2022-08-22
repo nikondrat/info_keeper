@@ -24,6 +24,7 @@ class ChatImagePage extends StatelessWidget {
                       .all[Controller.to.selectedFolder.value]
                       .childrens[Controller.to.selectedElementIndex.value]
                       .child
+                      .value
                       .messages
                       .removeAt(selectedMessage);
 

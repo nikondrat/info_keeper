@@ -46,11 +46,12 @@ class _ChatPageRecordVoiceState extends State<ChatPageRecordVoice> {
         location: ItemLocation(
             inDirectory: Controller.to.selectedFolder.value,
             index: Controller.to.selectedElementIndex.value,
-            selectedMessageIndex: Controller
+            itemIndex: Controller
                 .to
                 .all[Controller.to.selectedFolder.value]
                 .childrens[Controller.to.selectedElementIndex.value]
                 .child
+                .value
                 .messages
                 .length)));
   }

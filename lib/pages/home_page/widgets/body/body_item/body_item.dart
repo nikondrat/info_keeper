@@ -1,11 +1,10 @@
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/pages/home_page/widgets/body/body_item/body_item_anim.dart';
 import 'package:info_keeper/pages/home_page/widgets/body/body_item/body_item_child.dart';
 
 class HomeBodyItem extends StatelessWidget {
-  final int index;
+  final int homeItemIndex;
   final HomeItem homeItem;
   final String term;
   final bool isVault;
@@ -13,7 +12,7 @@ class HomeBodyItem extends StatelessWidget {
 
   const HomeBodyItem(
       {Key? key,
-      required this.index,
+      required this.homeItemIndex,
       required this.homeItem,
       this.term = '',
       this.isTrash = false,
@@ -24,8 +23,9 @@ class HomeBodyItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return homeItem.isAnimated
         ? HomeBodyItemAnimation(
-            bodyItem:
-                HomeBodyItemChild(index: index, homeItem: homeItem, term: term))
-        : HomeBodyItemChild(index: index, homeItem: homeItem, term: term);
+            bodyItem: HomeBodyItemChild(
+                homeItemIndex: homeItemIndex, homeItem: homeItem, term: term))
+        : HomeBodyItemChild(
+            homeItemIndex: homeItemIndex, homeItem: homeItem, term: term);
   }
 }

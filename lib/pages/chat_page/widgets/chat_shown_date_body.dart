@@ -46,6 +46,7 @@ class ChatPageShownDateBody extends StatelessWidget {
             .all[Controller.to.selectedFolder.value]
             .childrens[Controller.to.selectedElementIndex.value]
             .child
+            .value
             .messages
             .isNotEmpty
         ? GroupedListView(
@@ -115,6 +116,7 @@ class ChatPageShownDateBody extends StatelessWidget {
                 .all[Controller.to.selectedFolder.value]
                 .childrens[Controller.to.selectedElementIndex.value]
                 .child
+                .value
                 .messages!,
             groupBy: (dynamic element) {
               late DateFormat format = DateFormat('yyyy-MM-dd HH:mm:ss');

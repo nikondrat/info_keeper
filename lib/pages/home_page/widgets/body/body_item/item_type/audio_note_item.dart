@@ -1,6 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/pages/home_page/widgets/body/body_item/body_item_child_body.dart';
 import 'package:info_keeper/pages/home_page/widgets/body/body_item/body_item_decoration.dart';

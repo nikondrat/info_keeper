@@ -25,6 +25,7 @@ class ChatPageTitles extends StatelessWidget {
                 .all[Controller.to.selectedFolder.value]
                 .childrens[Controller.to.selectedElementIndex.value]
                 .child
+                .value
                 .messages!
                 .length;
         i++) {
@@ -33,6 +34,7 @@ class ChatPageTitles extends StatelessWidget {
                   .all[Controller.to.selectedFolder.value]
                   .childrens[Controller.to.selectedElementIndex.value]
                   .child
+                  .value
                   .messages![i]
                   .type ==
               AllType.chatMessage &&
@@ -41,6 +43,7 @@ class ChatPageTitles extends StatelessWidget {
               .all[Controller.to.selectedFolder.value]
               .childrens[Controller.to.selectedElementIndex.value]
               .child
+              .value
               .messages![i]
               .isLocked) {
         titlesMessages.add(Controller
@@ -48,6 +51,7 @@ class ChatPageTitles extends StatelessWidget {
             .all[Controller.to.selectedFolder.value]
             .childrens[Controller.to.selectedElementIndex.value]
             .child
+            .value
             .messages![i]);
       }
     }

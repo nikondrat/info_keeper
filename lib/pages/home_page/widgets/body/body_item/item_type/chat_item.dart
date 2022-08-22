@@ -18,7 +18,7 @@ class ChatItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HomeBodyItemGesture(
-        index: index,
+        homeItemIndex: index,
         homeItem: homeItem,
         child: BodyItemDecoration(
             homeItem: homeItem,

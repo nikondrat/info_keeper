@@ -86,6 +86,7 @@ class ChatMediaBodyImages extends StatelessWidget {
                 .all[Controller.to.selectedFolder.value]
                 .childrens[Controller.to.selectedElementIndex.value]
                 .child
+                .value
                 .messages
                 .length;
         i++) {
@@ -94,6 +95,7 @@ class ChatMediaBodyImages extends StatelessWidget {
               .all[Controller.to.selectedFolder.value]
               .childrens[Controller.to.selectedElementIndex.value]
               .child
+              .value
               .messages[i]
               .type ==
           AllType.chatImage) {
@@ -102,6 +104,7 @@ class ChatMediaBodyImages extends StatelessWidget {
             .all[Controller.to.selectedFolder.value]
             .childrens[Controller.to.selectedElementIndex.value]
             .child
+            .value
             .messages[i]);
       }
     }
@@ -133,6 +136,7 @@ class ChatMediaBodyFiles extends StatelessWidget {
                 .all[Controller.to.selectedFolder.value]
                 .childrens[Controller.to.selectedElementIndex.value]
                 .child
+                .value
                 .messages
                 .length;
         i++) {
@@ -141,6 +145,7 @@ class ChatMediaBodyFiles extends StatelessWidget {
               .all[Controller.to.selectedFolder.value]
               .childrens[Controller.to.selectedElementIndex.value]
               .child
+              .value
               .messages[i]
               .type ==
           AllType.chatFile) {
@@ -149,6 +154,7 @@ class ChatMediaBodyFiles extends StatelessWidget {
             .all[Controller.to.selectedFolder.value]
             .childrens[Controller.to.selectedElementIndex.value]
             .child
+            .value
             .messages[i]);
       }
     }
@@ -178,6 +184,7 @@ class ChatMediaBodyLinks extends StatelessWidget {
                 .all[Controller.to.selectedFolder.value]
                 .childrens[Controller.to.selectedElementIndex.value]
                 .child
+                .value
                 .messages
                 .length;
         i++) {
@@ -186,6 +193,7 @@ class ChatMediaBodyLinks extends StatelessWidget {
                   .all[Controller.to.selectedFolder.value]
                   .childrens[Controller.to.selectedElementIndex.value]
                   .child
+                  .value
                   .messages[i]
                   .type ==
               AllType.chatMessage &&
@@ -194,6 +202,7 @@ class ChatMediaBodyLinks extends StatelessWidget {
               .all[Controller.to.selectedFolder.value]
               .childrens[Controller.to.selectedElementIndex.value]
               .child
+              .value
               .messages[i]
               .isLocked &&
           Controller
@@ -201,6 +210,7 @@ class ChatMediaBodyLinks extends StatelessWidget {
               .all[Controller.to.selectedFolder.value]
               .childrens[Controller.to.selectedElementIndex.value]
               .child
+              .value
               .messages[i]
               .messageText
               .contains(RegExp(r'(https?://[^\s]+)'))) {
@@ -209,6 +219,7 @@ class ChatMediaBodyLinks extends StatelessWidget {
             .all[Controller.to.selectedFolder.value]
             .childrens[Controller.to.selectedElementIndex.value]
             .child
+            .value
             .messages[i]);
       }
     }
@@ -238,6 +249,7 @@ class ChatMediaBodySounds extends StatelessWidget {
                 .all[Controller.to.selectedFolder.value]
                 .childrens[Controller.to.selectedElementIndex.value]
                 .child
+                .value
                 .messages
                 .length;
         i++) {
@@ -246,6 +258,7 @@ class ChatMediaBodySounds extends StatelessWidget {
               .all[Controller.to.selectedFolder.value]
               .childrens[Controller.to.selectedElementIndex.value]
               .child
+              .value
               .messages[i]
               .type ==
           AllType.chatVoice) {
@@ -254,6 +267,7 @@ class ChatMediaBodySounds extends StatelessWidget {
             .all[Controller.to.selectedFolder.value]
             .childrens[Controller.to.selectedElementIndex.value]
             .child
+            .value
             .messages[i]);
       }
     }

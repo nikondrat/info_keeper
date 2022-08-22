@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/home/storage_file/storage_file.dart';
-import 'package:info_keeper/model/types/home/todo/task.dart';
-import 'package:info_keeper/model/types/home/todo/todo.dart';
-import 'package:info_keeper/model/types/home_item.dart';
-import 'package:info_keeper/model/types/item_location.dart';
 import 'package:info_keeper/pages/audio_page/audio_page.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
 import 'package:info_keeper/pages/home_page/widgets/home_alert_dialog.dart';
 import 'package:info_keeper/pages/storage_file_page/storage_file_page.dart';
-import 'package:info_keeper/pages/todo_page/todo_page.dart';
 import 'package:info_keeper/pages/home_page/widgets/fab_menu/fab.dart';
+import 'package:info_keeper/pages/task_page/task_page.dart';
 
 class HomeFloatButtons extends StatefulWidget {
   const HomeFloatButtons({Key? key}) : super(key: key);
@@ -63,18 +57,7 @@ class _HomeFloatButtonsState extends State<HomeFloatButtons>
             ActionButton(
               onPressed: () {
                 _toggle();
-                Get.to(() => TodoPage(
-                      homeItem: HomeItem(
-                          child: Todo(tasks: <Task>[].obs),
-                          location: ItemLocation(
-                              inDirectory: Controller.to.selectedFolder.value,
-                              index: Controller
-                                      .to
-                                      .all[Controller.to.selectedFolder.value]
-                                      .childrens
-                                      .length -
-                                  1)),
-                    ));
+                Get.to(() => const TaskPage());
               },
               icon: const Icon(Icons.add_task),
               heroTag: 'floatbtn2',

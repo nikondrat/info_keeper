@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/model/types/home_item.dart';
-import 'package:info_keeper/pages/home_page/home_widget/type/home_widget_audio_note.dart';
-import 'package:info_keeper/pages/home_page/home_widget/type/home_widget_chat.dart';
 import 'package:info_keeper/pages/home_page/home_widget/type/home_widget_storage_file.dart';
 
 class HomeWidgetChild extends StatelessWidget {

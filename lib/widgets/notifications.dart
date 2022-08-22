@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
-import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/item_location.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
@@ -101,7 +100,7 @@ class _NotificationsState extends State<Notifications> {
       );
     }
 
-    return widget.locElement.selectedMessageIndex != null
+    return widget.locElement.itemIndex != null
         ? TextButton.icon(
             style: const ButtonStyle(
               alignment: Alignment.centerLeft,

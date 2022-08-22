@@ -7,6 +7,7 @@ ThemeData defaultLight = ThemeData(
     canvasColor: Colors.white,
     appBarTheme: appBarTheme,
     textButtonTheme: textButtonTheme,
+    checkboxTheme: checkboxTheme,
     floatingActionButtonTheme: floatingActionButtonThemeData);
 
 AppBarTheme appBarTheme = const AppBarTheme(
@@ -29,6 +30,10 @@ TextButtonThemeData textButtonTheme = TextButtonThemeData(
                 ? Colors.grey.shade200
                 : Colors.grey.shade300),
         splashFactory: NoSplash.splashFactory));
+
+CheckboxThemeData checkboxTheme = CheckboxThemeData(
+    fillColor: MaterialStateProperty.all(Colors.grey.shade600),
+    overlayColor: MaterialStateProperty.all(Colors.transparent));
 
 FloatingActionButtonThemeData floatingActionButtonThemeData =
     FloatingActionButtonThemeData(

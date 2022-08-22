@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home_item.dart';
-import 'package:info_keeper/model/types/item_location.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
-import 'package:info_keeper/pages/home_page/widgets/btm_bar/btm_menu_controller.dart';
 import 'package:info_keeper/widgets/notifications.dart';
 
 class HomeBottomMenu extends StatelessWidget {
@@ -13,7 +11,6 @@ class HomeBottomMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     late final HomeController home = Get.find();
-    late final BottomMenuController menu = Get.put(BottomMenuController());
     late HomeItem item = Controller.to.all[Controller.to.selectedFolder.value]
         .childrens[Controller.to.selectedElementIndex.value];
 
@@ -31,27 +28,21 @@ class HomeBottomMenu extends StatelessWidget {
             IconButton(
                 splashRadius: 20,
                 onPressed: () {
-                  menu.pinItem(item);
+                  item.copyWith(isPinned: !item.isPinned);
                   home.isShowBottomMenu.value = false;
                 },
                 icon: const Icon(Icons.push_pin_outlined)),
             IconButton(
               splashRadius: 20,
               onPressed: () {
-                menu.animateItem(item);
+                item.copyWith(isAnimated: !item.isAnimated);
                 home.isShowBottomMenu.value = false;
               },
               icon: const Icon(
                 Icons.local_fire_department_outlined,
               ),
             ),
-            Notifications(
-              name: Controller.to.all[Controller.to.selectedFolder.value]
-                  .childrens[Controller.to.selectedElementIndex.value].name,
-              locElement: ItemLocation(
-                  inDirectory: Controller.to.selectedFolder.value,
-                  index: Controller.to.selectedElementIndex.value),
-            ),
+            Notifications(name: item.name, locElement: item.location),
             IconButton(
                 splashRadius: 20,
                 onPressed: () {

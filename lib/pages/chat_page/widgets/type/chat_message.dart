@@ -64,25 +64,28 @@ class MessageWidget extends StatelessWidget {
                 .all[Controller.to.selectedFolder.value]
                 .childrens[Controller.to.selectedElementIndex.value]
                 .child
-                .messages[message.location.selectedMessageIndex!]
+                .value
+                .messages[message.location.itemIndex!]
                 .isLocked &&
             !Controller
                 .to
                 .all[Controller.to.selectedFolder.value]
                 .childrens[Controller.to.selectedElementIndex.value]
                 .child
-                .messages[message.location.selectedMessageIndex!]
+                .value
+                .messages[message.location.itemIndex!]
                 .isUnlocked
         ? GestureDetector(
             key: messageKey,
             onTap: () {
-              selected.value = message.location.selectedMessageIndex!;
+              selected.value = message.location.itemIndex!;
               if (moveMessage.value) {
                 var message = Controller
                     .to
                     .all[Controller.to.selectedFolder.value]
                     .childrens[Controller.to.selectedElementIndex.value]
                     .child
+                    .value
                     .messages
                     .removeAt(Controller.to.firstSelectedMessage);
                 Controller
@@ -90,6 +93,7 @@ class MessageWidget extends StatelessWidget {
                     .all[Controller.to.selectedFolder.value]
                     .childrens[Controller.to.selectedElementIndex.value]
                     .child
+                    .value
                     .messages
                     .insert(selected.value, message);
                 moveMessage.value = false;
@@ -142,8 +146,7 @@ class MessageWidget extends StatelessWidget {
             : SwipeTo(
                 key: messageKey,
                 onRightSwipe: () {
-                  selectedMessage!.value =
-                      message.location.selectedMessageIndex!;
+                  selectedMessage!.value = message.location.itemIndex!;
                   editMessage!.value = true;
                   contentController!.value = TextEditingValue(
                       text: Controller
@@ -151,6 +154,7 @@ class MessageWidget extends StatelessWidget {
                           .all[Controller.to.selectedFolder.value]
                           .childrens[Controller.to.selectedElementIndex.value]
                           .child
+                          .value
                           .messages[selectedMessage!.value]
                           .messageText);
                   titleController!.value = TextEditingValue(
@@ -159,6 +163,7 @@ class MessageWidget extends StatelessWidget {
                           .all[Controller.to.selectedFolder.value]
                           .childrens[Controller.to.selectedElementIndex.value]
                           .child
+                          .value
                           .messages[selectedMessage!.value]
                           .title);
                   textFieldFocusNode!.requestFocus();
@@ -233,7 +238,7 @@ class MessageWidgetChild extends StatelessWidget {
             splitMessages.value != true &&
             fullScreen != true &&
             moveMessage.value != true) {
-          selectedMessage!.value = message.location.selectedMessageIndex!;
+          selectedMessage!.value = message.location.itemIndex!;
 
           showModalBottomSheet(
               isScrollControlled: true,
@@ -253,13 +258,14 @@ class MessageWidgetChild extends StatelessWidget {
                   contentController: contentController!,
                   selectedMessage: selectedMessage!));
         }
-        selected.value = message.location.selectedMessageIndex!;
+        selected.value = message.location.itemIndex!;
         if (moveMessage.value) {
           var message = Controller
               .to
               .all[Controller.to.selectedFolder.value]
               .childrens[Controller.to.selectedElementIndex.value]
               .child
+              .value
               .messages
               .removeAt(Controller.to.firstSelectedMessage);
           Controller
@@ -267,6 +273,7 @@ class MessageWidgetChild extends StatelessWidget {
               .all[Controller.to.selectedFolder.value]
               .childrens[Controller.to.selectedElementIndex.value]
               .child
+              .value
               .messages
               .insert(selected.value, message);
           moveMessage.value = false;
@@ -278,6 +285,7 @@ class MessageWidgetChild extends StatelessWidget {
               .all[Controller.to.selectedFolder.value]
               .childrens[Controller.to.selectedElementIndex.value]
               .child
+              .value
               .messages;
           message.isSelected = !message.isSelected;
           if (message.isSelected) {
@@ -288,7 +296,7 @@ class MessageWidgetChild extends StatelessWidget {
             selectedMessagesCount.value -= 1;
           }
           // print(selectedMessages);
-          messages[message.location.selectedMessageIndex!] = message;
+          messages[message.location.itemIndex!] = message;
           Controller.to.change(
             Chat(messages: messages.obs),
           );
@@ -395,6 +403,7 @@ class MessageWidgetBody extends StatelessWidget {
                                               .childrens[Controller.to
                                                   .selectedElementIndex.value]
                                               .child
+                                              .value
                                               .messages[selected!.value]
                                               .type ==
                                           AllType.chatMessage
@@ -405,6 +414,7 @@ class MessageWidgetBody extends StatelessWidget {
                                           .childrens[Controller
                                               .to.selectedElementIndex.value]
                                           .child
+                                          .value
                                           .messages[selected!.value]
                                           .isCollapsed
                                       ? 6

@@ -1,22 +1,16 @@
 class ItemLocation {
   int inDirectory;
   int index;
-  int? selectedMessageIndex;
+  int? itemIndex;
   ItemLocation(
-      {required this.inDirectory,
-      required this.index,
-      this.selectedMessageIndex});
+      {required this.inDirectory, required this.index, this.itemIndex});
 
   ItemLocation.fromJson(Map<String, dynamic> json)
       : inDirectory = json['inDirectory'],
         index = json['index'],
-        selectedMessageIndex = json['selectedMessageIndex'];
+        itemIndex = json['itemIndex'];
 
   Map<String, dynamic> toJson() {
-    return {
-      'inDirectory': inDirectory,
-      'index': index,
-      'selectedMessageIndex': selectedMessageIndex
-    };
+    return {'inDirectory': inDirectory, 'index': index, 'itemIndex': itemIndex};
   }
 }

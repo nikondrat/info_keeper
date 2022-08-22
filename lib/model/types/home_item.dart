@@ -1,8 +1,5 @@
-import 'package:info_keeper/model/types/home/audio/audio_note.dart';
-import 'package:info_keeper/model/types/home/chat/chat.dart';
-import 'package:info_keeper/model/types/home/home.dart';
-import 'package:info_keeper/model/types/home/storage_file/storage_file.dart';
-import 'package:info_keeper/model/types/home/todo/todo.dart';
+import 'package:info_keeper/model/controller.dart';
+import 'package:info_keeper/model/types/home/task/task.dart';
 import 'package:info_keeper/model/types/item_location.dart';
 
 class HomeItem {
@@ -26,17 +23,33 @@ class HomeItem {
     required this.location,
   });
 
-  void pin() {
-    isPinned = !isPinned;
-  }
+  HomeItem copyWith({
+    String? name,
+    dynamic child,
+    bool? isLink,
+    bool? isLocked,
+    bool? isPinned,
+    bool? isAnimated,
+    bool? isDublicated,
+    ItemLocation? location,
+  }) {
+    HomeItem homeItem = HomeItem(
+        name: name ?? this.name,
+        isLink: isLink ?? this.isLink,
+        isLocked: isLocked ?? this.isLocked,
+        isPinned: isPinned ?? this.isPinned,
+        isAnimated: isAnimated ?? this.isAnimated,
+        isDublicated: isDublicated ?? this.isDublicated,
+        child: child ?? this.child,
+        location: location ?? this.location);
 
-  void animate() {
-    isAnimated = !isAnimated;
+    return Controller.to.all[Controller.to.selectedFolder.value]
+        .childrens[Controller.to.selectedElementIndex.value] = homeItem;
   }
 
   HomeItem.fromJson(Map<String, dynamic> json)
       : name = json['name'] ?? '',
-        child = Todo.fromJson(json['child']),
+        child = Task.fromJson(json['child']),
 
         // child = json['child'].values.map((e) {
         //   // child = (json['child']).values.map((e) {

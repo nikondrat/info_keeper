@@ -15,7 +15,7 @@ class HomePageBottomNavigationBar extends StatelessWidget {
 
   animate() {
     switch (Controller.to.all[Controller.to.selectedFolder.value]
-        .childrens[Controller.to.selectedElementIndex.value].child.type) {
+        .childrens[Controller.to.selectedElementIndex.value].child.value.type) {
       case AllType.chat:
         // Controller.to.change(Chat(
         //   isAnimated: Controller
@@ -77,8 +77,13 @@ class HomePageBottomNavigationBar extends StatelessWidget {
 
   lock() {
     if (Controller.to.password.isNotEmpty) {
-      switch (Controller.to.all[Controller.to.selectedFolder.value]
-          .childrens[Controller.to.selectedElementIndex.value].child.type) {
+      switch (Controller
+          .to
+          .all[Controller.to.selectedFolder.value]
+          .childrens[Controller.to.selectedElementIndex.value]
+          .child
+          .value
+          .type) {
         case AllType.chat:
           // Controller.to.change(Chat(
           //   isLocked: Controller
@@ -144,7 +149,7 @@ class HomePageBottomNavigationBar extends StatelessWidget {
 
   dublicate() {
     switch (Controller.to.all[Controller.to.selectedFolder.value]
-        .childrens[Controller.to.selectedElementIndex.value].child.type) {
+        .childrens[Controller.to.selectedElementIndex.value].child.value.type) {
       case AllType.chat:
         // Controller.to.add(Chat(
         //     name: Controller.to.all[Controller.to.selectedFolder.value]
@@ -245,7 +250,7 @@ class HomePageBottomNavigationBar extends StatelessWidget {
 
   pin() {
     switch (Controller.to.all[Controller.to.selectedFolder.value]
-        .childrens[Controller.to.selectedElementIndex.value].child.type) {
+        .childrens[Controller.to.selectedElementIndex.value].child.value.type) {
       case AllType.chat:
         // Controller.to.change(Chat(
         //     isPinned: Controller

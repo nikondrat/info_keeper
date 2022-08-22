@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/home/home.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/model/types/item_location.dart';
 import 'package:info_keeper/model/types/home/storage_file/storage_file.dart';
@@ -28,15 +27,15 @@ class StorageFilePage extends StatelessWidget {
     TextEditingController title =
         TextEditingController(text: homeItem != null ? homeItem!.name : '');
     TextEditingController data = TextEditingController(
-        text: homeItem != null ? homeItem!.child.data : '');
+        text: homeItem != null ? homeItem!.child.value.data : '');
     final changeFile = change.obs;
     final history = [].obs;
     var pathToImage = ''.obs;
 
     if (change) {
-      history.value = homeItem!.child.history!;
-      if (homeItem!.child.pathToImage.isNotEmpty) {
-        pathToImage.value = homeItem!.child.pathToImage;
+      history.value = homeItem!.child.value.history!;
+      if (homeItem!.child.value.pathToImage.isNotEmpty) {
+        pathToImage.value = homeItem!.child.value.pathToImage;
         Controller.to.setData();
       }
     }
@@ -53,9 +52,10 @@ class StorageFilePage extends StatelessWidget {
         Controller.to.change(HomeItem(
           name: title.text,
           child: StorageFile(
-              pathToImage: pathToImage.value,
-              history: history,
-              data: data.value.text),
+                  pathToImage: pathToImage.value,
+                  history: history,
+                  data: data.value.text)
+              .obs,
           location: ItemLocation(
               inDirectory: Controller.to.selectedFolder.value,
               index: Controller.to.all[Controller.to.selectedFolder.value]
@@ -210,7 +210,8 @@ class StorageFilePage extends StatelessWidget {
                     onSelected: (value) {
                       if (value == 2) {
                         Get.to(() => StorageFileHistory(
-                              historyElements: homeItem!.child.history!.obs,
+                              historyElements:
+                                  homeItem!.child.value.history!.obs,
                               dataController: data,
                             ));
                       }
@@ -228,9 +229,10 @@ class StorageFilePage extends StatelessWidget {
                         ? Controller.to.change(HomeItem(
                             name: title.text,
                             child: StorageFile(
-                                pathToImage: pathToImage.value,
-                                history: history,
-                                data: data.value.text),
+                                    pathToImage: pathToImage.value,
+                                    history: history,
+                                    data: data.value.text)
+                                .obs,
                             location: ItemLocation(
                                 inDirectory: Controller.to.selectedFolder.value,
                                 index: Controller
@@ -243,9 +245,10 @@ class StorageFilePage extends StatelessWidget {
                         : Controller.to.add(HomeItem(
                             name: title.text,
                             child: StorageFile(
-                                history: history,
-                                pathToImage: pathToImage.value,
-                                data: data.value.text),
+                                    history: history,
+                                    pathToImage: pathToImage.value,
+                                    data: data.value.text)
+                                .obs,
                             location: ItemLocation(
                                 inDirectory: Controller.to.selectedFolder.value,
                                 index: Controller

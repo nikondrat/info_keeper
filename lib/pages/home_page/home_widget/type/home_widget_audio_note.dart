@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/home/audio/audio_note.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
 import 'package:info_keeper/pages/trash_page/trash_element.dart';
@@ -99,7 +98,7 @@ class _HomeWidgetAudioNoteBodyState extends State<HomeWidgetAudioNoteBody> {
     isPlay.value = true;
     mPlayer!.startPlayer(
         codec: Codec.aacMP4,
-        fromURI: widget.homeItem.child.path,
+        fromURI: widget.homeItem.child.value.path,
         whenFinished: () {
           isPlay.value = false;
         });

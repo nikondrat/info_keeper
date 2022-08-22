@@ -4,17 +4,17 @@ import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home/home.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
-import 'package:info_keeper/pages/todo_page/todo_page.dart';
+import 'package:info_keeper/pages/task_page/task_page.dart';
 
 class HomeBodyItemGesture extends StatelessWidget {
-  final int index;
+  final int homeItemIndex;
   final HomeItem homeItem;
   final Widget child;
   const HomeBodyItemGesture(
       {Key? key,
       required this.child,
       required this.homeItem,
-      required this.index})
+      required this.homeItemIndex})
       : super(key: key);
 
   @override
@@ -25,14 +25,14 @@ class HomeBodyItemGesture extends StatelessWidget {
       onTap: () {
         home.isShowDialMenu.value = false;
         home.isShowBottomMenu.value = false;
+        Controller.to.selectedElementIndex.value = homeItemIndex;
         switch (homeItem.child.type) {
           case HomeType.chat:
             break;
           case HomeType.storageFile:
-            print('storage');
             break;
           case HomeType.todo:
-            Get.to(() => TodoPage(homeItem: homeItem, change: true));
+            Get.to(() => TaskPage(homeItem: homeItem, change: true));
             break;
           case HomeType.audioNote:
             break;
@@ -40,8 +40,9 @@ class HomeBodyItemGesture extends StatelessWidget {
         }
       },
       onLongPress: () {
+        home.isShowDialMenu.value = false;
         home.isShowBottomMenu.value = true;
-        Controller.to.selectedElementIndex.value = index;
+        Controller.to.selectedElementIndex.value = homeItemIndex;
       },
       child: child,
     );

@@ -45,6 +45,7 @@ class ChatPageReorderableBody extends StatelessWidget {
             .all[Controller.to.selectedFolder.value]
             .childrens[Controller.to.selectedElementIndex.value]
             .child
+            .value
             .messages
             .isNotEmpty
         ? ReorderableListView.builder(
@@ -60,6 +61,7 @@ class ChatPageReorderableBody extends StatelessWidget {
                   .all[Controller.to.selectedFolder.value]
                   .childrens[Controller.to.selectedElementIndex.value]
                   .child
+                  .value
                   .messages
                   .removeAt(oldIndex);
               List messages = Controller
@@ -67,6 +69,7 @@ class ChatPageReorderableBody extends StatelessWidget {
                   .all[Controller.to.selectedFolder.value]
                   .childrens[Controller.to.selectedElementIndex.value]
                   .child
+                  .value
                   .messages;
               messages.insert(newIndex, message);
               message.location.selectedMessageIndex = newIndex;
@@ -81,6 +84,7 @@ class ChatPageReorderableBody extends StatelessWidget {
                 .all[Controller.to.selectedFolder.value]
                 .childrens[Controller.to.selectedElementIndex.value]
                 .child
+                .value
                 .messages
                 .length,
             itemBuilder: (context, messageIndex) {
@@ -89,6 +93,7 @@ class ChatPageReorderableBody extends StatelessWidget {
                   .all[Controller.to.selectedFolder.value]
                   .childrens[Controller.to.selectedElementIndex.value]
                   .child
+                  .value
                   .messages[messageIndex]
                   .location
                   .selectedMessageIndex = messageIndex;

@@ -1,10 +1,8 @@
 import 'package:expansion_widget/expansion_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home_item.dart';
-import 'package:info_keeper/model/types/home/storage_file/storage_file.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
 import 'package:info_keeper/pages/storage_file_page/storage_file_page.dart';
 import 'package:info_keeper/pages/trash_page/trash_element.dart';
@@ -56,7 +54,7 @@ class HomeWidgetStorageFile extends StatelessWidget {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(6),
                       border: Border.all(
-                          color: homeItem.child.isAnimated
+                          color: homeItem.child.value.isAnimated
                               ? const Color(0xFFB9DFBB)
                               : Colors.grey.shade600,
                           width: homeItem.isAnimated ? 1.4 : 1)),
@@ -64,7 +62,7 @@ class HomeWidgetStorageFile extends StatelessWidget {
                     content: Padding(
                       padding:
                           const EdgeInsets.only(left: 8, right: 8, bottom: 8),
-                      child: Text(homeItem.child.data!, maxLines: 6),
+                      child: Text(homeItem.child.value.data!, maxLines: 6),
                     ),
                     titleBuilder: (animationValue, easeInValue, isExpanded,
                             toggleFunction) =>
@@ -79,19 +77,19 @@ class HomeWidgetStorageFile extends StatelessWidget {
                                   padding: EdgeInsets.only(right: 8),
                                   child: Icon(Icons.push_pin_outlined),
                                 )
-                              : SizedBox(),
+                              : const SizedBox(),
                           homeItem.isLink
                               ? const Padding(
                                   padding: EdgeInsets.only(right: 8),
                                   child: Icon(Icons.subdirectory_arrow_left),
                                 )
-                              : SizedBox(),
+                              : const SizedBox(),
                           homeItem.isDublicated
                               ? const Padding(
                                   padding: EdgeInsets.only(right: 8),
                                   child: Icon(Icons.copy_all),
                                 )
-                              : SizedBox(),
+                              : const SizedBox(),
                           Expanded(
                             child: SubstringHighlight(
                               term: term,

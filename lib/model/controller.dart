@@ -51,7 +51,7 @@ class Controller extends GetxController {
 
   void change(dynamic value) {
     HomeItem homeItem =
-        HomeItem(child: StorageFile(), location: value.location);
+        HomeItem(child: StorageFile().obs, location: value.location);
 
     chat() {
       Chat chat = Chat();
@@ -59,24 +59,28 @@ class Controller extends GetxController {
           all[selectedFolder.value]
               .childrens[selectedElementIndex.value]
               .child
+              .value
               .messages;
       chat.favorites = value.favorites ??
           all[selectedFolder.value]
               .childrens[selectedElementIndex.value]
               .child
+              .value
               .favorites;
       chat.pathToImage = value.pathToImage ??
           all[selectedFolder.value]
               .childrens[selectedElementIndex.value]
               .child
+              .value
               .pathToImage;
       chat.pinnedMessages = value.pinnedMessages ??
           all[selectedFolder.value]
               .childrens[selectedElementIndex.value]
               .child
+              .value
               .pinnedMessages;
 
-      homeItem.child = chat;
+      homeItem.child = chat.obs;
       all[selectedFolder.value].childrens[selectedElementIndex.value] =
           homeItem;
     }
@@ -87,18 +91,21 @@ class Controller extends GetxController {
           all[selectedFolder.value]
               .childrens[selectedElementIndex.value]
               .child
+              .value
               .data;
       storageFile.history = value.history ??
           all[selectedFolder.value]
               .childrens[selectedElementIndex.value]
               .child
+              .value
               .history;
       storageFile.pathToImage = all[selectedFolder.value]
           .childrens[selectedElementIndex.value]
           .child
+          .value
           .pathToImage;
 
-      homeItem.child = storageFile;
+      homeItem.child = storageFile.obs;
 
       all[selectedFolder.value].childrens[selectedElementIndex.value] =
           homeItem;
@@ -181,7 +188,7 @@ class Controller extends GetxController {
 
   void addLink(dynamic value, int folderIndex) {
     HomeItem homeItem =
-        HomeItem(child: StorageFile(), location: value.location);
+        HomeItem(child: StorageFile().obs, location: value.location);
 
     chat() {
       Chat chat = Chat();
@@ -189,24 +196,28 @@ class Controller extends GetxController {
           all[selectedFolder.value]
               .childrens[selectedElementIndex.value]
               .child
+              .value
               .messages;
       chat.favorites = value.favorites ??
           all[selectedFolder.value]
               .childrens[selectedElementIndex.value]
               .child
+              .value
               .favorites;
       chat.pathToImage = value.pathToImage ??
           all[selectedFolder.value]
               .childrens[selectedElementIndex.value]
               .child
+              .value
               .pathToImage;
       chat.pinnedMessages = value.pinnedMessages ??
           all[selectedFolder.value]
               .childrens[selectedElementIndex.value]
               .child
+              .value
               .pinnedMessages;
 
-      homeItem.child = chat;
+      homeItem.child = chat.obs;
       homeItem.isLink = true;
 
       all[folderIndex].childrens.add(homeItem);
@@ -219,18 +230,21 @@ class Controller extends GetxController {
           all[selectedFolder.value]
               .childrens[selectedElementIndex.value]
               .child
+              .value
               .data;
       storageFile.history = value.history ??
           all[selectedFolder.value]
               .childrens[selectedElementIndex.value]
               .child
+              .value
               .history;
       storageFile.pathToImage = all[selectedFolder.value]
           .childrens[selectedElementIndex.value]
           .child
+          .value
           .pathToImage;
 
-      homeItem.child = storageFile;
+      homeItem.child = storageFile.obs;
       homeItem.isLink = true;
 
       all[folderIndex].childrens.add(homeItem);
@@ -311,6 +325,7 @@ class Controller extends GetxController {
     all[selectedFolder.value]
         .childrens[selectedElementIndex.value]
         .child
+        .value
         .messages
         .insert(0, message);
     setData();
@@ -320,6 +335,7 @@ class Controller extends GetxController {
     all[selectedFolder.value]
         .childrens[selectedElementIndex.value]
         .child
+        .value
         .messages
         .insert(0, image);
     setData();
@@ -329,6 +345,7 @@ class Controller extends GetxController {
     all[selectedFolder.value]
         .childrens[selectedElementIndex.value]
         .child
+        .value
         .messages
         .insert(0, voice);
     setData();
@@ -338,6 +355,7 @@ class Controller extends GetxController {
     all[selectedFolder.value]
         .childrens[selectedElementIndex.value]
         .child
+        .value
         .messages
         .insert(0, file);
     setData();

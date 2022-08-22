@@ -84,7 +84,7 @@ class HomeWidgetChat extends StatelessWidget {
                           )
                         : Container()
                     : Controller.to.all[Controller.to.selectedFolder.value]
-                            .childrens[index].child.link
+                            .childrens[index].child.value.link
                         ? const Padding(
                             padding: EdgeInsets.only(right: 8),
                             child: Icon(Icons.subdirectory_arrow_left),
@@ -98,7 +98,7 @@ class HomeWidgetChat extends StatelessWidget {
                           )
                         : Container()
                     : Controller.to.all[Controller.to.selectedFolder.value]
-                            .childrens[index].child.dublicated
+                            .childrens[index].child.value.dublicated
                         ? const Padding(
                             padding: EdgeInsets.only(right: 8),
                             child: Icon(Icons.copy_all),
