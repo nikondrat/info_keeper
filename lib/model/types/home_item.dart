@@ -1,5 +1,10 @@
 import 'package:info_keeper/model/controller.dart';
+import 'package:info_keeper/model/types/home/audio/audio_note.dart';
+import 'package:info_keeper/model/types/home/chat/chat.dart';
+import 'package:info_keeper/model/types/home/home.dart';
+import 'package:info_keeper/model/types/home/storage_file/storage_file.dart';
 import 'package:info_keeper/model/types/home/task/task.dart';
+import 'package:info_keeper/model/types/home/task/todo.dart';
 import 'package:info_keeper/model/types/item_location.dart';
 
 class HomeItem {
@@ -47,9 +52,23 @@ class HomeItem {
         .childrens[Controller.to.selectedElementIndex.value] = homeItem;
   }
 
+  static dynamic _childFromJson(Map<String, dynamic> json) {
+    switch (HomeType.values.elementAt(json['type'])) {
+      case HomeType.chat:
+        return Chat.fromJson(json);
+      case HomeType.storageFile:
+        return StorageFile.fromJson(json);
+      case HomeType.task:
+        return Task.fromJson(json);
+      case HomeType.audioNote:
+        return AudioNote.fromJson(json);
+      default:
+    }
+  }
+
   HomeItem.fromJson(Map<String, dynamic> json)
       : name = json['name'] ?? '',
-        child = Task.fromJson(json['child']),
+        child = _childFromJson(json['child']),
 
         // child = json['child'].values.map((e) {
         //   switch (HomeType.values.elementAt(e['type'])) {

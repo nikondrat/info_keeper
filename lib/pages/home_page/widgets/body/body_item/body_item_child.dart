@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:info_keeper/model/types/home/home.dart';
 import 'package:info_keeper/model/types/home_item.dart';
+import 'package:info_keeper/pages/home_page/widgets/body/body_item/item_type/audio_note_item.dart';
+import 'package:info_keeper/pages/home_page/widgets/body/body_item/item_type/chat_item.dart';
+import 'package:info_keeper/pages/home_page/widgets/body/body_item/item_type/storage_file_item.dart';
 import 'package:info_keeper/pages/home_page/widgets/body/body_item/item_type/task_item.dart';
 
 class HomeBodyItemChild extends StatelessWidget {
@@ -15,19 +19,21 @@ class HomeBodyItemChild extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TodoItem(
-        homeItemIndex: homeItemIndex, homeItem: homeItem, term: term);
-    // switch (homeItem.child.type) {
-    //   case HomeType.chat:
-    //     return ChatItem(index: index, homeItem: homeItem, term: term);
-    //   case HomeType.storageFile:
-    //     return StorageFileItem(index: index, homeItem: homeItem, term: term);
-    //   case HomeType.todo:
-    //     return TodoItem(index: index, homeItem: homeItem, term: term);
-    //   case HomeType.audioNote:
-    //     return AudioNoteItem(homeItem: homeItem, term: term);
-    //   default:
-    //     return const SizedBox();
-    // }
+    // return TodoItem(
+    //     homeItemIndex: homeItemIndex, homeItem: homeItem, term: term);
+    switch (homeItem.child.type) {
+      case HomeType.chat:
+        return ChatItem(index: homeItemIndex, homeItem: homeItem, term: term);
+      case HomeType.storageFile:
+        return StorageFileItem(
+            index: homeItemIndex, homeItem: homeItem, term: term);
+      case HomeType.task:
+        return TodoItem(
+            homeItemIndex: homeItemIndex, homeItem: homeItem, term: term);
+      case HomeType.audioNote:
+        return AudioNoteItem(homeItem: homeItem, term: term);
+      default:
+        return const SizedBox();
+    }
   }
 }

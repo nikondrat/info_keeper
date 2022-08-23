@@ -54,18 +54,16 @@ class HomePageAlertDialog extends StatelessWidget {
               Controller.to.add(HomeItem(
                   name: value,
                   child: Chat(
-                          favorites: [].obs,
-                          pinnedMessages: [].obs,
-                          messages: [].obs)
-                      .obs,
+                      favorites: [].obs,
+                      pinnedMessages: [].obs,
+                      messages: [].obs),
                   location: ItemLocation(
                       inDirectory: Controller.to.selectedFolder.value,
                       index: Controller
-                              .to
-                              .all[Controller.to.selectedFolder.value]
-                              .childrens
-                              .length -
-                          1)));
+                          .to
+                          .all[Controller.to.selectedFolder.value]
+                          .childrens
+                          .length)));
               Navigator.pop(context, 'Create');
             }
             validate.value = true;
@@ -80,18 +78,16 @@ class HomePageAlertDialog extends StatelessWidget {
               Controller.to.add(HomeItem(
                   name: controller.text,
                   child: Chat(
-                          favorites: [].obs,
-                          pinnedMessages: [].obs,
-                          messages: [].obs)
-                      .obs,
+                      favorites: [].obs,
+                      pinnedMessages: [].obs,
+                      messages: [].obs),
                   location: ItemLocation(
                       inDirectory: Controller.to.selectedFolder.value,
                       index: Controller
-                              .to
-                              .all[Controller.to.selectedFolder.value]
-                              .childrens
-                              .length -
-                          1)));
+                          .to
+                          .all[Controller.to.selectedFolder.value]
+                          .childrens
+                          .length)));
 
               Navigator.pop(context, 'Create');
             }

@@ -229,34 +229,30 @@ class StorageFilePage extends StatelessWidget {
                         ? Controller.to.change(HomeItem(
                             name: title.text,
                             child: StorageFile(
-                                    pathToImage: pathToImage.value,
-                                    history: history,
-                                    data: data.value.text)
-                                .obs,
+                                pathToImage: pathToImage.value,
+                                history: history,
+                                data: data.value.text),
                             location: ItemLocation(
                                 inDirectory: Controller.to.selectedFolder.value,
                                 index: Controller
-                                        .to
-                                        .all[Controller.to.selectedFolder.value]
-                                        .childrens
-                                        .length -
-                                    1),
+                                    .to
+                                    .all[Controller.to.selectedFolder.value]
+                                    .childrens
+                                    .length),
                           ))
                         : Controller.to.add(HomeItem(
                             name: title.text,
                             child: StorageFile(
-                                    history: history,
-                                    pathToImage: pathToImage.value,
-                                    data: data.value.text)
-                                .obs,
+                                history: history,
+                                pathToImage: pathToImage.value,
+                                data: data.value.text),
                             location: ItemLocation(
                                 inDirectory: Controller.to.selectedFolder.value,
                                 index: Controller
-                                        .to
-                                        .all[Controller.to.selectedFolder.value]
-                                        .childrens
-                                        .length -
-                                    1),
+                                    .to
+                                    .all[Controller.to.selectedFolder.value]
+                                    .childrens
+                                    .length),
                           ));
                   }
                   Get.back();

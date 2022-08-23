@@ -46,10 +46,10 @@ class _HomeFloatButtonsState extends State<HomeFloatButtons>
     return Obx(() => !home.isShowBottomMenu.value
         ? ExpandableFab(distance: 100, controller: controller, children: [
             ActionButton(
-              onPressed: () {
-                _toggle();
-                Get.to(() => const AudioPage());
-              },
+              // onPressed: () {
+              //   _toggle();
+              //   Get.to(() => const AudioPage());
+              // },
               icon: const Icon(Icons.keyboard_voice_outlined),
               heroTag: 'floatbtn1',
               controller: controller,
@@ -64,21 +64,21 @@ class _HomeFloatButtonsState extends State<HomeFloatButtons>
               controller: controller,
             ),
             ActionButton(
-              onPressed: () {
-                _toggle();
-                Get.to(() => const StorageFilePage());
-              },
+              // onPressed: () {
+              //   _toggle();
+              //   Get.to(() => const StorageFilePage());
+              // },
               icon: const Icon(Icons.file_open_outlined),
               heroTag: 'floatbtn3',
               controller: controller,
             ),
             ActionButton(
-              onPressed: () {
-                _toggle();
-                showDialog(
-                    context: context,
-                    builder: (context) => const HomePageAlertDialog());
-              },
+              // onPressed: () {
+              //   _toggle();
+              //   showDialog(
+              //       context: context,
+              //       builder: (context) => const HomePageAlertDialog());
+              // },
               icon: const Icon(Icons.chat_bubble_outline),
               heroTag: 'floatbtn4',
               controller: controller,

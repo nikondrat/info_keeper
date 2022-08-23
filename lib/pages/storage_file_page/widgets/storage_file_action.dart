@@ -30,18 +30,16 @@ class StorageFilePageAction extends StatelessWidget {
                 Controller.to.change(HomeItem(
                   name: titleController.text,
                   child: StorageFile(
-                          pathToImage: pathToImage.value,
-                          history: history,
-                          data: dataController.text)
-                      .obs,
+                      pathToImage: pathToImage.value,
+                      history: history,
+                      data: dataController.text),
                   location: ItemLocation(
                       inDirectory: Controller.to.selectedFolder.value,
                       index: Controller
-                              .to
-                              .all[Controller.to.selectedFolder.value]
-                              .childrens
-                              .length -
-                          1),
+                          .to
+                          .all[Controller.to.selectedFolder.value]
+                          .childrens
+                          .length),
                 ));
                 Get.back();
               }
@@ -55,15 +53,14 @@ class StorageFilePageAction extends StatelessWidget {
                 Controller.to.all[Controller.to.selectedFolder.value].childrens
                     .add(HomeItem(
                   name: titleController.text,
-                  child: StorageFile(data: dataController.text).obs,
+                  child: StorageFile(data: dataController.text),
                   location: ItemLocation(
                       inDirectory: Controller.to.selectedFolder.value,
                       index: Controller
-                              .to
-                              .all[Controller.to.selectedFolder.value]
-                              .childrens
-                              .length -
-                          1),
+                          .to
+                          .all[Controller.to.selectedFolder.value]
+                          .childrens
+                          .length),
                 ));
                 changeFile.value = true;
                 Get.back();

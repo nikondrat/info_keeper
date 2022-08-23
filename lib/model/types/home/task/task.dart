@@ -8,7 +8,7 @@ class Task {
   RxList<Todo> todos;
 
   Task({
-    this.type = HomeType.todo,
+    this.type = HomeType.task,
     required this.todos,
   });
 

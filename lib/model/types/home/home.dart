@@ -1,6 +1,6 @@
 enum HomeType {
   chat,
   storageFile,
-  todo,
+  task,
   audioNote,
 }

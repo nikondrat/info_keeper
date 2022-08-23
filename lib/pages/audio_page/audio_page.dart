@@ -70,14 +70,14 @@ class _AudioPageState extends State<AudioPage> {
   void closeRecorder() {
     _mRecorder!.closeRecorder();
     Controller.to.add(HomeItem(
+        name: titleController.text,
         child: AudioNote(
           path: mPath,
-        ).obs,
+        ),
         location: ItemLocation(
             inDirectory: Controller.to.selectedFolder.value,
-            index: Controller.to.all[Controller.to.selectedFolder.value]
-                    .childrens.length -
-                1)));
+            index: Controller
+                .to.all[Controller.to.selectedFolder.value].childrens.length)));
     Get.back();
   }
 

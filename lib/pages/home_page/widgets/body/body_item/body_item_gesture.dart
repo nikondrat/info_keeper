@@ -31,7 +31,7 @@ class HomeBodyItemGesture extends StatelessWidget {
             break;
           case HomeType.storageFile:
             break;
-          case HomeType.todo:
+          case HomeType.task:
             Get.to(() => TaskPage(homeItem: homeItem, change: true));
             break;
           case HomeType.audioNote:
