@@ -74,6 +74,7 @@ class _AudioPageState extends State<AudioPage> {
     Controller.to.add(HomeItem(
         name: titleController.text,
         child: AudioNote(
+          codec: codec,
           path: mPath,
         ),
         location: ItemLocation(

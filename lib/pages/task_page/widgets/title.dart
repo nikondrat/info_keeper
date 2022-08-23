@@ -6,10 +6,12 @@ class TaskTitle extends StatelessWidget {
   final TextEditingController titleController;
   final RxBool changeTitle;
   final RxBool addTodo;
+  final FocusNode titleFocus;
   const TaskTitle(
       {Key? key,
       required this.titleController,
       required this.changeTitle,
+      required this.titleFocus,
       required this.addTodo})
       : super(key: key);
 
@@ -18,8 +20,9 @@ class TaskTitle extends StatelessWidget {
     TextField titleTextField = TextField(
       controller: titleController,
       cursorColor: Colors.black,
-      autofocus: true,
       maxLength: 20,
+      focusNode: titleFocus,
+      onTap: () => changeTitle.value = true,
       decoration: InputDecoration(
           hintText: 'Write title',
           contentPadding: const EdgeInsets.symmetric(horizontal: 10),
@@ -40,19 +43,6 @@ class TaskTitle extends StatelessWidget {
       },
     );
 
-    return Obx(() => changeTitle.value
-        ? titleTextField
-        : TextButton(
-            onPressed: () {
-              addTodo.value = false;
-              changeTitle.value = !changeTitle.value;
-              titleController.selection = TextSelection(
-                  baseOffset: 0, extentOffset: titleController.text.length);
-            },
-            child: AutoSizeText(
-              titleController.text,
-              style: const TextStyle(fontSize: 18),
-            ),
-          ));
+    return titleTextField;
   }
 }

@@ -37,7 +37,7 @@ class TaskBottomField extends StatelessWidget {
             changeTitle.value = false;
             isAddTodo.value = !isAddTodo.value;
           },
-          label: const AutoSizeText('Add Todo')),
+          label: const AutoSizeText('Add')),
     );
 
     Widget addTodoField = Transform.translate(
@@ -53,7 +53,7 @@ class TaskBottomField extends StatelessWidget {
                   maxLines: 1,
                   cursorColor: Colors.black,
                   decoration: const InputDecoration(
-                      border: InputBorder.none, hintText: 'Write todo'),
+                      border: InputBorder.none, hintText: 'Write text'),
                   onSubmitted: (value) {
                     addTodo();
                   },

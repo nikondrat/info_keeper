@@ -5,12 +5,12 @@ import 'package:info_keeper/pages/home_page/widgets/body/body_item/body_item_dec
 import 'package:info_keeper/pages/home_page/widgets/body/body_item/body_item_gesture.dart';
 
 class ChatItem extends StatelessWidget {
-  final int index;
+  final int homeItemIndex;
   final HomeItem homeItem;
   final String term;
   const ChatItem(
       {Key? key,
-      required this.index,
+      required this.homeItemIndex,
       required this.homeItem,
       required this.term})
       : super(key: key);
@@ -18,7 +18,7 @@ class ChatItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HomeBodyItemGesture(
-        homeItemIndex: index,
+        homeItemIndex: homeItemIndex,
         homeItem: homeItem,
         child: BodyItemDecoration(
             homeItem: homeItem,

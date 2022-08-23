@@ -19,19 +19,19 @@ class HomeBodyItemChild extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return TodoItem(
-    //     homeItemIndex: homeItemIndex, homeItem: homeItem, term: term);
     switch (homeItem.child.type) {
       case HomeType.chat:
-        return ChatItem(index: homeItemIndex, homeItem: homeItem, term: term);
+        return ChatItem(
+            homeItemIndex: homeItemIndex, homeItem: homeItem, term: term);
       case HomeType.storageFile:
         return StorageFileItem(
-            index: homeItemIndex, homeItem: homeItem, term: term);
+            homeItemIndex: homeItemIndex, homeItem: homeItem, term: term);
       case HomeType.task:
         return TodoItem(
             homeItemIndex: homeItemIndex, homeItem: homeItem, term: term);
       case HomeType.audioNote:
-        return AudioNoteItem(homeItem: homeItem, term: term);
+        return AudioNoteItem(
+            homeItemIndex: homeItemIndex, homeItem: homeItem, term: term);
       default:
         return const SizedBox();
     }

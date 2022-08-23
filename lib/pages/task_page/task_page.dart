@@ -23,6 +23,7 @@ class TaskPage extends StatelessWidget {
     Task task = homeItem?.child ?? Task(todos: <Todo>[].obs);
     RxBool changeTitle = false.obs;
     RxBool isAddTodo = false.obs;
+    FocusNode titleFocus = FocusNode();
 
     return Scaffold(
       appBar: AppBar(
@@ -34,6 +35,7 @@ class TaskPage extends StatelessWidget {
             onPressed: changeTitle.value
                 ? () {
                     changeTitle.value = !changeTitle.value;
+                    titleFocus.unfocus();
                     change
                         ? titleController.text = homeItem!.name
                         : titleController.text = defaultName;
@@ -63,6 +65,8 @@ class TaskPage extends StatelessWidget {
                       ? () {
                           if (titleController.text.isNotEmpty) {
                             changeTitle.value = !changeTitle.value;
+                            titleFocus.unfocus();
+                            defaultName = titleController.text;
                           }
                         }
                       : () {
@@ -86,6 +90,7 @@ class TaskPage extends StatelessWidget {
                       change || changeTitle.value ? Icons.done : Icons.add))))
         ],
         title: TaskTitle(
+            titleFocus: titleFocus,
             titleController: titleController,
             changeTitle: changeTitle,
             addTodo: isAddTodo),

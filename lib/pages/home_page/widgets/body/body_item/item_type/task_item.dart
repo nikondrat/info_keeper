@@ -36,10 +36,8 @@ class TodoItem extends StatelessWidget {
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: task.todos.length,
                     itemBuilder: (context, todoIndex) {
-                      return !task.todos[todoIndex].isCompleted
-                          ? TodoWidget(
-                              index: todoIndex, task: task, change: false)
-                          : const SizedBox();
+                      return TodoWidget(
+                          index: todoIndex, task: task, change: false);
                     })))));
   }
 }
