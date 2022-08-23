@@ -23,7 +23,7 @@ class _AudioPageState extends State<AudioPage> {
   final FlutterSoundPlayer player = FlutterSoundPlayer();
   TextEditingController titleController = TextEditingController();
   final isRecord = false.obs;
-  List decibels = [];
+  // List decibels = [];
 
   @override
   void dispose() {
@@ -66,6 +66,7 @@ class _AudioPageState extends State<AudioPage> {
   void stopRecorder() {
     recorder.stopRecorder();
     isRecord.value = false;
+    // print(decibels);
   }
 
   void closeRecorder() {
