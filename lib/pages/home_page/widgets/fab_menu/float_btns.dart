@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/pages/audio_page/audio_page.dart';
+// import 'package:info_keeper/pages/audio_page/audio_page.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
-import 'package:info_keeper/pages/home_page/widgets/home_alert_dialog.dart';
-import 'package:info_keeper/pages/storage_file_page/storage_file_page.dart';
+// import 'package:info_keeper/pages/home_page/widgets/home_alert_dialog.dart';
+// import 'package:info_keeper/pages/storage_file_page/storage_file_page.dart';
 import 'package:info_keeper/pages/home_page/widgets/fab_menu/fab.dart';
 import 'package:info_keeper/pages/task_page/task_page.dart';
 
@@ -46,10 +47,10 @@ class _HomeFloatButtonsState extends State<HomeFloatButtons>
     return Obx(() => !home.isShowBottomMenu.value
         ? ExpandableFab(distance: 100, controller: controller, children: [
             ActionButton(
-              // onPressed: () {
-              //   _toggle();
-              //   Get.to(() => const AudioPage());
-              // },
+              onPressed: () {
+                _toggle();
+                Get.to(() => const AudioPage());
+              },
               icon: const Icon(Icons.keyboard_voice_outlined),
               heroTag: 'floatbtn1',
               controller: controller,

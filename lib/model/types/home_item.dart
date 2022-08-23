@@ -4,7 +4,6 @@ import 'package:info_keeper/model/types/home/chat/chat.dart';
 import 'package:info_keeper/model/types/home/home.dart';
 import 'package:info_keeper/model/types/home/storage_file/storage_file.dart';
 import 'package:info_keeper/model/types/home/task/task.dart';
-import 'package:info_keeper/model/types/home/task/todo.dart';
 import 'package:info_keeper/model/types/item_location.dart';
 
 class HomeItem {

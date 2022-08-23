@@ -19,28 +19,16 @@ class _AudioPageState extends State<AudioPage> {
   Codec codec = Codec.aacMP4;
   DateFormat dateFormat = DateFormat("yyyy_MM_dd_HH_mm_ss");
   String mPath = '';
-  FlutterSoundPlayer? _mPlayer = FlutterSoundPlayer();
-  FlutterSoundRecorder? _mRecorder = FlutterSoundRecorder();
+  final FlutterSoundRecorder recorder = FlutterSoundRecorder();
+  final FlutterSoundPlayer player = FlutterSoundPlayer();
   TextEditingController titleController = TextEditingController();
   final isRecord = false.obs;
-
-  @override
-  void initState() {
-    openTheRecorder();
-    mPath = '${dateFormat.format(DateTime.now())}.mp4';
-
-    _mPlayer!.openPlayer();
-    super.initState();
-  }
+  List decibels = [];
 
   @override
   void dispose() {
-    _mRecorder!.closeRecorder();
-    _mRecorder = null;
+    recorder.closeRecorder();
     titleController.dispose();
-
-    _mPlayer!.closePlayer();
-    _mPlayer = null;
 
     super.dispose();
   }
@@ -50,25 +38,38 @@ class _AudioPageState extends State<AudioPage> {
     if (status != PermissionStatus.granted) {
       throw RecordingPermissionException('Microphone permission not granted');
     }
-    await _mRecorder!.openRecorder();
+    mPath = '${dateFormat.format(DateTime.now())}.mp4';
+    return record();
   }
   // ----------------------  Here is the code for recording and playback -------
 
-  void record() {
-    _mRecorder!.startRecorder(
-      toFile: mPath,
-      codec: codec,
-    );
+  void record() async {
+    if (recorder.isPaused) {
+      recorder.resumeRecorder();
+    } else {
+      await recorder.openRecorder().then((value) {
+        recorder.startRecorder(
+          toFile: mPath,
+          codec: codec,
+        );
+        // recorder.setSubscriptionDuration(Duration(seconds: 20));
+        // value!.onProgress!.listen((event) {
+        //   print(event.decibels);
+        // }).onData((data) {
+        //   decibels.add(data.decibels);
+        // });
+      });
+    }
     isRecord.value = true;
   }
 
   void stopRecorder() {
-    _mRecorder!.stopRecorder();
+    recorder.stopRecorder();
     isRecord.value = false;
   }
 
   void closeRecorder() {
-    _mRecorder!.closeRecorder();
+    recorder.closeRecorder();
     Controller.to.add(HomeItem(
         name: titleController.text,
         child: AudioNote(
@@ -79,15 +80,6 @@ class _AudioPageState extends State<AudioPage> {
             index: Controller
                 .to.all[Controller.to.selectedFolder.value].childrens.length)));
     Get.back();
-  }
-
-  void play() {
-    stopRecorder();
-    _mPlayer!.startPlayer(fromURI: mPath, codec: codec);
-  }
-
-  void stopPlayer() {
-    _mPlayer!.stopPlayer();
   }
 
 // ----------------------------- UI --------------------------------------------
@@ -102,31 +94,23 @@ class _AudioPageState extends State<AudioPage> {
           autofocus: true,
           cursorColor: Colors.black,
           decoration: InputDecoration(
-              hintText: 'Title',
+              hintText: 'Write title',
               contentPadding: const EdgeInsets.symmetric(horizontal: 10),
               errorBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(6),
-                  borderSide: const BorderSide(width: 1, color: Colors.red)),
+                  borderSide: const BorderSide(color: Colors.red)),
               focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(6),
-                  borderSide: const BorderSide(
-                    width: 1,
-                  )),
+                  borderSide: const BorderSide()),
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(6),
-                  borderSide: const BorderSide(
-                    width: 1,
-                  )),
+                  borderSide: const BorderSide()),
               disabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(6),
-                  borderSide: const BorderSide(
-                    width: 1,
-                  )),
+                  borderSide: const BorderSide()),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(6),
-                borderSide: const BorderSide(
-                  width: 1,
-                ),
+                borderSide: const BorderSide(),
               )),
         ),
         leading: IconButton(
@@ -136,14 +120,6 @@ class _AudioPageState extends State<AudioPage> {
               closeRecorder();
             },
             icon: const Icon(Icons.arrow_back)),
-        actions: [
-          IconButton(
-              splashRadius: 20,
-              onPressed: () {
-                closeRecorder();
-              },
-              icon: const Icon(Icons.add))
-        ],
       ),
       body: LayoutBuilder(builder: (context, constraints) {
         double size = 0.14;
@@ -170,7 +146,7 @@ class _AudioPageState extends State<AudioPage> {
                       ),
                     )
                   : GestureDetector(
-                      onTap: record,
+                      onTap: openTheRecorder,
                       child: Container(
                         width: width,
                         height: height,
