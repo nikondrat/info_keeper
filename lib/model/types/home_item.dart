@@ -51,7 +51,7 @@ class HomeItem {
         .childrens[Controller.to.selectedElementIndex.value] = homeItem;
   }
 
-  static dynamic _childFromJson(Map<String, dynamic> json) {
+  static dynamic childFromJson(Map<String, dynamic> json) {
     switch (HomeType.values.elementAt(json['type'])) {
       case HomeType.chat:
         return Chat.fromJson(json);
@@ -67,21 +67,7 @@ class HomeItem {
 
   HomeItem.fromJson(Map<String, dynamic> json)
       : name = json['name'] ?? '',
-        child = _childFromJson(json['child']),
-
-        // child = json['child'].values.map((e) {
-        //   switch (HomeType.values.elementAt(e['type'])) {
-        //     case HomeType.chat:
-        //       return Chat.fromJson(e);
-        //     case HomeType.storageFile:
-        //       return StorageFile.fromJson(e);
-        //     case HomeType.todo:
-        //       return Todo.fromJson(e);
-        //     case HomeType.audioNote:
-        //       return AudioNote.fromJson(e);
-        //     default:
-        // }}),
-
+        child = childFromJson(json['child']),
         isLink = json['isLink'] ?? false,
         isLocked = json['isLocked'] ?? false,
         isPinned = json['isPinned'] ?? false,

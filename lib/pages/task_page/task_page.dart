@@ -2,25 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home/task/task.dart';
-import 'package:info_keeper/model/types/home/task/todo.dart';
 import 'package:info_keeper/model/types/home_item.dart';
-import 'package:info_keeper/model/types/item_location.dart';
 import 'package:info_keeper/pages/task_page/widgets/btm_field.dart';
 import 'package:info_keeper/pages/task_page/widgets/title.dart';
 import 'package:info_keeper/pages/task_page/widgets/task_body.dart';
 
 class TaskPage extends StatelessWidget {
-  final HomeItem? homeItem;
+  final HomeItem homeItem;
   final bool change;
-  const TaskPage({Key? key, this.homeItem, this.change = false})
+  const TaskPage({Key? key, required this.homeItem, this.change = false})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    String defaultName = 'Список без названия';
     final TextEditingController titleController =
-        TextEditingController(text: homeItem?.name ?? defaultName);
-    Task task = homeItem?.child ?? Task(todos: <Todo>[].obs);
+        TextEditingController(text: homeItem.name);
+    Task task = homeItem.child;
     RxBool changeTitle = false.obs;
     RxBool isAddTodo = false.obs;
     FocusNode titleFocus = FocusNode();
@@ -36,26 +33,18 @@ class TaskPage extends StatelessWidget {
                 ? () {
                     changeTitle.value = !changeTitle.value;
                     titleFocus.unfocus();
-                    change
-                        ? titleController.text = homeItem!.name
-                        : titleController.text = defaultName;
+                    // change
+                    // ?
+                    titleController.text = homeItem.name;
+                    // : titleController.text = defaultName;
                   }
-                : () =>
-                    // : () {
-                    //     change
-                    //         ? homeItem?.copyWith(name: titleController.text)
-                    //         : Controller.to.add(HomeItem(
-                    //             name: titleController.text,
-                    //             child: Task(todos: task.todos),
-                    //             location: ItemLocation(
-                    //                 inDirectory: Controller.to.selectedFolder.value,
-                    //                 index: Controller
-                    //                     .to
-                    //                     .all[Controller.to.selectedFolder.value]
-                    //                     .childrens
-                    //                     .length)));
-
-                    Get.back())),
+                : () {
+                    if (!change) {
+                      Controller.to.all[homeItem.location.inDirectory].childrens
+                          .removeAt(homeItem.location.index);
+                    }
+                    Get.back();
+                  })),
         actions: [
           Padding(
               padding: const EdgeInsets.all(8),
@@ -66,24 +55,13 @@ class TaskPage extends StatelessWidget {
                           if (titleController.text.isNotEmpty) {
                             changeTitle.value = !changeTitle.value;
                             titleFocus.unfocus();
-                            defaultName = titleController.text;
+                            // defaultName = titleController.text;
                           }
                         }
                       : () {
                           change
-                              ? homeItem?.copyWith(name: titleController.text)
-                              : Controller.to.add(HomeItem(
-                                  name: titleController.text,
-                                  child: Task(todos: task.todos),
-                                  location: ItemLocation(
-                                      inDirectory:
-                                          Controller.to.selectedFolder.value,
-                                      index: Controller
-                                          .to
-                                          .all[Controller
-                                              .to.selectedFolder.value]
-                                          .childrens
-                                          .length)));
+                              ? homeItem.copyWith(name: titleController.text)
+                              : null;
                           Get.back();
                         },
                   icon: Icon(
@@ -95,7 +73,7 @@ class TaskPage extends StatelessWidget {
             changeTitle: changeTitle,
             addTodo: isAddTodo),
       ),
-      body: TaskPageBody(task: task),
+      body: TaskPageBody(homeItem: homeItem),
       bottomNavigationBar: TaskBottomField(
           task: task, isAddTodo: isAddTodo, changeTitle: changeTitle),
     );

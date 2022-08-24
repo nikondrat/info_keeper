@@ -3,17 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home/task/task.dart';
 import 'package:info_keeper/model/types/home/task/todo.dart';
+import 'package:info_keeper/model/types/home_item.dart';
 
 class TodoWidget extends StatelessWidget {
   final int index;
   final bool change;
-  final Task task;
+  final HomeItem homeItem;
   const TodoWidget(
-      {Key? key, required this.index, this.change = true, required this.task})
+      {Key? key,
+      required this.index,
+      this.change = true,
+      required this.homeItem})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Task task = homeItem.child;
     TextEditingController controller =
         TextEditingController(text: task.todos[index].title);
 
@@ -24,7 +29,10 @@ class TodoWidget extends StatelessWidget {
             fillColor: MaterialStateProperty.all(Colors.grey.shade600),
             value: task.todos[index].isCompleted,
             onChanged: (value) {
-              task.todos[index].copyWith(index: index, isCompleted: value);
+              task.todos[index].copyWith(
+                  location: homeItem.location,
+                  index: index,
+                  isCompleted: value);
               Controller.to.setData();
             }),
         Expanded(
@@ -43,6 +51,8 @@ class TodoWidget extends StatelessWidget {
                       } else {
                         task.todos.insert(1, Todo(title: controller.text));
                       }
+                    } else {
+                      task.todos.removeAt(index);
                     }
                   },
                   decoration: const InputDecoration(

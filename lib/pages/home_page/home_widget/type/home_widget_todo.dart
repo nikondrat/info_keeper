@@ -91,7 +91,7 @@ class HomeWidgetTodo extends StatelessWidget {
                         return homeItem
                                 .child.value.tasks![index].title.isNotEmpty
                             ? TodoWidget(
-                                task: homeItem.child,
+                                homeItem: homeItem,
                                 index: index,
                                 change: false,
                               )

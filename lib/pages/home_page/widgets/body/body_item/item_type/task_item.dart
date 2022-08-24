@@ -37,7 +37,7 @@ class TodoItem extends StatelessWidget {
                     itemCount: task.todos.length,
                     itemBuilder: (context, todoIndex) {
                       return TodoWidget(
-                          index: todoIndex, task: task, change: false);
+                          index: todoIndex, homeItem: homeItem, change: false);
                     })))));
   }
 }

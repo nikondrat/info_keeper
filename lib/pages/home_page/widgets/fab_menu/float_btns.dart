@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:info_keeper/model/controller.dart';
+import 'package:info_keeper/model/types/home/task/task.dart';
+import 'package:info_keeper/model/types/home/task/todo.dart';
+import 'package:info_keeper/model/types/home_item.dart';
+import 'package:info_keeper/model/types/item_location.dart';
 import 'package:info_keeper/pages/audio_page/audio_page.dart';
 // import 'package:info_keeper/pages/audio_page/audio_page.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
@@ -58,7 +63,18 @@ class _HomeFloatButtonsState extends State<HomeFloatButtons>
             ActionButton(
               onPressed: () {
                 _toggle();
-                Get.to(() => const TaskPage());
+                HomeItem homeItem = HomeItem(
+                    name: 'Список без названия',
+                    child: Task(todos: <Todo>[].obs),
+                    location: ItemLocation(
+                        inDirectory: Controller.to.selectedFolder.value,
+                        index: Controller
+                            .to
+                            .all[Controller.to.selectedFolder.value]
+                            .childrens
+                            .length));
+                Controller.to.add(homeItem);
+                Get.to(() => TaskPage(homeItem: homeItem));
               },
               icon: const Icon(Icons.add_task),
               heroTag: 'floatbtn2',

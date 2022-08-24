@@ -37,6 +37,7 @@ dependencies:
   firebase_core: ^1.20.0
   cloud_firestore: ^3.4.3
   auto_size_text: ^3.0.0
+  audio_wave: ^0.1.4
 
 dev_dependencies:
   flutter_test:

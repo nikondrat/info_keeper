@@ -19,7 +19,7 @@ class TaskTitle extends StatelessWidget {
     TextField titleTextField = TextField(
       controller: titleController,
       cursorColor: Colors.black,
-      maxLength: 20,
+      maxLength: 22,
       focusNode: titleFocus,
       onTap: () => changeTitle.value = true,
       decoration: InputDecoration(
