@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
+import 'package:info_keeper/model/types/home/storage_file/storage_file.dart';
 import 'package:info_keeper/model/types/home/task/task.dart';
 import 'package:info_keeper/model/types/home/task/todo.dart';
 import 'package:info_keeper/model/types/home_item.dart';
@@ -11,6 +12,7 @@ import 'package:info_keeper/pages/home_page/home_controller.dart';
 // import 'package:info_keeper/pages/home_page/widgets/home_alert_dialog.dart';
 // import 'package:info_keeper/pages/storage_file_page/storage_file_page.dart';
 import 'package:info_keeper/pages/home_page/widgets/fab_menu/fab.dart';
+import 'package:info_keeper/pages/storage_file_page/storage_file_page.dart';
 import 'package:info_keeper/pages/task_page/task_page.dart';
 
 class HomeFloatButtons extends StatefulWidget {
@@ -81,10 +83,22 @@ class _HomeFloatButtonsState extends State<HomeFloatButtons>
               controller: controller,
             ),
             ActionButton(
-              // onPressed: () {
-              //   _toggle();
-              //   Get.to(() => const StorageFilePage());
-              // },
+              onPressed: () {
+                _toggle();
+                HomeItem homeItem = HomeItem(
+                    name: 'Без названия',
+                    child: StorageFile(history: []),
+                    location: ItemLocation(
+                        inDirectory: Controller.to.selectedFolder.value,
+                        index: Controller
+                            .to
+                            .all[Controller.to.selectedFolder.value]
+                            .childrens
+                            .length));
+                Get.to(() => StorageFilePage(
+                      homeItem: homeItem,
+                    ));
+              },
               icon: const Icon(Icons.file_open_outlined),
               heroTag: 'floatbtn3',
               controller: controller,

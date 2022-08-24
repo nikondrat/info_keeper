@@ -22,34 +22,25 @@ class StorageFilePageTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       controller: titleController,
-      autofocus: change.value ? false : true,
       cursorColor: Colors.black,
       decoration: InputDecoration(
-          hintText: 'Title',
+          hintText: 'Write title',
           contentPadding: const EdgeInsets.symmetric(horizontal: 10),
           errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(6),
-              borderSide: const BorderSide(width: 1, color: Colors.red)),
+              borderSide: const BorderSide(color: Colors.red)),
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(6),
-              borderSide: const BorderSide(
-                width: 1,
-              )),
+              borderSide: const BorderSide()),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(6),
-              borderSide: const BorderSide(
-                width: 1,
-              )),
+              borderSide: const BorderSide()),
           disabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(6),
-              borderSide: const BorderSide(
-                width: 1,
-              )),
+              borderSide: const BorderSide()),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(6),
-            borderSide: const BorderSide(
-              width: 1,
-            ),
+            borderSide: const BorderSide(),
           )),
       onSubmitted: (String value) {
         if (value.isNotEmpty) {
@@ -60,8 +51,7 @@ class StorageFilePageTextField extends StatelessWidget {
             location: ItemLocation(
                 inDirectory: Controller.to.selectedFolder.value,
                 index: Controller.to.all[Controller.to.selectedFolder.value]
-                        .childrens.length -
-                    1),
+                    .childrens.length),
           ));
         }
       },

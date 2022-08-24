@@ -4,6 +4,7 @@ import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home/home.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
+import 'package:info_keeper/pages/storage_file_page/storage_file_page.dart';
 import 'package:info_keeper/pages/task_page/task_page.dart';
 
 class HomeBodyItemGesture extends StatelessWidget {
@@ -30,6 +31,7 @@ class HomeBodyItemGesture extends StatelessWidget {
           case HomeType.chat:
             break;
           case HomeType.storageFile:
+            Get.to(() => StorageFilePage(homeItem: homeItem, change: true));
             break;
           case HomeType.task:
             Get.to(() => TaskPage(homeItem: homeItem, change: true));

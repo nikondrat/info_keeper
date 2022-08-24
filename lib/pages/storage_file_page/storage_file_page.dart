@@ -18,24 +18,23 @@ import 'package:path_provider/path_provider.dart';
 
 class StorageFilePage extends StatelessWidget {
   final bool change;
-  final HomeItem? homeItem;
-  const StorageFilePage({Key? key, this.homeItem, this.change = false})
+  final HomeItem homeItem;
+  const StorageFilePage({Key? key, required this.homeItem, this.change = false})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController title =
-        TextEditingController(text: homeItem != null ? homeItem!.name : '');
-    TextEditingController data = TextEditingController(
-        text: homeItem != null ? homeItem!.child.value.data : '');
+    TextEditingController title = TextEditingController(text: homeItem.name);
+    TextEditingController data =
+        TextEditingController(text: homeItem.child.data);
     final changeFile = change.obs;
     final history = [].obs;
     var pathToImage = ''.obs;
 
     if (change) {
-      history.value = homeItem!.child.value.history!;
-      if (homeItem!.child.value.pathToImage.isNotEmpty) {
-        pathToImage.value = homeItem!.child.value.pathToImage;
+      history.value = homeItem.child.history;
+      if (homeItem.child.pathToImage.isNotEmpty) {
+        pathToImage.value = homeItem.child.pathToImage;
         Controller.to.setData();
       }
     }
@@ -114,8 +113,8 @@ class StorageFilePage extends StatelessWidget {
           PopupMenuItem(
               value: 3,
               child: Notifications(
-                locElement: homeItem!.location,
-                name: homeItem!.name,
+                locElement: homeItem.location,
+                name: homeItem.name,
                 isStorageFile: true,
               )),
           PopupMenuItem(
@@ -210,8 +209,7 @@ class StorageFilePage extends StatelessWidget {
                     onSelected: (value) {
                       if (value == 2) {
                         Get.to(() => StorageFileHistory(
-                              historyElements:
-                                  homeItem!.child.value.history!.obs,
+                              historyElements: homeItem.child.history!.obs,
                               dataController: data,
                             ));
                       }

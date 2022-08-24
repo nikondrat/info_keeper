@@ -119,7 +119,6 @@ class _AudioPageState extends State<AudioPage> {
             splashRadius: 20,
             onPressed: () {
               Get.back();
-              closeRecorder();
             },
             icon: const Icon(Icons.arrow_back)),
       ),
