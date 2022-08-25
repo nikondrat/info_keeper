@@ -6,68 +6,41 @@ import 'package:info_keeper/model/types/item_location.dart';
 import 'package:info_keeper/model/types/home/storage_file/storage_file.dart';
 
 class StorageFilePageAction extends StatelessWidget {
-  final RxList history;
+  final HomeItem homeItem;
+  final List history;
   final TextEditingController titleController;
   final TextEditingController dataController;
-  final RxBool changeFile;
-  final RxString pathToImage;
+  final bool change;
+  final String pathToImage;
   const StorageFilePageAction(
       {Key? key,
+      required this.homeItem,
       required this.history,
       required this.titleController,
       required this.pathToImage,
       required this.dataController,
-      required this.changeFile})
+      required this.change})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => changeFile.value
-        ? IconButton(
-            onPressed: () {
-              if (titleController.text.isNotEmpty) {
-                history.add(dataController.text);
-                Controller.to.change(HomeItem(
+    return IconButton(
+      onPressed: change
+          ? () {
+              history.add(dataController.text);
+              homeItem.copyWith(
                   name: titleController.text,
-                  child: StorageFile(
-                      pathToImage: pathToImage.value,
+                  child: homeItem.child.copyWith(
+                      data: dataController.text,
                       history: history,
-                      data: dataController.text),
-                  location: ItemLocation(
-                      inDirectory: Controller.to.selectedFolder.value,
-                      index: Controller
-                          .to
-                          .all[Controller.to.selectedFolder.value]
-                          .childrens
-                          .length),
-                ));
-                Get.back();
-              }
+                      pathToImage: pathToImage));
+              Get.back();
+            }
+          : () {
+              Get.back();
             },
-            icon: const Icon(Icons.done),
-            splashRadius: 20,
-          )
-        : IconButton(
-            onPressed: () {
-              if (titleController.text.isNotEmpty) {
-                Controller.to.all[Controller.to.selectedFolder.value].childrens
-                    .add(HomeItem(
-                  name: titleController.text,
-                  child: StorageFile(data: dataController.text),
-                  location: ItemLocation(
-                      inDirectory: Controller.to.selectedFolder.value,
-                      index: Controller
-                          .to
-                          .all[Controller.to.selectedFolder.value]
-                          .childrens
-                          .length),
-                ));
-                changeFile.value = true;
-                Get.back();
-              }
-            },
-            icon: const Icon(Icons.add),
-            splashRadius: 20,
-          ));
+      icon: Icon(change ? Icons.done : Icons.add),
+      splashRadius: 20,
+    );
   }
 }

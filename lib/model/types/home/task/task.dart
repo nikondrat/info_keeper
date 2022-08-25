@@ -12,8 +12,8 @@ class Task {
     required this.todos,
   });
 
-  Task copyWith({HomeType? type, RxList<Todo>? todos}) {
-    Task task = Task(type: type ?? this.type, todos: todos ?? this.todos);
+  Task copyWith({RxList<Todo>? todos}) {
+    Task task = Task(todos: todos ?? this.todos);
     return Controller.to.all[Controller.to.selectedFolder.value]
         .childrens[Controller.to.selectedElementIndex.value].child = task;
   }

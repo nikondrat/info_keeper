@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:info_keeper/model/types/home/task/task.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/pages/task_page/widgets/todo.dart';

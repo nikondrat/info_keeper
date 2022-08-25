@@ -12,6 +12,7 @@ import 'package:info_keeper/pages/home_page/home_controller.dart';
 // import 'package:info_keeper/pages/home_page/widgets/home_alert_dialog.dart';
 // import 'package:info_keeper/pages/storage_file_page/storage_file_page.dart';
 import 'package:info_keeper/pages/home_page/widgets/fab_menu/fab.dart';
+import 'package:info_keeper/pages/home_page/widgets/home_alert_dialog.dart';
 import 'package:info_keeper/pages/storage_file_page/storage_file_page.dart';
 import 'package:info_keeper/pages/task_page/task_page.dart';
 
@@ -95,6 +96,7 @@ class _HomeFloatButtonsState extends State<HomeFloatButtons>
                             .all[Controller.to.selectedFolder.value]
                             .childrens
                             .length));
+                Controller.to.add(homeItem);
                 Get.to(() => StorageFilePage(
                       homeItem: homeItem,
                     ));
@@ -104,12 +106,12 @@ class _HomeFloatButtonsState extends State<HomeFloatButtons>
               controller: controller,
             ),
             ActionButton(
-              // onPressed: () {
-              //   _toggle();
-              //   showDialog(
-              //       context: context,
-              //       builder: (context) => const HomePageAlertDialog());
-              // },
+              onPressed: () {
+                // _toggle();
+                // showDialog(
+                //     context: context,
+                //     builder: (context) => const HomePageAlertDialog());
+              },
               icon: const Icon(Icons.chat_bubble_outline),
               heroTag: 'floatbtn4',
               controller: controller,

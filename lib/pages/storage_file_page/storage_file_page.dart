@@ -24,20 +24,12 @@ class StorageFilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    StorageFile storageFile = homeItem.child;
     TextEditingController title = TextEditingController(text: homeItem.name);
     TextEditingController data =
         TextEditingController(text: homeItem.child.data);
-    final changeFile = change.obs;
-    final history = [].obs;
-    var pathToImage = ''.obs;
-
-    if (change) {
-      history.value = homeItem.child.history;
-      if (homeItem.child.pathToImage.isNotEmpty) {
-        pathToImage.value = homeItem.child.pathToImage;
-        Controller.to.setData();
-      }
-    }
+    final history = storageFile.history;
+    var pathToImage = storageFile.pathToImage;
 
     void pickImage() async {
       FilePickerResult? result =
@@ -47,24 +39,22 @@ class StorageFilePage extends StatelessWidget {
         File file = File(result.files.single.path.toString());
         String path = '${dir.path}/${result.files.single.name}';
         await file.copy(path);
-        pathToImage.value = path;
+        pathToImage = path;
         Controller.to.change(HomeItem(
           name: title.text,
           child: StorageFile(
-                  pathToImage: pathToImage.value,
-                  history: history,
-                  data: data.value.text)
-              .obs,
+              pathToImage: pathToImage,
+              history: history,
+              data: data.value.text),
           location: ItemLocation(
               inDirectory: Controller.to.selectedFolder.value,
-              index: Controller.to.all[Controller.to.selectedFolder.value]
-                      .childrens.length -
-                  1),
+              index: Controller
+                  .to.all[Controller.to.selectedFolder.value].childrens.length),
         ));
       }
     }
 
-    List<PopupMenuItem> changePopupMenuItems(BoxConstraints constraints) => [
+    List<PopupMenuItem> changePopupMenuItems() => [
           PopupMenuItem(
               value: 0,
               onTap: () {
@@ -74,7 +64,6 @@ class StorageFilePage extends StatelessWidget {
                     icon: const Icon(Icons.done),
                     margin: const EdgeInsets.all(10),
                     duration: const Duration(seconds: 1),
-                    maxWidth: constraints.maxWidth * 0.9,
                     isDismissible: true,
                     snackPosition: SnackPosition.BOTTOM);
               },
@@ -119,7 +108,7 @@ class StorageFilePage extends StatelessWidget {
               )),
           PopupMenuItem(
               onTap: () {
-                if (history.indexOf(data.text) >= 1) {
+                if (history!.indexOf(data.text) >= 1) {
                   data.text = history[history.indexOf(data.text) - 1];
                 }
               },
@@ -154,7 +143,7 @@ class StorageFilePage extends StatelessWidget {
               )),
         ];
 
-    List<PopupMenuItem> addPopupMenuItems(BoxConstraints constraints) => [
+    List<PopupMenuItem> addPopupMenuItems() => [
           PopupMenuItem(
               value: 0,
               onTap: () {
@@ -164,7 +153,6 @@ class StorageFilePage extends StatelessWidget {
                     icon: const Icon(Icons.done),
                     margin: const EdgeInsets.all(10),
                     duration: const Duration(seconds: 1),
-                    maxWidth: constraints.maxWidth * 0.9,
                     isDismissible: true,
                     snackPosition: SnackPosition.BOTTOM);
               },
@@ -191,82 +179,59 @@ class StorageFilePage extends StatelessWidget {
               )),
         ];
 
-    return LayoutBuilder(
-      builder: (context, constraints) => Scaffold(
-          resizeToAvoidBottomInset: false,
-          appBar: AppBar(
-              titleSpacing: 0,
-              actions: [
-                StorageFilePageAction(
-                    history: history,
-                    titleController: title,
-                    dataController: data,
-                    pathToImage: pathToImage,
-                    changeFile: changeFile),
-                PopupMenuButton(
-                    splashRadius: 20,
-                    tooltip: '',
-                    onSelected: (value) {
-                      if (value == 2) {
-                        Get.to(() => StorageFileHistory(
-                              historyElements: homeItem.child.history!.obs,
-                              dataController: data,
-                            ));
-                      }
-                    },
-                    itemBuilder: (context) => change
-                        ? changePopupMenuItems(constraints)
-                        : addPopupMenuItems(constraints))
-              ],
-              leading: IconButton(
-                splashRadius: 20,
-                icon: const Icon(Icons.arrow_back),
-                onPressed: () {
-                  if (title.text.isNotEmpty) {
-                    changeFile.value
-                        ? Controller.to.change(HomeItem(
-                            name: title.text,
-                            child: StorageFile(
-                                pathToImage: pathToImage.value,
-                                history: history,
-                                data: data.value.text),
-                            location: ItemLocation(
-                                inDirectory: Controller.to.selectedFolder.value,
-                                index: Controller
-                                    .to
-                                    .all[Controller.to.selectedFolder.value]
-                                    .childrens
-                                    .length),
-                          ))
-                        : Controller.to.add(HomeItem(
-                            name: title.text,
-                            child: StorageFile(
-                                history: history,
-                                pathToImage: pathToImage.value,
-                                data: data.value.text),
-                            location: ItemLocation(
-                                inDirectory: Controller.to.selectedFolder.value,
-                                index: Controller
-                                    .to
-                                    .all[Controller.to.selectedFolder.value]
-                                    .childrens
-                                    .length),
+    return Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+            titleSpacing: 0,
+            actions: [
+              StorageFilePageAction(
+                  homeItem: homeItem,
+                  history: history!,
+                  titleController: title,
+                  dataController: data,
+                  pathToImage: pathToImage,
+                  change: change),
+              PopupMenuButton(
+                  splashRadius: 20,
+                  tooltip: '',
+                  onSelected: (value) {
+                    if (value == 2) {
+                      Get.to(() => StorageFileHistory(
+                            historyElements: homeItem.child.history!,
+                            dataController: data,
                           ));
-                  }
-                  Get.back();
-                },
-              ),
-              title: StorageFilePageTextField(
-                history: history,
-                titleController: title,
-                dataController: data,
-                change: changeFile,
-              )),
-          body: Obx(() => pathToImage.isNotEmpty
-              ? BackgroundImageWidget(
-                  image: pathToImage.value,
-                  child: StorageFilePageBody(dataController: data))
-              : StorageFilePageBody(dataController: data))),
-    );
+                    }
+                  },
+                  itemBuilder: (context) =>
+                      change ? changePopupMenuItems() : addPopupMenuItems())
+            ],
+            leading: IconButton(
+              splashRadius: 20,
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () {
+                if (title.text.isNotEmpty) {
+                  change
+                      ? storageFile.copyWith(
+                          data: data.value.text,
+                          history: history,
+                          pathToImage: pathToImage)
+                      : Controller
+                          .to.all[Controller.to.selectedFolder.value].childrens
+                          .removeAt(homeItem.location.index);
+                }
+                Get.back();
+              },
+            ),
+            title: StorageFilePageTextField(
+              history: history,
+              titleController: title,
+              dataController: data,
+              change: change,
+            )),
+        body: pathToImage.isNotEmpty
+            ? BackgroundImageWidget(
+                image: pathToImage,
+                child: StorageFilePageBody(dataController: data))
+            : StorageFilePageBody(dataController: data));
   }
 }

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home/home.dart';
 import 'package:info_keeper/model/types/home_item.dart';
+import 'package:info_keeper/pages/chat_page/chat_page.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
 import 'package:info_keeper/pages/storage_file_page/storage_file_page.dart';
 import 'package:info_keeper/pages/task_page/task_page.dart';
@@ -29,6 +30,7 @@ class HomeBodyItemGesture extends StatelessWidget {
         Controller.to.selectedElementIndex.value = homeItemIndex;
         switch (homeItem.child.type) {
           case HomeType.chat:
+            // Get.to(() => ChatPage(chatIndex: homeItem.location.index));
             break;
           case HomeType.storageFile:
             Get.to(() => StorageFilePage(homeItem: homeItem, change: true));

@@ -8,8 +8,8 @@ import 'package:info_keeper/model/types/home/storage_file/storage_file.dart';
 class StorageFilePageTextField extends StatelessWidget {
   final TextEditingController titleController;
   final TextEditingController dataController;
-  final RxBool change;
-  final RxList history;
+  final bool change;
+  final List history;
   const StorageFilePageTextField(
       {Key? key,
       required this.titleController,
