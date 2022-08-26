@@ -6,14 +6,11 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home_item.dart';
-import 'package:info_keeper/model/types/item_location.dart';
 import 'package:info_keeper/model/types/home/storage_file/storage_file.dart';
 import 'package:info_keeper/pages/storage_file_page/storage_history_page.dart';
-import 'package:info_keeper/pages/storage_file_page/widgets/storage_file_action.dart';
 import 'package:info_keeper/pages/storage_file_page/widgets/storage_file_body.dart';
-import 'package:info_keeper/pages/storage_file_page/widgets/storage_file_text_field.dart';
-import 'package:info_keeper/widgets/background_image.dart';
 import 'package:info_keeper/widgets/notifications.dart';
+import 'package:info_keeper/widgets/title.dart';
 import 'package:path_provider/path_provider.dart';
 
 class StorageFilePage extends StatelessWidget {
@@ -24,12 +21,12 @@ class StorageFilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final RxBool changeTitle = false.obs;
     StorageFile storageFile = homeItem.child;
     TextEditingController title = TextEditingController(text: homeItem.name);
-    TextEditingController data =
-        TextEditingController(text: homeItem.child.data);
-    final history = storageFile.history;
-    var pathToImage = storageFile.pathToImage;
+    FocusNode titleFocus = FocusNode();
+    TextEditingController data = TextEditingController(text: storageFile.data);
+    RxString pathToImage = storageFile.pathToImage.obs;
 
     void pickImage() async {
       FilePickerResult? result =
@@ -39,18 +36,11 @@ class StorageFilePage extends StatelessWidget {
         File file = File(result.files.single.path.toString());
         String path = '${dir.path}/${result.files.single.name}';
         await file.copy(path);
-        pathToImage = path;
-        Controller.to.change(HomeItem(
-          name: title.text,
-          child: StorageFile(
-              pathToImage: pathToImage,
-              history: history,
-              data: data.value.text),
-          location: ItemLocation(
-              inDirectory: Controller.to.selectedFolder.value,
-              index: Controller
-                  .to.all[Controller.to.selectedFolder.value].childrens.length),
-        ));
+        pathToImage.value = path;
+        // storageFile.pathToImage = path;
+        storageFile.copyWith(pathToImage: path, data: data.text);
+        // homeItem.copyWith(name: title.text, child: storageFile);
+        return Controller.to.setData();
       }
     }
 
@@ -108,8 +98,9 @@ class StorageFilePage extends StatelessWidget {
               )),
           PopupMenuItem(
               onTap: () {
-                if (history!.indexOf(data.text) >= 1) {
-                  data.text = history[history.indexOf(data.text) - 1];
+                if (storageFile.history!.indexOf(data.text) >= 1) {
+                  data.text = storageFile
+                      .history![storageFile.history!.indexOf(data.text) - 1];
                 }
               },
               value: 4,
@@ -179,59 +170,90 @@ class StorageFilePage extends StatelessWidget {
               )),
         ];
 
-    return Scaffold(
-        resizeToAvoidBottomInset: false,
+    return Obx(() => Scaffold(
         appBar: AppBar(
             titleSpacing: 0,
-            actions: [
-              StorageFilePageAction(
-                  homeItem: homeItem,
-                  history: history!,
-                  titleController: title,
-                  dataController: data,
-                  pathToImage: pathToImage,
-                  change: change),
-              PopupMenuButton(
-                  splashRadius: 20,
-                  tooltip: '',
-                  onSelected: (value) {
-                    if (value == 2) {
-                      Get.to(() => StorageFileHistory(
-                            historyElements: homeItem.child.history!,
-                            dataController: data,
-                          ));
-                    }
-                  },
-                  itemBuilder: (context) =>
-                      change ? changePopupMenuItems() : addPopupMenuItems())
-            ],
+            actions: changeTitle.value
+                ? [
+                    Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: IconButton(
+                            splashRadius: 20,
+                            onPressed: () {
+                              if (title.text.isNotEmpty) {
+                                changeTitle.value = !changeTitle.value;
+                                titleFocus.unfocus();
+                                // defaultName = titleController.text;
+                                change
+                                    ? homeItem.copyWith(name: title.text)
+                                    : homeItem.name = title.text;
+                              }
+                            },
+                            icon: const Icon(Icons.done)))
+                  ]
+                : [
+                    IconButton(
+                      onPressed: () {
+                        if (data.text.isNotEmpty) {
+                          homeItem.child.history.add(data.text);
+                        }
+                        homeItem.copyWith(
+                            name: title.text,
+                            child: homeItem.child.copyWith(
+                                data: data.text,
+                                history: homeItem.child.history,
+                                pathToImage: homeItem.child.pathToImage));
+                        Get.back();
+                      },
+                      icon: Icon(change ? Icons.done : Icons.add),
+                      splashRadius: 20,
+                    ),
+                    PopupMenuButton(
+                        splashRadius: 20,
+                        tooltip: '',
+                        onSelected: (value) {
+                          if (value == 2) {
+                            Get.to(() => StorageFileHistory(
+                                  historyElements: homeItem.child.history!,
+                                  dataController: data,
+                                ));
+                          }
+                        },
+                        itemBuilder: (context) => change
+                            ? changePopupMenuItems()
+                            : addPopupMenuItems())
+                  ],
             leading: IconButton(
               splashRadius: 20,
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () {
-                if (title.text.isNotEmpty) {
-                  change
-                      ? storageFile.copyWith(
-                          data: data.value.text,
-                          history: history,
-                          pathToImage: pathToImage)
-                      : Controller
-                          .to.all[Controller.to.selectedFolder.value].childrens
-                          .removeAt(homeItem.location.index);
-                }
-                Get.back();
-              },
+              icon: Icon(changeTitle.value ? Icons.close : Icons.arrow_back),
+              onPressed: changeTitle.value
+                  ? () {
+                      changeTitle.value = !changeTitle.value;
+                      titleFocus.unfocus();
+                      // change
+                      // ?
+                      title.text = homeItem.name;
+                      // : titleController.text = defaultName;
+                    }
+                  : () {
+                      if (title.text.isNotEmpty) {
+                        change
+                            ? storageFile.copyWith(
+                                data: data.value.text,
+                                history: storageFile.history,
+                                pathToImage: pathToImage.value)
+                            : Controller
+                                .to
+                                .all[Controller.to.selectedFolder.value]
+                                .childrens
+                                .removeAt(homeItem.location.index);
+                      }
+                      Get.back();
+                    },
             ),
-            title: StorageFilePageTextField(
-              history: history,
-              titleController: title,
-              dataController: data,
-              change: change,
-            )),
-        body: pathToImage.isNotEmpty
-            ? BackgroundImageWidget(
-                image: pathToImage,
-                child: StorageFilePageBody(dataController: data))
-            : StorageFilePageBody(dataController: data));
+            title: TitleWidget(
+                controller: title, change: changeTitle, focusNode: titleFocus)),
+        body: StorageFilePageBody(
+            dataController: data, pathToImage: pathToImage)));
   }
 }

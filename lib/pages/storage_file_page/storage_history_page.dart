@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class StorageFileHistory extends StatelessWidget {
-  final RxList historyElements;
+  final List historyElements;
   final TextEditingController? dataController;
   const StorageFileHistory(
       {Key? key, required this.historyElements, this.dataController})

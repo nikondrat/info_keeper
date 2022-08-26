@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class TaskTitle extends StatelessWidget {
-  final TextEditingController titleController;
-  final RxBool changeTitle;
-  final FocusNode titleFocus;
-  const TaskTitle({
-    Key? key,
-    required this.titleController,
-    required this.changeTitle,
-    required this.titleFocus,
-  }) : super(key: key);
+class TitleWidget extends StatelessWidget {
+  final TextEditingController controller;
+  final FocusNode? focusNode;
+  final RxBool change;
+  const TitleWidget(
+      {Key? key,
+      required this.controller,
+      this.focusNode,
+      required this.change})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     TextField titleTextField = TextField(
-      controller: titleController,
+      controller: controller,
       cursorColor: Colors.black,
       maxLength: 22,
-      focusNode: titleFocus,
-      onTap: () => changeTitle.value = true,
+      focusNode: focusNode,
+      onTap: () => change.value = true,
       decoration: InputDecoration(
           hintText: 'Write title',
           contentPadding: const EdgeInsets.symmetric(horizontal: 10),
@@ -35,8 +35,8 @@ class TaskTitle extends StatelessWidget {
               OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(6))),
       onSubmitted: (value) {
-        titleController.text = value;
-        value.isNotEmpty ? changeTitle.value = false : null;
+        controller.text = value;
+        value.isNotEmpty ? change.value = false : null;
       },
     );
 

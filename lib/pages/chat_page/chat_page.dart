@@ -14,7 +14,6 @@ import 'package:info_keeper/pages/chat_page/widgets/chat_bottom_text_field.dart'
 import 'package:info_keeper/pages/chat_page/widgets/chat_pinned_message.dart';
 import 'package:info_keeper/pages/chat_page/widgets/message_menu/chat_colors_selector.dart';
 import 'package:info_keeper/pages/chat_page/widgets/chat_title.dart';
-import 'package:info_keeper/widgets/background_image.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:swipe/swipe.dart';
@@ -250,8 +249,11 @@ class ChatPage extends StatelessWidget {
                         ))
                     : null),
             body: pathToImage.isNotEmpty
-                ? BackgroundImageWidget(
-                    image: pathToImage.value,
+                ? Container(
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: FileImage(File(pathToImage.value)),
+                            fit: BoxFit.cover)),
                     child: ChatPageBody(
                       moveMessage: moveMessage,
                       pinnedMessages: pinnedMessages,
