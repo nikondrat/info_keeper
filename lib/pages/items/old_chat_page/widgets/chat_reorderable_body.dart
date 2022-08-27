@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/home/chat/chat.dart';
+import 'package:info_keeper/model/types/home/chat/old_chat.dart';
 import 'package:info_keeper/pages/items/old_chat_page/widgets/chat_body.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
@@ -74,7 +74,7 @@ class ChatPageReorderableBody extends StatelessWidget {
               messages.insert(newIndex, message);
               message.location.selectedMessageIndex = newIndex;
 
-              Controller.to.change(Chat(messages: messages.obs));
+              Controller.to.change(ChatItem(messages: messages.obs));
             },
             reverse: true,
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/home/chat/chat.dart';
+import 'package:info_keeper/model/types/home/chat/old_chat.dart';
 import 'package:info_keeper/model/types/item_location.dart';
 import 'package:info_keeper/pages/items/old_chat_page/chat_history_page.dart';
 import 'package:info_keeper/pages/items/old_chat_page/widgets/message_menu/chat_menu_item.dart';
@@ -160,7 +160,7 @@ class ChatPageMenu extends StatelessWidget {
                       .messages;
                   messages[selectedMessage.value].isCollapsed =
                       !messages[selectedMessage.value].isCollapsed;
-                  Controller.to.change(Chat(messages: messages.obs));
+                  Controller.to.change(ChatItem(messages: messages.obs));
                 }),
             ChatPageMenuItem(
                 function: () {
@@ -211,7 +211,7 @@ class ChatPageMenu extends StatelessWidget {
                       ? pinnedMessages.add(messages[selectedMessage.value])
                       : pinnedMessages.removeAt(0);
 
-                  Controller.to.change(Chat(
+                  Controller.to.change(ChatItem(
                       messages: messages.obs, pinnedMessages: pinnedMessages));
                 },
                 icon: const Icon(Icons.push_pin_outlined),
@@ -252,8 +252,8 @@ class ChatPageMenu extends StatelessWidget {
                       ? favorites.add(messages[selectedMessage.value])
                       : favorites.remove(messages[selectedMessage.value]);
 
-                  Controller.to.change(
-                      Chat(favorites: favorites.obs, messages: messages.obs));
+                  Controller.to.change(ChatItem(
+                      favorites: favorites.obs, messages: messages.obs));
                 },
                 icon: const Icon(Icons.star_outline),
                 text: Controller
@@ -282,7 +282,7 @@ class ChatPageMenu extends StatelessWidget {
                     messages[selectedMessage.value].isLocked = true;
                     messages[selectedMessage.value].isUnlocked = false;
 
-                    Controller.to.change(Chat(messages: messages.obs));
+                    Controller.to.change(ChatItem(messages: messages.obs));
                   } else {
                     Get.to(() => VaultPage(
                         selectedElement: selectedMessage, first: true));
