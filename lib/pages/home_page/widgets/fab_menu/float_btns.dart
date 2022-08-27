@@ -6,15 +6,12 @@ import 'package:info_keeper/model/types/home/task/task.dart';
 import 'package:info_keeper/model/types/home/task/todo.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/model/types/item_location.dart';
-import 'package:info_keeper/pages/audio_page/audio_page.dart';
-// import 'package:info_keeper/pages/audio_page/audio_page.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
-// import 'package:info_keeper/pages/home_page/widgets/home_alert_dialog.dart';
-// import 'package:info_keeper/pages/storage_file_page/storage_file_page.dart';
 import 'package:info_keeper/pages/home_page/widgets/fab_menu/fab.dart';
-import 'package:info_keeper/pages/home_page/widgets/home_alert_dialog.dart';
-import 'package:info_keeper/pages/storage_file_page/storage_file_page.dart';
-import 'package:info_keeper/pages/task_page/task_page.dart';
+import 'package:info_keeper/pages/home_page/widgets/alert_dialog.dart';
+import 'package:info_keeper/pages/items/audio/audio_page.dart';
+import 'package:info_keeper/pages/items/storage_file/storage_file_page.dart';
+import 'package:info_keeper/pages/items/task/task_page.dart';
 
 class HomeFloatButtons extends StatefulWidget {
   const HomeFloatButtons({Key? key}) : super(key: key);
@@ -107,10 +104,10 @@ class _HomeFloatButtonsState extends State<HomeFloatButtons>
             ),
             ActionButton(
               onPressed: () {
-                // _toggle();
-                // showDialog(
-                //     context: context,
-                //     builder: (context) => const HomePageAlertDialog());
+                _toggle();
+                showDialog(
+                    context: context,
+                    builder: (context) => const HomeAlertDialog());
               },
               icon: const Icon(Icons.chat_bubble_outline),
               heroTag: 'floatbtn4',

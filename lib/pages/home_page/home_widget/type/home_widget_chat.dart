@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/pages/chat_page/chat_page.dart';
+import 'package:info_keeper/model/types/home_item.dart';
+import 'package:info_keeper/model/types/item_location.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
+import 'package:info_keeper/pages/items/chat/chat_page.dart';
 import 'package:info_keeper/pages/trash_page/trash_element.dart';
 import 'package:substring_highlight/substring_highlight.dart';
 
@@ -27,7 +29,9 @@ class HomeWidgetChat extends StatelessWidget {
               home.isShowBottomMenu.value = false;
               Controller.to.selectedElementIndex.value = index;
               Get.to(() => ChatPage(
-                    chatIndex: index,
+                    homeItem: HomeItem(
+                        child: null,
+                        location: ItemLocation(inDirectory: 0, index: index)),
                   ));
             },
       onLongPress: isTrash != null

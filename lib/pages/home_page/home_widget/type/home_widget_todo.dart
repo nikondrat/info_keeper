@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
-import 'package:info_keeper/pages/task_page/task_page.dart';
-import 'package:info_keeper/pages/task_page/widgets/todo.dart';
+import 'package:info_keeper/pages/items/task/task_page.dart';
+import 'package:info_keeper/pages/items/task/widgets/todo.dart';
 import 'package:info_keeper/pages/trash_page/trash_element.dart';
 import 'package:substring_highlight/substring_highlight.dart';
 
