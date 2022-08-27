@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/all.dart';
-import 'package:info_keeper/model/types/home/chat/chat.dart';
+import 'package:info_keeper/model/types/home/chat/old_chat.dart';
 import 'package:info_keeper/model/types/home/chat/message.dart';
 import 'package:info_keeper/pages/items/old_chat_page/widgets/message_menu/chat_menu.dart';
 import 'package:info_keeper/pages/trash_page/trash_element.dart';
@@ -26,7 +26,7 @@ class MessageWidget extends StatelessWidget {
   final RxInt? selectedMessage;
   final RxBool showDate;
   final bool fullScreen;
-  final Message message;
+  final OldMessage message;
   final String dateTime;
   final RxBool splitMessages;
   final RxBool isShowColorSelector;
@@ -200,7 +200,7 @@ class MessageWidgetChild extends StatelessWidget {
   final RxInt? selectedMessage;
   final RxBool showDate;
   final bool fullScreen;
-  final Message message;
+  final OldMessage message;
   final String dateTime;
   final RxBool splitMessages;
   final RxBool isShowColorSelector;
@@ -298,7 +298,7 @@ class MessageWidgetChild extends StatelessWidget {
           // print(selectedMessages);
           messages[message.location.itemIndex!] = message;
           Controller.to.change(
-            Chat(messages: messages.obs),
+            ChatItem(messages: messages.obs),
           );
         }
       },
@@ -320,7 +320,7 @@ class MessageWidgetBody extends StatelessWidget {
   final bool fullScreen;
   final RxInt? selected;
   final RxBool? splitMessages;
-  final Message message;
+  final OldMessage message;
   final RxBool? showDate;
   final String? dateTime;
   final String term;

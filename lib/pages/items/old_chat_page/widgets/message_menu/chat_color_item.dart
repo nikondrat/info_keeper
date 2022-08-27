@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/home/chat/chat.dart';
+import 'package:info_keeper/model/types/home/chat/old_chat.dart';
 import 'package:info_keeper/themes/default/default.dart';
 
 class ChatPageColorItem extends StatelessWidget {
@@ -30,7 +30,7 @@ class ChatPageColorItem extends StatelessWidget {
             messages[selectedMessage.value].selectedColorIndex =
                 selectedIndex.value;
 
-            Controller.to.change(Chat(
+            Controller.to.change(ChatItem(
               messages: messages.obs,
             ));
           },

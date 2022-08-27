@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:info_keeper/pages/items/chat/widgets/btm_app_bar/widgets/btm_text_field.dart';
-import 'package:info_keeper/pages/items/chat/widgets/btm_app_bar/widgets/btm_title_text_field.dart';
+import 'package:info_keeper/pages/items/chat/widgets/btm_app_bar/widgets/text_field.dart';
+import 'package:info_keeper/pages/items/chat/widgets/btm_app_bar/widgets/title_text_field.dart';
 
 class ChatBottomAppBar extends StatelessWidget {
   const ChatBottomAppBar({Key? key}) : super(key: key);

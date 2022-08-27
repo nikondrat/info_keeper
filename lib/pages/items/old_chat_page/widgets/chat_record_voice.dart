@@ -40,7 +40,7 @@ class _ChatPageRecordVoiceState extends State<ChatPageRecordVoice> {
     String dateTime = format.format(DateTime.now());
     isRecord.value = false;
     recorder!.stopRecorder();
-    Controller.to.addChatVoice(ChatVoice(
+    Controller.to.addChatVoice(OldChatVoice(
         path: mPath,
         dateTime: dateTime,
         location: ItemLocation(

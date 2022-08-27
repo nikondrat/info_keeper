@@ -1,5 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:info_keeper/pages/items/chat/widgets/btm_app_bar/widgets/file_selector_btn.dart';
+import 'package:info_keeper/pages/items/chat/widgets/btm_app_bar/widgets/recorder.dart';
+import 'package:info_keeper/pages/items/chat/widgets/btm_app_bar/widgets/send_btn.dart';
 
 class ChatBottomTextField extends StatelessWidget {
   final RxBool isShowTitleTextField;
@@ -9,6 +14,7 @@ class ChatBottomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextEditingController messageController = TextEditingController();
+    final RxBool textFieldIsEmpty = true.obs;
 
     return Row(children: [
       IconButton(
@@ -31,19 +37,21 @@ class ChatBottomTextField extends StatelessWidget {
                   disabledBorder: InputBorder.none,
                   border: InputBorder.none),
               onEditingComplete: () {
-                // contentController.text.isEmpty
-                //     ? textFieldIsEmpty.value = true
-                //     : textFieldIsEmpty.value = false;
+                messageController.text.isEmpty
+                    ? textFieldIsEmpty.value = true
+                    : textFieldIsEmpty.value = false;
               },
               onChanged: (value) {
-                // value.isEmpty
-                //     ? textFieldIsEmpty.value = true
-                //     : textFieldIsEmpty.value = false;
+                value.isEmpty
+                    ? textFieldIsEmpty.value = true
+                    : textFieldIsEmpty.value = false;
               })),
-      IconButton(
-          splashRadius: 20,
-          onPressed: () {},
-          icon: const Icon(Icons.attach_file))
+      Obx(() => textFieldIsEmpty.value && (Platform.isAndroid || Platform.isIOS)
+          ? Row(children: const [
+              ChatBottomFileSelectorButton(),
+              ChatBottomRecorder()
+            ])
+          : const ChatBottomSendButton())
     ]);
   }
 }

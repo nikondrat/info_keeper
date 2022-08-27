@@ -1,7 +1,7 @@
 import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/model/types/item_location.dart';
 
-class OldMessage {
+class Message {
   ItemLocation location;
   AllType type;
   String title;
@@ -16,7 +16,7 @@ class OldMessage {
   bool isCollapsed;
   List? history;
 
-  OldMessage(
+  Message(
       {required this.location,
       this.title = '',
       this.type = AllType.chatMessage,
@@ -31,7 +31,7 @@ class OldMessage {
       this.history,
       required this.dateTime});
 
-  OldMessage.fromJson(Map<String, dynamic> json)
+  Message.fromJson(Map<String, dynamic> json)
       : type = AllType.values.elementAt(json['type']),
         location = ItemLocation.fromJson(json['location']),
         title = json['title'],

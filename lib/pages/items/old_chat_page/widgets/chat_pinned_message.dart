@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/home/chat/chat.dart';
+import 'package:info_keeper/model/types/home/chat/old_chat.dart';
 import 'package:info_keeper/pages/items/old_chat_page/chat_pinned_messages.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
@@ -68,8 +68,8 @@ class ChatPagePinnedMessage extends StatelessWidget {
                           .isPinned;
 
                   pinnedMessages.removeAt(0);
-                  Controller.to.change(
-                      Chat(messages: messages, pinnedMessages: pinnedMessages));
+                  Controller.to.change(ChatItem(
+                      messages: messages, pinnedMessages: pinnedMessages));
                 },
                 splashRadius: 20,
                 icon: Icon(

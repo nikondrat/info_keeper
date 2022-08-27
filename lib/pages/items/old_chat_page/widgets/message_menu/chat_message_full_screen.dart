@@ -5,7 +5,7 @@ import 'package:info_keeper/pages/items/old_chat_page/widgets/type/chat_message.
 
 class ChatPageMessageInFullScreen extends StatelessWidget {
   final RxInt selected;
-  final Message message;
+  final OldMessage message;
   final String dateTime;
   final RxBool splitMessages;
   final RxBool showDate;

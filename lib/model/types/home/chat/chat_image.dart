@@ -1,7 +1,7 @@
 import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/model/types/item_location.dart';
 
-class ChatImage {
+class OldChatImage {
   AllType type;
   ItemLocation location;
   String path;
@@ -9,7 +9,7 @@ class ChatImage {
   bool isLocked;
   bool isUnlocked;
 
-  ChatImage(
+  OldChatImage(
       {required this.path,
       required this.location,
       this.type = AllType.chatImage,
@@ -17,7 +17,7 @@ class ChatImage {
       this.isUnlocked = false,
       required this.dateTime});
 
-  ChatImage.fromJson(Map<String, dynamic> json)
+  OldChatImage.fromJson(Map<String, dynamic> json)
       : type = AllType.values.elementAt(json['type']),
         location = ItemLocation.fromJson(json['location']),
         dateTime = json['dateTime'],

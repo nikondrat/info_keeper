@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/model/types/folder.dart';
-import 'package:info_keeper/model/types/home/chat/chat.dart';
+import 'package:info_keeper/model/types/home/chat/old_chat.dart';
 import 'package:info_keeper/model/types/home/chat/chat_file.dart';
 import 'package:info_keeper/model/types/home/chat/chat_image.dart';
 import 'package:info_keeper/model/types/home/chat/chat_voice.dart';
@@ -54,7 +54,7 @@ class Controller extends GetxController {
         HomeItem(child: StorageFile().obs, location: value.location);
 
     chat() {
-      Chat chat = Chat();
+      ChatItem chat = ChatItem();
       chat.messages = value.messages ??
           all[selectedFolder.value]
               .childrens[selectedElementIndex.value]
@@ -191,7 +191,7 @@ class Controller extends GetxController {
         HomeItem(child: StorageFile().obs, location: value.location);
 
     chat() {
-      Chat chat = Chat();
+      ChatItem chat = ChatItem();
       chat.messages = value.messages ??
           all[selectedFolder.value]
               .childrens[selectedElementIndex.value]
@@ -321,7 +321,7 @@ class Controller extends GetxController {
     setData();
   }
 
-  void addMessage(Message message) {
+  void addMessage(OldMessage message) {
     all[selectedFolder.value]
         .childrens[selectedElementIndex.value]
         .child
@@ -331,7 +331,7 @@ class Controller extends GetxController {
     setData();
   }
 
-  void addChatImage(ChatImage image) {
+  void addChatImage(OldChatImage image) {
     all[selectedFolder.value]
         .childrens[selectedElementIndex.value]
         .child
@@ -341,7 +341,7 @@ class Controller extends GetxController {
     setData();
   }
 
-  void addChatVoice(ChatVoice voice) {
+  void addChatVoice(OldChatVoice voice) {
     all[selectedFolder.value]
         .childrens[selectedElementIndex.value]
         .child
@@ -351,7 +351,7 @@ class Controller extends GetxController {
     setData();
   }
 
-  void addChatFile(ChatFile file) {
+  void addChatFile(OldChatFile file) {
     all[selectedFolder.value]
         .childrens[selectedElementIndex.value]
         .child

@@ -25,7 +25,7 @@ class _AudioPageState extends State<AudioPage> {
   final FocusNode titleFocus = FocusNode();
 
   //
-  Codec codec = Codec.aacMP4;
+  Codec codec = Codec.aacADTS;
   DateFormat dateFormat = DateFormat("yyyy_MM_dd_HH_mm_ss");
   String mPath = '';
 
@@ -49,7 +49,7 @@ class _AudioPageState extends State<AudioPage> {
     if (status != PermissionStatus.granted) {
       throw RecordingPermissionException('Microphone permission not granted');
     }
-    mPath = '${dateFormat.format(DateTime.now())}.mp4';
+    mPath = '${dateFormat.format(DateTime.now())}.aac';
     return record();
   }
   // ----------------------  Here is the code for recording and playback -------

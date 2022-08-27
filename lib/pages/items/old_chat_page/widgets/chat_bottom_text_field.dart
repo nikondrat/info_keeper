@@ -5,7 +5,7 @@ import 'package:flutter_sound/flutter_sound.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/all.dart';
-import 'package:info_keeper/model/types/home/chat/chat.dart';
+import 'package:info_keeper/model/types/home/chat/old_chat.dart';
 import 'package:info_keeper/model/types/home/chat/chat_file.dart';
 import 'package:info_keeper/model/types/home/chat/chat_image.dart';
 import 'package:info_keeper/model/types/home/chat/chat_voice.dart';
@@ -15,7 +15,7 @@ import 'package:info_keeper/pages/items/old_chat_page/widgets/chat_record_voice.
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 
-enum MusicFormat { webm, ogg, mp3, mp4, flac, wav }
+enum MusicFormat { webm, ogg, mp3, flac, wav }
 
 enum ImageFormat { jpeg, png, gif, bmp, webp, wbmp, jpg }
 
@@ -64,7 +64,7 @@ class ChatPageBottomTextField extends StatelessWidget {
             (element) => element.toString() == 'MusicFormat.$type');
 
         if (imageFormat != null) {
-          Controller.to.addChatImage(ChatImage(
+          Controller.to.addChatImage(OldChatImage(
               path: path,
               dateTime: dateTime,
               location: ItemLocation(
@@ -89,9 +89,6 @@ class ChatPageBottomTextField extends StatelessWidget {
             case MusicFormat.mp3:
               codec = Codec.mp3;
               break;
-            case MusicFormat.mp4:
-              codec = Codec.aacMP4;
-              break;
             case MusicFormat.ogg:
               codec = Codec.vorbisOGG;
               break;
@@ -100,7 +97,7 @@ class ChatPageBottomTextField extends StatelessWidget {
               break;
             default:
           }
-          Controller.to.addChatVoice(ChatVoice(
+          Controller.to.addChatVoice(OldChatVoice(
               name: name,
               path: path,
               codec: codec,
@@ -117,7 +114,7 @@ class ChatPageBottomTextField extends StatelessWidget {
                       .messages
                       .length)));
         } else {
-          Controller.to.addChatFile(ChatFile(
+          Controller.to.addChatFile(OldChatFile(
               name: name,
               path: path,
               location: ItemLocation(
@@ -306,8 +303,8 @@ class ChatPageBottomTextField extends StatelessWidget {
                                     messages[selectedMessage.value].history =
                                         history;
 
-                                    Controller.to
-                                        .change(Chat(messages: messages.obs));
+                                    Controller.to.change(
+                                        ChatItem(messages: messages.obs));
                                   } else {
                                     if (contentController.text.isNotEmpty) {
                                       List messages = Controller
@@ -319,7 +316,7 @@ class ChatPageBottomTextField extends StatelessWidget {
                                           .child
                                           .value
                                           .messages!;
-                                      Controller.to.addMessage(Message(
+                                      Controller.to.addMessage(OldMessage(
                                           location: ItemLocation(
                                               inDirectory: Controller
                                                   .to.selectedFolder.value,

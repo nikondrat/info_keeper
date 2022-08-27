@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/home/chat/chat.dart';
+import 'package:info_keeper/model/types/home/chat/old_chat.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/model/types/item_location.dart';
 
@@ -53,7 +53,7 @@ class ChatPageTitle extends StatelessWidget {
               if (value.isNotEmpty) {
                 Controller.to.change(HomeItem(
                     name: titleController.text,
-                    child: Chat().obs,
+                    child: ChatItem().obs,
                     location: ItemLocation(
                         inDirectory: Controller.to.selectedFolder.value,
                         index: Controller

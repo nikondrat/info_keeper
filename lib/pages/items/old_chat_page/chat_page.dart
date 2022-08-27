@@ -3,7 +3,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/home/chat/chat.dart';
+import 'package:info_keeper/model/types/home/chat/old_chat.dart';
 import 'package:info_keeper/pages/items/old_chat_page/chat_favorites_page.dart';
 import 'package:info_keeper/pages/items/old_chat_page/chat_media.dart';
 import 'package:info_keeper/pages/items/old_chat_page/chat_search.dart';
@@ -86,7 +86,7 @@ class OldChatPage extends StatelessWidget {
         await file.copy(path);
         pathToImage.value = path;
         Controller.to.change(
-          Chat(pathToImage: pathToImage.value),
+          ChatItem(pathToImage: pathToImage.value),
         );
       }
     }
@@ -119,7 +119,7 @@ class OldChatPage extends StatelessWidget {
 
                                 messages.remove(selectedMessages[i]);
                                 Controller.to
-                                    .change(Chat(messages: messages.obs));
+                                    .change(ChatItem(messages: messages.obs));
                               }
                               selectedMessagesCount.value = 0;
                               splitMessages.value = false;
