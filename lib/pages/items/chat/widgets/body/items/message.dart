@@ -16,7 +16,7 @@ class MessageWidget extends StatelessWidget {
       decoration: BoxDecoration(
           boxShadow: drag
               ? [
-                  BoxShadow(
+                  const BoxShadow(
                       offset: Offset(0, 2), blurRadius: 4, color: Colors.grey)
                 ]
               : [],

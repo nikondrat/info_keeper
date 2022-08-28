@@ -23,7 +23,6 @@ class ChatBottomAppBar extends StatelessWidget {
                 ))),
                 child: GetBuilder<BottomAppBarController>(
                     init: BottomAppBarController(),
-                    dispose: (state) => state.dispose(),
                     builder: (controller) =>
                         controller.isShowTitleTextField.value
                             ? Column(mainAxisSize: MainAxisSize.min, children: [

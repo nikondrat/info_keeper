@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
@@ -12,11 +10,11 @@ class ChatReorderableBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    RxList messages = chat.messages;
+    final RxList messages = chat.messages;
 
-    return Obx(() => ReorderableListView.builder(
+    return ReorderableListView.builder(
         proxyDecorator: (child, index, animation) => MessageWidget(
-            key: UniqueKey(), message: messages[index], drag: true),
+            key: Key('$index'), message: messages[index], drag: true),
         itemCount: messages.length,
         reverse: true,
         physics: const BouncingScrollPhysics(),
@@ -24,7 +22,7 @@ class ChatReorderableBody extends StatelessWidget {
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         itemBuilder: (context, index) {
           messages[index].location.itemIndex = index;
-          return MessageWidget(key: UniqueKey(), message: messages[index]);
+          return MessageWidget(key: Key('$index'), message: messages[index]);
         },
         onReorder: (oldIndex, newIndex) {
           if (oldIndex < newIndex) {
@@ -35,6 +33,6 @@ class ChatReorderableBody extends StatelessWidget {
           message.location.itemIndex = newIndex;
           chat.copyWith(messages: messages);
           Controller.to.setData();
-        }));
+        });
   }
 }

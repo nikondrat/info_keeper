@@ -17,7 +17,7 @@ void main(List<String> args) async {
 
   Get.put(Controller());
 
-  await clearData();
+  // await clearData();
   await initData();
   if (Platform.isAndroid || Platform.isIOS) {
     await Firebase.initializeApp(
