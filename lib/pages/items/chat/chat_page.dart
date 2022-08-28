@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/home/chat/old_chat.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/pages/items/chat/widgets/body/body.dart';
 import 'package:info_keeper/pages/items/chat/widgets/btm_app_bar/btm_app_bar.dart';
@@ -14,7 +13,6 @@ class ChatPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ChatItem chat = homeItem.child;
     // title
     final RxBool changeTitle = false.obs;
     TextEditingController titleController =
@@ -135,8 +133,8 @@ class ChatPage extends StatelessWidget {
                         change: changeTitle,
                         focusNode: titleFocus)
                     : Text(titleController.text)),
-            body: ChatBody(chat: chat),
-            bottomNavigationBar: const ChatBottomAppBar(),
+            body: ChatBody(chat: homeItem.child),
+            bottomNavigationBar: ChatBottomAppBar(homeItem: homeItem),
           )),
     );
   }

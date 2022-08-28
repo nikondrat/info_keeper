@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/home/chat/old_chat.dart';
+import 'package:info_keeper/model/types/home/chat/chat.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/model/types/item_location.dart';
 
@@ -18,8 +18,7 @@ class HomeAlertDialog extends StatelessWidget {
         validate.value = false;
         Controller.to.add(HomeItem(
             name: text,
-            child: ChatItem(
-                favorites: [].obs, pinnedMessages: [].obs, messages: [].obs),
+            child: Chat(messages: [].obs),
             location: ItemLocation(
                 inDirectory: Controller.to.selectedFolder.value,
                 index: Controller.to.all[Controller.to.selectedFolder.value]

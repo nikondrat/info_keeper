@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:info_keeper/model/types/home_item.dart';
+import 'package:info_keeper/pages/items/chat/widgets/btm_app_bar/btm_app_bar_controller.dart';
 import 'package:info_keeper/pages/items/chat/widgets/btm_app_bar/widgets/text_field.dart';
 import 'package:info_keeper/pages/items/chat/widgets/btm_app_bar/widgets/title_text_field.dart';
 
 class ChatBottomAppBar extends StatelessWidget {
-  const ChatBottomAppBar({Key? key}) : super(key: key);
+  final HomeItem homeItem;
+  const ChatBottomAppBar({Key? key, required this.homeItem}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final RxBool isShowTitleTextField = false.obs;
-
     return Transform.translate(
         offset: Offset(0, -1 * MediaQuery.of(context).viewInsets.bottom),
         child: BottomAppBar(
@@ -20,13 +21,15 @@ class ChatBottomAppBar extends StatelessWidget {
                   width: 1,
                   color: Colors.grey.shade300,
                 ))),
-                child: Obx(() => isShowTitleTextField.value
-                    ? Column(mainAxisSize: MainAxisSize.min, children: [
-                        const ChatBottomTitleTextField(),
-                        ChatBottomTextField(
-                            isShowTitleTextField: isShowTitleTextField)
-                      ])
-                    : ChatBottomTextField(
-                        isShowTitleTextField: isShowTitleTextField)))));
+                child: GetBuilder<BottomAppBarController>(
+                    init: BottomAppBarController(),
+                    dispose: (state) => state.dispose(),
+                    builder: (controller) =>
+                        controller.isShowTitleTextField.value
+                            ? Column(mainAxisSize: MainAxisSize.min, children: [
+                                const ChatBottomTitleTextField(),
+                                ChatBottomTextField(homeItem: homeItem)
+                              ])
+                            : ChatBottomTextField(homeItem: homeItem)))));
   }
 }

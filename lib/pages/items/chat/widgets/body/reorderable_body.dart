@@ -1,23 +1,40 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:info_keeper/model/types/home/chat/old_chat.dart';
+import 'package:get/get.dart';
+import 'package:info_keeper/model/controller.dart';
+import 'package:info_keeper/model/types/home/chat/chat.dart';
+import 'package:info_keeper/pages/items/chat/widgets/body/items/message.dart';
 
 class ChatReorderableBody extends StatelessWidget {
-  final ChatItem chat;
+  final Chat chat;
   const ChatReorderableBody({Key? key, required this.chat}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ReorderableListView.builder(
+    RxList messages = chat.messages;
+
+    return Obx(() => ReorderableListView.builder(
+        proxyDecorator: (child, index, animation) => MessageWidget(
+            key: UniqueKey(), message: messages[index], drag: true),
+        itemCount: messages.length,
+        reverse: true,
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-        itemBuilder: (context, index) => Text(key: UniqueKey(), '$index'),
-        itemCount: 20,
-        reverse: true,
+        itemBuilder: (context, index) {
+          messages[index].location.itemIndex = index;
+          return MessageWidget(key: UniqueKey(), message: messages[index]);
+        },
         onReorder: (oldIndex, newIndex) {
           if (oldIndex < newIndex) {
             newIndex -= 1;
           }
-        });
+          final message = messages.removeAt(oldIndex);
+          messages.insert(newIndex, message);
+          message.location.itemIndex = newIndex;
+          chat.copyWith(messages: messages);
+          Controller.to.setData();
+        }));
   }
 }

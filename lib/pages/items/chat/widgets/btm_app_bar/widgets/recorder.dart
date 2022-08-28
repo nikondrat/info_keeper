@@ -23,10 +23,13 @@ class _ChatBottomRecorderState extends State<ChatBottomRecorder> {
     if (status != PermissionStatus.granted) {
       throw RecordingPermissionException('Microphone permission not granted');
     }
-    await recorder.openRecorder().whenComplete(() => record);
+    await recorder.openRecorder().whenComplete(() => record());
   }
 
-  void closeRecorder() {}
+  void closeRecorder() {
+    recorder.closeRecorder();
+    isRecord.value = false;
+  }
 
   void record() {
     path = '${dateFormat.format(DateTime.now())}.aac';
@@ -38,7 +41,7 @@ class _ChatBottomRecorderState extends State<ChatBottomRecorder> {
   Widget build(BuildContext context) {
     return Obx(() => IconButton(
         splashRadius: 20,
-        onPressed: () {},
+        onPressed: isRecord.value ? closeRecorder : openTheRecorder,
         icon: isRecord.value
             ? const Icon(Icons.radio_button_checked, color: Colors.red)
             : const Icon(Icons.mic)));

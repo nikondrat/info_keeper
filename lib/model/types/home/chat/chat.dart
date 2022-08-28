@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/model/types/home/chat/items/file.dart';
 import 'package:info_keeper/model/types/home/chat/items/image.dart';
@@ -8,10 +9,21 @@ import 'package:info_keeper/model/types/home/home.dart';
 
 class Chat {
   HomeType type;
-  RxList? messages;
+  RxList messages;
   String backgroundImage;
 
-  Chat({this.type = HomeType.chat, this.backgroundImage = '', this.messages});
+  Chat(
+      {this.type = HomeType.chat,
+      this.backgroundImage = '',
+      required this.messages});
+
+  Chat copyWith({RxList? messages, String? backgroundImage}) {
+    Chat chat = Chat(
+        messages: messages ?? this.messages,
+        backgroundImage: backgroundImage ?? this.backgroundImage);
+    return Controller.to.all[Controller.to.selectedFolder.value]
+        .childrens[Controller.to.selectedElementIndex.value].child = chat;
+  }
 
   Chat.fromJson(Map<String, dynamic> json)
       : type = HomeType.values.elementAt(json['type']),
@@ -44,7 +56,7 @@ class Chat {
     return {
       'type': type.index,
       'backgroundImage': backgroundImage,
-      'messages': messages!.map((e) => e.toJson()).toList(),
+      'messages': messages.map((e) => e.toJson()).toList(),
     };
   }
 }
