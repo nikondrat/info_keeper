@@ -74,6 +74,8 @@ class _HomeFloatButtonsState extends State<HomeFloatButtons>
                             .childrens
                             .length));
                 Controller.to.add(homeItem);
+                Controller.to.selectedElementIndex.value =
+                    homeItem.location.index;
                 Get.to(() => TaskPage(homeItem: homeItem));
               },
               icon: const Icon(Icons.add_task),
@@ -94,6 +96,8 @@ class _HomeFloatButtonsState extends State<HomeFloatButtons>
                             .childrens
                             .length));
                 Controller.to.add(homeItem);
+                Controller.to.selectedElementIndex.value =
+                    homeItem.location.index;
                 Get.to(() => StorageFilePage(
                       homeItem: homeItem,
                     ));

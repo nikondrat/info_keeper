@@ -41,7 +41,7 @@ class ChatPagePinnedMessage extends StatelessWidget {
           style: const TextStyle(fontSize: 14),
         ),
         subtitle: Text(
-          pinnedMessages[0].messageText,
+          pinnedMessages[0].content,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: const TextStyle(fontSize: 14),

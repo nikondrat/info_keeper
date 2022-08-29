@@ -105,8 +105,8 @@ class OldChatPage extends StatelessWidget {
                               for (int i = 1;
                                   i < selectedMessages.length;
                                   i++) {
-                                selectedMessages[0].messageText =
-                                    '${selectedMessages[0].messageText}\n${selectedMessages[i].messageText}';
+                                selectedMessages[0].content =
+                                    '${selectedMessages[0].content}\n${selectedMessages[i].content}';
 
                                 List messages = Controller
                                     .to

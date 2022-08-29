@@ -20,9 +20,9 @@ class MessageWidget extends StatelessWidget {
                       offset: Offset(0, 2), blurRadius: 4, color: Colors.grey)
                 ]
               : [],
-          color: messageColors[5],
+          color: messageColors[message.color],
           borderRadius: BorderRadius.circular(6)),
-      child: Text(message.messageText),
+      child: Text(message.content),
     );
   }
 }

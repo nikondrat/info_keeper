@@ -212,7 +212,7 @@ class ChatMediaBodyLinks extends StatelessWidget {
               .child
               .value
               .messages[i]
-              .messageText
+              .content
               .contains(RegExp(r'(https?://[^\s]+)'))) {
         links.add(Controller
             .to

@@ -20,13 +20,15 @@ class ChatBottomSendButton extends StatelessWidget {
       builder: (controller) => IconButton(
           splashRadius: 20,
           onPressed: () {
-            messages.add(Message(
-                location: ItemLocation(
-                    inDirectory: homeItem.location.inDirectory,
-                    index: homeItem.location.index,
-                    itemIndex: homeItem.child.messages.length),
-                messageText: controller.messageController.text,
-                dateTime: ''));
+            messages.insert(
+                0,
+                Message(
+                    location: ItemLocation(
+                        inDirectory: homeItem.location.inDirectory,
+                        index: homeItem.location.index,
+                        itemIndex: homeItem.child.messages.length),
+                    content: controller.messageController.text,
+                    dateTime: DateTime.now()));
             homeItem.child.copyWith(messages: messages);
             Controller.to.setData();
 

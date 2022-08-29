@@ -195,14 +195,14 @@ class StorageFilePage extends StatelessWidget {
                     IconButton(
                       onPressed: () {
                         if (data.text.isNotEmpty) {
-                          homeItem.child.history.add(data.text);
+                          storageFile.history!.add(data.text);
                         }
                         homeItem.copyWith(
                             name: title.text,
-                            child: homeItem.child.copyWith(
+                            child: storageFile.copyWith(
                                 data: data.text,
-                                history: homeItem.child.history,
-                                pathToImage: homeItem.child.pathToImage));
+                                history: storageFile.history,
+                                pathToImage: storageFile.pathToImage));
                         Get.back();
                       },
                       icon: Icon(change ? Icons.done : Icons.add),
@@ -214,7 +214,7 @@ class StorageFilePage extends StatelessWidget {
                         onSelected: (value) {
                           if (value == 2) {
                             Get.to(() => StorageFileHistory(
-                                  historyElements: homeItem.child.history!,
+                                  historyElements: storageFile.history!,
                                   dataController: data,
                                 ));
                           }

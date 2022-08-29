@@ -5,9 +5,10 @@ class Message {
   ItemLocation location;
   AllType type;
   String title;
-  String messageText;
-  int selectedColorIndex;
-  String dateTime;
+  String content;
+  int color;
+  DateTime dateTime;
+
   bool isFavorite;
   bool isSelected;
   bool isPinned;
@@ -20,8 +21,8 @@ class Message {
       {required this.location,
       this.title = '',
       this.type = AllType.chatMessage,
-      required this.messageText,
-      this.selectedColorIndex = 5,
+      required this.content,
+      this.color = 5,
       this.isFavorite = false,
       this.isSelected = false,
       this.isPinned = false,
@@ -35,23 +36,23 @@ class Message {
       : type = AllType.values.elementAt(json['type']),
         location = ItemLocation.fromJson(json['location']),
         title = json['title'],
-        messageText = json['messageText'],
+        content = json['content'],
         isSelected = json['isSelected'],
         isPinned = json['isPinned'],
         isLocked = json['isLocked'],
         isCollapsed = json['isCollapsed'],
         isUnlocked = json['isUnlocked'],
-        selectedColorIndex = json['selectedColorIndex'],
+        color = json['color'],
         isFavorite = json['isFavorite'],
         history = json['history'],
-        dateTime = json['dateTime'];
+        dateTime = DateTime.parse(json['dateTime']);
 
   Map<String, dynamic> toJson() => {
         'type': type.index,
         'location': location.toJson(),
         'title': title,
-        'messageText': messageText,
-        'selectedColorIndex': selectedColorIndex,
+        'content': content,
+        'color': color,
         'isFavorite': isFavorite,
         'isCollapsed': isCollapsed,
         'isSelected': isSelected,
@@ -59,6 +60,6 @@ class Message {
         'isPinned': isPinned,
         'isLocked': isLocked,
         'history': history,
-        'dateTime': dateTime
+        'dateTime': dateTime.toString()
       };
 }

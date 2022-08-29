@@ -19,6 +19,9 @@ class ChatPage extends StatelessWidget {
         TextEditingController(text: homeItem.name);
     FocusNode titleFocus = FocusNode();
 
+    // body
+    final RxBool showDate = true.obs;
+
     return Swipe(
       onSwipeRight: () => null,
       child: Obx(() => Scaffold(
@@ -133,7 +136,7 @@ class ChatPage extends StatelessWidget {
                         change: changeTitle,
                         focusNode: titleFocus)
                     : Text(titleController.text)),
-            body: ChatBody(chat: homeItem.child),
+            body: ChatBody(chat: homeItem.child, showDate: showDate),
             bottomNavigationBar: ChatBottomAppBar(homeItem: homeItem),
           )),
     );

@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home/task/task.dart';
 import 'package:info_keeper/model/types/home/task/todo.dart';
@@ -37,26 +38,31 @@ class TodoWidget extends StatelessWidget {
             }),
         Expanded(
           child: change
-              ? TextField(
-                  autocorrect: true,
-                  controller: controller,
-                  maxLines: 1,
-                  cursorColor: Colors.black,
-                  onSubmitted: (value) {
-                    if (controller.text.isNotEmpty) {
-                      if (change && index != 0) {
+              ? RawKeyboardListener(
+                  onKey: (value) {
+                    if (value.logicalKey == LogicalKeyboardKey.backspace &&
+                        value.runtimeType.toString() == 'RawKeyDownEvent') {
+                      task.todos.removeAt(index);
+                    }
+                  },
+                  focusNode: FocusNode(),
+                  child: TextField(
+                    autocorrect: true,
+                    controller: controller,
+                    maxLines: 1,
+                    cursorColor: Colors.black,
+                    onSubmitted: (value) {
+                      if (controller.text.isNotEmpty) {
                         task.todos[index] = Todo(
                             title: controller.text,
                             isCompleted: task.todos[index].isCompleted);
                       } else {
-                        task.todos.insert(1, Todo(title: controller.text));
+                        task.todos.removeAt(index);
                       }
-                    } else {
-                      task.todos.removeAt(index);
-                    }
-                  },
-                  decoration: const InputDecoration(
-                      border: InputBorder.none, hintText: 'Text'),
+                    },
+                    decoration: const InputDecoration(
+                        border: InputBorder.none, hintText: 'Text'),
+                  ),
                 )
               : AutoSizeText(
                   task.todos[index].title,

@@ -156,7 +156,7 @@ class MessageWidget extends StatelessWidget {
                           .child
                           .value
                           .messages[selectedMessage!.value]
-                          .messageText);
+                          .content);
                   titleController!.value = TextEditingValue(
                       text: Controller
                           .to
