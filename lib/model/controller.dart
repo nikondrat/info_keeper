@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/model/types/folder.dart';
+import 'package:info_keeper/model/types/home/chat/items/voice.dart';
 import 'package:info_keeper/model/types/home/chat/old_chat.dart';
 import 'package:info_keeper/model/types/home/chat/chat_file.dart';
 import 'package:info_keeper/model/types/home/chat/chat_image.dart';
@@ -338,16 +339,6 @@ class Controller extends GetxController {
         .value
         .messages
         .insert(0, image);
-    setData();
-  }
-
-  void addChatVoice(OldChatVoice voice) {
-    all[selectedFolder.value]
-        .childrens[selectedElementIndex.value]
-        .child
-        .value
-        .messages
-        .insert(0, voice);
     setData();
   }
 

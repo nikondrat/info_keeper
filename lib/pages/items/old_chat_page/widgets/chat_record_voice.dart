@@ -40,20 +40,20 @@ class _ChatPageRecordVoiceState extends State<ChatPageRecordVoice> {
     String dateTime = format.format(DateTime.now());
     isRecord.value = false;
     recorder!.stopRecorder();
-    Controller.to.addChatVoice(OldChatVoice(
-        path: mPath,
-        dateTime: dateTime,
-        location: ItemLocation(
-            inDirectory: Controller.to.selectedFolder.value,
-            index: Controller.to.selectedElementIndex.value,
-            itemIndex: Controller
-                .to
-                .all[Controller.to.selectedFolder.value]
-                .childrens[Controller.to.selectedElementIndex.value]
-                .child
-                .value
-                .messages
-                .length)));
+    // Controller.to.addChatVoice(OldChatVoice(
+    //     path: mPath,
+    //     dateTime: dateTime,
+    //     location: ItemLocation(
+    //         inDirectory: Controller.to.selectedFolder.value,
+    //         index: Controller.to.selectedElementIndex.value,
+    //         itemIndex: Controller
+    //             .to
+    //             .all[Controller.to.selectedFolder.value]
+    //             .childrens[Controller.to.selectedElementIndex.value]
+    //             .child
+    //             .value
+    //             .messages
+    //             .length)));
   }
 
   Future<void> openTheRecorder() async {

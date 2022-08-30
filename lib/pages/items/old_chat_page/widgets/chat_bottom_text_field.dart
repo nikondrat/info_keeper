@@ -97,22 +97,22 @@ class ChatPageBottomTextField extends StatelessWidget {
               break;
             default:
           }
-          Controller.to.addChatVoice(OldChatVoice(
-              name: name,
-              path: path,
-              codec: codec,
-              dateTime: dateTime,
-              location: ItemLocation(
-                  inDirectory: Controller.to.selectedFolder.value,
-                  index: Controller.to.selectedElementIndex.value,
-                  itemIndex: Controller
-                      .to
-                      .all[Controller.to.selectedFolder.value]
-                      .childrens[Controller.to.selectedElementIndex.value]
-                      .child
-                      .value
-                      .messages
-                      .length)));
+          // Controller.to.addChatVoice(OldChatVoice(
+          //     name: name,
+          //     path: path,
+          //     codec: codec,
+          //     dateTime: dateTime,
+          //     location: ItemLocation(
+          //         inDirectory: Controller.to.selectedFolder.value,
+          //         index: Controller.to.selectedElementIndex.value,
+          //         itemIndex: Controller
+          //             .to
+          //             .all[Controller.to.selectedFolder.value]
+          //             .childrens[Controller.to.selectedElementIndex.value]
+          //             .child
+          //             .value
+          //             .messages
+          //             .length)));
         } else {
           Controller.to.addChatFile(OldChatFile(
               name: name,

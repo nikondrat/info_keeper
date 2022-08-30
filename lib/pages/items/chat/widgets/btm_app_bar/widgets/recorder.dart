@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:get/get.dart';
+import 'package:info_keeper/model/controller.dart';
+import 'package:info_keeper/model/types/home/chat/chat.dart';
+import 'package:info_keeper/model/types/home/chat/items/voice.dart';
 import 'package:info_keeper/model/types/home_item.dart';
+import 'package:info_keeper/model/types/item_location.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -32,6 +36,21 @@ class _ChatBottomRecorderState extends State<ChatBottomRecorder> {
   void closeRecorder() {
     recorder.closeRecorder();
     isRecord.value = false;
+
+    Chat chat = widget.homeItem.child;
+
+    RxList messages = chat.messages;
+    messages.insert(
+        0,
+        ChatVoice(
+            path: path,
+            location: ItemLocation(
+                inDirectory: widget.homeItem.location.inDirectory,
+                index: widget.homeItem.location.index,
+                itemIndex: messages.length),
+            dateTime: DateTime.now()));
+    chat.copyWith(messages: messages);
+    Controller.to.setData();
   }
 
   void record() {

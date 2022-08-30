@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:info_keeper/model/types/home/chat/chat.dart';
-import 'package:info_keeper/pages/items/chat/widgets/body/items/message.dart';
+import 'package:info_keeper/pages/items/chat/widgets/body/items/item.dart';
 import 'package:info_keeper/pages/items/chat/widgets/body/with_time/body_separator.dart';
 
 class ChatBodyWithTime extends StatelessWidget {
@@ -21,8 +21,8 @@ class ChatBodyWithTime extends StatelessWidget {
           element.dateTime.year, element.dateTime.month, element.dateTime.day),
       groupSeparatorBuilder: (DateTime dateTime) =>
           ChatBodySeparator(dateTime: dateTime),
-      itemBuilder: (context, dynamic element) =>
-          MessageWidget(message: element),
+      indexedItemBuilder: (context, element, index) =>
+          ChatItem(index: index, message: element),
     );
   }
 }
