@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:get/get.dart';
+import 'package:info_keeper/model/types/home_item.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class ChatBottomRecorder extends StatefulWidget {
-  const ChatBottomRecorder({Key? key}) : super(key: key);
+  final HomeItem homeItem;
+  const ChatBottomRecorder({Key? key, required this.homeItem})
+      : super(key: key);
 
   @override
   State<ChatBottomRecorder> createState() => _ChatBottomRecorderState();

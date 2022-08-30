@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:info_keeper/model/types/home/chat/chat.dart';
 import 'package:info_keeper/pages/items/chat/widgets/body/items/message.dart';
+import 'package:info_keeper/pages/items/chat/widgets/body/with_time/body_separator.dart';
 
 class ChatBodyWithTime extends StatelessWidget {
   final Chat chat;
@@ -14,10 +15,12 @@ class ChatBodyWithTime extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
       physics: const BouncingScrollPhysics(),
       keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-      floatingHeader: true,
+      sort: false,
       elements: chat.messages,
-      groupBy: (dynamic element) => element.dateTime,
-      groupSeparatorBuilder: (dynamic value) => Text(value.toString()),
+      groupBy: (dynamic element) => DateTime.utc(
+          element.dateTime.year, element.dateTime.month, element.dateTime.day),
+      groupSeparatorBuilder: (DateTime dateTime) =>
+          ChatBodySeparator(dateTime: dateTime),
       itemBuilder: (context, dynamic element) =>
           MessageWidget(message: element),
     );

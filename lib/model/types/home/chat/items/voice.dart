@@ -7,7 +7,7 @@ class ChatVoice {
   String path;
   AllType type;
   ItemLocation location;
-  String dateTime;
+  DateTime dateTime;
   Codec codec;
   bool isLocked;
   bool isUnlocked;
@@ -26,7 +26,7 @@ class ChatVoice {
       : name = json['name'],
         type = AllType.values.elementAt(json['type']),
         location = ItemLocation.fromJson(json['location']),
-        dateTime = json['dateTime'],
+        dateTime = DateTime.parse(json['dateTime']),
         isLocked = json['isLocked'],
         isUnlocked = json['isUnlocked'],
         codec = Codec.values.elementAt(json['codec']),
@@ -36,7 +36,7 @@ class ChatVoice {
         'name': name,
         'type': type.index,
         'location': location.toJson(),
-        'dateTime': dateTime,
+        'dateTime': dateTime.toString(),
         'isLocked': isLocked,
         'isUnlocked': isUnlocked,
         'path': path,

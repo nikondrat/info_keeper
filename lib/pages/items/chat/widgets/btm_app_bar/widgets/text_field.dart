@@ -55,9 +55,9 @@ class ChatBottomTextField extends StatelessWidget {
                 })),
         controller.textFieldIsEmpty.value &&
                 (Platform.isAndroid || Platform.isIOS)
-            ? Row(children: const [
-                ChatBottomFileSelectorButton(),
-                ChatBottomRecorder()
+            ? Row(children: [
+                const ChatBottomFileSelectorButton(),
+                ChatBottomRecorder(homeItem: homeItem)
               ])
             : ChatBottomSendButton(homeItem: homeItem)
       ]),

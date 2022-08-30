@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home_item.dart';
+import 'package:info_keeper/pages/items/chat/chat_controller.dart';
 import 'package:info_keeper/pages/items/chat/widgets/body/body.dart';
 import 'package:info_keeper/pages/items/chat/widgets/btm_app_bar/btm_app_bar.dart';
 import 'package:info_keeper/widgets/title.dart';
@@ -13,40 +14,40 @@ class ChatPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ChatController controller = Get.put(ChatController());
     // title
-    final RxBool changeTitle = false.obs;
     TextEditingController titleController =
         TextEditingController(text: homeItem.name);
     FocusNode titleFocus = FocusNode();
-
-    // body
-    final RxBool showDate = true.obs;
 
     return Swipe(
       onSwipeRight: () => null,
       child: Obx(() => Scaffold(
             resizeToAvoidBottomInset: false,
             appBar: AppBar(
-                titleSpacing: changeTitle.value ? 0 : null,
+                titleSpacing: controller.changeTitle.value ? 0 : null,
                 centerTitle: false,
                 leading: IconButton(
                     splashRadius: 20,
-                    icon: Icon(
-                        changeTitle.value ? Icons.close : Icons.arrow_back),
-                    onPressed: changeTitle.value
+                    icon: Icon(controller.changeTitle.value
+                        ? Icons.close
+                        : Icons.arrow_back),
+                    onPressed: controller.changeTitle.value
                         ? () {
-                            changeTitle.value = !changeTitle.value;
+                            controller.changeTitle.value =
+                                !controller.changeTitle.value;
                             titleFocus.unfocus();
                             titleController.text = homeItem.name;
                           }
                         : () => Get.back()),
-                actions: changeTitle.value
+                actions: controller.changeTitle.value
                     ? [
                         IconButton(
                             splashRadius: 20,
                             onPressed: () {
                               if (titleController.text.isNotEmpty) {
-                                changeTitle.value = !changeTitle.value;
+                                controller.changeTitle.value =
+                                    !controller.changeTitle.value;
                                 titleFocus.unfocus();
                                 // defaultName = titleController.text;
                                 homeItem.copyWith(name: titleController.text);
@@ -79,7 +80,7 @@ class ChatPage extends StatelessWidget {
                                   )),
                                   PopupMenuItem(
                                       onTap: () {
-                                        changeTitle.value = true;
+                                        controller.changeTitle.value = true;
                                       },
                                       child: Row(
                                         children: const [
@@ -103,7 +104,8 @@ class ChatPage extends StatelessWidget {
                                       )),
                                   PopupMenuItem(
                                       onTap: () {
-                                        // showDate.value = !showDate.value;
+                                        controller.showDate.value =
+                                            !controller.showDate.value;
                                       },
                                       child: Row(
                                         children: const [
@@ -130,13 +132,13 @@ class ChatPage extends StatelessWidget {
                                       )),
                                 ])
                       ],
-                title: changeTitle.value
+                title: controller.changeTitle.value
                     ? TitleWidget(
                         controller: titleController,
-                        change: changeTitle,
+                        change: controller.changeTitle,
                         focusNode: titleFocus)
                     : Text(titleController.text)),
-            body: ChatBody(chat: homeItem.child, showDate: showDate),
+            body: ChatBody(chat: homeItem.child),
             bottomNavigationBar: ChatBottomAppBar(homeItem: homeItem),
           )),
     );
