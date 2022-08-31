@@ -59,6 +59,7 @@ class ChatBottomFileSelectorButton extends StatelessWidget {
           messages.insert(
               0,
               ChatVoice(
+                  name: name,
                   codec: codec,
                   path: selectedFile.path!,
                   location: ItemLocation(
