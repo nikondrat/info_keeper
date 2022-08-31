@@ -51,6 +51,8 @@ FloatingActionButtonThemeData floatingActionButtonThemeData =
                     : Colors.black54),
             borderRadius: BorderRadius.circular(50)));
 
+int defaultColor = 5;
+
 List messageColors = const [
   Color(0xFFC9FEF8),
   Color(0xFFB18CFE),

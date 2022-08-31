@@ -1,8 +1,8 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/all.dart';
-import 'package:info_keeper/model/types/home/audio/audio_note.dart';
 import 'package:info_keeper/model/types/home/chat/chat.dart';
 import 'package:info_keeper/pages/items/chat/widgets/body/items/item.dart';
 
@@ -14,12 +14,20 @@ class ChatReorderableBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final RxList messages = chat.messages;
 
-    return ReorderableListView.builder(
-        proxyDecorator: (child, index, animation) => ChatItem(
-            key: Key('$index'),
-            index: index,
-            message: messages[index],
-            drag: true),
+    return Obx(() => ReorderableListView.builder(
+        proxyDecorator: (child, index, animation) {
+          final double animValue = Curves.easeInOut.transform(animation.value);
+          final double elevation = lerpDouble(0, 6, animValue)!;
+
+          return AnimatedBuilder(
+            animation: animation,
+            builder: (context, child) => ChatItem(
+                key: Key('$index'),
+                index: index,
+                elevation: elevation,
+                message: messages[index]),
+          );
+        },
         itemCount: messages.length,
         reverse: true,
         physics: const BouncingScrollPhysics(),
@@ -36,6 +44,6 @@ class ChatReorderableBody extends StatelessWidget {
           message.location.itemIndex = newIndex;
           chat.copyWith(messages: messages);
           Controller.to.setData();
-        });
+        }));
   }
 }

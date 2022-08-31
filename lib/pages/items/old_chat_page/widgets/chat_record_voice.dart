@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:get/get.dart';
-import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/home/chat/chat_voice.dart';
-import 'package:info_keeper/model/types/item_location.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -36,8 +33,8 @@ class _ChatPageRecordVoiceState extends State<ChatPageRecordVoice> {
   }
 
   void closeRecorder() {
-    DateFormat format = DateFormat('yyyy-MM-dd HH:mm:ss');
-    String dateTime = format.format(DateTime.now());
+    // DateFormat format = DateFormat('yyyy-MM-dd HH:mm:ss');
+    // String dateTime = format.format(DateTime.now());
     isRecord.value = false;
     recorder!.stopRecorder();
     // Controller.to.addChatVoice(OldChatVoice(

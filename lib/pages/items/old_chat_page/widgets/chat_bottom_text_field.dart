@@ -1,14 +1,12 @@
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_sound/flutter_sound.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/model/types/home/chat/old_chat.dart';
 import 'package:info_keeper/model/types/home/chat/chat_file.dart';
 import 'package:info_keeper/model/types/home/chat/chat_image.dart';
-import 'package:info_keeper/model/types/home/chat/chat_voice.dart';
 import 'package:info_keeper/model/types/home/chat/message.dart';
 import 'package:info_keeper/model/types/item_location.dart';
 import 'package:info_keeper/pages/items/old_chat_page/widgets/chat_record_voice.dart';
@@ -56,7 +54,6 @@ class ChatPageBottomTextField extends StatelessWidget {
             result.files.single.path!.split('/').last.split('.').first;
         final String type =
             result.files.single.path!.split('/').last.split('.').last;
-        Codec codec = Codec.aacMP4;
 
         final imageFormat = ImageFormat.values.firstWhereOrNull(
             (element) => element.toString() == 'ImageFormat.$type');
@@ -81,19 +78,14 @@ class ChatPageBottomTextField extends StatelessWidget {
         } else if (musicFormat != null) {
           switch (musicFormat) {
             case MusicFormat.webm:
-              codec = Codec.vorbisWebM;
               break;
             case MusicFormat.flac:
-              codec = Codec.flac;
               break;
             case MusicFormat.mp3:
-              codec = Codec.mp3;
               break;
             case MusicFormat.ogg:
-              codec = Codec.vorbisOGG;
               break;
             case MusicFormat.wav:
-              codec = Codec.pcm16WAV;
               break;
             default:
           }

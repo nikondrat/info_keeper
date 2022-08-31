@@ -1,28 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:info_keeper/model/types/home/chat/items/message.dart';
-import 'package:info_keeper/themes/default/default.dart';
+import 'package:info_keeper/pages/items/chat/widgets/body/items/item_decoration.dart';
 
 class MessageWidget extends StatelessWidget {
   final Message message;
-  final bool drag;
-  const MessageWidget({Key? key, required this.message, this.drag = false})
+  final double elevation;
+  const MessageWidget({Key? key, required this.message, this.elevation = 0})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 2),
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-          boxShadow: drag
-              ? [
-                  const BoxShadow(
-                      offset: Offset(0, 2), blurRadius: 4, color: Colors.grey)
-                ]
-              : [],
-          color: messageColors[message.color],
-          borderRadius: BorderRadius.circular(6)),
-      child: Text(message.content),
-    );
+    return ItemDecoration(
+        color: message.color,
+        elevation: elevation,
+        dateTime: message.dateTime,
+        child: Text(message.content));
   }
 }

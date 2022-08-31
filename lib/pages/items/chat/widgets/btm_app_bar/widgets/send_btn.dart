@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
+import 'package:info_keeper/model/types/home/chat/chat.dart';
 import 'package:info_keeper/model/types/home/chat/items/message.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/model/types/item_location.dart';
@@ -13,7 +14,8 @@ class ChatBottomSendButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    RxList messages = homeItem.child.messages;
+    Chat chat = homeItem.child;
+    RxList messages = chat.messages;
 
     return GetBuilder<BottomAppBarController>(
       init: BottomAppBarController(),
@@ -26,10 +28,10 @@ class ChatBottomSendButton extends StatelessWidget {
                     location: ItemLocation(
                         inDirectory: homeItem.location.inDirectory,
                         index: homeItem.location.index,
-                        itemIndex: homeItem.child.messages.length),
+                        itemIndex: messages.length),
                     content: controller.messageController.text,
                     dateTime: DateTime.now()));
-            homeItem.child.copyWith(messages: messages);
+            chat.copyWith(messages: messages);
             Controller.to.setData();
 
             controller.isShowTitleTextField.value = false;

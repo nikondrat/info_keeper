@@ -1,5 +1,6 @@
 import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/model/types/item_location.dart';
+import 'package:info_keeper/themes/default/default.dart';
 
 class Message {
   ItemLocation location;
@@ -30,7 +31,9 @@ class Message {
       this.isCollapsed = false,
       this.isUnlocked = false,
       this.history,
-      required this.dateTime});
+      required this.dateTime}) {
+    color = defaultColor;
+  }
 
   Message.fromJson(Map<String, dynamic> json)
       : type = AllType.values.elementAt(json['type']),
