@@ -68,7 +68,7 @@ class ChatPageMenu extends StatelessWidget {
                           .child
                           .value
                           .messages[selectedMessage.value]
-                          .content));
+                          .title));
                   Navigator.pop(context);
                   Get.snackbar('Done', 'The message has been copied',
                       shouldIconPulse: true,
@@ -93,7 +93,7 @@ class ChatPageMenu extends StatelessWidget {
                           .child
                           .value
                           .messages[selectedMessage.value]
-                          .content);
+                          .title);
                   titleController.value = TextEditingValue(
                       text: Controller
                           .to
@@ -300,7 +300,7 @@ class ChatPageMenu extends StatelessWidget {
                   .child
                   .value
                   .messages[selectedMessage.value]
-                  .content,
+                  .title,
               locElement: ItemLocation(
                   inDirectory: Controller.to.selectedFolder.value,
                   itemIndex: selectedMessage.value,

@@ -164,7 +164,7 @@ class ChatPageBottomTextField extends StatelessWidget {
                                 .child
                                 .value
                                 .messages![selectedMessage.value]
-                                .content,
+                                .title,
                             maxLines: 1,
                             textAlign: TextAlign.justify,
                           ),
@@ -287,10 +287,10 @@ class ChatPageBottomTextField extends StatelessWidget {
 
                                     messages[selectedMessage.value].title =
                                         titleController.value.text;
-                                    messages[selectedMessage.value].content =
+                                    messages[selectedMessage.value].title =
                                         contentController.value.text;
-                                    history.add(messages[selectedMessage.value]
-                                        .content);
+                                    history.add(
+                                        messages[selectedMessage.value].title);
                                     messages[selectedMessage.value].history =
                                         history;
 

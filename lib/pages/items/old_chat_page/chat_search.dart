@@ -78,7 +78,7 @@ class ChatPageSearch extends StatelessWidget {
           onChanged: (text) {
             searchResult.clear();
             for (var element in list) {
-              if (element.content.toLowerCase().contains(text) ||
+              if (element.title.toLowerCase().contains(text) ||
                   element.title.toLowerCase().contains(text)) {
                 if (searchQueryController.text.isNotEmpty) {
                   searchResult.add(element);

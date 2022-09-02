@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:info_keeper/model/types/home/chat/items/message.dart';
 import 'package:info_keeper/pages/items/chat/widgets/body/items/item_decoration.dart';
+import 'package:info_keeper/pages/items/chat/widgets/body/items/menu/menu.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class MessageWidget extends StatelessWidget {
@@ -17,15 +18,9 @@ class MessageWidget extends StatelessWidget {
         padding: EdgeInsets.zero,
         dateTime: message.dateTime,
         child: GestureDetector(
-          onTap: () => showMaterialModalBottomSheet(
+          onTap: () => showBarModalBottomSheet(
               context: context,
-              builder: (context) => ListView(
-                    children: [
-                      Text('hello'),
-                      Text('hello'),
-                      Text('hello'),
-                    ],
-                  )),
+              builder: (context) => MessageMenuWidget(message: message)),
           child: message.title.isNotEmpty
               ? Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
