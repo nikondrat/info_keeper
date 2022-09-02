@@ -9,11 +9,13 @@ class ItemDecoration extends StatelessWidget {
   final int? color;
   final double elevation;
   final DateTime dateTime;
+  final EdgeInsets? padding;
   const ItemDecoration(
       {Key? key,
       this.color,
-      required this.child,
       this.elevation = 0,
+      required this.child,
+      this.padding,
       required this.dateTime})
       : super(key: key);
 
@@ -31,7 +33,7 @@ class ItemDecoration extends StatelessWidget {
       elevation: elevation,
       child: Container(
           margin: const EdgeInsets.symmetric(vertical: 2),
-          padding: const EdgeInsets.all(8),
+          padding: padding ?? const EdgeInsets.all(8),
           decoration: BoxDecoration(
               color: messageColors[color ?? defaultColor],
               borderRadius: BorderRadius.circular(6)),
@@ -43,7 +45,11 @@ class ItemDecoration extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        AutoSizeText('$hour:$minute'),
+                        padding != null
+                            ? Padding(
+                                padding: const EdgeInsets.all(8),
+                                child: AutoSizeText('$hour:$minute'))
+                            : AutoSizeText('$hour:$minute')
                       ],
                     ),
                   ],

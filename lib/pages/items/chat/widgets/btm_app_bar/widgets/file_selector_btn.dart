@@ -4,6 +4,8 @@ import 'package:flutter_sound/flutter_sound.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home/chat/chat.dart';
+import 'package:info_keeper/model/types/home/chat/items/file.dart';
+import 'package:info_keeper/model/types/home/chat/items/image.dart';
 import 'package:info_keeper/model/types/home/chat/items/voice.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/model/types/item_location.dart';
@@ -34,7 +36,19 @@ class ChatBottomFileSelectorButton extends StatelessWidget {
         final musicFormat = MusicFormat.values.firstWhereOrNull(
             (element) => element.toString() == 'MusicFormat.$type');
 
-        if (musicFormat != null) {
+        if (imageFormat != null) {
+          messages.insert(
+              0,
+              ChatImage(
+                  path: selectedFile.path!,
+                  location: ItemLocation(
+                      inDirectory: homeItem.location.inDirectory,
+                      index: homeItem.location.index,
+                      itemIndex: messages.length),
+                  dateTime: DateTime.now()));
+          chat.copyWith(messages: messages);
+          Controller.to.setData();
+        } else if (musicFormat != null) {
           Codec codec = Codec.aacADTS;
 
           switch (musicFormat) {
@@ -61,6 +75,19 @@ class ChatBottomFileSelectorButton extends StatelessWidget {
               ChatVoice(
                   name: name,
                   codec: codec,
+                  path: selectedFile.path!,
+                  location: ItemLocation(
+                      inDirectory: homeItem.location.inDirectory,
+                      index: homeItem.location.index,
+                      itemIndex: messages.length),
+                  dateTime: DateTime.now()));
+          chat.copyWith(messages: messages);
+          Controller.to.setData();
+        } else {
+          messages.insert(
+              0,
+              ChatFile(
+                  name: name,
                   path: selectedFile.path!,
                   location: ItemLocation(
                       inDirectory: homeItem.location.inDirectory,

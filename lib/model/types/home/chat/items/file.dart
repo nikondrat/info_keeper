@@ -6,7 +6,7 @@ class ChatFile {
   AllType type;
   ItemLocation location;
   String path;
-  String dateTime;
+  DateTime dateTime;
   bool isLocked;
   bool isUnlocked;
 
@@ -23,7 +23,7 @@ class ChatFile {
       : name = json['name'],
         type = AllType.values.elementAt(json['type']),
         location = ItemLocation.fromJson(json['location']),
-        dateTime = json['dateTime'],
+        dateTime = DateTime.parse(json['dateTime']),
         isLocked = json['isLocked'],
         isUnlocked = json['isUnlocked'],
         path = json['path'];
@@ -35,6 +35,6 @@ class ChatFile {
         'location': location.toJson(),
         'isLocked': isLocked,
         'isUnlocked': isUnlocked,
-        'dateTime': dateTime
+        'dateTime': dateTime.toString()
       };
 }

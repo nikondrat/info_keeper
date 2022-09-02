@@ -5,7 +5,7 @@ class ChatImage {
   AllType type;
   ItemLocation location;
   String path;
-  String dateTime;
+  DateTime dateTime;
   bool isLocked;
   bool isUnlocked;
 
@@ -20,7 +20,7 @@ class ChatImage {
   ChatImage.fromJson(Map<String, dynamic> json)
       : type = AllType.values.elementAt(json['type']),
         location = ItemLocation.fromJson(json['location']),
-        dateTime = json['dateTime'],
+        dateTime = DateTime.parse(json['dateTime']),
         isLocked = json['isLocked'],
         isUnlocked = json['isUnlocked'],
         path = json['path'];
@@ -31,6 +31,6 @@ class ChatImage {
         'location': location.toJson(),
         'isLocked': isLocked,
         'isUnlocked': isUnlocked,
-        'dateTime': dateTime
+        'dateTime': dateTime.toString()
       };
 }

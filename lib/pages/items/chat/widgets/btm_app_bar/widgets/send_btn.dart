@@ -25,6 +25,7 @@ class ChatBottomSendButton extends StatelessWidget {
             messages.insert(
                 0,
                 Message(
+                    title: controller.titleController.text,
                     location: ItemLocation(
                         inDirectory: homeItem.location.inDirectory,
                         index: homeItem.location.index,

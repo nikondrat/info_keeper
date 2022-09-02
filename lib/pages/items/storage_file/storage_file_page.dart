@@ -37,10 +37,6 @@ class StorageFilePage extends StatelessWidget {
         String path = '${dir.path}/${result.files.single.name}';
         await file.copy(path);
         pathToImage.value = path;
-        // storageFile.pathToImage = path;
-        storageFile.copyWith(pathToImage: path, data: data.text);
-        // homeItem.copyWith(name: title.text, child: storageFile);
-        return Controller.to.setData();
       }
     }
 
@@ -202,7 +198,7 @@ class StorageFilePage extends StatelessWidget {
                             child: storageFile.copyWith(
                                 data: data.text,
                                 history: storageFile.history,
-                                pathToImage: storageFile.pathToImage));
+                                pathToImage: pathToImage.value));
                         Get.back();
                       },
                       icon: Icon(change ? Icons.done : Icons.add),

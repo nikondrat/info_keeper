@@ -60,10 +60,7 @@ class TaskPage extends StatelessWidget {
                               }
                             }
                           : () {
-                              change
-                                  ? homeItem.copyWith(
-                                      name: titleController.text)
-                                  : null;
+                              homeItem.copyWith(name: titleController.text);
                               Get.back();
                             },
                       icon: Icon(change || changeTitle.value
