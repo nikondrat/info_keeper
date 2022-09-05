@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/pages/items/chat/chat_controller.dart';
 import 'package:info_keeper/pages/items/chat/widgets/body/body.dart';
 import 'package:info_keeper/pages/items/chat/widgets/btm_app_bar/btm_app_bar.dart';
 import 'package:info_keeper/widgets/app_bar/app_bar.dart';
-import 'package:info_keeper/widgets/app_bar/widgets/title.dart';
 import 'package:swipe/swipe.dart';
 
 class ChatPage extends StatelessWidget {

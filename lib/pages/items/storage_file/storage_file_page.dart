@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,7 +11,6 @@ import 'package:info_keeper/pages/items/storage_file/widgets/storage_file_body.d
 import 'package:info_keeper/widgets/app_bar/app_bar.dart';
 import 'package:info_keeper/widgets/app_bar/widgets/popup_menu.dart';
 import 'package:info_keeper/widgets/notifications.dart';
-import 'package:info_keeper/widgets/app_bar/widgets/title.dart';
 import 'package:path_provider/path_provider.dart';
 
 class StorageFilePage extends StatelessWidget {

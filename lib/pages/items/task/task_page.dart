@@ -6,7 +6,6 @@ import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/pages/items/task/widgets/btm_field.dart';
 import 'package:info_keeper/pages/items/task/widgets/task_body.dart';
 import 'package:info_keeper/widgets/app_bar/app_bar.dart';
-import 'package:info_keeper/widgets/app_bar/widgets/title.dart';
 
 class TaskPage extends StatelessWidget {
   final HomeItem homeItem;

@@ -6,7 +6,6 @@ import 'package:info_keeper/model/types/home/audio/audio_note.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/model/types/item_location.dart';
 import 'package:info_keeper/widgets/app_bar/app_bar.dart';
-import 'package:info_keeper/widgets/app_bar/widgets/title.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 
