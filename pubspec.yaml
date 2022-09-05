@@ -37,12 +37,11 @@ dependencies:
   firebase_core: ^1.20.0
   cloud_firestore: ^3.4.3
   auto_size_text: ^3.0.0
-  audio_wave: ^0.1.4
-  search_choices: ^2.1.1
   dismissible_page: ^0.7.3
-  expandable: ^5.0.1
   modal_bottom_sheet: ^2.1.0
-  loading_animation_widget: ^1.2.0+3
+  # audio_wave: ^0.1.4
+  # expandable: ^5.0.1
+  # loading_animation_widget: ^1.2.0+3
 
 dev_dependencies:
   flutter_test:

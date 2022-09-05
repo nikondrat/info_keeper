@@ -30,6 +30,14 @@ class TaskPage extends StatelessWidget {
               controller: titleController,
               change: changeTitle,
               focus: titleFocus,
+              leadingButtonFunc: () {
+                if (!change) {
+                  Controller.to.all[homeItem.location.inDirectory].childrens
+                      .removeAt(homeItem.location.index);
+                }
+
+                Get.back();
+              },
               actions: [
                 IconButton(
                     splashRadius: 20,

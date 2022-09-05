@@ -107,6 +107,7 @@ class _AudioPageState extends State<AudioPage> {
           preferredSize: const Size.fromHeight(kToolbarHeight),
           child: AppBarWidget(
               controller: titleController,
+              leadingButtonFunc: () => Get.back(),
               change: changeTitle,
               focus: titleFocus)),
       body: LayoutBuilder(builder: (context, constraints) {

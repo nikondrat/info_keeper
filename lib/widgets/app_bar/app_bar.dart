@@ -4,16 +4,22 @@ import 'package:info_keeper/widgets/app_bar/widgets/title.dart';
 
 class AppBarWidget extends StatelessWidget {
   final TextEditingController controller;
+  final double titleSpacing;
+  final bool centerTitle;
   final RxBool change;
+  final Widget? title;
   final FocusNode focus;
   final List<Widget>? actions;
-  final Function()? leadingButtonFunc;
+  final Function() leadingButtonFunc;
   const AppBarWidget(
       {super.key,
+      this.titleSpacing = 0,
       required this.controller,
+      this.centerTitle = false,
       required this.change,
+      this.title,
       this.actions,
-      this.leadingButtonFunc,
+      required this.leadingButtonFunc,
       required this.focus});
 
   @override
@@ -21,7 +27,8 @@ class AppBarWidget extends StatelessWidget {
     String defaultText = controller.text;
 
     return Obx(() => AppBar(
-          titleSpacing: 0,
+          titleSpacing: titleSpacing,
+          centerTitle: centerTitle,
           leading: IconButton(
               splashRadius: 20,
               onPressed: change.value
@@ -32,8 +39,9 @@ class AppBarWidget extends StatelessWidget {
                     }
                   : leadingButtonFunc,
               icon: Icon(change.value ? Icons.close : Icons.arrow_back)),
-          title: TitleWidget(
-              controller: controller, change: change, focusNode: focus),
+          title: title ??
+              TitleWidget(
+                  controller: controller, change: change, focusNode: focus),
           actions: change.value
               ? [
                   IconButton(
