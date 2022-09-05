@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:info_keeper/model/types/home/chat/items/message.dart';
 import 'package:info_keeper/pages/items/chat/widgets/body/items/menu/item.dart';
 
@@ -17,11 +19,27 @@ class MessageMenuWidget extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           children: [
             MenuItemWidget(
-                title: 'Copy', icon: const Icon(Icons.copy), onPressed: () {}),
+                title: 'Copy',
+                icon: const Icon(Icons.copy),
+                onPressed: () {
+                  Clipboard.setData(ClipboardData(text: message.content));
+                  Navigator.pop(context);
+                  Get.snackbar('Done', 'The message has been copied',
+                      shouldIconPulse: true,
+                      icon: const Icon(Icons.done),
+                      margin: const EdgeInsets.all(10),
+                      duration: const Duration(seconds: 1),
+                      isDismissible: true,
+                      snackPosition: SnackPosition.BOTTOM);
+                }),
             MenuItemWidget(
-                title: 'Copy', icon: const Icon(Icons.copy), onPressed: () {}),
+                title: 'Edit',
+                icon: const Icon(Icons.edit_outlined),
+                onPressed: () {}),
             MenuItemWidget(
-                title: 'Copy', icon: const Icon(Icons.copy), onPressed: () {}),
+                title: 'Highlite',
+                icon: const Icon(Icons.brush_outlined),
+                onPressed: () {}),
             MenuItemWidget(
                 title: 'Copy', icon: const Icon(Icons.copy), onPressed: () {}),
             MenuItemWidget(

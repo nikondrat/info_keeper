@@ -43,17 +43,10 @@ class AudioNoteItemBody extends StatefulWidget {
 }
 
 class _AudioNoteItemBodyState extends State<AudioNoteItemBody> {
-  late final FlutterSoundPlayer player;
+  late final FlutterSoundPlayer player = FlutterSoundPlayer();
   final isPlay = false.obs;
 
-  @override
-  void dispose() {
-    player.closePlayer();
-    super.dispose();
-  }
-
   void play() async {
-    player = FlutterSoundPlayer();
     await player.openPlayer().whenComplete(() {
       isPlay.value = true;
       player.startPlayer(

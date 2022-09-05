@@ -3,12 +3,12 @@ import 'package:get/get.dart';
 
 class TitleWidget extends StatelessWidget {
   final TextEditingController controller;
-  final FocusNode? focusNode;
+  final FocusNode focusNode;
   final RxBool change;
   const TitleWidget(
       {Key? key,
       required this.controller,
-      this.focusNode,
+      required this.focusNode,
       required this.change})
       : super(key: key);
 

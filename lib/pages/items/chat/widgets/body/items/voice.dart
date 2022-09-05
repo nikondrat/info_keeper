@@ -51,7 +51,7 @@ class ChatVoiceWidget extends StatelessWidget {
                 splashRadius: 20,
                 onPressed: voice.isPlay ? close : play,
                 icon: Icon(voice.isPlay ? Icons.pause : Icons.play_arrow)),
-            AutoSizeText(voice.name)
+            Expanded(child: AutoSizeText(voice.name))
           ],
         ));
   }

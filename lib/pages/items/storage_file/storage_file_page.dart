@@ -9,8 +9,9 @@ import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/model/types/home/storage_file/storage_file.dart';
 import 'package:info_keeper/pages/items/storage_file/storage_history_page.dart';
 import 'package:info_keeper/pages/items/storage_file/widgets/storage_file_body.dart';
+import 'package:info_keeper/widgets/app_bar/app_bar.dart';
 import 'package:info_keeper/widgets/notifications.dart';
-import 'package:info_keeper/widgets/title.dart';
+import 'package:info_keeper/widgets/app_bar/widgets/title.dart';
 import 'package:path_provider/path_provider.dart';
 
 class StorageFilePage extends StatelessWidget {
@@ -166,90 +167,69 @@ class StorageFilePage extends StatelessWidget {
               )),
         ];
 
-    return Obx(() => Scaffold(
-        appBar: AppBar(
-            titleSpacing: 0,
-            actions: changeTitle.value
-                ? [
-                    Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: IconButton(
-                            splashRadius: 20,
-                            onPressed: () {
-                              if (title.text.isNotEmpty) {
-                                changeTitle.value = !changeTitle.value;
-                                titleFocus.unfocus();
-                                // defaultName = titleController.text;
-                                change
-                                    ? homeItem.copyWith(name: title.text)
-                                    : homeItem.name = title.text;
-                              }
-                            },
-                            icon: const Icon(Icons.done)))
-                  ]
-                : [
-                    IconButton(
-                      onPressed: () {
-                        if (data.text.isNotEmpty) {
-                          storageFile.history!.add(data.text);
-                        }
-                        homeItem.copyWith(
-                            name: title.text,
-                            child: storageFile.copyWith(
-                                data: data.text,
-                                history: storageFile.history,
-                                pathToImage: pathToImage.value));
-                        Get.back();
-                      },
-                      icon: Icon(change ? Icons.done : Icons.add),
-                      splashRadius: 20,
-                    ),
-                    PopupMenuButton(
-                        splashRadius: 20,
-                        tooltip: '',
-                        onSelected: (value) {
-                          if (value == 2) {
-                            Get.to(() => StorageFileHistory(
-                                  historyElements: storageFile.history!,
-                                  dataController: data,
-                                ));
-                          }
-                        },
-                        itemBuilder: (context) => change
-                            ? changePopupMenuItems()
-                            : addPopupMenuItems())
-                  ],
-            leading: IconButton(
-              splashRadius: 20,
-              icon: Icon(changeTitle.value ? Icons.close : Icons.arrow_back),
-              onPressed: changeTitle.value
-                  ? () {
-                      changeTitle.value = !changeTitle.value;
-                      titleFocus.unfocus();
-                      // change
-                      // ?
-                      title.text = homeItem.name;
-                      // : titleController.text = defaultName;
-                    }
-                  : () {
-                      if (title.text.isNotEmpty) {
-                        change
-                            ? storageFile.copyWith(
-                                data: data.value.text,
-                                history: storageFile.history,
-                                pathToImage: pathToImage.value)
-                            : Controller
-                                .to
-                                .all[Controller.to.selectedFolder.value]
-                                .childrens
-                                .removeAt(homeItem.location.index);
-                      }
+    List<PopupMenuItem> popupItems() {
+      List<PopupMenuItem> items = [];
+
+      return items;
+    }
+
+    return Scaffold(
+        appBar: PreferredSize(
+            preferredSize: const Size.fromHeight(kToolbarHeight),
+            child: AppBarWidget(
+              controller: title,
+              change: changeTitle,
+              focus: titleFocus,
+              leadingButtonFunc: () {
+                if (change) {
+                  storageFile.copyWith(
+                      data: data.value.text,
+                      history: storageFile.history,
+                      pathToImage: pathToImage.value);
+                } else {
+                  Controller.to.all[homeItem.location.inDirectory].childrens
+                      .removeAt(homeItem.location.index);
+                }
+                Get.back();
+              },
+              actions: [
+                IconButton(
+                    splashRadius: 20,
+                    onPressed: () {
+                      storageFile.history!.add(data.text);
+                      homeItem.copyWith(
+                          name: title.text,
+                          child: storageFile.copyWith(
+                              data: data.text,
+                              history: storageFile.history,
+                              pathToImage: pathToImage.value));
                       Get.back();
                     },
-            ),
-            title: TitleWidget(
-                controller: title, change: changeTitle, focusNode: titleFocus)),
+                    icon: Icon(change ? Icons.done : Icons.add)),
+                PopupMenuButton(
+                    splashRadius: 20,
+                    itemBuilder: (context) => popupItems(),
+                    icon: const Icon(Icons.more_vert))
+              ],
+            )),
+
+        // PopupMenuButton(
+        //                 splashRadius: 20,
+        //                 tooltip: '',
+        //                 onSelected: (value) {
+        //                   if (value == 2) {
+        //                     Get.to(() => StorageFileHistory(
+        //                           historyElements: storageFile.history!,
+        //                           dataController: data,
+        //                         ));
+        //                   }
+        //                 },
+        //                 itemBuilder: (context) => change
+        //                     ? changePopupMenuItems()
+        //                     : addPopupMenuItems())
+        //           ],
+
         body: StorageFilePageBody(
-            dataController: data, pathToImage: pathToImage)));
+            dataController: data, pathToImage: pathToImage));
   }
 }

@@ -64,7 +64,7 @@ class _HomeFloatButtonsState extends State<HomeFloatButtons>
               onPressed: () {
                 _toggle();
                 HomeItem homeItem = HomeItem(
-                    name: 'Список без названия',
+                    name: '',
                     child: Task(todos: <Todo>[].obs),
                     location: ItemLocation(
                         inDirectory: Controller.to.selectedFolder.value,
@@ -86,7 +86,7 @@ class _HomeFloatButtonsState extends State<HomeFloatButtons>
               onPressed: () {
                 _toggle();
                 HomeItem homeItem = HomeItem(
-                    name: 'Без названия',
+                    name: '',
                     child: StorageFile(history: []),
                     location: ItemLocation(
                         inDirectory: Controller.to.selectedFolder.value,

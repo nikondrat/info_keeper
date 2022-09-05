@@ -10,7 +10,7 @@ import 'package:info_keeper/model/types/home/chat/items/voice.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/model/types/item_location.dart';
 
-enum MusicFormat { webm, ogg, mp3, flac, wav, acc }
+enum MusicFormat { ogg, mp3, flac, wav, acc }
 
 enum ImageFormat { jpeg, png, gif, bmp, webp, wbmp, jpg }
 
@@ -52,9 +52,6 @@ class ChatBottomFileSelectorButton extends StatelessWidget {
           Codec codec = Codec.aacADTS;
 
           switch (musicFormat) {
-            case MusicFormat.webm:
-              codec = Codec.opusWebM;
-              break;
             case MusicFormat.flac:
               codec = Codec.flac;
               break;
