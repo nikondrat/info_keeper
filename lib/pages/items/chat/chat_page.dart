@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,7 +8,6 @@ import 'package:info_keeper/pages/items/chat/chat_controller.dart';
 import 'package:info_keeper/pages/items/chat/pages/search/search_title.dart';
 import 'package:info_keeper/pages/items/chat/pages/title_page.dart';
 import 'package:info_keeper/pages/items/chat/widgets/body/body.dart';
-import 'package:info_keeper/pages/items/chat/pages/search/search_body.dart';
 import 'package:info_keeper/pages/items/chat/widgets/btm_app_bar/btm_app_bar.dart';
 import 'package:info_keeper/widgets/app_bar/app_bar.dart';
 import 'package:info_keeper/widgets/app_bar/widgets/popup_menu.dart';
@@ -46,7 +43,7 @@ class ChatPage extends StatelessWidget {
           child: const PopupMenuItemBody(
               title: 'Rename chat', icon: Icons.edit_outlined));
 
-      PopupMenuItem media = PopupMenuItem(
+      PopupMenuItem media = const PopupMenuItem(
           child: PopupMenuItemBody(title: 'Media', icon: Icons.cloud_outlined));
 
       PopupMenuItem date = PopupMenuItem(

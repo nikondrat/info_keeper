@@ -6,7 +6,6 @@ import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/model/types/home/chat/old_chat.dart';
 import 'package:info_keeper/pages/items/old_chat_page/widgets/chat_record_voice.dart';
-import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 
 enum MusicFormat { webm, ogg, mp3, flac, wav }
@@ -32,8 +31,8 @@ class ChatPageBottomTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     final textFieldIsEmpty = true.obs;
     final isShowTitleTextField = false.obs;
-    final DateFormat format = DateFormat('yyyy-MM-dd HH:mm:ss');
-    final String dateTime = format.format(DateTime.now());
+    // final DateFormat format = DateFormat('yyyy-MM-dd HH:mm:ss');
+    // final String dateTime = format.format(DateTime.now());
 
     // final List imageFormats = ['jpeg', 'png', 'gif', 'bmp', 'webp', 'wbmp'];
     // final List musicFormats = ['webm', 'ogg', 'mp3', 'mp4', 'flac', 'wav'];
@@ -46,8 +45,8 @@ class ChatPageBottomTextField extends StatelessWidget {
         final String path = '${dir.path}/${result.files.single.name}';
         await file.copy(path);
 
-        final String name =
-            result.files.single.path!.split('/').last.split('.').first;
+        // final String name =
+        //     result.files.single.path!.split('/').last.split('.').first;
         final String type =
             result.files.single.path!.split('/').last.split('.').last;
 
@@ -294,15 +293,15 @@ class ChatPageBottomTextField extends StatelessWidget {
                                         ChatItem(messages: messages.obs));
                                   } else {
                                     if (contentController.text.isNotEmpty) {
-                                      List messages = Controller
-                                          .to
-                                          .all[Controller
-                                              .to.selectedFolder.value]
-                                          .childrens[Controller
-                                              .to.selectedElementIndex.value]
-                                          .child
-                                          .value
-                                          .messages!;
+                                      // List messages = Controller
+                                      //     .to
+                                      //     .all[Controller
+                                      //         .to.selectedFolder.value]
+                                      //     .childrens[Controller
+                                      //         .to.selectedElementIndex.value]
+                                      //     .child
+                                      //     .value
+                                      //     .messages!;
                                       //   Controller.to.addMessage(OldMessage(
                                       //       location: ItemLocation(
                                       //           inDirectory: Controller
