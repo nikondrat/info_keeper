@@ -5,10 +5,6 @@ import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/model/types/home/chat/old_chat.dart';
-import 'package:info_keeper/model/types/home/chat/chat_file.dart';
-import 'package:info_keeper/model/types/home/chat/chat_image.dart';
-import 'package:info_keeper/model/types/home/chat/message.dart';
-import 'package:info_keeper/model/types/item_location.dart';
 import 'package:info_keeper/pages/items/old_chat_page/widgets/chat_record_voice.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
@@ -61,20 +57,20 @@ class ChatPageBottomTextField extends StatelessWidget {
             (element) => element.toString() == 'MusicFormat.$type');
 
         if (imageFormat != null) {
-          Controller.to.addChatImage(OldChatImage(
-              path: path,
-              dateTime: dateTime,
-              location: ItemLocation(
-                  inDirectory: Controller.to.selectedFolder.value,
-                  index: Controller.to.selectedElementIndex.value,
-                  itemIndex: Controller
-                      .to
-                      .all[Controller.to.selectedFolder.value]
-                      .childrens[Controller.to.selectedElementIndex.value]
-                      .child
-                      .value
-                      .messages
-                      .length)));
+          // Controller.to.addChatImage(OldChatImage(
+          //     path: path,
+          //     dateTime: dateTime,
+          //     location: ItemLocation(
+          //         inDirectory: Controller.to.selectedFolder.value,
+          //         index: Controller.to.selectedElementIndex.value,
+          //         itemIndex: Controller
+          //             .to
+          //             .all[Controller.to.selectedFolder.value]
+          //             .childrens[Controller.to.selectedElementIndex.value]
+          //             .child
+          //             .value
+          //             .messages
+          //             .length)));
         } else if (musicFormat != null) {
           switch (musicFormat) {
             case MusicFormat.webm:
@@ -106,21 +102,21 @@ class ChatPageBottomTextField extends StatelessWidget {
           //             .messages
           //             .length)));
         } else {
-          Controller.to.addChatFile(OldChatFile(
-              name: name,
-              path: path,
-              location: ItemLocation(
-                  inDirectory: Controller.to.selectedFolder.value,
-                  index: Controller.to.selectedElementIndex.value,
-                  itemIndex: Controller
-                      .to
-                      .all[Controller.to.selectedFolder.value]
-                      .childrens[Controller.to.selectedElementIndex.value]
-                      .child
-                      .value
-                      .messages
-                      .length),
-              dateTime: dateTime));
+          // Controller.to.addChatFile(OldChatFile(
+          //     name: name,
+          //     path: path,
+          //     location: ItemLocation(
+          //         inDirectory: Controller.to.selectedFolder.value,
+          //         index: Controller.to.selectedElementIndex.value,
+          //         itemIndex: Controller
+          //             .to
+          //             .all[Controller.to.selectedFolder.value]
+          //             .childrens[Controller.to.selectedElementIndex.value]
+          //             .child
+          //             .value
+          //             .messages
+          //             .length),
+          //     dateTime: dateTime));
         }
       }
     }
@@ -307,17 +303,17 @@ class ChatPageBottomTextField extends StatelessWidget {
                                           .child
                                           .value
                                           .messages!;
-                                      Controller.to.addMessage(OldMessage(
-                                          location: ItemLocation(
-                                              inDirectory: Controller
-                                                  .to.selectedFolder.value,
-                                              index: Controller.to
-                                                  .selectedElementIndex.value,
-                                              itemIndex: messages.length),
-                                          title: titleController.text,
-                                          messageText: contentController.text,
-                                          history: [contentController.text],
-                                          dateTime: dateTime));
+                                      //   Controller.to.addMessage(OldMessage(
+                                      //       location: ItemLocation(
+                                      //           inDirectory: Controller
+                                      //               .to.selectedFolder.value,
+                                      //           index: Controller.to
+                                      //               .selectedElementIndex.value,
+                                      //           itemIndex: messages.length),
+                                      //       title: titleController.text,
+                                      //       messageText: contentController.text,
+                                      //       history: [contentController.text],
+                                      //       dateTime: dateTime));
                                     }
                                   }
                                   titleController.clear();

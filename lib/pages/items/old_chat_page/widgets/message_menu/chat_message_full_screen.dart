@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:info_keeper/model/types/home/chat/message.dart';
+import 'package:info_keeper/model/types/home/chat/items/message.dart';
 import 'package:info_keeper/pages/items/old_chat_page/widgets/type/chat_message.dart';
 
 class ChatPageMessageInFullScreen extends StatelessWidget {
   final RxInt selected;
-  final OldMessage message;
+  final Message message;
   final String dateTime;
   final RxBool splitMessages;
   final RxBool showDate;

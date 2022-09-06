@@ -1,10 +1,18 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:info_keeper/model/controller.dart';
+import 'package:info_keeper/model/types/home/chat/chat.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/pages/items/chat/chat_controller.dart';
+import 'package:info_keeper/pages/items/chat/pages/title_page.dart';
 import 'package:info_keeper/pages/items/chat/widgets/body/body.dart';
+import 'package:info_keeper/pages/items/chat/widgets/body/search_body.dart';
 import 'package:info_keeper/pages/items/chat/widgets/btm_app_bar/btm_app_bar.dart';
 import 'package:info_keeper/widgets/app_bar/app_bar.dart';
+import 'package:info_keeper/widgets/app_bar/widgets/popup_menu.dart';
 import 'package:swipe/swipe.dart';
 
 class ChatPage extends StatelessWidget {
@@ -14,10 +22,53 @@ class ChatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ChatController controller = Get.put(ChatController());
+    Chat chat = homeItem.child;
+
     // title
+    // final RxBool isSearch = false.obs;
     TextEditingController titleController =
         TextEditingController(text: homeItem.name);
     FocusNode titleFocus = FocusNode();
+
+    final RxString pathToImage = chat.backgroundImage.obs;
+
+    List<PopupMenuItem> popupItems() {
+      List<PopupMenuItem> items = [];
+
+      PopupMenuItem search = PopupMenuItem(
+          child: PopupMenuItemBody(title: 'Search', icon: Icons.search));
+
+      PopupMenuItem rename = PopupMenuItem(
+          onTap: () =>
+              controller.changeTitle.value = !controller.changeTitle.value,
+          child: const PopupMenuItemBody(
+              title: 'Rename chat', icon: Icons.edit_outlined));
+
+      PopupMenuItem media = PopupMenuItem(
+          child: PopupMenuItemBody(title: 'Media', icon: Icons.cloud_outlined));
+
+      PopupMenuItem date = PopupMenuItem(
+          onTap: () => controller.showDate.value = !controller.showDate.value,
+          child: const PopupMenuItemBody(
+              title: 'Show date', icon: Icons.date_range_outlined));
+
+      PopupMenuItem background = PopupMenuItem(
+          onTap: () async {
+            FilePickerResult? result =
+                await FilePicker.platform.pickFiles(type: FileType.image);
+            if (result != null) {
+              pathToImage.value = result.files.single.path!;
+              chat.copyWith(backgroundImage: pathToImage.value);
+              Controller.to.setData();
+            }
+          },
+          child: const PopupMenuItemBody(
+              title: 'Change background', icon: Icons.palette_outlined));
+
+      items.addAll([search, rename, media, date, background]);
+
+      return items;
+    }
 
     return Swipe(
         onSwipeRight: () => null,
@@ -25,128 +76,33 @@ class ChatPage extends StatelessWidget {
             resizeToAvoidBottomInset: false,
             appBar: PreferredSize(
                 preferredSize: const Size.fromHeight(kToolbarHeight),
-                child: AppBarWidget(
-                    title: Text(homeItem.name),
-                    titleSpacing: 20,
+                child: Obx(() => AppBarWidget(
+                    title: controller.changeTitle.value
+                        ? null
+                        : Text(titleController.text),
+                    titleSpacing: controller.changeTitle.value ? 0 : 20,
                     controller: titleController,
                     change: controller.changeTitle,
-                    leadingButtonFunc: () => Get.back(),
-                    focus: titleFocus)),
-            // appBar: AppBar(
-            //     titleSpacing: controller.changeTitle.value ? 0 : null,
-            //     centerTitle: false,
-            //     leading: IconButton(
-            //         splashRadius: 20,
-            //         icon: Icon(controller.changeTitle.value
-            //             ? Icons.close
-            //             : Icons.arrow_back),
-            //         onPressed: controller.changeTitle.value
-            //             ? () {
-            //                 controller.changeTitle.value =
-            //                     !controller.changeTitle.value;
-            //                 titleFocus.unfocus();
-            //                 titleController.text = homeItem.name;
-            //               }
-            //             : () => Get.back()),
-            //     actions: controller.changeTitle.value
-            //         ? [
-            //             IconButton(
-            //                 splashRadius: 20,
-            //                 onPressed: () {
-            //                   if (titleController.text.isNotEmpty) {
-            //                     controller.changeTitle.value =
-            //                         !controller.changeTitle.value;
-            //                     titleFocus.unfocus();
-            //                     // defaultName = titleController.text;
-            //                     homeItem.copyWith(name: titleController.text);
-
-            //                     Controller.to.setData();
-            //                   }
-            //                 },
-            //                 icon: const Icon(Icons.done))
-            //           ]
-            //         : [
-            //             IconButton(
-            //                 splashRadius: 20,
-            //                 onPressed: () {},
-            //                 icon: const Icon(Icons.title)),
-            //             IconButton(
-            //                 splashRadius: 20,
-            //                 onPressed: () {},
-            //                 icon: const Icon(Icons.star_outline)),
-            //             PopupMenuButton(
-            //                 itemBuilder: (context) => [
-            //                       PopupMenuItem(
-            //                           child: Row(
-            //                         children: const [
-            //                           Padding(
-            //                             padding: EdgeInsets.only(right: 4),
-            //                             child: Icon(Icons.search),
-            //                           ),
-            //                           Text('Search'),
-            //                         ],
-            //                       )),
-            //                       PopupMenuItem(
-            //                           onTap: () {
-            //                             controller.changeTitle.value = true;
-            //                           },
-            //                           child: Row(
-            //                             children: const [
-            //                               Padding(
-            //                                 padding: EdgeInsets.only(right: 4),
-            //                                 child: Icon(Icons.edit_outlined),
-            //                               ),
-            //                               Text('Rename chat')
-            //                             ],
-            //                           )),
-            //                       PopupMenuItem(
-            //                           value: 2,
-            //                           child: Row(
-            //                             children: const [
-            //                               Padding(
-            //                                 padding: EdgeInsets.only(right: 8),
-            //                                 child: Icon(Icons.cloud_outlined),
-            //                               ),
-            //                               Text('Media')
-            //                             ],
-            //                           )),
-            //                       PopupMenuItem(
-            //                           onTap: () {
-            //                             controller.showDate.value =
-            //                                 !controller.showDate.value;
-            //                           },
-            //                           child: Row(
-            //                             children: const [
-            //                               Padding(
-            //                                 padding: EdgeInsets.only(right: 8),
-            //                                 child:
-            //                                     Icon(Icons.date_range_outlined),
-            //                               ),
-            //                               Text('Show date')
-            //                             ],
-            //                           )),
-            //                       PopupMenuItem(
-            //                           onTap: () {
-            //                             // pickImage();
-            //                           },
-            //                           child: Row(
-            //                             children: const [
-            //                               Padding(
-            //                                 padding: EdgeInsets.only(right: 8),
-            //                                 child: Icon(Icons.palette_outlined),
-            //                               ),
-            //                               Text('Change background')
-            //                             ],
-            //                           )),
-            //                     ])
-            //           ],
-            //     title: controller.changeTitle.value
-            //         ? TitleWidget(
-            //             controller: titleController,
-            //             change: controller.changeTitle,
-            //             focusNode: titleFocus)
-            //         : Text(titleController.text)),
-            body: ChatBody(chat: homeItem.child),
+                    leadingButtonFunc: () {
+                      homeItem.copyWith(name: titleController.text);
+                      Get.back();
+                    },
+                    actions: [
+                      IconButton(
+                          splashRadius: 20,
+                          onPressed: () =>
+                              Get.to(() => ChatTitlesPage(chat: chat)),
+                          icon: const Icon(Icons.title)),
+                      IconButton(
+                          splashRadius: 20,
+                          onPressed: () {},
+                          icon: const Icon(Icons.star_outline)),
+                      PopupMenuButton(
+                          splashRadius: 20,
+                          itemBuilder: (context) => popupItems())
+                    ],
+                    focus: titleFocus))),
+            body: ChatBody(chat: homeItem.child, pathToImage: pathToImage),
             bottomNavigationBar: ChatBottomAppBar(homeItem: homeItem)));
   }
 }

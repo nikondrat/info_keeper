@@ -126,7 +126,9 @@ class StorageFilePage extends StatelessWidget {
                 IconButton(
                     splashRadius: 20,
                     onPressed: () {
-                      storageFile.history!.add(data.text);
+                      if (data.text.isNotEmpty) {
+                        storageFile.history!.add(data.text);
+                      }
                       homeItem.copyWith(
                           name: title.text,
                           child: storageFile.copyWith(

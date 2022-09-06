@@ -29,7 +29,6 @@ class ChatBottomTextField extends StatelessWidget {
         Expanded(
             child: TextField(
                 controller: controller.messageController,
-                autofocus: true,
                 // autofocus: editMessage.value ? true : false,
                 maxLines: null,
                 // focusNode: focusNode,

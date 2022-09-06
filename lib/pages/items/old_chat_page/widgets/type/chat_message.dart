@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/all.dart';
+import 'package:info_keeper/model/types/home/chat/items/message.dart';
 import 'package:info_keeper/model/types/home/chat/old_chat.dart';
-import 'package:info_keeper/model/types/home/chat/message.dart';
 import 'package:info_keeper/pages/items/old_chat_page/widgets/message_menu/chat_menu.dart';
 import 'package:info_keeper/pages/trash_page/trash_element.dart';
 import 'package:info_keeper/pages/vault_page/vault_page.dart';
@@ -26,7 +26,7 @@ class MessageWidget extends StatelessWidget {
   final RxInt? selectedMessage;
   final RxBool showDate;
   final bool fullScreen;
-  final OldMessage message;
+  final Message message;
   final String dateTime;
   final RxBool splitMessages;
   final RxBool isShowColorSelector;
@@ -200,7 +200,7 @@ class MessageWidgetChild extends StatelessWidget {
   final RxInt? selectedMessage;
   final RxBool showDate;
   final bool fullScreen;
-  final OldMessage message;
+  final Message message;
   final String dateTime;
   final RxBool splitMessages;
   final RxBool isShowColorSelector;
@@ -320,7 +320,7 @@ class MessageWidgetBody extends StatelessWidget {
   final bool fullScreen;
   final RxInt? selected;
   final RxBool? splitMessages;
-  final OldMessage message;
+  final Message message;
   final RxBool? showDate;
   final String? dateTime;
   final String term;
@@ -382,8 +382,8 @@ class MessageWidgetBody extends StatelessWidget {
                         color: splitMessages != null
                             ? splitMessages!.value && message.isSelected
                                 ? Colors.white
-                                : messageColors[message.selectedColorIndex]
-                            : messageColors[message.selectedColorIndex]),
+                                : messageColors[message.color]
+                            : messageColors[message.color]),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
@@ -394,7 +394,7 @@ class MessageWidgetBody extends StatelessWidget {
                                 child: SubstringHighlight(
                               textStyle: const TextStyle(
                                   color: Colors.black, fontSize: 16),
-                              text: message.messageText,
+                              text: message.content,
                               maxLines: selected != null &&
                                       Controller
                                               .to
@@ -458,7 +458,7 @@ class MessageWidgetBody extends StatelessWidget {
       return LayoutBuilder(
         builder: (context, constraints) => GestureDetector(
             onTap: () {
-              Clipboard.setData(ClipboardData(text: message.messageText));
+              Clipboard.setData(ClipboardData(text: message.content));
               Navigator.pop(context);
               Get.snackbar('Done', 'The message has been copied',
                   shouldIconPulse: true,

@@ -4,9 +4,6 @@ import 'package:get/get.dart';
 import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/model/types/folder.dart';
 import 'package:info_keeper/model/types/home/chat/old_chat.dart';
-import 'package:info_keeper/model/types/home/chat/chat_file.dart';
-import 'package:info_keeper/model/types/home/chat/chat_image.dart';
-import 'package:info_keeper/model/types/home/chat/message.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/model/types/home/storage_file/storage_file.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -320,33 +317,23 @@ class Controller extends GetxController {
     setData();
   }
 
-  void addMessage(OldMessage message) {
-    all[selectedFolder.value]
-        .childrens[selectedElementIndex.value]
-        .child
-        .value
-        .messages
-        .insert(0, message);
-    setData();
-  }
+  // void addMessage(OldMessage message) {
+  //   all[selectedFolder.value]
+  //       .childrens[selectedElementIndex.value]
+  //       .child
+  //       .value
+  //       .messages
+  //       .insert(0, message);
+  //   setData();
+  // }
 
-  void addChatImage(OldChatImage image) {
-    all[selectedFolder.value]
-        .childrens[selectedElementIndex.value]
-        .child
-        .value
-        .messages
-        .insert(0, image);
-    setData();
-  }
-
-  void addChatFile(OldChatFile file) {
-    all[selectedFolder.value]
-        .childrens[selectedElementIndex.value]
-        .child
-        .value
-        .messages
-        .insert(0, file);
-    setData();
-  }
+  // void addChatImage(OldChatImage image) {
+  //   all[selectedFolder.value]
+  //       .childrens[selectedElementIndex.value]
+  //       .child
+  //       .value
+  //       .messages
+  //       .insert(0, image);
+  //   setData();
+  // }
 }

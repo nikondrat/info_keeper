@@ -9,11 +9,13 @@ class AppBarWidget extends StatelessWidget {
   final RxBool change;
   final Widget? title;
   final FocusNode focus;
+  final Widget? leading;
   final List<Widget>? actions;
   final Function() leadingButtonFunc;
   const AppBarWidget(
       {super.key,
       this.titleSpacing = 0,
+      this.leading,
       required this.controller,
       this.centerTitle = false,
       required this.change,
@@ -29,16 +31,17 @@ class AppBarWidget extends StatelessWidget {
     return Obx(() => AppBar(
           titleSpacing: titleSpacing,
           centerTitle: centerTitle,
-          leading: IconButton(
-              splashRadius: 20,
-              onPressed: change.value
-                  ? () {
-                      change.value = !change.value;
-                      controller.text = defaultText;
-                      focus.unfocus();
-                    }
-                  : leadingButtonFunc,
-              icon: Icon(change.value ? Icons.close : Icons.arrow_back)),
+          leading: leading ??
+              IconButton(
+                  splashRadius: 20,
+                  onPressed: change.value
+                      ? () {
+                          change.value = !change.value;
+                          controller.text = defaultText;
+                          focus.unfocus();
+                        }
+                      : leadingButtonFunc,
+                  icon: Icon(change.value ? Icons.close : Icons.arrow_back)),
           title: title ??
               TitleWidget(
                   controller: controller, change: change, focusNode: focus),

@@ -1,9 +1,5 @@
 import 'package:get/get.dart';
 import 'package:info_keeper/model/types/all.dart';
-import 'package:info_keeper/model/types/home/chat/chat_file.dart';
-import 'package:info_keeper/model/types/home/chat/chat_image.dart';
-import 'package:info_keeper/model/types/home/chat/chat_voice.dart';
-import 'package:info_keeper/model/types/home/chat/message.dart';
 import 'package:info_keeper/model/types/home/home.dart';
 
 class ChatItem {
@@ -26,13 +22,13 @@ class ChatItem {
             .map<dynamic>((dynamic e) {
               switch (AllType.values.elementAt(e['type'])) {
                 case AllType.chatMessage:
-                  return OldMessage.fromJson(e);
+                // return OldMessage.fromJson(e);
                 case AllType.chatVoice:
-                  return OldChatVoice.fromJson(e);
+                // return OldChatVoice.fromJson(e);
                 case AllType.chatImage:
-                  return OldChatImage.fromJson(e);
+                // return OldChatImage.fromJson(e);
                 case AllType.chatFile:
-                  return OldChatFile.fromJson(e);
+                // return OldChatFile.fromJson(e);
                 case AllType.chat:
                   break;
                 case AllType.storageFile:
@@ -49,13 +45,13 @@ class ChatItem {
             .map<dynamic>((dynamic e) {
               switch (AllType.values.elementAt(e['type'])) {
                 case AllType.chatMessage:
-                  return OldMessage.fromJson(e);
+                // return OldMessage.fromJson(e);
                 case AllType.chatVoice:
-                  return OldChatVoice.fromJson(e);
+                // return OldChatVoice.fromJson(e);
                 case AllType.chatImage:
-                  return OldChatImage.fromJson(e);
+                // return OldChatImage.fromJson(e);
                 case AllType.chatFile:
-                  return OldChatFile.fromJson(e);
+                // return OldChatFile.fromJson(e);
                 case AllType.chat:
                   break;
                 case AllType.storageFile:
@@ -73,13 +69,13 @@ class ChatItem {
             .map<dynamic>((dynamic e) {
               switch (AllType.values.elementAt(e['type'])) {
                 case AllType.chatMessage:
-                  return OldMessage.fromJson(e);
+                // return OldMessage.fromJson(e);
                 case AllType.chatVoice:
-                  return OldChatVoice.fromJson(e);
+                // return OldChatVoice.fromJson(e);
                 case AllType.chatImage:
-                  return OldChatImage.fromJson(e);
+                // return OldChatImage.fromJson(e);
                 case AllType.chatFile:
-                  return OldChatFile.fromJson(e);
+                // return OldChatFile.fromJson(e);
                 case AllType.chat:
                   break;
                 case AllType.storageFile:
