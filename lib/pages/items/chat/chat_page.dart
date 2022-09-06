@@ -7,9 +7,10 @@ import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home/chat/chat.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/pages/items/chat/chat_controller.dart';
+import 'package:info_keeper/pages/items/chat/pages/search/search_title.dart';
 import 'package:info_keeper/pages/items/chat/pages/title_page.dart';
 import 'package:info_keeper/pages/items/chat/widgets/body/body.dart';
-import 'package:info_keeper/pages/items/chat/widgets/body/search_body.dart';
+import 'package:info_keeper/pages/items/chat/pages/search/search_body.dart';
 import 'package:info_keeper/pages/items/chat/widgets/btm_app_bar/btm_app_bar.dart';
 import 'package:info_keeper/widgets/app_bar/app_bar.dart';
 import 'package:info_keeper/widgets/app_bar/widgets/popup_menu.dart';
@@ -25,18 +26,19 @@ class ChatPage extends StatelessWidget {
     Chat chat = homeItem.child;
 
     // title
-    // final RxBool isSearch = false.obs;
     TextEditingController titleController =
         TextEditingController(text: homeItem.name);
     FocusNode titleFocus = FocusNode();
 
+    // body
     final RxString pathToImage = chat.backgroundImage.obs;
 
     List<PopupMenuItem> popupItems() {
       List<PopupMenuItem> items = [];
 
       PopupMenuItem search = PopupMenuItem(
-          child: PopupMenuItemBody(title: 'Search', icon: Icons.search));
+          onTap: () => controller.isSearch.value = !controller.isSearch.value,
+          child: const PopupMenuItemBody(title: 'Search', icon: Icons.search));
 
       PopupMenuItem rename = PopupMenuItem(
           onTap: () =>
@@ -72,37 +74,47 @@ class ChatPage extends StatelessWidget {
 
     return Swipe(
         onSwipeRight: () => null,
-        child: Scaffold(
+        child: Obx(() => Scaffold(
             resizeToAvoidBottomInset: false,
             appBar: PreferredSize(
                 preferredSize: const Size.fromHeight(kToolbarHeight),
-                child: Obx(() => AppBarWidget(
-                    title: controller.changeTitle.value
-                        ? null
-                        : Text(titleController.text),
+                child: AppBarWidget(
+                    title: !controller.changeTitle.value
+                        ? controller.isSearch.value
+                            ? ChatSearchTitle()
+                            : Text(titleController.text)
+                        : null,
                     titleSpacing: controller.changeTitle.value ? 0 : 20,
                     controller: titleController,
                     change: controller.changeTitle,
                     leadingButtonFunc: () {
-                      homeItem.copyWith(name: titleController.text);
-                      Get.back();
+                      if (controller.isSearch.value) {
+                        controller.isSearch.value = !controller.isSearch.value;
+                      } else {
+                        homeItem.copyWith(name: titleController.text);
+                        Get.back();
+                      }
                     },
-                    actions: [
-                      IconButton(
-                          splashRadius: 20,
-                          onPressed: () =>
-                              Get.to(() => ChatTitlesPage(chat: chat)),
-                          icon: const Icon(Icons.title)),
-                      IconButton(
-                          splashRadius: 20,
-                          onPressed: () {},
-                          icon: const Icon(Icons.star_outline)),
-                      PopupMenuButton(
-                          splashRadius: 20,
-                          itemBuilder: (context) => popupItems())
-                    ],
-                    focus: titleFocus))),
+                    actions: controller.isSearch.value
+                        ? null
+                        : [
+                            IconButton(
+                                splashRadius: 20,
+                                onPressed: () =>
+                                    Get.to(() => ChatTitlesPage(chat: chat)),
+                                icon: const Icon(Icons.title)),
+                            IconButton(
+                                splashRadius: 20,
+                                onPressed: () {},
+                                icon: const Icon(Icons.star_outline)),
+                            PopupMenuButton(
+                                splashRadius: 20,
+                                itemBuilder: (context) => popupItems())
+                          ],
+                    focus: titleFocus)),
             body: ChatBody(chat: homeItem.child, pathToImage: pathToImage),
-            bottomNavigationBar: ChatBottomAppBar(homeItem: homeItem)));
+            bottomNavigationBar: !controller.isSearch.value
+                ? ChatBottomAppBar(homeItem: homeItem)
+                : null)));
   }
 }
