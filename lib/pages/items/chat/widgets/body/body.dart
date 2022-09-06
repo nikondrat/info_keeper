@@ -22,20 +22,20 @@ class ChatBody extends StatelessWidget {
     final ChatController chatController = Get.find();
 
     Widget body = Obx(() => chatController.isSearch.value
-        ? ChatSearchBody(messages: chat.messages)
-        : chatController.showDate.value
-            ? ChatBodyWithTime(chat: chat)
-            : ChatReorderableBody(chat: chat));
+        ? const ChatSearchBody()
+        : Transform.translate(
+            offset: Offset(0, -1 * MediaQuery.of(context).viewInsets.bottom),
+            child: chatController.showDate.value
+                ? ChatBodyWithTime(chat: chat)
+                : ChatReorderableBody(chat: chat)));
 
-    return Transform.translate(
-        offset: Offset(0, -1 * MediaQuery.of(context).viewInsets.bottom),
-        child: Obx(() => pathToImage.isNotEmpty
-            ? Container(
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: FileImage(File(pathToImage.value)),
-                        fit: BoxFit.cover)),
-                child: body)
-            : body));
+    return Obx(() => pathToImage.isNotEmpty
+        ? Container(
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: FileImage(File(pathToImage.value)),
+                    fit: BoxFit.cover)),
+            child: body)
+        : body);
   }
 }

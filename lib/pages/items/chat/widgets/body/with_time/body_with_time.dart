@@ -11,18 +11,17 @@ class ChatBodyWithTime extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GroupedListView(
-      reverse: true,
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
-      physics: const BouncingScrollPhysics(),
-      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-      sort: false,
-      elements: chat.messages,
-      groupBy: (dynamic element) => DateTime.utc(
-          element.dateTime.year, element.dateTime.month, element.dateTime.day),
-      groupSeparatorBuilder: (DateTime dateTime) =>
-          ChatBodySeparator(dateTime: dateTime),
-      indexedItemBuilder: (context, element, index) =>
-          ChatItem(index: index, message: element),
-    );
+        reverse: true,
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+        physics: const BouncingScrollPhysics(),
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+        sort: false,
+        elements: chat.messages,
+        groupBy: (dynamic element) => DateTime.utc(element.dateTime.year,
+            element.dateTime.month, element.dateTime.day),
+        groupSeparatorBuilder: (DateTime dateTime) =>
+            ChatBodySeparator(dateTime: dateTime),
+        indexedItemBuilder: (context, element, index) =>
+            ChatItem(index: index, message: element));
   }
 }

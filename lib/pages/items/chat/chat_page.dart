@@ -81,15 +81,19 @@ class ChatPage extends StatelessWidget {
                 child: AppBarWidget(
                     title: !controller.changeTitle.value
                         ? controller.isSearch.value
-                            ? ChatSearchTitle()
+                            ? ChatSearchTitle(messages: chat.messages)
                             : Text(titleController.text)
                         : null,
-                    titleSpacing: controller.changeTitle.value ? 0 : 20,
+                    titleSpacing: controller.changeTitle.value ||
+                            controller.isSearch.value
+                        ? 0
+                        : 20,
                     controller: titleController,
                     change: controller.changeTitle,
                     leadingButtonFunc: () {
                       if (controller.isSearch.value) {
                         controller.isSearch.value = !controller.isSearch.value;
+                        controller.searchItems.clear();
                       } else {
                         homeItem.copyWith(name: titleController.text);
                         Get.back();

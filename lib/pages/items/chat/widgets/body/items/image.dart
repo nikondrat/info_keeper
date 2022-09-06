@@ -52,6 +52,8 @@ class ChatImageInFullscreen extends StatelessWidget {
         child: Image.file(
           File(image.path),
           fit: BoxFit.fitWidth,
+          filterQuality: FilterQuality.high,
+          isAntiAlias: true,
         ),
       ),
     );

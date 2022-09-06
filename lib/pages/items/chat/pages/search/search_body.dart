@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:info_keeper/pages/items/chat/chat_controller.dart';
 import 'package:info_keeper/pages/items/chat/widgets/body/items/item.dart';
 
 class ChatSearchBody extends StatelessWidget {
-  final List messages;
-  const ChatSearchBody({super.key, required this.messages});
+  const ChatSearchBody({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: messages.length,
-      reverse: true,
-      physics: const BouncingScrollPhysics(),
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
-      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-      itemBuilder: (context, index) =>
-          ChatItem(index: index, message: messages[index]),
-    );
+    final ChatController controller = Get.find();
+
+    return Obx(() => ListView.builder(
+          itemCount: controller.searchItems.length,
+          physics: const BouncingScrollPhysics(),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+          itemBuilder: (context, index) => ChatItem(
+              index: index,
+              message: controller.searchItems[index],
+              searchQuery: controller.searchController.text),
+        ));
   }
 }
