@@ -5,12 +5,14 @@ import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home/chat/chat.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/pages/items/chat/chat_controller.dart';
+import 'package:info_keeper/pages/items/chat/pages/media/media_page.dart';
 import 'package:info_keeper/pages/items/chat/pages/search/search_title.dart';
-import 'package:info_keeper/pages/items/chat/pages/title_page.dart';
+import 'package:info_keeper/pages/items/chat/pages/titles/title_page.dart';
 import 'package:info_keeper/pages/items/chat/widgets/body/body.dart';
 import 'package:info_keeper/pages/items/chat/widgets/btm_app_bar/btm_app_bar.dart';
 import 'package:info_keeper/widgets/app_bar/app_bar.dart';
 import 'package:info_keeper/widgets/app_bar/widgets/popup_menu.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:swipe/swipe.dart';
 
 class ChatPage extends StatelessWidget {
@@ -29,6 +31,10 @@ class ChatPage extends StatelessWidget {
 
     // body
     final RxString pathToImage = chat.backgroundImage.obs;
+    controller.autoScrollController = AutoScrollController(
+        viewportBoundaryGetter: () =>
+            Rect.fromLTRB(0, 0, 0, MediaQuery.of(context).viewInsets.bottom),
+        axis: Axis.vertical);
 
     List<PopupMenuItem> popupItems() {
       List<PopupMenuItem> items = [];
@@ -44,6 +50,7 @@ class ChatPage extends StatelessWidget {
               title: 'Rename chat', icon: Icons.edit_outlined));
 
       PopupMenuItem media = const PopupMenuItem(
+          value: 0,
           child: PopupMenuItemBody(title: 'Media', icon: Icons.cloud_outlined));
 
       PopupMenuItem date = PopupMenuItem(
@@ -110,6 +117,10 @@ class ChatPage extends StatelessWidget {
                                 icon: const Icon(Icons.star_outline)),
                             PopupMenuButton(
                                 splashRadius: 20,
+                                onSelected: (value) => value == 0
+                                    ? Get.to(
+                                        () => ChatMediaPage(homeItem: homeItem))
+                                    : null,
                                 itemBuilder: (context) => popupItems())
                           ],
                     focus: titleFocus)),

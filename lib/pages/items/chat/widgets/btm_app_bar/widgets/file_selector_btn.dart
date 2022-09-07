@@ -37,15 +37,13 @@ class ChatBottomFileSelectorButton extends StatelessWidget {
             (element) => element.toString() == 'MusicFormat.$type');
 
         if (imageFormat != null) {
-          messages.insert(
-              0,
-              ChatImage(
-                  path: selectedFile.path!,
-                  location: ItemLocation(
-                      inDirectory: homeItem.location.inDirectory,
-                      index: homeItem.location.index,
-                      itemIndex: messages.length),
-                  dateTime: DateTime.now()));
+          messages.add(ChatImage(
+              path: selectedFile.path!,
+              location: ItemLocation(
+                  inDirectory: homeItem.location.inDirectory,
+                  index: homeItem.location.index,
+                  itemIndex: messages.length),
+              dateTime: DateTime.now()));
           chat.copyWith(messages: messages);
           Controller.to.setData();
         } else if (musicFormat != null) {
@@ -67,101 +65,30 @@ class ChatBottomFileSelectorButton extends StatelessWidget {
             default:
           }
 
-          messages.insert(
-              0,
-              ChatVoice(
-                  name: name,
-                  codec: codec,
-                  path: selectedFile.path!,
-                  location: ItemLocation(
-                      inDirectory: homeItem.location.inDirectory,
-                      index: homeItem.location.index,
-                      itemIndex: messages.length),
-                  dateTime: DateTime.now()));
+          messages.add(ChatVoice(
+              name: name,
+              codec: codec,
+              path: selectedFile.path!,
+              location: ItemLocation(
+                  inDirectory: homeItem.location.inDirectory,
+                  index: homeItem.location.index,
+                  itemIndex: messages.length),
+              dateTime: DateTime.now()));
           chat.copyWith(messages: messages);
           Controller.to.setData();
         } else {
-          messages.insert(
-              0,
-              ChatFile(
-                  name: name,
-                  path: selectedFile.path!,
-                  location: ItemLocation(
-                      inDirectory: homeItem.location.inDirectory,
-                      index: homeItem.location.index,
-                      itemIndex: messages.length),
-                  dateTime: DateTime.now()));
+          messages.add(ChatFile(
+              name: name,
+              path: selectedFile.path!,
+              location: ItemLocation(
+                  inDirectory: homeItem.location.inDirectory,
+                  index: homeItem.location.index,
+                  itemIndex: messages.length),
+              dateTime: DateTime.now()));
           chat.copyWith(messages: messages);
           Controller.to.setData();
         }
-
-        // final File file = File('${result.files.single.path}');
-        // final String path = '${dir.path}/${result.files.single.name}';
-        // await file.copy(path);
-
-        // if (imageFormat != null) {
-        //   Controller.to.addChatImage(OldChatImage(
-        //       path: path,
-        //       dateTime: dateTime,
-        //       location: ItemLocation(
-        //           inDirectory: Controller.to.selectedFolder.value,
-        //           index: Controller.to.selectedElementIndex.value,
-        //           itemIndex: Controller
-        //               .to
-        //               .all[Controller.to.selectedFolder.value]
-        //               .childrens[Controller.to.selectedElementIndex.value]
-        //               .child
-        //               .value
-        //               .messages
-        //               .length)));
-        // } else if (musicFormat != null) {
-        //   switch (musicFormat) {
-        //     case MusicFormat.webm:
-        //       break;
-        //     case MusicFormat.flac:
-        //       break;
-        //     case MusicFormat.mp3:
-        //       break;
-        //     case MusicFormat.ogg:
-        //       break;
-        //     case MusicFormat.wav:
-        //       break;
-        //     default:
       }
-      // Controller.to.addChatVoice(OldChatVoice(
-      //     name: name,
-      //     path: path,
-      //     codec: codec,
-      //     dateTime: dateTime,
-      //     location: ItemLocation(
-      //         inDirectory: Controller.to.selectedFolder.value,
-      //         index: Controller.to.selectedElementIndex.value,
-      //         itemIndex: Controller
-      //             .to
-      //             .all[Controller.to.selectedFolder.value]
-      //             .childrens[Controller.to.selectedElementIndex.value]
-      //             .child
-      //             .value
-      //             .messages
-      //             .length)));
-      // } else {
-      //   Controller.to.addChatFile(OldChatFile(
-      //       name: name,
-      //       path: path,
-      //       location: ItemLocation(
-      //           inDirectory: Controller.to.selectedFolder.value,
-      //           index: Controller.to.selectedElementIndex.value,
-      //           itemIndex: Controller
-      //               .to
-      //               .all[Controller.to.selectedFolder.value]
-      //               .childrens[Controller.to.selectedElementIndex.value]
-      //               .child
-      //               .value
-      //               .messages
-      //               .length),
-      //       dateTime: dateTime));
-      // }
-      // }
     }
 
     return IconButton(

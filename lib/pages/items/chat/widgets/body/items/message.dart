@@ -19,6 +19,7 @@ class MessageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ItemDecoration(
+        index: message.location.itemIndex!,
         color: message.color,
         elevation: elevation,
         padding: EdgeInsets.zero,

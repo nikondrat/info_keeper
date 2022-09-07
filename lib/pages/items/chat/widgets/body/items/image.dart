@@ -13,6 +13,7 @@ class ChatImageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ItemDecoration(
+        index: image.location.itemIndex!,
         elevation: elevation,
         padding: EdgeInsets.zero,
         dateTime: image.dateTime,
@@ -20,7 +21,7 @@ class ChatImageWidget extends StatelessWidget {
           onTap: () =>
               context.pushTransparentRoute(ChatImageInFullscreen(image: image)),
           child: Hero(
-              tag: image.path,
+              tag: image.dateTime,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(6),
                 child: Image.file(
@@ -48,7 +49,7 @@ class ChatImageInFullscreen extends StatelessWidget {
       direction: DismissiblePageDismissDirection.multi,
       isFullScreen: false,
       child: Hero(
-        tag: image.path,
+        tag: image.dateTime,
         child: Image.file(
           File(image.path),
           fit: BoxFit.fitWidth,

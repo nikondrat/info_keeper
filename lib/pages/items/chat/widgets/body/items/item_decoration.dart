@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/pages/items/chat/chat_controller.dart';
 import 'package:info_keeper/themes/default/default.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 
 class ItemDecoration extends StatelessWidget {
+  final int index;
   final Widget child;
   final int? color;
   final double elevation;
@@ -12,6 +14,7 @@ class ItemDecoration extends StatelessWidget {
   final EdgeInsets? padding;
   const ItemDecoration(
       {Key? key,
+      required this.index,
       this.color,
       this.elevation = 0,
       required this.child,
@@ -31,30 +34,35 @@ class ItemDecoration extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       elevation: elevation,
-      child: Container(
-          margin: const EdgeInsets.symmetric(vertical: 2),
-          padding: padding ?? const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-              color: messageColors[color ?? defaultColor],
-              borderRadius: BorderRadius.circular(6)),
-          child: Obx(() => controller.showDate.value
-              ? Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    child,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        padding != null
-                            ? Padding(
-                                padding: const EdgeInsets.all(8),
-                                child: AutoSizeText('$hour:$minute'))
-                            : AutoSizeText('$hour:$minute')
-                      ],
-                    ),
-                  ],
-                )
-              : child)),
+      child: AutoScrollTag(
+        index: index,
+        key: ValueKey(index),
+        controller: controller.autoScrollController,
+        child: Container(
+            margin: const EdgeInsets.symmetric(vertical: 2),
+            padding: padding ?? const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+                color: messageColors[color ?? defaultColor],
+                borderRadius: BorderRadius.circular(6)),
+            child: Obx(() => controller.showDate.value
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      child,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          padding != null
+                              ? Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: AutoSizeText('$hour:$minute'))
+                              : AutoSizeText('$hour:$minute')
+                        ],
+                      ),
+                    ],
+                  )
+                : child)),
+      ),
     );
   }
 }

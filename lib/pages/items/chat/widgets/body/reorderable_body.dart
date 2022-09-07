@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home/chat/chat.dart';
+import 'package:info_keeper/pages/items/chat/chat_controller.dart';
 import 'package:info_keeper/pages/items/chat/widgets/body/items/item.dart';
 
 class ChatReorderableBody extends StatelessWidget {
@@ -12,9 +13,11 @@ class ChatReorderableBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final RxList messages = chat.messages;
+    final ChatController chatController = Get.find();
+    RxList messages = chat.messages.reversed.toList().obs;
 
     return Obx(() => ReorderableListView.builder(
+        scrollController: chatController.autoScrollController,
         proxyDecorator: (child, index, animation) {
           final double animValue = Curves.easeInOut.transform(animation.value);
           final double elevation = lerpDouble(0, 6, animValue)!;
@@ -23,7 +26,6 @@ class ChatReorderableBody extends StatelessWidget {
             animation: animation,
             builder: (context, child) => ChatItem(
                 key: Key('$index'),
-                index: index,
                 elevation: elevation,
                 message: messages[index]),
           );
@@ -33,8 +35,8 @@ class ChatReorderableBody extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-        itemBuilder: (context, index) => ChatItem(
-            key: Key('$index'), index: index, message: messages[index]),
+        itemBuilder: (context, index) =>
+            ChatItem(key: Key('$index'), message: messages[index]),
         onReorder: (oldIndex, newIndex) {
           if (oldIndex < newIndex) {
             newIndex -= 1;

@@ -11,6 +11,7 @@ class ChatFileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ItemDecoration(
+        index: file.location.itemIndex!,
         dateTime: file.dateTime,
         elevation: elevation,
         child: GestureDetector(

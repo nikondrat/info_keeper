@@ -16,7 +16,6 @@ class ChatSearchBody extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           itemBuilder: (context, index) => ChatItem(
-              index: index,
               message: controller.searchItems[index],
               searchQuery: controller.searchController.text),
         ));

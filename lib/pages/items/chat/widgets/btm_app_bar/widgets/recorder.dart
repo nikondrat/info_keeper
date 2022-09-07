@@ -41,15 +41,13 @@ class ChatBottomRecorder extends StatelessWidget {
 
       RxList messages = homeItem.child.messages;
 
-      messages.insert(
-          0,
-          ChatVoice(
-              path: path,
-              location: ItemLocation(
-                  inDirectory: homeItem.location.inDirectory,
-                  index: homeItem.location.index,
-                  itemIndex: messages.length),
-              dateTime: DateTime.now()));
+      messages.add(ChatVoice(
+          path: path,
+          location: ItemLocation(
+              inDirectory: homeItem.location.inDirectory,
+              index: homeItem.location.index,
+              itemIndex: messages.length),
+          dateTime: DateTime.now()));
       homeItem.child.copyWith(messages: messages);
       Controller.to.setData();
     }

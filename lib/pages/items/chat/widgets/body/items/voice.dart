@@ -43,6 +43,7 @@ class ChatVoiceWidget extends StatelessWidget {
     }
 
     return ItemDecoration(
+        index: voice.location.itemIndex!,
         dateTime: voice.dateTime,
         elevation: elevation,
         child: Row(
