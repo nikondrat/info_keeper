@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home/chat/chat.dart';
 import 'package:info_keeper/model/types/home/chat/items/message.dart';
 import 'package:info_keeper/model/types/home_item.dart';
@@ -22,16 +21,17 @@ class ChatBottomSendButton extends StatelessWidget {
       builder: (controller) => IconButton(
           splashRadius: 20,
           onPressed: () {
-            messages.add(Message(
-                title: controller.titleController.text,
-                location: ItemLocation(
-                    inDirectory: homeItem.location.inDirectory,
-                    index: homeItem.location.index,
-                    itemIndex: messages.length),
-                content: controller.messageController.text,
-                dateTime: DateTime.now()));
+            messages.insert(
+                0,
+                Message(
+                    title: controller.titleController.text,
+                    location: ItemLocation(
+                        inDirectory: homeItem.location.inDirectory,
+                        index: homeItem.location.index,
+                        itemIndex: messages.length),
+                    content: controller.messageController.text,
+                    dateTime: DateTime.now()));
             chat.copyWith(messages: messages);
-            Controller.to.setData();
 
             controller.isShowTitleTextField.value = false;
             controller.titleController.clear();

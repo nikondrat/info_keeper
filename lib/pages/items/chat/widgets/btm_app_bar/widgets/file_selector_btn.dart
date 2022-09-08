@@ -2,7 +2,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:get/get.dart';
-import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home/chat/chat.dart';
 import 'package:info_keeper/model/types/home/chat/items/file.dart';
 import 'package:info_keeper/model/types/home/chat/items/image.dart';
@@ -24,7 +23,7 @@ class ChatBottomFileSelectorButton extends StatelessWidget {
     Chat chat = homeItem.child;
     RxList messages = chat.messages;
 
-    void pickFiles() async {
+    pickFiles() async {
       FilePickerResult? result = await FilePicker.platform.pickFiles();
       if (result != null) {
         PlatformFile selectedFile = result.files.single;
@@ -37,15 +36,16 @@ class ChatBottomFileSelectorButton extends StatelessWidget {
             (element) => element.toString() == 'MusicFormat.$type');
 
         if (imageFormat != null) {
-          messages.add(ChatImage(
-              path: selectedFile.path!,
-              location: ItemLocation(
-                  inDirectory: homeItem.location.inDirectory,
-                  index: homeItem.location.index,
-                  itemIndex: messages.length),
-              dateTime: DateTime.now()));
+          messages.insert(
+              0,
+              ChatImage(
+                  path: selectedFile.path!,
+                  location: ItemLocation(
+                      inDirectory: homeItem.location.inDirectory,
+                      index: homeItem.location.index,
+                      itemIndex: messages.length),
+                  dateTime: DateTime.now()));
           chat.copyWith(messages: messages);
-          Controller.to.setData();
         } else if (musicFormat != null) {
           Codec codec = Codec.aacADTS;
 
@@ -65,35 +65,38 @@ class ChatBottomFileSelectorButton extends StatelessWidget {
             default:
           }
 
-          messages.add(ChatVoice(
-              name: name,
-              codec: codec,
-              path: selectedFile.path!,
-              location: ItemLocation(
-                  inDirectory: homeItem.location.inDirectory,
-                  index: homeItem.location.index,
-                  itemIndex: messages.length),
-              dateTime: DateTime.now()));
+          messages.insert(
+              0,
+              ChatVoice(
+                  name: name,
+                  codec: codec,
+                  path: selectedFile.path!,
+                  location: ItemLocation(
+                      inDirectory: homeItem.location.inDirectory,
+                      index: homeItem.location.index,
+                      itemIndex: messages.length),
+                  dateTime: DateTime.now()));
           chat.copyWith(messages: messages);
-          Controller.to.setData();
         } else {
-          messages.add(ChatFile(
-              name: name,
-              path: selectedFile.path!,
-              location: ItemLocation(
-                  inDirectory: homeItem.location.inDirectory,
-                  index: homeItem.location.index,
-                  itemIndex: messages.length),
-              dateTime: DateTime.now()));
+          messages.insert(
+              0,
+              ChatFile(
+                  name: name,
+                  path: selectedFile.path!,
+                  location: ItemLocation(
+                      inDirectory: homeItem.location.inDirectory,
+                      index: homeItem.location.index,
+                      itemIndex: messages.length),
+                  dateTime: DateTime.now()));
           chat.copyWith(messages: messages);
-          Controller.to.setData();
         }
       }
     }
 
     return IconButton(
-        splashRadius: 20,
-        onPressed: pickFiles,
-        icon: const Icon(Icons.attach_file));
+      splashRadius: 20,
+      onPressed: pickFiles,
+      icon: const Icon(Icons.attach_file),
+    );
   }
 }

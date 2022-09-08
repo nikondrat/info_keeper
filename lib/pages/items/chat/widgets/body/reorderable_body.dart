@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home/chat/chat.dart';
 import 'package:info_keeper/pages/items/chat/chat_controller.dart';
 import 'package:info_keeper/pages/items/chat/widgets/body/items/item.dart';
@@ -14,7 +13,7 @@ class ChatReorderableBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ChatController chatController = Get.find();
-    RxList messages = chat.messages.reversed.toList().obs;
+    RxList messages = chat.messages;
 
     return Obx(() => ReorderableListView.builder(
         scrollController: chatController.autoScrollController,
@@ -35,17 +34,18 @@ class ChatReorderableBody extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-        itemBuilder: (context, index) =>
-            ChatItem(key: Key('$index'), message: messages[index]),
+        itemBuilder: (context, index) {
+          messages[index].location.itemIndex = index;
+
+          return ChatItem(key: Key('$index'), message: messages[index]);
+        },
         onReorder: (oldIndex, newIndex) {
           if (oldIndex < newIndex) {
             newIndex -= 1;
           }
           final message = messages.removeAt(oldIndex);
           messages.insert(newIndex, message);
-          message.location.itemIndex = newIndex;
           chat.copyWith(messages: messages);
-          Controller.to.setData();
         }));
   }
 }

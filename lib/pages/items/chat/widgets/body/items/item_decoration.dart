@@ -44,6 +44,14 @@ class ItemDecoration extends StatelessWidget {
             decoration: BoxDecoration(
                 color: messageColors[color ?? defaultColor],
                 borderRadius: BorderRadius.circular(6)),
+
+            // index:
+
+            // child: Center(
+            //   child: Text('$index'),
+            // ))
+
+            // body:
             child: Obx(() => controller.showDate.value
                 ? Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,

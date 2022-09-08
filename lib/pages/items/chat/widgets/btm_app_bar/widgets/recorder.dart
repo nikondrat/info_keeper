@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:get/get.dart';
-import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home/chat/items/voice.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/model/types/item_location.dart';
@@ -41,15 +40,16 @@ class ChatBottomRecorder extends StatelessWidget {
 
       RxList messages = homeItem.child.messages;
 
-      messages.add(ChatVoice(
-          path: path,
-          location: ItemLocation(
-              inDirectory: homeItem.location.inDirectory,
-              index: homeItem.location.index,
-              itemIndex: messages.length),
-          dateTime: DateTime.now()));
+      messages.insert(
+          0,
+          ChatVoice(
+              path: path,
+              location: ItemLocation(
+                  inDirectory: homeItem.location.inDirectory,
+                  index: homeItem.location.index,
+                  itemIndex: messages.length),
+              dateTime: DateTime.now()));
       homeItem.child.copyWith(messages: messages);
-      Controller.to.setData();
     }
 
     return Obx(() => IconButton(

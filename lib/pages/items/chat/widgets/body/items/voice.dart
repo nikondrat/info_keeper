@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
-import 'package:info_keeper/model/controller.dart';
+import 'package:get/get.dart';
 import 'package:info_keeper/model/types/home/chat/items/voice.dart';
 import 'package:info_keeper/pages/items/chat/widgets/body/items/item_decoration.dart';
 
@@ -17,6 +17,12 @@ class ChatVoiceWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     FlutterSoundPlayer player = FlutterSoundPlayer();
+    final isPlay = false.obs;
+
+    void close() async {
+      await player.closePlayer();
+      isPlay.value = false;
+    }
 
     void play() async {
       await player.openPlayer().then((value) {
@@ -24,22 +30,11 @@ class ChatVoiceWidget extends StatelessWidget {
             codec: voice.codec,
             fromURI: voice.path,
             whenFinished: () {
-              voice.isPlay = false;
-              voice.copyWith(isPlay: voice.isPlay);
-              Controller.to.setData();
+              isPlay.value = false;
               player.closePlayer();
             });
-        voice.isPlay = true;
-        voice.copyWith(isPlay: voice.isPlay);
-        Controller.to.setData();
+        isPlay.value = true;
       });
-    }
-
-    void close() {
-      player.closePlayer();
-      voice.isPlay = false;
-      voice.copyWith(isPlay: voice.isPlay);
-      Controller.to.setData();
     }
 
     return ItemDecoration(
@@ -48,10 +43,12 @@ class ChatVoiceWidget extends StatelessWidget {
         elevation: elevation,
         child: Row(
           children: [
-            IconButton(
-                splashRadius: 20,
-                onPressed: voice.isPlay ? close : play,
-                icon: Icon(voice.isPlay ? Icons.pause : Icons.play_arrow)),
+            Obx(
+              () => IconButton(
+                  splashRadius: 20,
+                  onPressed: isPlay.value ? close : play,
+                  icon: Icon(isPlay.value ? Icons.pause : Icons.play_arrow)),
+            ),
             Expanded(child: AutoSizeText(voice.name))
           ],
         ));

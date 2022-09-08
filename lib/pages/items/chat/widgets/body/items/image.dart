@@ -18,8 +18,9 @@ class ChatImageWidget extends StatelessWidget {
         padding: EdgeInsets.zero,
         dateTime: image.dateTime,
         child: GestureDetector(
-          onTap: () =>
-              context.pushTransparentRoute(ChatImageInFullscreen(image: image)),
+          onTap: () {
+            context.pushTransparentRoute(ChatImageInFullscreen(image: image));
+          },
           child: Hero(
               tag: image.dateTime,
               child: ClipRRect(

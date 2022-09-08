@@ -98,6 +98,7 @@ class ChatPage extends StatelessWidget {
                       if (controller.isSearch.value) {
                         controller.isSearch.value = !controller.isSearch.value;
                         controller.searchItems.clear();
+                        controller.searchController.clear();
                       } else {
                         homeItem.copyWith(name: titleController.text);
                         Get.back();

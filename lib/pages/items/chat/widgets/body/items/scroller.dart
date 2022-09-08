@@ -17,7 +17,6 @@ class ChatScrollerItem extends StatelessWidget {
     return GestureDetector(
         onTap: () {
           onTap != null ? onTap!() : null;
-          print(index);
           chatController.autoScrollController
               .scrollToIndex(index, preferPosition: AutoScrollPosition.middle);
         },

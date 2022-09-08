@@ -1,4 +1,5 @@
 import 'package:flutter_sound/flutter_sound.dart';
+import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/model/types/item_location.dart';
@@ -12,7 +13,6 @@ class ChatVoice {
   Codec codec;
   bool isLocked;
   bool isUnlocked;
-  bool isPlay;
 
   ChatVoice(
       {this.name = '',
@@ -21,19 +21,15 @@ class ChatVoice {
       required this.location,
       this.isLocked = false,
       this.isUnlocked = false,
-      this.isPlay = false,
       this.codec = Codec.aacADTS,
       required this.dateTime});
 
   ChatVoice copyWith({
     String? path,
-    bool? isPlay,
+    RxBool? isPlay,
   }) {
     ChatVoice voice = ChatVoice(
-        path: path ?? this.path,
-        isPlay: isPlay ?? this.isPlay,
-        location: location,
-        dateTime: dateTime);
+        path: path ?? this.path, location: location, dateTime: dateTime);
     return Controller.to.all[location.inDirectory].childrens[location.index]
         .child.messages[location.itemIndex] = voice;
   }
@@ -44,7 +40,6 @@ class ChatVoice {
         location = ItemLocation.fromJson(json['location']),
         dateTime = DateTime.parse(json['dateTime']),
         isLocked = json['isLocked'],
-        isPlay = json['isPlay'],
         isUnlocked = json['isUnlocked'],
         codec = Codec.values.elementAt(json['codec']),
         path = json['path'];
@@ -55,7 +50,6 @@ class ChatVoice {
         'location': location.toJson(),
         'dateTime': dateTime.toString(),
         'isLocked': isLocked,
-        'isPlay': isPlay,
         'isUnlocked': isUnlocked,
         'path': path,
         'codec': codec.index

@@ -4,7 +4,6 @@ import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/model/types/home/chat/chat.dart';
 import 'package:info_keeper/model/types/home/chat/items/message.dart';
 import 'package:info_keeper/pages/items/chat/widgets/body/items/item.dart';
-import 'package:info_keeper/pages/items/chat/widgets/body/items/scroller.dart';
 
 class ChatTitlesPage extends StatelessWidget {
   final Chat chat;

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/types/home_item.dart';
+import 'package:info_keeper/pages/items/chat/pages/media/body/files.dart';
 import 'package:info_keeper/pages/items/chat/pages/media/body/media.dart';
+import 'package:info_keeper/pages/items/chat/pages/media/body/sounds.dart';
 
 class ChatMediaPage extends StatefulWidget {
   final HomeItem homeItem;
@@ -55,9 +57,9 @@ class _ChatMediaPageState extends State<ChatMediaPage>
           controller: tabController,
           children: [
             ChatMediaBody(chat: widget.homeItem.child),
-            Text('Files'),
-            Text('Links'),
-            Text('Sounds'),
+            ChatMediaFiles(chat: widget.homeItem.child),
+            const Text('Links'),
+            ChatMediaSounds(chat: widget.homeItem.child)
           ]),
     );
   }

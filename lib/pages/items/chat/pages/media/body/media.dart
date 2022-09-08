@@ -5,9 +5,7 @@ import 'package:get/get.dart';
 import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/model/types/home/chat/chat.dart';
 import 'package:info_keeper/model/types/home/chat/items/image.dart';
-import 'package:info_keeper/pages/items/chat/chat_controller.dart';
 import 'package:info_keeper/pages/items/chat/widgets/body/items/scroller.dart';
-import 'package:scroll_to_index/scroll_to_index.dart';
 
 class ChatMediaBody extends StatelessWidget {
   final Chat chat;
@@ -19,7 +17,7 @@ class ChatMediaBody extends StatelessWidget {
 
     for (int i = 0; i < chat.messages.length; i++) {
       if (chat.messages[i].type == AllType.chatImage) {
-        images.add(chat.messages[i]);
+        images.insert(0, chat.messages[i]);
       }
     }
 
@@ -31,9 +29,12 @@ class ChatMediaBody extends StatelessWidget {
       itemBuilder: (context, index) => ChatScrollerItem(
         index: images[index].location.itemIndex!,
         onTap: () => Get.back(),
-        child: Image.file(
-          File(images[index].path),
-          fit: BoxFit.cover,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(6),
+          child: Image.file(
+            File(images[index].path),
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );

@@ -17,12 +17,13 @@ class Chat {
       this.backgroundImage = '',
       required this.messages});
 
-  Chat copyWith({RxList? messages, String? backgroundImage}) {
+  copyWith({RxList? messages, String? backgroundImage}) {
     Chat chat = Chat(
-        messages: messages ?? this.messages,
+        messages: messages ?? this.messages.reversed.toList().obs,
         backgroundImage: backgroundImage ?? this.backgroundImage);
-    return Controller.to.all[Controller.to.selectedFolder.value]
+    Controller.to.all[Controller.to.selectedFolder.value]
         .childrens[Controller.to.selectedElementIndex.value].child = chat;
+    return Controller.to.setData();
   }
 
   Chat.fromJson(Map<String, dynamic> json)
