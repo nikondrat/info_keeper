@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_parsed_text/flutter_parsed_text.dart';
 import 'package:info_keeper/model/types/home/chat/items/message.dart';
 import 'package:info_keeper/pages/items/chat/widgets/body/items/item_decoration.dart';
 import 'package:info_keeper/pages/items/chat/widgets/body/items/menu/menu.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:substring_highlight/substring_highlight.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class MessageWidget extends StatelessWidget {
   final Message message;
@@ -51,8 +54,18 @@ class MessageWidget extends StatelessWidget {
                     ])
               : Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: SubstringHighlight(
-                      text: message.content, term: searchQuery),
+                  child: searchQuery.isEmpty
+                      ? ParsedText(
+                          text: message.content,
+                          parse: [
+                            MatchText(
+                                type: ParsedType.URL,
+                                onTap: (url) => launchUrlString(url),
+                                style: TextStyle(color: Colors.blue))
+                          ],
+                        )
+                      : SubstringHighlight(
+                          text: message.content, term: searchQuery),
                 ),
         ));
   }

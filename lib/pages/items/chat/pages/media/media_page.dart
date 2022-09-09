@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/pages/items/chat/pages/media/body/files.dart';
+import 'package:info_keeper/pages/items/chat/pages/media/body/links.dart';
 import 'package:info_keeper/pages/items/chat/pages/media/body/media.dart';
 import 'package:info_keeper/pages/items/chat/pages/media/body/sounds.dart';
 
@@ -58,7 +59,7 @@ class _ChatMediaPageState extends State<ChatMediaPage>
           children: [
             ChatMediaBody(chat: widget.homeItem.child),
             ChatMediaFiles(chat: widget.homeItem.child),
-            const Text('Links'),
+            ChatMediaLinks(chat: widget.homeItem.child),
             ChatMediaSounds(chat: widget.homeItem.child)
           ]),
     );

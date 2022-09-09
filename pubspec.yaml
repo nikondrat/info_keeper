@@ -39,6 +39,8 @@ dependencies:
   auto_size_text: ^3.0.0
   dismissible_page: ^0.7.3
   modal_bottom_sheet: ^2.1.0
+  flutter_parsed_text: ^2.2.1
+  url_launcher: ^6.1.5
   # audio_wave: ^0.1.4
   # expandable: ^5.0.1
   # loading_animation_widget: ^1.2.0+3
