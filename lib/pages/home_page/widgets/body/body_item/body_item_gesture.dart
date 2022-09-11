@@ -4,9 +4,9 @@ import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home/home.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
-import 'package:info_keeper/pages/items/chat/chat_page.dart';
-import 'package:info_keeper/pages/items/storage_file/storage_file_page.dart';
-import 'package:info_keeper/pages/items/task/task_page.dart';
+import 'package:info_keeper/pages/home_page/items/chat/chat_page.dart';
+import 'package:info_keeper/pages/home_page/items/storage_file/storage_file_page.dart';
+import 'package:info_keeper/pages/home_page/items/task/task_page.dart';
 
 class HomeBodyItemGesture extends StatelessWidget {
   final int homeItemIndex;

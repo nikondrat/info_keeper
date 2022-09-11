@@ -5,7 +5,7 @@ import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/pages/home_page/widgets/body/body_item/body_item_child_body.dart';
 import 'package:info_keeper/pages/home_page/widgets/body/body_item/body_item_decoration.dart';
 import 'package:info_keeper/pages/home_page/widgets/body/body_item/body_item_gesture.dart';
-import 'package:info_keeper/pages/items/task/widgets/todo.dart';
+import 'package:info_keeper/pages/home_page/items/task/widgets/todo.dart';
 
 class TodoItem extends StatelessWidget {
   final int homeItemIndex;

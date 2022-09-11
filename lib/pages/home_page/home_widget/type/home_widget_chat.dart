@@ -4,7 +4,7 @@ import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/model/types/item_location.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
-import 'package:info_keeper/pages/items/chat/chat_page.dart';
+import 'package:info_keeper/pages/home_page/items/chat/chat_page.dart';
 import 'package:info_keeper/pages/trash_page/trash_element.dart';
 import 'package:substring_highlight/substring_highlight.dart';
 

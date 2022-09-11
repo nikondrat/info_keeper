@@ -4,10 +4,10 @@ import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/pages/home_page/home_widget/home_widget.dart';
-import 'package:info_keeper/pages/items/old_chat_page/widgets/type/chat_image.dart';
-import 'package:info_keeper/pages/items/old_chat_page/widgets/type/chat_message.dart';
-import 'package:info_keeper/pages/items/old_chat_page/widgets/type/chat_file.dart';
-import 'package:info_keeper/pages/items/old_chat_page/widgets/type/chat_voice.dart';
+import 'package:info_keeper/pages/home_page/items/old_chat_page/widgets/type/chat_image.dart';
+import 'package:info_keeper/pages/home_page/items/old_chat_page/widgets/type/chat_message.dart';
+import 'package:info_keeper/pages/home_page/items/old_chat_page/widgets/type/chat_file.dart';
+import 'package:info_keeper/pages/home_page/items/old_chat_page/widgets/type/chat_voice.dart';
 
 class TrashPage extends StatelessWidget {
   const TrashPage({Key? key}) : super(key: key);

@@ -9,9 +9,9 @@ import 'package:info_keeper/model/types/item_location.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
 import 'package:info_keeper/pages/home_page/widgets/fab_menu/fab.dart';
 import 'package:info_keeper/pages/home_page/widgets/alert_dialog.dart';
-import 'package:info_keeper/pages/items/audio/audio_page.dart';
-import 'package:info_keeper/pages/items/storage_file/storage_file_page.dart';
-import 'package:info_keeper/pages/items/task/task_page.dart';
+import 'package:info_keeper/pages/home_page/items/audio/audio_page.dart';
+import 'package:info_keeper/pages/home_page/items/storage_file/storage_file_page.dart';
+import 'package:info_keeper/pages/home_page/items/task/task_page.dart';
 
 class HomeFloatButtons extends StatefulWidget {
   const HomeFloatButtons({Key? key}) : super(key: key);
