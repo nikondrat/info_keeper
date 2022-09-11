@@ -19,6 +19,23 @@ class ChatSearchTitle extends StatelessWidget {
       }
     }
 
+    search(String text) {
+      if (text.isNotEmpty) {
+        for (var item in items) {
+          if (item.title.toLowerCase().contains(text) ||
+              item.content.toLowerCase().contains(text)) {
+            return controller.searchItems.add(item);
+          }
+        }
+      } else {
+        controller.searchItems.clear();
+      }
+    }
+
+    // if (controller.searchController.text.isNotEmpty) {
+    //   search(controller.searchController.text);
+    // }
+
     TextField titleTextField = TextField(
       controller: controller.searchController,
       cursorColor: Colors.black,
@@ -39,33 +56,28 @@ class ChatSearchTitle extends StatelessWidget {
           disabledBorder:
               OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(6))),
+      onEditingComplete: () {
+        search(controller.searchController.text);
+      },
       onChanged: (text) {
         controller.searchItems.clear();
-        if (text.isNotEmpty) {
-          for (var item in items) {
-            if (item.title.toLowerCase().contains(text) ||
-                item.content.toLowerCase().contains(text)) {
-              controller.searchItems.add(item);
-            }
-          }
-        } else {
-          controller.searchItems.clear();
-        }
+        search(text);
+      }
 
-        // for (int i = 0; i < messages.length; i++) {
-        //   if (messages[i].type == AllType.chatMessage) {
-        //     if (messages.contains(messages[i].content)) {
-        //       controller.searchItems.add(messages[i]);
-        //     }
-        //   }
-        // }
-        // print(controller.searchItems);
+      // for (int i = 0; i < messages.length; i++) {
+      //   if (messages[i].type == AllType.chatMessage) {
+      //     if (messages.contains(messages[i].content)) {
+      //       controller.searchItems.add(messages[i]);
+      //     }
+      //   }
+      // }
+      // print(controller.searchItems);
 
-        // if(messages. messages.contains(element)){}
-        // if (messages.contains(element.title)) {
-        //   controller.searchItems.add(element);
-        // }
-      },
+      // if(messages. messages.contains(element)){}
+      // if (messages.contains(element.title)) {
+      //   controller.searchItems.add(element);
+      // }
+      ,
       onSubmitted: (value) {
         // controller.text = value;
         // value.isNotEmpty ? change.value = false : null;

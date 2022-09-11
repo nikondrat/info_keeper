@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_parsed_text/flutter_parsed_text.dart';
+import 'package:get/get.dart';
 import 'package:info_keeper/model/types/home/chat/items/message.dart';
+import 'package:info_keeper/pages/items/chat/chat_controller.dart';
 import 'package:info_keeper/pages/items/chat/widgets/body/items/item_decoration.dart';
 import 'package:info_keeper/pages/items/chat/widgets/body/items/menu/menu.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:substring_highlight/substring_highlight.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class MessageWidget extends StatelessWidget {
@@ -54,18 +55,38 @@ class MessageWidget extends StatelessWidget {
                     ])
               : Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: searchQuery.isEmpty
-                      ? ParsedText(
-                          text: message.content,
-                          parse: [
-                            MatchText(
-                                type: ParsedType.URL,
-                                onTap: (url) => launchUrlString(url),
-                                style: TextStyle(color: Colors.blue))
-                          ],
-                        )
-                      : SubstringHighlight(
-                          text: message.content, term: searchQuery),
+                  child: ParsedText(
+                    text: message.content,
+                    style: const TextStyle(color: Colors.black),
+                    parse: [
+                      MatchText(
+                          pattern: '([$searchQuery])',
+                          type: ParsedType.CUSTOM,
+                          onTap: (text) => null,
+                          style: const TextStyle(color: Colors.blue)),
+                      MatchText(
+                          type: ParsedType.URL,
+                          onTap: (url) => launchUrlString(url),
+                          style: const TextStyle(color: Colors.blue)),
+                      MatchText(
+                          type: ParsedType.PHONE,
+                          onTap: (phone) => launchUrlString('tel:$phone'),
+                          style: const TextStyle(color: Colors.blue)),
+                      MatchText(
+                          type: ParsedType.EMAIL,
+                          onTap: (email) => null,
+                          style: const TextStyle(color: Colors.blue)),
+                      MatchText(
+                          pattern: r"(@[^:]+)",
+                          type: ParsedType.CUSTOM,
+                          onTap: (hashtag) {
+                            final ChatController controller = Get.find();
+                            controller.isSearch.value = true;
+                            controller.searchController.text = hashtag;
+                          },
+                          style: const TextStyle(color: Colors.blue))
+                    ],
+                  ),
                 ),
         ));
   }
