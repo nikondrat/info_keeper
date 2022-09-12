@@ -97,7 +97,7 @@ class HomeBottomMenu extends StatelessWidget {
                 Icons.local_fire_department_outlined,
               ),
             ),
-            Notifications(name: item.name, locElement: item.location),
+            Notifications(homeItem: item),
             IconButton(
                 splashRadius: 20,
                 onPressed: () {

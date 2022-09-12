@@ -21,7 +21,9 @@ class FolderItemMenu extends StatelessWidget {
                       .to.all[Controller.to.selectedFolder.value].childrens
                       .removeAt(Controller.to.selectedElementIndex.value);
                   Controller.to.selectedFolder.value = index;
-                  Controller.to.add(data);
+                  Controller
+                      .to.all[Controller.to.selectedFolder.value].childrens
+                      .add(data);
                   Controller.to.selectedFolder.value = index;
                   Navigator.pop(context);
                 },
@@ -34,7 +36,10 @@ class FolderItemMenu extends StatelessWidget {
                   .all[Controller.to.selectedFolder.value]
                   .childrens[Controller.to.selectedElementIndex.value];
 
-              Controller.to.addLink(element, index);
+              element.isLink = true;
+
+              Controller.to.all[index].childrens.add(element);
+
               Controller.to.selectedFolder.value = index;
               Navigator.pop(context);
             },

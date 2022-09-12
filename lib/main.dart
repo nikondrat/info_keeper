@@ -20,9 +20,9 @@ void main(List<String> args) async {
   // await clearData();
   await initData();
   if (Platform.isAndroid || Platform.isIOS) {
+    await notificationInit();
     await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform);
-    await notificationInit();
   }
 
   runApp(const MyApp());

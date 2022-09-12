@@ -3,12 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home/chat/old_chat.dart';
-import 'package:info_keeper/model/types/item_location.dart';
 import 'package:info_keeper/pages/home_page/items/old_chat_page/chat_history_page.dart';
 import 'package:info_keeper/pages/home_page/items/old_chat_page/widgets/message_menu/chat_menu_item.dart';
 import 'package:info_keeper/pages/home_page/items/old_chat_page/widgets/message_menu/chat_message_full_screen.dart';
 import 'package:info_keeper/pages/vault_page/vault_page.dart';
-import 'package:info_keeper/widgets/notifications.dart';
 
 class ChatPageMenu extends StatelessWidget {
   final BoxConstraints constraints;
@@ -290,22 +288,22 @@ class ChatPageMenu extends StatelessWidget {
                 },
                 icon: const Icon(Icons.lock_outline),
                 text: 'Lock message'),
-            Notifications(
-              name: Controller.to.all[Controller.to.selectedFolder.value]
-                  .childrens[Controller.to.selectedElementIndex.value].name,
-              messageText: Controller
-                  .to
-                  .all[Controller.to.selectedFolder.value]
-                  .childrens[Controller.to.selectedElementIndex.value]
-                  .child
-                  .value
-                  .messages[selectedMessage.value]
-                  .title,
-              locElement: ItemLocation(
-                  inDirectory: Controller.to.selectedFolder.value,
-                  itemIndex: selectedMessage.value,
-                  index: Controller.to.selectedElementIndex.value),
-            ),
+            // Notifications(
+            //   name: Controller.to.all[Controller.to.selectedFolder.value]
+            //       .childrens[Controller.to.selectedElementIndex.value].name,
+            //   messageText: Controller
+            //       .to
+            //       .all[Controller.to.selectedFolder.value]
+            //       .childrens[Controller.to.selectedElementIndex.value]
+            //       .child
+            //       .value
+            //       .messages[selectedMessage.value]
+            //       .title,
+            //   homeItem: ItemLocation(
+            //       inDirectory: Controller.to.selectedFolder.value,
+            //       itemIndex: selectedMessage.value,
+            //       index: Controller.to.selectedElementIndex.value),
+            // ),
             // ChatPageMenuItem(
             //     function: () {
             //       Navigator.pop(context);

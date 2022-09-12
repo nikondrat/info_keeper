@@ -2,22 +2,20 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
-import 'package:info_keeper/model/types/item_location.dart';
+import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 // ignore: depend_on_referenced_packages
 import 'package:timezone/timezone.dart' as tz;
 
 class Notifications extends StatefulWidget {
-  final String name;
   final String? messageText;
   final bool isStorageFile;
-  final ItemLocation locElement;
+  final HomeItem homeItem;
   const Notifications(
       {Key? key,
-      required this.locElement,
+      required this.homeItem,
       this.isStorageFile = false,
-      required this.name,
       this.messageText})
       : super(key: key);
 
@@ -53,19 +51,19 @@ class _NotificationsState extends State<Notifications> {
         selectedDate.minute);
 
     // await flutterLocalNotificationsPlugin.show(
-    //     widget.locElement.index,
-    //     widget.messageText == null ? 'Notification' : widget.name,
-    //     widget.messageText ?? widget.name,
+    //     widget.homeItem.location.index,
+    //     widget.messageText == null ? 'Notification' : widget.homeItem.name,
+    //     widget.messageText ?? widget.homeItem.name,
     //     platformChannelSpecifics,
-    //     payload: jsonEncode(widget.locElement));
+    //     payload: jsonEncode(widget.homeItem));
 
     await flutterLocalNotificationsPlugin.zonedSchedule(
-      widget.locElement.index,
-      widget.messageText == null ? 'Notification' : widget.name,
-      widget.messageText ?? widget.name,
+      widget.homeItem.location.index,
+      widget.messageText == null ? 'Notification' : widget.homeItem.name,
+      widget.messageText ?? widget.homeItem.name,
       tz.TZDateTime.from(selected, selected.location),
       platformChannelSpecifics,
-      payload: jsonEncode(widget.locElement),
+      payload: jsonEncode(widget.homeItem),
       androidAllowWhileIdle: true,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
@@ -100,7 +98,7 @@ class _NotificationsState extends State<Notifications> {
       );
     }
 
-    return widget.locElement.itemIndex != null
+    return widget.homeItem.location.itemIndex != null
         ? TextButton.icon(
             style: const ButtonStyle(
               alignment: Alignment.centerLeft,

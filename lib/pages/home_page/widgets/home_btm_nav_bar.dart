@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/item_location.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
 import 'package:info_keeper/pages/home_page/widgets/folders/folders.dart';
 import 'package:info_keeper/pages/vault_page/vault_page.dart';
-import 'package:info_keeper/widgets/notifications.dart';
 
 class HomePageBottomNavigationBar extends StatelessWidget {
   final bool isVault;
@@ -444,19 +442,19 @@ class HomePageBottomNavigationBar extends StatelessWidget {
                                 Icons.local_fire_department_outlined,
                               ),
                             ),
-                            Notifications(
-                              name: Controller
-                                  .to
-                                  .all[Controller.to.selectedFolder.value]
-                                  .childrens[
-                                      Controller.to.selectedElementIndex.value]
-                                  .name,
-                              locElement: ItemLocation(
-                                  inDirectory:
-                                      Controller.to.selectedFolder.value,
-                                  index:
-                                      Controller.to.selectedElementIndex.value),
-                            ),
+                            // Notifications(
+                            //   name: Controller
+                            //       .to
+                            //       .all[Controller.to.selectedFolder.value]
+                            //       .childrens[
+                            //           Controller.to.selectedElementIndex.value]
+                            //       .name,
+                            //   homeItem: ItemLocation(
+                            //       inDirectory:
+                            //           Controller.to.selectedFolder.value,
+                            //       index:
+                            //           Controller.to.selectedElementIndex.value),
+                            // ),
                             IconButton(
                                 splashRadius: 20,
                                 onPressed: () {
