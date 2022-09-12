@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/model/types/home/chat/chat.dart';
 import 'package:info_keeper/model/types/home/chat/items/image.dart';
-import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/scroller.dart';
+import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/widgets/scroller.dart';
 
 class ChatMediaBody extends StatelessWidget {
   final Chat chat;

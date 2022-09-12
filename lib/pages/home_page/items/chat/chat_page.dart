@@ -1,9 +1,9 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home/chat/chat.dart';
 import 'package:info_keeper/model/types/home_item.dart';
+import 'package:info_keeper/pages/home_page/home_controller.dart';
 import 'package:info_keeper/pages/home_page/items/chat/chat_controller.dart';
 import 'package:info_keeper/pages/home_page/items/chat/pages/media/media_page.dart';
 import 'package:info_keeper/pages/home_page/items/chat/pages/search/search_title.dart';
@@ -22,6 +22,7 @@ class ChatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ChatController controller = Get.put(ChatController());
+    final HomeController home = Get.find();
     Chat chat = homeItem.child;
 
     // title
@@ -65,7 +66,6 @@ class ChatPage extends StatelessWidget {
             if (result != null) {
               pathToImage.value = result.files.single.path!;
               chat.copyWith(backgroundImage: pathToImage.value);
-              Controller.to.setData();
             }
           },
           child: const PopupMenuItemBody(
@@ -99,6 +99,8 @@ class ChatPage extends StatelessWidget {
                         controller.isSearch.value = !controller.isSearch.value;
                         controller.searchItems.clear();
                         controller.searchController.clear();
+                      } else if (home.isSearch.value) {
+                        Get.back();
                       } else {
                         homeItem.copyWith(name: titleController.text);
                         Get.back();

@@ -37,6 +37,7 @@ class HomeAppBar extends StatelessWidget {
                   splashRadius: 20,
                   onPressed: () {
                     home.isSearch.value = !home.isSearch.value;
+                    home.searchItems.clear();
                     home.searchController.clear();
                   },
                   icon: const Icon(Icons.arrow_back))

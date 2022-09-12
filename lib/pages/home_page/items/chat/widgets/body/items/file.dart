@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:info_keeper/model/types/home/chat/items/file.dart';
-import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/item_decoration.dart';
+import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/widgets/item_decoration.dart';
 import 'package:open_filex/open_filex.dart';
 
 class ChatFileWidget extends StatelessWidget {

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/types/home/chat/items/voice.dart';
-import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/item_decoration.dart';
+import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/widgets/item_decoration.dart';
 
 class ChatVoiceWidget extends StatelessWidget {
   final ChatVoice voice;

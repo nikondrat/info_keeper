@@ -19,8 +19,9 @@ class Chat {
 
   copyWith({RxList? messages, String? backgroundImage}) {
     Chat chat = Chat(
-        messages: messages ?? this.messages.reversed.toList().obs,
+        messages: messages ?? this.messages,
         backgroundImage: backgroundImage ?? this.backgroundImage);
+
     Controller.to.all[Controller.to.selectedFolder.value]
         .childrens[Controller.to.selectedElementIndex.value].child = chat;
     return Controller.to.setData();

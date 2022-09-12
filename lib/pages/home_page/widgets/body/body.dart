@@ -10,24 +10,27 @@ class HomeBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    HomeController home = Get.find();
+    HomeController home = Get.put(HomeController());
 
     return Obx(
       () => MasonryGridView.count(
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           crossAxisCount: home.isGridView.value ? 2 : 1,
-          itemCount: Controller.to.all[Controller.to.selectedFolder.value]
-              .getChildrens()
-              .length,
+          itemCount: home.isSearch.value
+              ? home.searchItems.length
+              : Controller.to.all[Controller.to.selectedFolder.value]
+                  .getChildrens()
+                  .length,
           itemBuilder: (context, homeItemIndex) {
             return Padding(
                 padding: const EdgeInsets.all(5),
-                child: HomeBodyItem(
-                    homeItem: Controller
-                        .to.all[Controller.to.selectedFolder.value]
-                        .getChildrens()[homeItemIndex],
-                    homeItemIndex: homeItemIndex));
+                child: Obx(() => HomeBodyItem(
+                    homeItem: home.isSearch.value
+                        ? home.searchItems[homeItemIndex]
+                        : Controller.to.all[Controller.to.selectedFolder.value]
+                            .getChildrens()[homeItemIndex],
+                    homeItemIndex: homeItemIndex)));
           }),
     );
   }

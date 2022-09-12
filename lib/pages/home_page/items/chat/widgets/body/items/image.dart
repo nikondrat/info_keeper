@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:dismissible_page/dismissible_page.dart';
 import 'package:flutter/material.dart';
 import 'package:info_keeper/model/types/home/chat/items/image.dart';
-import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/item_decoration.dart';
+import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/widgets/item_decoration.dart';
 
 class ChatImageWidget extends StatelessWidget {
   final ChatImage image;
