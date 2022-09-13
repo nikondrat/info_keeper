@@ -6,7 +6,6 @@ import 'package:info_keeper/model/types/home/chat/old_chat.dart';
 import 'package:info_keeper/pages/home_page/items/old_chat_page/chat_history_page.dart';
 import 'package:info_keeper/pages/home_page/items/old_chat_page/widgets/message_menu/chat_menu_item.dart';
 import 'package:info_keeper/pages/home_page/items/old_chat_page/widgets/message_menu/chat_message_full_screen.dart';
-import 'package:info_keeper/pages/vault_page/vault_page.dart';
 
 class ChatPageMenu extends StatelessWidget {
   final BoxConstraints constraints;
@@ -282,8 +281,8 @@ class ChatPageMenu extends StatelessWidget {
 
                     Controller.to.change(ChatItem(messages: messages.obs));
                   } else {
-                    Get.to(() => VaultPage(
-                        selectedElement: selectedMessage, first: true));
+                    // Get.to(() => VaultPage(
+                    //     selectedElement: selectedMessage, first: true));
                   }
                 },
                 icon: const Icon(Icons.lock_outline),

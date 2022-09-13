@@ -27,7 +27,7 @@ class HomeItem {
     required this.location,
   });
 
-  HomeItem copyWith({
+  copyWith({
     String? name,
     dynamic child,
     bool? isLink,
@@ -47,8 +47,9 @@ class HomeItem {
         child: child ?? this.child,
         location: location ?? this.location);
 
-    return Controller.to.all[Controller.to.selectedFolder.value]
+    Controller.to.all[Controller.to.selectedFolder.value]
         .childrens[Controller.to.selectedElementIndex.value] = homeItem;
+    return Controller.to.setData();
   }
 
   static dynamic childFromJson(Map<String, dynamic> json) {

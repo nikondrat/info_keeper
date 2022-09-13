@@ -23,6 +23,8 @@ class TaskBottomField extends StatelessWidget {
       if (todoController.text.isNotEmpty) {
         task.todos.add(Todo(title: todoController.text));
         isAddTodo.value = !isAddTodo.value;
+      } else {
+        isAddTodo.value = !isAddTodo.value;
       }
     }
 
@@ -43,27 +45,32 @@ class TaskBottomField extends StatelessWidget {
     Widget addTodoField = Transform.translate(
         offset: Offset(0, -1 * MediaQuery.of(context).viewInsets.bottom),
         child: Padding(
-            padding: const EdgeInsets.all(8),
-            child: Row(children: [
-              Checkbox(value: false, onChanged: (value) {}),
-              Expanded(
-                child: TextField(
-                  autofocus: true,
-                  controller: todoController,
-                  maxLines: 1,
-                  cursorColor: Colors.black,
-                  decoration: const InputDecoration(
-                      border: InputBorder.none, hintText: 'Write text'),
-                  onSubmitted: (value) {
-                    addTodo();
-                  },
+          padding: const EdgeInsets.all(8),
+          child: Container(
+              decoration: BoxDecoration(
+                  color: Colors.grey.shade300,
+                  borderRadius: BorderRadius.circular(12)),
+              child: Row(children: [
+                Checkbox(value: false, onChanged: (value) {}),
+                Expanded(
+                  child: TextField(
+                    autofocus: true,
+                    controller: todoController,
+                    maxLines: 1,
+                    cursorColor: Colors.black,
+                    decoration: const InputDecoration(
+                        border: InputBorder.none, hintText: 'Write text'),
+                    onSubmitted: (value) {
+                      addTodo();
+                    },
+                  ),
                 ),
-              ),
-              IconButton(
-                  onPressed: addTodo,
-                  icon: const Icon(Icons.done),
-                  splashRadius: 20)
-            ])));
+                IconButton(
+                    onPressed: addTodo,
+                    icon: const Icon(Icons.done),
+                    splashRadius: 20)
+              ])),
+        ));
 
     return Obx(() => isAddTodo.value ? addTodoField : addTodoWidget);
   }

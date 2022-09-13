@@ -6,18 +6,17 @@ import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
 import 'package:info_keeper/pages/home_page/items/storage_file/storage_file_page.dart';
 import 'package:info_keeper/pages/trash_page/trash_element.dart';
-import 'package:substring_highlight/substring_highlight.dart';
 
 class HomeWidgetStorageFile extends StatelessWidget {
   final HomeItem homeItem;
   final int index;
   final String term;
-  final bool? isTrash;
+  final bool isTrash;
   const HomeWidgetStorageFile(
       {Key? key,
       required this.homeItem,
       required this.index,
-      this.isTrash,
+      this.isTrash = false,
       this.term = ''})
       : super(key: key);
 
@@ -32,7 +31,7 @@ class HomeWidgetStorageFile extends StatelessWidget {
             splashFactory: NoSplash.splashFactory,
             highlightColor: Colors.transparent),
         child: GestureDetector(
-            onTap: isTrash != null
+            onTap: isTrash
                 ? null
                 : () {
                     home.isShowBottomMenu.value = false;
@@ -41,7 +40,7 @@ class HomeWidgetStorageFile extends StatelessWidget {
                     Get.to(() =>
                         StorageFilePage(homeItem: homeItem, change: true));
                   },
-            onLongPress: isTrash != null
+            onLongPress: isTrash
                 ? () => isShowRestoreMenu.value = true
                 : () {
                     home.isShowBottomMenu.value = true;
@@ -54,7 +53,7 @@ class HomeWidgetStorageFile extends StatelessWidget {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(6),
                       border: Border.all(
-                          color: homeItem.child.value.isAnimated
+                          color: homeItem.isAnimated
                               ? const Color(0xFFB9DFBB)
                               : Colors.grey.shade600,
                           width: homeItem.isAnimated ? 1.4 : 1)),
@@ -90,22 +89,22 @@ class HomeWidgetStorageFile extends StatelessWidget {
                                   child: Icon(Icons.copy_all),
                                 )
                               : const SizedBox(),
-                          Expanded(
-                            child: SubstringHighlight(
-                              term: term,
-                              textStyle: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                              text: homeItem.name,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          IconButton(
-                              onPressed: () => toggleFunction(animated: true),
-                              icon: Icon(isExpanded
-                                  ? Icons.arrow_drop_up
-                                  : Icons.arrow_drop_down))
+                          // Expanded(
+                          //   child: SubstringHighlight(
+                          //     term: term,
+                          //     textStyle: const TextStyle(
+                          //         fontWeight: FontWeight.bold,
+                          //         color: Colors.black),
+                          //     text: homeItem.name,
+                          //     maxLines: 2,
+                          //     overflow: TextOverflow.ellipsis,
+                          //   ),
+                          // ),
+                          // IconButton(
+                          //     onPressed: () => toggleFunction(animated: true),
+                          //     icon: Icon(isExpanded
+                          //         ? Icons.arrow_drop_up
+                          //         : Icons.arrow_drop_down))
                         ],
                       ),
                     ),

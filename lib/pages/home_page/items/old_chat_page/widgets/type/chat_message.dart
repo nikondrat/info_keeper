@@ -2,16 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/model/types/home/chat/items/message.dart';
 import 'package:info_keeper/model/types/home/chat/old_chat.dart';
 import 'package:info_keeper/pages/home_page/items/old_chat_page/widgets/message_menu/chat_menu.dart';
 import 'package:info_keeper/pages/trash_page/trash_element.dart';
-import 'package:info_keeper/pages/vault_page/vault_page.dart';
 import 'package:info_keeper/themes/default/default.dart';
 import 'package:intl/intl.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
-import 'package:substring_highlight/substring_highlight.dart';
 import 'package:swipe_to/swipe_to.dart';
 
 class MessageWidget extends StatelessWidget {
@@ -98,10 +95,10 @@ class MessageWidget extends StatelessWidget {
                     .insert(selected.value, message);
                 moveMessage.value = false;
               }
-              Get.to(() => VaultPage(
-                    isChat: true,
-                    selectedElement: selectedMessage!,
-                  ));
+              // Get.to(() => VaultPage(
+              //       isChat: true,
+              //       selectedElement: selectedMessage!,
+              //     ));
             },
             child: Container(
               margin: const EdgeInsets.symmetric(vertical: 2),
@@ -358,16 +355,16 @@ class MessageWidgetBody extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisSize: fullScreen ? MainAxisSize.min : MainAxisSize.max,
               children: [
-                message.title.isNotEmpty
-                    ? Container(
-                        padding: const EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                            color: const Color(0xFF9FA8A8),
-                            borderRadius: BorderRadius.circular(6)),
-                        child:
-                            SubstringHighlight(text: message.title, term: term),
-                      )
-                    : Container(),
+                // message.title.isNotEmpty
+                //     ? Container(
+                //         padding: const EdgeInsets.all(4),
+                //         decoration: BoxDecoration(
+                //             color: const Color(0xFF9FA8A8),
+                //             borderRadius: BorderRadius.circular(6)),
+                //         child:
+                //             SubstringHighlight(text: message.title, term: term),
+                //       )
+                //     : Container(),
                 Container(
                     margin: const EdgeInsets.symmetric(vertical: 2),
                     padding: const EdgeInsets.all(10),
@@ -390,38 +387,38 @@ class MessageWidgetBody extends StatelessWidget {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Expanded(
-                                child: SubstringHighlight(
-                              textStyle: const TextStyle(
-                                  color: Colors.black, fontSize: 16),
-                              text: message.content,
-                              maxLines: selected != null &&
-                                      Controller
-                                              .to
-                                              .all[Controller
-                                                  .to.selectedFolder.value]
-                                              .childrens[Controller.to
-                                                  .selectedElementIndex.value]
-                                              .child
-                                              .value
-                                              .messages[selected!.value]
-                                              .type ==
-                                          AllType.chatMessage
-                                  ? Controller
-                                          .to
-                                          .all[Controller
-                                              .to.selectedFolder.value]
-                                          .childrens[Controller
-                                              .to.selectedElementIndex.value]
-                                          .child
-                                          .value
-                                          .messages[selected!.value]
-                                          .isCollapsed
-                                      ? 6
-                                      : null
-                                  : null,
-                              term: term,
-                            )),
+                            // Expanded(
+                            //     child: SubstringHighlight(
+                            //   textStyle: const TextStyle(
+                            //       color: Colors.black, fontSize: 16),
+                            //   text: message.content,
+                            //   maxLines: selected != null &&
+                            //           Controller
+                            //                   .to
+                            //                   .all[Controller
+                            //                       .to.selectedFolder.value]
+                            //                   .childrens[Controller.to
+                            //                       .selectedElementIndex.value]
+                            //                   .child
+                            //                   .value
+                            //                   .messages[selected!.value]
+                            //                   .type ==
+                            //               AllType.chatMessage
+                            //       ? Controller
+                            //               .to
+                            //               .all[Controller
+                            //                   .to.selectedFolder.value]
+                            //               .childrens[Controller
+                            //                   .to.selectedElementIndex.value]
+                            //               .child
+                            //               .value
+                            //               .messages[selected!.value]
+                            //               .isCollapsed
+                            //           ? 6
+                            //           : null
+                            //       : null,
+                            //   term: term,
+                            // )),
                             Column(
                               children: [
                                 message.isUnlocked

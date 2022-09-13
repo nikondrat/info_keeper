@@ -4,7 +4,6 @@ import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
 import 'package:info_keeper/pages/home_page/widgets/folders/folders.dart';
-import 'package:info_keeper/pages/vault_page/vault_page.dart';
 
 class HomePageBottomNavigationBar extends StatelessWidget {
   final bool isVault;
@@ -140,8 +139,8 @@ class HomePageBottomNavigationBar extends StatelessWidget {
         default:
       }
     } else {
-      Get.to(() => VaultPage(
-          selectedElement: Controller.to.selectedElementIndex, first: true));
+      // Get.to(() => VaultPage(
+      //     selectedElement: Controller.to.selectedElementIndex, first: true));
     }
   }
 

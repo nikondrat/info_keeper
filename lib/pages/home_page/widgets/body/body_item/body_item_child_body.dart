@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_parsed_text/flutter_parsed_text.dart';
 import 'package:info_keeper/model/types/home_item.dart';
-import 'package:substring_highlight/substring_highlight.dart';
 
 class HomeBodyItemChildBody extends StatelessWidget {
   final HomeItem homeItem;
@@ -38,11 +38,19 @@ class HomeBodyItemChildBody extends StatelessWidget {
               )
             : const SizedBox(),
         Expanded(
-          child: SubstringHighlight(
-            term: term,
-            textStyle: const TextStyle(
-                fontWeight: FontWeight.bold, color: Colors.black),
+          child: ParsedText(
+            regexOptions: const RegexOptions(
+                multiLine: true, unicode: true, dotAll: true),
             text: homeItem.name,
+            parse: [
+              MatchText(
+                  pattern: '([$term])',
+                  type: ParsedType.CUSTOM,
+                  onTap: (text) => null,
+                  style: const TextStyle(color: Colors.blue)),
+            ],
+            style: const TextStyle(
+                fontWeight: FontWeight.bold, color: Colors.black),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),

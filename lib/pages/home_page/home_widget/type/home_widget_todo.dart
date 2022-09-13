@@ -6,7 +6,6 @@ import 'package:info_keeper/pages/home_page/home_controller.dart';
 import 'package:info_keeper/pages/home_page/items/task/task_page.dart';
 import 'package:info_keeper/pages/home_page/items/task/widgets/todo.dart';
 import 'package:info_keeper/pages/trash_page/trash_element.dart';
-import 'package:substring_highlight/substring_highlight.dart';
 
 class HomeWidgetTodo extends StatelessWidget {
   final HomeItem homeItem;
@@ -68,16 +67,16 @@ class HomeWidgetTodo extends StatelessWidget {
                               child: Icon(Icons.copy_all),
                             )
                           : Container(),
-                      Expanded(
-                        child: SubstringHighlight(
-                          term: term,
-                          text: homeItem.name,
-                          textStyle: const TextStyle(
-                              color: Colors.black,
-                              decoration: TextDecoration.underline,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
+                      // Expanded(
+                      //   child: SubstringHighlight(
+                      //     term: term,
+                      //     text: homeItem.name,
+                      //     textStyle: const TextStyle(
+                      //         color: Colors.black,
+                      //         decoration: TextDecoration.underline,
+                      //         fontWeight: FontWeight.bold),
+                      //   ),
+                      // ),
                     ],
                   ),
                   Obx(() => ListView.builder(

@@ -18,7 +18,6 @@ class HomePage extends StatelessWidget {
         Get.to(() => VaultPage(
               childrens: Controller
                   .to.all[Controller.to.selectedFolder.value].childrens,
-              selectedElement: 0.obs,
             ));
       },
       child: const Scaffold(

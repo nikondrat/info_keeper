@@ -9,7 +9,8 @@ import 'package:info_keeper/pages/home_page/items/widgets/app_bar/widgets/popup_
 import 'package:info_keeper/widgets/notifications.dart';
 
 class HomeBottomMenu extends StatelessWidget {
-  const HomeBottomMenu({Key? key}) : super(key: key);
+  final bool isVault;
+  const HomeBottomMenu({Key? key, this.isVault = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +61,9 @@ class HomeBottomMenu extends StatelessWidget {
           child: const PopupMenuItemBody(
               title: 'Move to trash', icon: Icons.delete_outline));
 
-      items.addAll([folder, dublicate, delete]);
+      isVault
+          ? items.addAll([dublicate, delete])
+          : items.addAll([folder, dublicate, delete]);
 
       return items;
     }
@@ -102,6 +105,7 @@ class HomeBottomMenu extends StatelessWidget {
                 splashRadius: 20,
                 onPressed: () {
                   home.isShowBottomMenu.value = false;
+                  item.copyWith(isLocked: !item.isLocked);
                   // lock();
                 },
                 icon: const Icon(Icons.lock_outline)),

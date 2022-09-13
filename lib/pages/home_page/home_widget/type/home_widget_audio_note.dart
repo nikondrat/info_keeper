@@ -5,7 +5,6 @@ import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
 import 'package:info_keeper/pages/trash_page/trash_element.dart';
-import 'package:substring_highlight/substring_highlight.dart';
 
 class HomeWidgetAudioNote extends StatelessWidget {
   final HomeItem homeItem;
@@ -56,13 +55,13 @@ class HomeWidgetAudioNote extends StatelessWidget {
                           child: Icon(Icons.copy_all))
                       : Container(),
                   HomeWidgetAudioNoteBody(homeItem: homeItem),
-                  Expanded(
-                      child: SubstringHighlight(
-                    text: homeItem.name,
-                    term: term,
-                    textStyle: const TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.black),
-                  ))
+                  // Expanded(
+                  //     child: SubstringHighlight(
+                  //   text: homeItem.name,
+                  //   term: term,
+                  //   textStyle: const TextStyle(
+                  //       fontWeight: FontWeight.bold, color: Colors.black),
+                  // ))
                 ]))));
   }
 }

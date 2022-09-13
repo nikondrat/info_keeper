@@ -6,7 +6,6 @@ import 'package:info_keeper/model/types/item_location.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
 import 'package:info_keeper/pages/home_page/items/chat/chat_page.dart';
 import 'package:info_keeper/pages/trash_page/trash_element.dart';
-import 'package:substring_highlight/substring_highlight.dart';
 
 class HomeWidgetChat extends StatelessWidget {
   final String term;
@@ -108,19 +107,19 @@ class HomeWidgetChat extends StatelessWidget {
                             child: Icon(Icons.copy_all),
                           )
                         : Container(),
-                Expanded(
-                  child: SubstringHighlight(
-                    term: term,
-                    textStyle: const TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.black),
-                    text: isTrash != null
-                        ? Controller.to.trashElements[index].name
-                        : Controller.to.all[Controller.to.selectedFolder.value]
-                            .childrens[index].name,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
+                // Expanded(
+                //   child: SubstringHighlight(
+                //     term: term,
+                //     textStyle: const TextStyle(
+                //         fontWeight: FontWeight.bold, color: Colors.black),
+                //     text: isTrash != null
+                //         ? Controller.to.trashElements[index].name
+                //         : Controller.to.all[Controller.to.selectedFolder.value]
+                //             .childrens[index].name,
+                //     maxLines: 1,
+                //     overflow: TextOverflow.ellipsis,
+                //   ),
+                // ),
               ],
             ),
           )),

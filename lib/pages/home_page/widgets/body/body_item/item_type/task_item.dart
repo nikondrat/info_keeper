@@ -31,10 +31,9 @@ class TodoItem extends StatelessWidget {
                 homeItem: homeItem,
                 term: term,
                 verticalChild: Obx(() => ListView.builder(
-                    reverse: true,
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: task.todos.length,
+                    itemCount: task.todos.length > 10 ? 10 : task.todos.length,
                     itemBuilder: (context, todoIndex) {
                       return TodoWidget(
                           index: todoIndex, homeItem: homeItem, change: false);

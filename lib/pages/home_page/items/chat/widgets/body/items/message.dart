@@ -6,7 +6,6 @@ import 'package:info_keeper/pages/home_page/items/chat/chat_controller.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/widgets/item_decoration.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/menu/menu.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:substring_highlight/substring_highlight.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class MessageWidget extends StatelessWidget {
@@ -42,54 +41,64 @@ class MessageWidget extends StatelessWidget {
                             borderRadius: BorderRadius.circular(6),
                             color: Colors.grey.shade400),
                         child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: SubstringHighlight(
-                              text: message.title, term: searchQuery),
-                        ),
+                            padding: const EdgeInsets.all(8.0),
+                            child: MessageWidgetText(
+                                text: message.title, searchQuery: searchQuery)),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: SubstringHighlight(
-                            text: message.content, term: searchQuery),
-                      )
+                          padding: const EdgeInsets.all(8.0),
+                          child: MessageWidgetText(
+                              text: message.content, searchQuery: searchQuery))
                     ])
               : Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: ParsedText(
-                    regexOptions: const RegexOptions(
-                        multiLine: true, unicode: true, dotAll: true),
-                    text: message.content,
-                    style: const TextStyle(color: Colors.black),
-                    parse: [
-                      MatchText(
-                          type: ParsedType.EMAIL,
-                          onTap: (email) => launchUrlString('mailto:$email'),
-                          style: const TextStyle(color: Colors.blue)),
-                      MatchText(
-                          type: ParsedType.URL,
-                          onTap: (url) => launchUrlString(url),
-                          style: const TextStyle(color: Colors.blue)),
-                      MatchText(
-                          type: ParsedType.PHONE,
-                          onTap: (phone) => launchUrlString('tel:$phone'),
-                          style: const TextStyle(color: Colors.blue)),
-                      MatchText(
-                          pattern: '([$searchQuery])',
-                          type: ParsedType.CUSTOM,
-                          onTap: (text) => null,
-                          style: const TextStyle(color: Colors.blue)),
-                      MatchText(
-                          pattern: r"\B#+([\w]+)\b",
-                          type: ParsedType.CUSTOM,
-                          onTap: (hashtag) {
-                            final ChatController controller = Get.find();
-                            controller.isSearch.value = true;
-                            controller.searchController.text = hashtag;
-                          },
-                          style: const TextStyle(color: Colors.blue))
-                    ],
-                  ),
-                ),
+                  child: MessageWidgetText(
+                      text: message.content, searchQuery: searchQuery)),
         ));
+  }
+}
+
+class MessageWidgetText extends StatelessWidget {
+  final String text;
+  final String searchQuery;
+  const MessageWidgetText(
+      {super.key, required this.text, required this.searchQuery});
+
+  @override
+  Widget build(BuildContext context) {
+    return ParsedText(
+      regexOptions:
+          const RegexOptions(multiLine: true, unicode: true, dotAll: true),
+      text: text,
+      style: const TextStyle(color: Colors.black),
+      parse: [
+        MatchText(
+            type: ParsedType.EMAIL,
+            onTap: (email) => launchUrlString('mailto:$email'),
+            style: const TextStyle(color: Colors.blue)),
+        MatchText(
+            type: ParsedType.URL,
+            onTap: (url) => launchUrlString(url),
+            style: const TextStyle(color: Colors.blue)),
+        MatchText(
+            type: ParsedType.PHONE,
+            onTap: (phone) => launchUrlString('tel:$phone'),
+            style: const TextStyle(color: Colors.blue)),
+        MatchText(
+            pattern: '([$searchQuery])',
+            type: ParsedType.CUSTOM,
+            onTap: (text) => null,
+            style: const TextStyle(color: Colors.blue)),
+        MatchText(
+            pattern: r"\B#+([\w]+)\b",
+            type: ParsedType.CUSTOM,
+            onTap: (hashtag) {
+              final ChatController controller = Get.find();
+              controller.isSearch.value = true;
+              controller.searchController.text = hashtag;
+            },
+            style: const TextStyle(color: Colors.blue))
+      ],
+    );
   }
 }

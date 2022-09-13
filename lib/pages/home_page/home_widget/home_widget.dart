@@ -7,15 +7,15 @@ class HomeWidget extends StatelessWidget {
   final HomeItem homeItem;
   final String term;
   final int index;
-  final bool? isVault;
-  final bool? isTrash;
+  final bool isVault;
+  final bool isTrash;
   const HomeWidget(
       {Key? key,
       required this.homeItem,
       required this.index,
       this.term = '',
-      this.isTrash,
-      this.isVault})
+      this.isTrash = false,
+      this.isVault = false})
       : super(key: key);
 
   @override

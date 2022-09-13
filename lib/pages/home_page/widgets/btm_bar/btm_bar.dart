@@ -7,7 +7,8 @@ import 'package:info_keeper/pages/home_page/widgets/btm_bar/btm_menu.dart';
 import 'package:info_keeper/pages/home_page/widgets/btm_bar/btm_nav_bar.dart';
 
 class HomeBottomBar extends StatelessWidget {
-  const HomeBottomBar({Key? key}) : super(key: key);
+  final bool isVault;
+  const HomeBottomBar({Key? key, this.isVault = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +30,14 @@ class HomeBottomBar extends StatelessWidget {
           child: Obx(() => home.isShowBottomMenu.value
               ? Column(
                   mainAxisSize: MainAxisSize.min,
-                  children: const [
-                    HomeBottomMenu(),
-                    HomeBottomNavigation(),
+                  children: [
+                    HomeBottomMenu(isVault: isVault),
+                    !isVault ? const SizedBox() : const HomeBottomNavigation(),
                   ],
                 )
-              : const HomeBottomNavigation())),
+              : !isVault
+                  ? const SizedBox()
+                  : const HomeBottomNavigation())),
     );
   }
 }
