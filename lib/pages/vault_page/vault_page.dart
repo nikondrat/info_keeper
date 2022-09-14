@@ -5,22 +5,20 @@ import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/pages/home_page/widgets/body/body_item/body_item.dart';
 import 'package:info_keeper/pages/home_page/widgets/btm_bar/btm_bar.dart';
+import 'package:info_keeper/pages/vault_page/vault_controller.dart';
 import 'package:info_keeper/pages/vault_page/vault_password.dart';
 
 class VaultPage extends StatelessWidget {
   final RxList<HomeItem> childrens;
-  final bool first;
 
   const VaultPage({
     Key? key,
     required this.childrens,
-    this.first = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController passwordController = TextEditingController();
-    TextEditingController repeatPasswordController = TextEditingController();
+    final VaultController vaultController = Get.put(VaultController());
     final isGridView = true.obs;
     final isUnblocked = false.obs;
 
@@ -63,9 +61,7 @@ class VaultPage extends StatelessWidget {
                         )
                       : Container();
                 })
-            : VaultPagePasswordWidget(
-                passwordController: passwordController,
-                repeatPasswordController: repeatPasswordController),
+            : const VaultPagePasswordWidget(),
         bottomNavigationBar: const HomeBottomBar(isVault: true),
         floatingActionButton: isUnblocked.value
             ? null
@@ -108,23 +104,20 @@ class VaultPage extends StatelessWidget {
                   //   Get.back();
                   // }
 
-                  homeFunc() {
-                    if (passwordController.text ==
-                        repeatPasswordController.text) {
-                      Controller.to.password = passwordController.text.obs;
-                      Controller.to.setData();
-                      if (first) {
-                        Get.back();
-                      } else {
-                        isUnblocked.value = true;
-                      }
-                    } else if (passwordController.text ==
-                        Controller.to.password.value) {
+                  if (vaultController.passwordController.text ==
+                      vaultController.repeatPasswordController.text) {
+                    Controller.to.password =
+                        vaultController.passwordController.text.obs;
+                    Controller.to.setData();
+                    if (Controller.to.password.isEmpty) {
+                      Get.back();
+                    } else {
                       isUnblocked.value = true;
                     }
+                  } else if (vaultController.passwordController.text ==
+                      Controller.to.password.value) {
+                    isUnblocked.value = true;
                   }
-
-                  homeFunc();
                 },
                 backgroundColor: Colors.blue,
                 child: const Icon(

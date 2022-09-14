@@ -79,9 +79,7 @@ class ChatPageVault extends StatelessWidget {
                         .messages![index]
                         .dateTime,
                     message: lockedMessages[index]))
-            : VaultPagePasswordWidget(
-                passwordController: passwordController,
-                repeatPasswordController: repeatPasswordController),
+            : const VaultPagePasswordWidget(),
         floatingActionButton: isUnblocked.value
             ? null
             : FloatingActionButton(

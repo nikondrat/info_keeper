@@ -18,7 +18,6 @@ class ChatBottomAppBar extends StatelessWidget {
                 decoration: BoxDecoration(
                     border: Border(
                         top: BorderSide(
-                  width: 1,
                   color: Colors.grey.shade300,
                 ))),
                 child: GetBuilder<BottomAppBarController>(
@@ -29,6 +28,8 @@ class ChatBottomAppBar extends StatelessWidget {
                                 const ChatBottomTitleTextField(),
                                 ChatBottomTextField(homeItem: homeItem)
                               ])
-                            : ChatBottomTextField(homeItem: homeItem)))));
+                            : Obx(() => controller.isShowColorSelector.value
+                                ? const SizedBox()
+                                : ChatBottomTextField(homeItem: homeItem))))));
   }
 }

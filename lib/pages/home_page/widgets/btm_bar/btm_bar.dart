@@ -32,10 +32,10 @@ class HomeBottomBar extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     HomeBottomMenu(isVault: isVault),
-                    !isVault ? const SizedBox() : const HomeBottomNavigation(),
+                    isVault ? const SizedBox() : const HomeBottomNavigation(),
                   ],
                 )
-              : !isVault
+              : isVault
                   ? const SizedBox()
                   : const HomeBottomNavigation())),
     );

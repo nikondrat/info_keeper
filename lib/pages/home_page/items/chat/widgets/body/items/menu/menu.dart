@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/types/home/chat/items/message.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/menu/item.dart';
+import 'package:info_keeper/pages/home_page/items/chat/widgets/btm_app_bar/btm_app_bar_controller.dart';
 
 class MessageMenuWidget extends StatelessWidget {
   final Message message;
@@ -10,6 +11,8 @@ class MessageMenuWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final BottomAppBarController controller = Get.find();
+
     return NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (OverscrollIndicatorNotification overscroll) {
           overscroll.disallowIndicator();
@@ -23,7 +26,6 @@ class MessageMenuWidget extends StatelessWidget {
                 icon: const Icon(Icons.copy),
                 onPressed: () {
                   Clipboard.setData(ClipboardData(text: message.content));
-                  Navigator.pop(context);
                   Get.snackbar('Done', 'The message has been copied',
                       shouldIconPulse: true,
                       icon: const Icon(Icons.done),
@@ -39,7 +41,7 @@ class MessageMenuWidget extends StatelessWidget {
             MenuItemWidget(
                 title: 'Highlite',
                 icon: const Icon(Icons.brush_outlined),
-                onPressed: () {}),
+                onPressed: () => controller.isShowColorSelector.value = true),
             MenuItemWidget(
                 title: 'Copy', icon: const Icon(Icons.copy), onPressed: () {}),
             MenuItemWidget(

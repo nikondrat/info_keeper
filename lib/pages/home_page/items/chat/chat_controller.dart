@@ -14,6 +14,11 @@ class ChatController extends GetxController {
   // body
   final RxBool showDate = false.obs;
   late AutoScrollController autoScrollController;
+
+  // bottom
+
+  final RxBool showColorSelector = false.obs;
+
   //  = AutoScrollController(
   //    viewportBoundaryGetter: () => Rect.fromLTRB(0, 0, 0, 1),
   //   axis: Axis.vertical,

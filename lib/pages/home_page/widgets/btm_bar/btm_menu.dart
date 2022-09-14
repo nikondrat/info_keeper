@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home_item.dart';
-import 'package:info_keeper/model/types/item_location.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
 import 'package:info_keeper/pages/home_page/widgets/folders/folders.dart';
 import 'package:info_keeper/pages/home_page/items/widgets/app_bar/widgets/popup_menu.dart';
@@ -30,14 +29,20 @@ class HomeBottomMenu extends StatelessWidget {
 
       PopupMenuItem dublicate = PopupMenuItem(
           onTap: () {
-            HomeItem dublicatedItem = item.copyWith(
-                isDublicated: true,
-                location: ItemLocation(
-                    inDirectory: Controller.to.selectedFolder.value,
-                    index: Controller.to.selectedElementIndex.value));
+            // HomeItem dublicatedItem = HomeItem(
+            //     isDublicated: true,
+            //     child: item,
+            //     location: ItemLocation(
+            //         inDirectory: Controller.to.selectedFolder.value,
+            //         index: Controller.to.selectedElementIndex.value));
+            // HomeItem dublicatedItem = item.copyWith(
+            //     isDublicated: true,
+            //     location: ItemLocation(
+            //         inDirectory: Controller.to.selectedFolder.value,
+            //         index: Controller.to.selectedElementIndex.value));
 
-            Controller.to.all[Controller.to.selectedFolder.value].childrens
-                .add(dublicatedItem);
+            // Controller.to.all[Controller.to.selectedFolder.value].childrens
+            //     .add(dublicatedItem);
 
             // dublicatedItem.location.index = Controller
             //     .to.all[Controller.to.selectedFolder.value].childrens.length;
@@ -100,7 +105,7 @@ class HomeBottomMenu extends StatelessWidget {
                 Icons.local_fire_department_outlined,
               ),
             ),
-            Notifications(homeItem: item),
+            isVault ? const SizedBox() : Notifications(homeItem: item),
             IconButton(
                 splashRadius: 20,
                 onPressed: () {
@@ -116,7 +121,7 @@ class HomeBottomMenu extends StatelessWidget {
                         context: context,
                         builder: (context) => const HomeFolders(isSelect: true))
                     : null,
-                offset: const Offset(0, -170),
+                offset: Offset(0, isVault ? -120 : -170),
                 itemBuilder: (context) => popupItems())
             // PopupMenuButton(
             //     splashRadius: 20,
