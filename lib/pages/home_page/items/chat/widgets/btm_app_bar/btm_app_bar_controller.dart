@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:info_keeper/themes/default/default.dart';
 
 class BottomAppBarController extends GetxController {
   TextEditingController titleController = TextEditingController();
@@ -7,4 +8,6 @@ class BottomAppBarController extends GetxController {
   final RxBool textFieldIsEmpty = true.obs;
   final RxBool isShowTitleTextField = false.obs;
   final RxBool isShowColorSelector = false.obs;
+
+  final RxInt selectedColor = defaultColor.obs;
 }

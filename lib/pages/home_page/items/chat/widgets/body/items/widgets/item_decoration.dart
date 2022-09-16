@@ -8,7 +8,7 @@ import 'package:scroll_to_index/scroll_to_index.dart';
 class ItemDecoration extends StatelessWidget {
   final int index;
   final Widget child;
-  final int? color;
+  final RxInt? color;
   final double elevation;
   final DateTime dateTime;
   final EdgeInsets? padding;
@@ -34,42 +34,43 @@ class ItemDecoration extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       elevation: elevation,
-      child: AutoScrollTag(
-        index: index,
-        key: ValueKey(index),
-        controller: controller.autoScrollController,
-        child: Container(
-            margin: const EdgeInsets.symmetric(vertical: 2),
-            padding: padding ?? const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-                color: messageColors[color ?? defaultColor],
-                borderRadius: BorderRadius.circular(6)),
+      child: Obx(
+        () => AutoScrollTag(
+            index: index,
+            key: ValueKey(index),
+            controller: controller.autoScrollController,
+            child: Container(
+                margin: const EdgeInsets.symmetric(vertical: 2),
+                padding: padding ?? const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                    color: messageColors[color?.value ?? defaultColor],
+                    borderRadius: BorderRadius.circular(6)),
 
-            // index:
+                // index:
 
-            // child: Center(
-            //   child: Text('$index'),
-            // ))
+                // child: Center(
+                //   child: Text('$index'),
+                // ))
 
-            // body:
-            child: Obx(() => controller.showDate.value
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      child,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                // body:
+                child: controller.showDate.value
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          padding != null
-                              ? Padding(
-                                  padding: const EdgeInsets.all(8),
-                                  child: AutoSizeText('$hour:$minute'))
-                              : AutoSizeText('$hour:$minute')
+                          child,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              padding != null
+                                  ? Padding(
+                                      padding: const EdgeInsets.all(8),
+                                      child: AutoSizeText('$hour:$minute'))
+                                  : AutoSizeText('$hour:$minute')
+                            ],
+                          ),
                         ],
-                      ),
-                    ],
-                  )
-                : child)),
+                      )
+                    : child)),
       ),
     );
   }

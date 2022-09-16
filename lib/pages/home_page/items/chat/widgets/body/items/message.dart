@@ -23,7 +23,7 @@ class MessageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ItemDecoration(
         index: message.location.itemIndex!,
-        color: message.color,
+        color: message.color.obs,
         elevation: elevation,
         padding: EdgeInsets.zero,
         dateTime: message.dateTime,
