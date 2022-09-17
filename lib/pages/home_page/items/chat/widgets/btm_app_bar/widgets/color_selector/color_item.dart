@@ -22,6 +22,7 @@ class ColorSelectorItem extends StatelessWidget {
         Chat chat = homeItem.child;
         RxList messages = chat.messages;
         messages[Controller.to.selectedElementIndex.value].color = itemIndex;
+        chat.messages = messages;
         chat.copyWith(messages: messages);
       },
       child: Obx(() => Container(

@@ -24,6 +24,7 @@ class ChatPage extends StatelessWidget {
     final ChatController controller = Get.put(ChatController());
     final HomeController home = Get.find();
     Chat chat = homeItem.child;
+    controller.homeItem = homeItem;
 
     // title
     TextEditingController titleController =

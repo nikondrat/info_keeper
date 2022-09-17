@@ -9,14 +9,11 @@ import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 class Notifications extends StatefulWidget {
+  final Widget child;
   final String? messageText;
-  final bool isStorageFile;
   final HomeItem homeItem;
   const Notifications(
-      {Key? key,
-      required this.homeItem,
-      this.isStorageFile = false,
-      this.messageText})
+      {Key? key, required this.child, required this.homeItem, this.messageText})
       : super(key: key);
 
   @override
@@ -74,62 +71,76 @@ class _NotificationsState extends State<Notifications> {
   Widget build(BuildContext context) {
     DateTime selectedDateTime = DateTime.now();
 
-    if (widget.isStorageFile) {
-      return GestureDetector(
-        onTap: () async {
-          Navigator.pop(context);
-          DateTime? picker = await showOmniDateTimePicker(
-              context: context, is24HourMode: true);
+    return GestureDetector(
+      onTap: () async {
+        DateTime? picker = await showOmniDateTimePicker(
+            context: context,
+            is24HourMode: true,
+            startFirstDate: selectedDateTime);
+        if (picker != null) {
+          selectedDateTime = picker;
+          showNotification(selectedDateTime);
+        }
+      },
+      child: widget.child,
+    );
 
-          if (picker != null) {
-            selectedDateTime = picker;
-            showNotification(selectedDateTime);
-          }
-        },
-        child: Row(
-          children: const [
-            Padding(
-              padding: EdgeInsets.only(right: 8),
-              child: Icon(Icons.notifications_none),
-            ),
-            Text('Remind')
-          ],
-        ),
-      );
-    }
+    // if (widget.isStorageFile) {
+    //   return GestureDetector(
+    //     onTap: () async {
+    //       Navigator.pop(context);
+    //       DateTime? picker = await showOmniDateTimePicker(
+    //           context: context, is24HourMode: true);
 
-    return widget.homeItem.location.itemIndex != null
-        ? TextButton.icon(
-            style: const ButtonStyle(
-              alignment: Alignment.centerLeft,
-            ),
-            onPressed: () async {
-              Navigator.pop(context);
-              DateTime? picker = await showOmniDateTimePicker(
-                  context: context, is24HourMode: true);
+    //       if (picker != null) {
+    //         selectedDateTime = picker;
+    //         showNotification(selectedDateTime);
+    //       }
+    //     },
+    //     child: Row(
+    //       children: const [
+    //         Padding(
+    //           padding: EdgeInsets.only(right: 8),
+    //           child: Icon(Icons.notifications_none),
+    //         ),
+    //         Text('Remind')
+    //       ],
+    //     ),
+    //   );
+    // }
 
-              if (picker != null) {
-                selectedDateTime = picker;
-                showNotification(selectedDateTime);
-              }
-            },
-            icon: const Icon(Icons.notifications_none),
-            label: const Text(
-              'Remind',
-            ))
-        : IconButton(
-            splashRadius: 20,
-            onPressed: () async {
-              late final HomeController home = Get.find();
-              DateTime? picker = await showOmniDateTimePicker(
-                  context: context, is24HourMode: true);
-              if (picker != null) {
-                selectedDateTime = picker;
-                showNotification(selectedDateTime);
-              }
+    // return widget.homeItem.location.itemIndex != null
+    //     ? TextButton.icon(
+    //         style: const ButtonStyle(
+    //           alignment: Alignment.centerLeft,
+    //         ),
+    //         onPressed: () async {
+    //           Navigator.pop(context);
+    //           DateTime? picker = await showOmniDateTimePicker(
+    //               context: context, is24HourMode: true);
 
-              home.isShowBottomMenu.value = false;
-            },
-            icon: const Icon(Icons.notifications_none));
+    //           if (picker != null) {
+    //             selectedDateTime = picker;
+    //             showNotification(selectedDateTime);
+    //           }
+    //         },
+    //         icon: const Icon(Icons.notifications_none),
+    //         label: const Text(
+    //           'Remind',
+    //         ))
+    //     : IconButton(
+    //         splashRadius: 20,
+    //         onPressed: () async {
+    //           late final HomeController home = Get.find();
+    //           DateTime? picker = await showOmniDateTimePicker(
+    //               context: context, is24HourMode: true);
+    //           if (picker != null) {
+    //             selectedDateTime = picker;
+    //             showNotification(selectedDateTime);
+    //           }
+
+    //           home.isShowBottomMenu.value = false;
+    //         },
+    //         icon: const Icon(Icons.notifications_none));
   }
 }

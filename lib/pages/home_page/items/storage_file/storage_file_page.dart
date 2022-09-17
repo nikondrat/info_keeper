@@ -67,7 +67,18 @@ class StorageFilePage extends StatelessWidget {
       );
 
       PopupMenuItem notification = PopupMenuItem(
-          child: Notifications(isStorageFile: true, homeItem: homeItem));
+          child: Notifications(
+        homeItem: homeItem,
+        child: Row(
+          children: const [
+            Padding(
+              padding: EdgeInsets.only(right: 8),
+              child: Icon(Icons.notifications_none),
+            ),
+            Text('Remind')
+          ],
+        ),
+      ));
 
       PopupMenuItem undo = PopupMenuItem(
           onTap: () {

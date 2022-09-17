@@ -105,7 +105,14 @@ class HomeBottomMenu extends StatelessWidget {
                 Icons.local_fire_department_outlined,
               ),
             ),
-            isVault ? const SizedBox() : Notifications(homeItem: item),
+            isVault
+                ? const SizedBox()
+                : Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Notifications(
+                        homeItem: item,
+                        child: const Icon(Icons.notifications_none)),
+                  ),
             IconButton(
                 splashRadius: 20,
                 onPressed: () {

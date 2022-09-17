@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/types/home/chat/items/message.dart';
+import 'package:info_keeper/pages/home_page/items/chat/chat_controller.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/menu/item.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/btm_app_bar/btm_app_bar_controller.dart';
+import 'package:info_keeper/widgets/notifications.dart';
 
 class MessageMenuWidget extends StatelessWidget {
   final Message message;
@@ -12,6 +14,7 @@ class MessageMenuWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final BottomAppBarController controller = Get.find();
+    final ChatController chatController = Get.find();
 
     return NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (OverscrollIndicatorNotification overscroll) {
@@ -43,21 +46,54 @@ class MessageMenuWidget extends StatelessWidget {
                 icon: const Icon(Icons.brush_outlined),
                 onPressed: () => controller.isShowColorSelector.value = true),
             MenuItemWidget(
-                title: 'Copy', icon: const Icon(Icons.copy), onPressed: () {}),
+                title: 'Edit history',
+                icon: const Icon(Icons.history),
+                onPressed: () {}),
             MenuItemWidget(
-                title: 'Copy', icon: const Icon(Icons.copy), onPressed: () {}),
+                title: 'Unite messages',
+                icon: const Icon(Icons.forum_outlined),
+                onPressed: () {}),
             MenuItemWidget(
-                title: 'Copy', icon: const Icon(Icons.copy), onPressed: () {}),
+                title: 'Move message',
+                icon: const Icon(Icons.drag_handle),
+                onPressed: () {}),
             MenuItemWidget(
-                title: 'Copy', icon: const Icon(Icons.copy), onPressed: () {}),
+                title: 'Collapse message',
+                icon: const Icon(Icons.close_fullscreen),
+                onPressed: () {}),
             MenuItemWidget(
-                title: 'Copy', icon: const Icon(Icons.copy), onPressed: () {}),
+                title: 'Full screen',
+                icon: const Icon(Icons.open_in_full),
+                onPressed: () {}),
             MenuItemWidget(
-                title: 'Copy', icon: const Icon(Icons.copy), onPressed: () {}),
+                title: 'Pin',
+                icon: const Icon(Icons.push_pin_outlined),
+                onPressed: () {}),
             MenuItemWidget(
-                title: 'Copy', icon: const Icon(Icons.copy), onPressed: () {}),
+                title: 'Add to favorites',
+                icon: const Icon(Icons.star_outline),
+                onPressed: () {}),
             MenuItemWidget(
-                title: 'Copy', icon: const Icon(Icons.copy), onPressed: () {}),
+                title: 'Lock message',
+                icon: const Icon(Icons.lock_outline),
+                onPressed: () {}),
+            // Notifications(
+            //   homeItem: chatController.homeItem,
+            //   child: Row(
+            //     children: [
+            //       Icon(Icons.notifications_none),
+            //       Expanded(
+            //           child: Text(
+            //         'Remind',
+            //         style: TextStyle(fontSize: 14),
+            //       ))
+            //     ],
+            //   ),
+            // ),
+            MenuItemWidget(
+                title: 'Move to trash',
+                icon: const Icon(Icons.delete),
+                onPressed: () {})
           ],
         ));
   }

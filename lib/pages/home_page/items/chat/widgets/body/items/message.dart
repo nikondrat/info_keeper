@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_parsed_text/flutter_parsed_text.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/types/home/chat/items/message.dart';
+import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/pages/home_page/items/chat/chat_controller.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/widgets/item_decoration.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/menu/menu.dart';
@@ -28,9 +29,11 @@ class MessageWidget extends StatelessWidget {
         padding: EdgeInsets.zero,
         dateTime: message.dateTime,
         child: GestureDetector(
-          onTap: () => showBarModalBottomSheet(
-              context: context,
-              builder: (context) => MessageMenuWidget(message: message)),
+          onTap: () {
+            showBarModalBottomSheet(
+                context: context,
+                builder: (context) => MessageMenuWidget(message: message));
+          },
           child: message.title.isNotEmpty
               ? Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
