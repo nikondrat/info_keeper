@@ -13,10 +13,7 @@ class MenuItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton.icon(
-      onPressed: () {
-        onPressed();
-        Navigator.pop(context);
-      },
+      onPressed: onPressed,
       style: const ButtonStyle(
         alignment: Alignment.centerLeft,
       ),

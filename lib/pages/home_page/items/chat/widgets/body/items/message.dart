@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_parsed_text/flutter_parsed_text.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/types/home/chat/items/message.dart';
-import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/pages/home_page/items/chat/chat_controller.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/widgets/item_decoration.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/menu/menu.dart';
@@ -22,42 +21,46 @@ class MessageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ItemDecoration(
-        index: message.location.itemIndex!,
-        color: message.color.obs,
-        elevation: elevation,
-        padding: EdgeInsets.zero,
-        dateTime: message.dateTime,
-        child: GestureDetector(
-          onTap: () {
-            showBarModalBottomSheet(
-                context: context,
-                builder: (context) => MessageMenuWidget(message: message));
-          },
-          child: message.title.isNotEmpty
-              ? Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(6),
-                            color: Colors.grey.shade400),
-                        child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: MessageWidgetText(
-                                text: message.title, searchQuery: searchQuery)),
-                      ),
-                      Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: MessageWidgetText(
-                              text: message.content, searchQuery: searchQuery))
-                    ])
-              : Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: MessageWidgetText(
-                      text: message.content, searchQuery: searchQuery)),
-        ));
+    Widget title = Container(
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(6), color: Colors.grey.shade400),
+      child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child:
+              MessageWidgetText(text: message.title, searchQuery: searchQuery)),
+    );
+
+    Widget content = Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: message.isFavorite
+            ? Row(
+                children: [
+                  Expanded(
+                    child: MessageWidgetText(
+                        text: message.content, searchQuery: searchQuery),
+                  ),
+                  const Icon(Icons.star, color: Colors.yellow)
+                ],
+              )
+            : MessageWidgetText(
+                text: message.content, searchQuery: searchQuery));
+
+    return GestureDetector(
+        onTap: () => showBarModalBottomSheet(
+            context: context,
+            builder: (context) => MessageMenuWidget(message: message)),
+        child: ItemDecoration(
+            index: message.location.itemIndex!,
+            color: message.color.obs,
+            elevation: elevation,
+            padding: EdgeInsets.zero,
+            dateTime: message.dateTime,
+            child: message.title.isNotEmpty
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [title, content])
+                : content));
   }
 }
 

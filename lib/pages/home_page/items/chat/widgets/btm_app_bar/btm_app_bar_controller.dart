@@ -8,6 +8,7 @@ class BottomAppBarController extends GetxController {
   final RxBool textFieldIsEmpty = true.obs;
   final RxBool isShowTitleTextField = false.obs;
   final RxBool isShowColorSelector = false.obs;
+  final RxBool isEditMessage = false.obs;
 
   final RxInt selectedColor = defaultColor.obs;
 }

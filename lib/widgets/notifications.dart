@@ -1,19 +1,23 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:get/get.dart';
 import 'package:info_keeper/model/types/home_item.dart';
-import 'package:info_keeper/pages/home_page/home_controller.dart';
+import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/menu/item.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 // ignore: depend_on_referenced_packages
 import 'package:timezone/timezone.dart' as tz;
 
 class Notifications extends StatefulWidget {
-  final Widget child;
+  final Widget? child;
   final String? messageText;
   final HomeItem homeItem;
+  final bool isChat;
   const Notifications(
-      {Key? key, required this.child, required this.homeItem, this.messageText})
+      {Key? key,
+      this.child,
+      this.isChat = false,
+      required this.homeItem,
+      this.messageText})
       : super(key: key);
 
   @override
@@ -71,19 +75,29 @@ class _NotificationsState extends State<Notifications> {
   Widget build(BuildContext context) {
     DateTime selectedDateTime = DateTime.now();
 
-    return GestureDetector(
-      onTap: () async {
-        DateTime? picker = await showOmniDateTimePicker(
-            context: context,
-            is24HourMode: true,
-            startFirstDate: selectedDateTime);
-        if (picker != null) {
-          selectedDateTime = picker;
-          showNotification(selectedDateTime);
-        }
-      },
-      child: widget.child,
-    );
+    onTap() async {
+      DateTime? picker = await showOmniDateTimePicker(
+          context: context,
+          is24HourMode: true,
+          startFirstDate: selectedDateTime);
+      if (picker != null) {
+        selectedDateTime = picker;
+        showNotification(selectedDateTime);
+      }
+    }
+
+    return widget.isChat
+        ? MenuItemWidget(
+            title: 'Remind',
+            icon: const Icon(Icons.notifications_none),
+            onPressed: () {
+              Navigator.pop(context);
+              onTap();
+            })
+        : GestureDetector(
+            onTap: onTap,
+            child: widget.child,
+          );
 
     // if (widget.isStorageFile) {
     //   return GestureDetector(

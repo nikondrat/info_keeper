@@ -5,6 +5,7 @@ import 'package:info_keeper/model/types/home/chat/chat.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
 import 'package:info_keeper/pages/home_page/items/chat/chat_controller.dart';
+import 'package:info_keeper/pages/home_page/items/chat/pages/favorites/favorites_page.dart';
 import 'package:info_keeper/pages/home_page/items/chat/pages/media/media_page.dart';
 import 'package:info_keeper/pages/home_page/items/chat/pages/search/search_title.dart';
 import 'package:info_keeper/pages/home_page/items/chat/pages/titles/title_page.dart';
@@ -117,7 +118,8 @@ class ChatPage extends StatelessWidget {
                                 icon: const Icon(Icons.title)),
                             IconButton(
                                 splashRadius: 20,
-                                onPressed: () {},
+                                onPressed: () =>
+                                    Get.to(() => ChatFavoritesPage(chat: chat)),
                                 icon: const Icon(Icons.star_outline)),
                             PopupMenuButton(
                                 splashRadius: 20,
