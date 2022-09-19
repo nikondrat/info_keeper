@@ -11,4 +11,5 @@ class BottomAppBarController extends GetxController {
   final RxBool isEditMessage = false.obs;
 
   final RxInt selectedColor = defaultColor.obs;
+  final RxString editMessageText = ''.obs;
 }

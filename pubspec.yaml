@@ -41,7 +41,7 @@ dependencies:
   flutter_parsed_text: ^2.2.1
   url_launcher: ^6.1.5
   # audio_wave: ^0.1.4
-  # expandable: ^5.0.1
+  expandable: ^5.0.1
   # loading_animation_widget: ^1.2.0+3
 
 dev_dependencies:

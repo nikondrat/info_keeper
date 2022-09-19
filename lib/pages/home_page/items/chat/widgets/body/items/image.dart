@@ -49,6 +49,7 @@ class ChatImageInFullscreen extends StatelessWidget {
       },
       direction: DismissiblePageDismissDirection.multi,
       isFullScreen: false,
+      startingOpacity: 0.8,
       child: Hero(
         tag: image.dateTime,
         child: Image.file(

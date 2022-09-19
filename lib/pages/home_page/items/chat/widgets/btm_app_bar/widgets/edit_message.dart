@@ -14,10 +14,10 @@ class BottomAppBarEditMessageWidget extends StatelessWidget {
       minVerticalPadding: 0,
       visualDensity: VisualDensity.compact,
       title: const AutoSizeText('Edit'),
-      subtitle: const AutoSizeText(
-        '',
+      subtitle: AutoSizeText(
+        barController.editMessageText.value,
         maxLines: 1,
-        style: TextStyle(color: Colors.black),
+        style: const TextStyle(color: Colors.black),
         textAlign: TextAlign.justify,
       ),
       style: ListTileStyle.drawer,

@@ -1,10 +1,13 @@
+import 'package:dismissible_page/dismissible_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/types/home/chat/chat.dart';
 import 'package:info_keeper/model/types/home/chat/items/message.dart';
 import 'package:info_keeper/pages/home_page/items/chat/chat_controller.dart';
+import 'package:info_keeper/pages/home_page/items/chat/pages/history/history_page.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/menu/item.dart';
+import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/message.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/btm_app_bar/btm_app_bar_controller.dart';
 import 'package:info_keeper/widgets/notifications.dart';
 
@@ -26,11 +29,13 @@ class MessageMenuWidget extends StatelessWidget {
           return false;
         },
         child: ListView(
+          shrinkWrap: true,
           padding: const EdgeInsets.all(10),
           children: [
             MenuItemWidget(
                 title: 'Copy',
                 icon: const Icon(Icons.copy),
+                done: true,
                 onPressed: () {
                   Navigator.pop(context);
                   Clipboard.setData(ClipboardData(text: message.content));
@@ -44,6 +49,7 @@ class MessageMenuWidget extends StatelessWidget {
                 }),
             MenuItemWidget(
                 title: 'Edit',
+                done: true,
                 icon: const Icon(Icons.edit_outlined),
                 onPressed: () {
                   barController.isEditMessage.value = true;
@@ -51,7 +57,8 @@ class MessageMenuWidget extends StatelessWidget {
                       TextEditingValue(text: message.content);
                   barController.titleController.value =
                       TextEditingValue(text: message.title);
-                  barController.textFieldIsEmpty.value = false;
+                  barController.editMessageText.value = message.content;
+                  // barController.textFieldIsEmpty.value = false;
                   Navigator.pop(context);
                 }),
             MenuItemWidget(
@@ -64,8 +71,11 @@ class MessageMenuWidget extends StatelessWidget {
             MenuItemWidget(
                 title: 'Edit history',
                 icon: const Icon(Icons.history),
+                done: true,
                 onPressed: () {
                   Navigator.pop(context);
+                  Get.to(
+                      () => ChatMessageHistoryPage(history: message.history!));
                 }),
             MenuItemWidget(
                 title: 'Unite messages',
@@ -80,16 +90,13 @@ class MessageMenuWidget extends StatelessWidget {
                   Navigator.pop(context);
                 }),
             MenuItemWidget(
-                title: 'Collapse message',
-                icon: const Icon(Icons.close_fullscreen),
-                onPressed: () {
-                  Navigator.pop(context);
-                }),
-            MenuItemWidget(
                 title: 'Full screen',
                 icon: const Icon(Icons.open_in_full),
+                done: true,
                 onPressed: () {
                   Navigator.pop(context);
+                  context.pushTransparentRoute(
+                      MessageWidgetInFullScreen(message: message));
                 }),
             MenuItemWidget(
                 title: 'Pin',
@@ -101,6 +108,7 @@ class MessageMenuWidget extends StatelessWidget {
                 title: message.isFavorite
                     ? 'Remove from favorites'
                     : 'Add to favorites',
+                done: true,
                 icon: const Icon(Icons.star_outline),
                 onPressed: () {
                   message.isFavorite = !message.isFavorite;

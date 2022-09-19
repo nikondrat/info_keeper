@@ -89,6 +89,7 @@ class _NotificationsState extends State<Notifications> {
     return widget.isChat
         ? MenuItemWidget(
             title: 'Remind',
+            done: true,
             icon: const Icon(Icons.notifications_none),
             onPressed: () {
               Navigator.pop(context);

@@ -1,3 +1,5 @@
+import 'package:dismissible_page/dismissible_page.dart';
+import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_parsed_text/flutter_parsed_text.dart';
 import 'package:get/get.dart';
@@ -33,49 +35,75 @@ class MessageWidget extends StatelessWidget {
 
     Widget content = Padding(
         padding: const EdgeInsets.all(8.0),
-        child: message.isFavorite
-            ? Row(
-                children: [
-                  Expanded(
-                    child: MessageWidgetText(
-                        text: message.content, searchQuery: searchQuery),
+        child: ExpandableNotifier(
+          child: ScrollOnExpand(
+            child: Row(
+              children: [
+                message.content.split(' ').length > 60
+                    ? Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ExpandableButton(
+                          child: const Icon(Icons.close_fullscreen),
+                        ),
+                      )
+                    : const SizedBox(),
+                Expanded(
+                  child: ExpandablePanel(
+                    collapsed: MessageWidgetText(
+                        text: message.content,
+                        maxLines: 3,
+                        searchQuery: searchQuery),
+                    expanded: MessageWidgetText(
+                        text: message.content,
+                        searchQuery: searchQuery,
+                        maxLines: 1000000000000000),
                   ),
-                  const Icon(Icons.star, color: Colors.yellow)
-                ],
-              )
-            : MessageWidgetText(
-                text: message.content, searchQuery: searchQuery));
+                ),
+                message.isFavorite
+                    ? const Icon(Icons.star, color: Colors.yellow)
+                    : const SizedBox()
+              ],
+            ),
+          ),
+        ));
 
     return GestureDetector(
         onTap: () => showBarModalBottomSheet(
             context: context,
             builder: (context) => MessageMenuWidget(message: message)),
         child: ItemDecoration(
-            index: message.location.itemIndex!,
-            color: message.color.obs,
-            elevation: elevation,
-            padding: EdgeInsets.zero,
-            dateTime: message.dateTime,
-            child: message.title.isNotEmpty
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [title, content])
-                : content));
+          index: message.location.itemIndex!,
+          color: message.color.obs,
+          elevation: elevation,
+          padding: EdgeInsets.zero,
+          dateTime: message.dateTime,
+          child: message.title.isNotEmpty
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [title, content])
+              : content,
+        ));
   }
 }
 
 class MessageWidgetText extends StatelessWidget {
   final String text;
   final String searchQuery;
+  final int? maxLines;
   const MessageWidgetText(
-      {super.key, required this.text, required this.searchQuery});
+      {super.key,
+      required this.text,
+      required this.searchQuery,
+      this.maxLines});
 
   @override
   Widget build(BuildContext context) {
     return ParsedText(
+      maxLines: maxLines,
       regexOptions:
           const RegexOptions(multiLine: true, unicode: true, dotAll: true),
       text: text,
+      overflow: TextOverflow.ellipsis,
       style: const TextStyle(color: Colors.black),
       parse: [
         MatchText(
@@ -96,7 +124,7 @@ class MessageWidgetText extends StatelessWidget {
             onTap: (text) => null,
             style: const TextStyle(color: Colors.blue)),
         MatchText(
-            pattern: r"\B#+([\w]+)\b",
+            pattern: r"\B(#|@)+([\w]+)\b",
             type: ParsedType.CUSTOM,
             onTap: (hashtag) {
               final ChatController controller = Get.find();
@@ -105,6 +133,30 @@ class MessageWidgetText extends StatelessWidget {
             },
             style: const TextStyle(color: Colors.blue))
       ],
+    );
+  }
+}
+
+class MessageWidgetInFullScreen extends StatelessWidget {
+  final Message message;
+  const MessageWidgetInFullScreen({super.key, required this.message});
+
+  @override
+  Widget build(BuildContext context) {
+    return DismissiblePage(
+      onDismissed: () {
+        Navigator.of(context).pop();
+      },
+      direction: DismissiblePageDismissDirection.multi,
+      isFullScreen: false,
+      startingOpacity: 0.6,
+      child: Center(
+          child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: SizedBox(
+            width: double.infinity,
+            child: MessageWidget(message: message, searchQuery: '')),
+      )),
     );
   }
 }
