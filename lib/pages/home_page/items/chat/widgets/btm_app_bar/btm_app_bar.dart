@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/btm_app_bar/btm_app_bar_controller.dart';
-import 'package:info_keeper/pages/home_page/items/chat/widgets/btm_app_bar/widgets/color_selector/color_selector.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/btm_app_bar/widgets/edit_message.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/btm_app_bar/widgets/text_field.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/btm_app_bar/widgets/title_text_field.dart';
@@ -32,9 +31,7 @@ class ChatBottomAppBar extends StatelessWidget {
                   Obx(() => barController.isShowTitleTextField.value
                       ? const ChatBottomTitleTextField()
                       : const SizedBox()),
-                  Obx(() => barController.isShowColorSelector.value
-                      ? ChatBottomAppBarColorSelector(homeItem: homeItem)
-                      : ChatBottomTextField(homeItem: homeItem))
+                  ChatBottomTextField(homeItem: homeItem)
                 ]))));
   }
 }

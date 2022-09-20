@@ -39,7 +39,7 @@ class MessageWidget extends StatelessWidget {
           child: ScrollOnExpand(
             child: Row(
               children: [
-                message.content.split(' ').length > 60
+                message.content.split(' ').length > 100
                     ? Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: ExpandableButton(
@@ -51,12 +51,13 @@ class MessageWidget extends StatelessWidget {
                   child: ExpandablePanel(
                     collapsed: MessageWidgetText(
                         text: message.content,
-                        maxLines: 3,
+                        maxLines:
+                            message.content.split(' ').length > 100 ? 3 : null,
                         searchQuery: searchQuery),
                     expanded: MessageWidgetText(
-                        text: message.content,
-                        searchQuery: searchQuery,
-                        maxLines: 1000000000000000),
+                      text: message.content,
+                      searchQuery: searchQuery,
+                    ),
                   ),
                 ),
                 message.isFavorite
@@ -73,7 +74,7 @@ class MessageWidget extends StatelessWidget {
             builder: (context) => MessageMenuWidget(message: message)),
         child: ItemDecoration(
           index: message.location.itemIndex!,
-          color: message.color.obs,
+          color: message.color,
           elevation: elevation,
           padding: EdgeInsets.zero,
           dateTime: message.dateTime,
@@ -100,10 +101,10 @@ class MessageWidgetText extends StatelessWidget {
   Widget build(BuildContext context) {
     return ParsedText(
       maxLines: maxLines,
-      regexOptions:
-          const RegexOptions(multiLine: true, unicode: true, dotAll: true),
+      regexOptions: const RegexOptions(
+          multiLine: true, unicode: true, dotAll: true, caseSensitive: true),
       text: text,
-      overflow: TextOverflow.ellipsis,
+      overflow: maxLines != null ? TextOverflow.ellipsis : TextOverflow.clip,
       style: const TextStyle(color: Colors.black),
       parse: [
         MatchText(
@@ -111,12 +112,13 @@ class MessageWidgetText extends StatelessWidget {
             onTap: (email) => launchUrlString('mailto:$email'),
             style: const TextStyle(color: Colors.blue)),
         MatchText(
-            type: ParsedType.URL,
-            onTap: (url) => launchUrlString(url),
-            style: const TextStyle(color: Colors.blue)),
-        MatchText(
             type: ParsedType.PHONE,
             onTap: (phone) => launchUrlString('tel:$phone'),
+            style: const TextStyle(color: Colors.blue)),
+        MatchText(
+            type: ParsedType.URL,
+            onTap: (url) =>
+                launchUrlString(url, mode: LaunchMode.externalApplication),
             style: const TextStyle(color: Colors.blue)),
         MatchText(
             pattern: '([$searchQuery])',
@@ -131,7 +133,7 @@ class MessageWidgetText extends StatelessWidget {
               controller.isSearch.value = true;
               controller.searchController.text = hashtag;
             },
-            style: const TextStyle(color: Colors.blue))
+            style: const TextStyle(color: Colors.blue)),
       ],
     );
   }
@@ -144,19 +146,12 @@ class MessageWidgetInFullScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DismissiblePage(
-      onDismissed: () {
-        Navigator.of(context).pop();
-      },
-      direction: DismissiblePageDismissDirection.multi,
-      isFullScreen: false,
-      startingOpacity: 0.6,
-      child: Center(
-          child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: SizedBox(
-            width: double.infinity,
-            child: MessageWidget(message: message, searchQuery: '')),
-      )),
-    );
+        onDismissed: () {
+          Navigator.of(context).pop();
+        },
+        direction: DismissiblePageDismissDirection.multi,
+        isFullScreen: false,
+        startingOpacity: 0.6,
+        child: MessageWidget(message: message, searchQuery: ''));
   }
 }

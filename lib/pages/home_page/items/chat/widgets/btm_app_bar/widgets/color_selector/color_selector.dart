@@ -2,20 +2,23 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/home_item.dart';
+import 'package:info_keeper/model/types/home/chat/chat.dart';
+import 'package:info_keeper/model/types/home/chat/items/message.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/btm_app_bar/btm_app_bar_controller.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/btm_app_bar/widgets/color_selector/color_item.dart';
 import 'package:info_keeper/themes/default/default.dart';
 
 class ChatBottomAppBarColorSelector extends StatelessWidget {
-  final HomeItem homeItem;
-  const ChatBottomAppBarColorSelector({super.key, required this.homeItem});
+  final Chat chat;
+  final Message message;
+  const ChatBottomAppBarColorSelector(
+      {super.key, required this.chat, required this.message});
 
   @override
   Widget build(BuildContext context) {
     final BottomAppBarController bottomAppBarController = Get.find();
     bottomAppBarController.selectedColor.value =
-        homeItem.child.messages[Controller.to.selectedElementIndex.value].color;
+        chat.messages[Controller.to.selectedElementIndex.value].color;
 
     return AspectRatio(
       aspectRatio: 16 / 5,
@@ -47,15 +50,14 @@ class ChatBottomAppBarColorSelector extends StatelessWidget {
                       ),
                       itemBuilder: (context, index) {
                         return ColorSelectorItem(
-                            itemIndex: index, homeItem: homeItem);
+                            itemIndex: index, chat: chat, message: message);
                       }),
                 ),
               ],
             ),
           ),
           RawMaterialButton(
-            onPressed: () =>
-                bottomAppBarController.isShowColorSelector.value = false,
+            onPressed: () => Navigator.pop(context),
             highlightElevation: 0,
             elevation: 1,
             splashColor: Colors.transparent,

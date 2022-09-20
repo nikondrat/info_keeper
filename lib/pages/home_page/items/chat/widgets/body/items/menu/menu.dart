@@ -9,7 +9,9 @@ import 'package:info_keeper/pages/home_page/items/chat/pages/history/history_pag
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/menu/item.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/message.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/btm_app_bar/btm_app_bar_controller.dart';
+import 'package:info_keeper/pages/home_page/items/chat/widgets/btm_app_bar/widgets/color_selector/color_selector.dart';
 import 'package:info_keeper/widgets/notifications.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class MessageMenuWidget extends StatelessWidget {
   final Message message;
@@ -22,6 +24,7 @@ class MessageMenuWidget extends StatelessWidget {
     final ChatController chatController = Get.find();
 
     final Chat chat = chatController.homeItem.child;
+    RxList messages = chat.messages;
 
     return NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (OverscrollIndicatorNotification overscroll) {
@@ -63,10 +66,19 @@ class MessageMenuWidget extends StatelessWidget {
                 }),
             MenuItemWidget(
                 title: 'Highlite',
+                done: true,
                 icon: const Icon(Icons.brush_outlined),
                 onPressed: () {
                   Navigator.pop(context);
-                  barController.isShowColorSelector.value = true;
+                  showBarModalBottomSheet(
+                      context: context,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      barrierColor: Colors.transparent,
+                      builder: (context) => ChatBottomAppBarColorSelector(
+                          chat: chat, message: message));
                 }),
             MenuItemWidget(
                 title: 'Edit history',
@@ -99,9 +111,13 @@ class MessageMenuWidget extends StatelessWidget {
                       MessageWidgetInFullScreen(message: message));
                 }),
             MenuItemWidget(
-                title: 'Pin',
+                title: message.isPinned ? 'Unpin' : 'Pin',
                 icon: const Icon(Icons.push_pin_outlined),
                 onPressed: () {
+                  message.isPinned = !message.isPinned;
+                  messages[messages.indexOf(message)] = message;
+                  chat.copyWith(messages: messages);
+                  chatController.refreshPinnedMessages(messages);
                   Navigator.pop(context);
                 }),
             MenuItemWidget(
@@ -112,7 +128,6 @@ class MessageMenuWidget extends StatelessWidget {
                 icon: const Icon(Icons.star_outline),
                 onPressed: () {
                   message.isFavorite = !message.isFavorite;
-                  RxList messages = chat.messages;
                   messages[messages.indexOf(message)] = message;
                   chat.copyWith(messages: messages);
                   Navigator.pop(context);

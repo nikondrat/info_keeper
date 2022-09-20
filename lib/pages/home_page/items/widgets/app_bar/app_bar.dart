@@ -12,6 +12,7 @@ class AppBarWidget extends StatelessWidget {
   final Widget? leading;
   final List<Widget>? actions;
   final Function() leadingButtonFunc;
+  final PreferredSizeWidget? bottom;
   const AppBarWidget(
       {super.key,
       this.titleSpacing = 0,
@@ -21,6 +22,7 @@ class AppBarWidget extends StatelessWidget {
       required this.change,
       this.title,
       this.actions,
+      this.bottom,
       required this.leadingButtonFunc,
       required this.focus});
 
@@ -31,6 +33,7 @@ class AppBarWidget extends StatelessWidget {
     return Obx(() => AppBar(
           titleSpacing: titleSpacing,
           centerTitle: centerTitle,
+          bottom: bottom,
           leading: leading ??
               IconButton(
                   splashRadius: 20,

@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home/chat/chat.dart';
-import 'package:info_keeper/model/types/home_item.dart';
+import 'package:info_keeper/model/types/home/chat/items/message.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/btm_app_bar/btm_app_bar_controller.dart';
 import 'package:info_keeper/themes/default/default.dart';
 
 class ColorSelectorItem extends StatelessWidget {
   final int itemIndex;
-  final HomeItem homeItem;
+  final Chat chat;
+  final Message message;
   const ColorSelectorItem(
-      {super.key, required this.itemIndex, required this.homeItem});
+      {super.key,
+      required this.itemIndex,
+      required this.message,
+      required this.chat});
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +22,9 @@ class ColorSelectorItem extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         bottomAppBarController.selectedColor.value = itemIndex;
-        Chat chat = homeItem.child;
         RxList messages = chat.messages;
-        messages[Controller.to.selectedElementIndex.value].color = itemIndex;
-        chat.messages = messages;
+        message.color = itemIndex;
+        messages[messages.indexOf(message)] = message;
         chat.copyWith(messages: messages);
       },
       child: Obx(() => Container(

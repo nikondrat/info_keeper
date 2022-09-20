@@ -9,6 +9,7 @@ import 'package:info_keeper/pages/home_page/items/chat/pages/favorites/favorites
 import 'package:info_keeper/pages/home_page/items/chat/pages/media/media_page.dart';
 import 'package:info_keeper/pages/home_page/items/chat/pages/search/search_title.dart';
 import 'package:info_keeper/pages/home_page/items/chat/pages/titles/title_page.dart';
+import 'package:info_keeper/pages/home_page/items/chat/widgets/app_bar/bottom.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/body.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/btm_app_bar/btm_app_bar.dart';
 import 'package:info_keeper/pages/home_page/items/widgets/app_bar/app_bar.dart';
@@ -26,6 +27,9 @@ class ChatPage extends StatelessWidget {
     final HomeController home = Get.find();
     Chat chat = homeItem.child;
     controller.homeItem = homeItem;
+    RxList messages = chat.messages;
+
+    controller.refreshPinnedMessages(messages);
 
     // title
     TextEditingController titleController =
@@ -83,7 +87,10 @@ class ChatPage extends StatelessWidget {
         child: Obx(() => Scaffold(
             resizeToAvoidBottomInset: false,
             appBar: PreferredSize(
-                preferredSize: const Size.fromHeight(kToolbarHeight),
+                preferredSize: Size.fromHeight(
+                    controller.pinnedMessages.isNotEmpty
+                        ? 100
+                        : kToolbarHeight),
                 child: AppBarWidget(
                     title: !controller.changeTitle.value
                         ? controller.isSearch.value
@@ -94,6 +101,11 @@ class ChatPage extends StatelessWidget {
                             controller.isSearch.value
                         ? 0
                         : 20,
+                    bottom: controller.pinnedMessages.isNotEmpty
+                        ? const PreferredSize(
+                            preferredSize: Size.fromHeight(double.infinity),
+                            child: ChatAppBarBottomWidget())
+                        : null,
                     controller: titleController,
                     change: controller.changeTitle,
                     leadingButtonFunc: () {

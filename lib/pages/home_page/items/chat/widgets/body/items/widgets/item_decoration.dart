@@ -8,7 +8,7 @@ import 'package:scroll_to_index/scroll_to_index.dart';
 class ItemDecoration extends StatelessWidget {
   final int index;
   final Widget child;
-  final RxInt? color;
+  final int? color;
   final double elevation;
   final DateTime dateTime;
   final EdgeInsets? padding;
@@ -43,7 +43,7 @@ class ItemDecoration extends StatelessWidget {
                 margin: const EdgeInsets.symmetric(vertical: 2),
                 padding: padding ?? const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                    color: messageColors[color?.value ?? defaultColor],
+                    color: messageColors[color ?? defaultColor],
                     borderRadius: BorderRadius.circular(6)),
 
                 // index:
