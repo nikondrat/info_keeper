@@ -7,6 +7,7 @@ import 'package:scroll_to_index/scroll_to_index.dart';
 
 class ChatController extends GetxController {
   late HomeItem homeItem;
+  late Message selectedMessage;
   // search
   final TextEditingController searchController = TextEditingController();
   final RxList searchItems = [].obs;

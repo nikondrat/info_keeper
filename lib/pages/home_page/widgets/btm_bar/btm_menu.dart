@@ -5,6 +5,7 @@ import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
 import 'package:info_keeper/pages/home_page/widgets/folders/folders.dart';
 import 'package:info_keeper/pages/home_page/items/widgets/app_bar/widgets/popup_menu.dart';
+import 'package:info_keeper/pages/vault_page/vault_page.dart';
 import 'package:info_keeper/widgets/notifications.dart';
 
 class HomeBottomMenu extends StatelessWidget {
@@ -118,6 +119,10 @@ class HomeBottomMenu extends StatelessWidget {
                 onPressed: () {
                   home.isShowBottomMenu.value = false;
                   item.copyWith(isLocked: !item.isLocked);
+                  Get.to(() => VaultPage(
+                        childrens: Controller.to
+                            .all[Controller.to.selectedFolder.value].childrens,
+                      ));
                   // lock();
                 },
                 icon: const Icon(Icons.lock_outline)),

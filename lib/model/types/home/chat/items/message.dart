@@ -18,6 +18,12 @@ class Message {
   bool isCollapsed;
   List? history;
 
+  // write an int variable with the length of the list
+  // because if i recover the message
+  // it recover at last position writed in location
+  // but if i adding new messages
+  // message recovered to old position
+
   Message(
       {required this.location,
       this.title = '',

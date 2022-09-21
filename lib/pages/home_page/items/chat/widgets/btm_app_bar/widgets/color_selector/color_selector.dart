@@ -1,9 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home/chat/chat.dart';
 import 'package:info_keeper/model/types/home/chat/items/message.dart';
+import 'package:info_keeper/pages/home_page/items/chat/chat_controller.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/btm_app_bar/btm_app_bar_controller.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/btm_app_bar/widgets/color_selector/color_item.dart';
 import 'package:info_keeper/themes/default/default.dart';
@@ -17,8 +17,9 @@ class ChatBottomAppBarColorSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final BottomAppBarController bottomAppBarController = Get.find();
+    ChatController chatController = Get.find();
     bottomAppBarController.selectedColor.value =
-        chat.messages[Controller.to.selectedElementIndex.value].color;
+        chatController.selectedMessage.color;
 
     return AspectRatio(
       aspectRatio: 16 / 5,

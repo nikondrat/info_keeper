@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home/chat/chat.dart';
 import 'package:info_keeper/model/types/home/chat/items/message.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/model/types/item_location.dart';
+import 'package:info_keeper/pages/home_page/items/chat/chat_controller.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/btm_app_bar/btm_app_bar_controller.dart';
 
 class ChatBottomSendButton extends StatelessWidget {
@@ -27,13 +27,14 @@ class ChatBottomSendButton extends StatelessWidget {
                   index: homeItem.location.index,
                   itemIndex: messages.length),
               content: controller.messageController.text,
-              history: [],
+              history: [controller.messageController.text],
               dateTime: DateTime.now()));
       chat.copyWith(messages: messages);
     }
 
     editMessage(BottomAppBarController controller) {
-      Message message = messages[Controller.to.selectedElementIndex.value];
+      ChatController chatController = Get.find();
+      Message message = chatController.selectedMessage;
       final List history = message.history ?? [];
 
       message.title = controller.titleController.text;
