@@ -85,7 +85,14 @@ class MessageWidgetBody extends StatelessWidget {
                       borderRadius: BorderRadius.circular(6),
                       color: Colors.grey),
                   child: const Icon(Icons.star, color: Colors.yellowAccent))
-              : const SizedBox()
+              : const SizedBox(),
+          message.isUnlocked
+              ? Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(6),
+                      color: Colors.grey),
+                  child: const Icon(Icons.lock_outline))
+              : const SizedBox(),
         ]))));
 
     return ItemDecoration(

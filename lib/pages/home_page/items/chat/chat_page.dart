@@ -1,7 +1,9 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/model/types/home/chat/chat.dart';
+import 'package:info_keeper/model/types/home/chat/items/message.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
 import 'package:info_keeper/pages/home_page/items/chat/chat_controller.dart';
@@ -14,6 +16,7 @@ import 'package:info_keeper/pages/home_page/items/chat/widgets/body/body.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/btm_app_bar/btm_app_bar.dart';
 import 'package:info_keeper/pages/home_page/items/widgets/app_bar/app_bar.dart';
 import 'package:info_keeper/pages/home_page/items/widgets/app_bar/widgets/popup_menu.dart';
+import 'package:info_keeper/pages/vault_page/vault_page.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:swipe/swipe.dart';
 
@@ -28,7 +31,13 @@ class ChatPage extends StatelessWidget {
     Chat chat = homeItem.child;
     controller.homeItem = homeItem;
     RxList messages = chat.messages;
+    RxList<Message> lockedMessages = <Message>[].obs;
 
+    for (int i = 0; i < messages.length; i++) {
+      if (messages[i].type == AllType.chatMessage && messages[i].isLocked) {
+        lockedMessages.add(messages[i]);
+      }
+    }
     controller.refreshPinnedMessages(messages);
 
     // title
@@ -83,7 +92,8 @@ class ChatPage extends StatelessWidget {
     }
 
     return Swipe(
-        onSwipeRight: () => null,
+        onSwipeRight: () =>
+            Get.to(() => VaultPage(childrens: lockedMessages, isChat: true)),
         child: Obx(() => Scaffold(
             resizeToAvoidBottomInset: false,
             appBar: PreferredSize(

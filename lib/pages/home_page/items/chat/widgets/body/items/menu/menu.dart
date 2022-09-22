@@ -133,9 +133,12 @@ class MessageMenuWidget extends StatelessWidget {
                   Navigator.pop(context);
                 }),
             MenuItemWidget(
-                title: 'Lock message',
+                title: message.isLocked ? 'Unlock' : 'Lock message',
                 icon: const Icon(Icons.lock_outline),
                 onPressed: () {
+                  message.isLocked = !message.isLocked;
+                  messages[messages.indexOf(message)] = message;
+                  chat.copyWith(messages: messages);
                   Navigator.pop(context);
                 }),
             Notifications(

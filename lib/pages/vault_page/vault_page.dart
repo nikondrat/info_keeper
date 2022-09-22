@@ -2,17 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/home_item.dart';
+import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/message.dart';
 import 'package:info_keeper/pages/home_page/widgets/body/body_item/body_item.dart';
 import 'package:info_keeper/pages/home_page/widgets/btm_bar/btm_bar.dart';
 import 'package:info_keeper/pages/vault_page/vault_controller.dart';
 import 'package:info_keeper/pages/vault_page/vault_password.dart';
 
 class VaultPage extends StatelessWidget {
-  final RxList<HomeItem> childrens;
+  final RxList childrens;
+  final bool isChat;
 
   const VaultPage({
     Key? key,
+    this.isChat = false,
     required this.childrens,
   }) : super(key: key);
 
@@ -54,10 +56,13 @@ class VaultPage extends StatelessWidget {
                   return childrens[index].isLocked
                       ? Padding(
                           padding: const EdgeInsets.all(5),
-                          child: HomeBodyItem(
-                            homeItem: childrens[index],
-                            homeItemIndex: index,
-                          ),
+                          child: isChat
+                              ? MessageWidget(
+                                  message: childrens[index], searchQuery: '')
+                              : HomeBodyItem(
+                                  homeItem: childrens[index],
+                                  homeItemIndex: index,
+                                ),
                         )
                       : Container();
                 })
