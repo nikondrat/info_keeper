@@ -19,10 +19,10 @@ class HomeAppBar extends StatelessWidget {
           onTap: () => home.isSearch.value = !home.isSearch.value,
           child: const PopupMenuItemBody(title: 'Search', icon: Icons.search));
 
-      PopupMenuItem trash = PopupMenuItem(
+      PopupMenuItem trash = const PopupMenuItem(
           value: 0,
-          onTap: () => home.isSearch.value = !home.isSearch.value,
-          child: const PopupMenuItemBody(
+          onTap: null,
+          child: PopupMenuItemBody(
               title: 'Trash bin', icon: Icons.delete_outline));
 
       items.addAll([search, trash]);

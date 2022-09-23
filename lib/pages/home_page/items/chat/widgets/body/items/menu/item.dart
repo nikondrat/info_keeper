@@ -16,7 +16,7 @@ class MenuItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return kDebugMode && done
-        ? const Text('in work')
+        ? const Text('done')
         : TextButton.icon(
             onPressed: onPressed,
             style: const ButtonStyle(

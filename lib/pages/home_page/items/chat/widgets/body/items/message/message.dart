@@ -25,7 +25,7 @@ class MessageWidget extends StatelessWidget {
     RxList messages = chat.messages;
 
     unlock() {
-      message.isLocked = !message.isLocked;
+      message.isUnlocked = !message.isUnlocked;
       messages[messages.indexOf(message)] = message;
       chat.copyWith(messages: messages);
     }
@@ -33,11 +33,11 @@ class MessageWidget extends StatelessWidget {
     return GestureDetector(
         onTap: () {
           chatController.selectedMessage = message;
-          !message.isLocked
-              ? showBarModalBottomSheet(
+          message.isLocked && !message.isUnlocked
+              ? unlock()
+              : showBarModalBottomSheet(
                   context: context,
-                  builder: (context) => MessageMenuWidget(message: message))
-              : unlock();
+                  builder: (context) => MessageMenuWidget(message: message));
         },
         child: MessageWidgetBody(message: message, searchQuery: searchQuery));
   }

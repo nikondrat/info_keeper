@@ -58,16 +58,10 @@ class MessageWidgetBody extends StatelessWidget {
                       color: Colors.grey),
                   child: const Icon(Icons.star, color: Colors.yellowAccent))
               : const SizedBox(),
-          message.isUnlocked
-              ? Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6),
-                      color: Colors.grey),
-                  child: const Icon(Icons.lock_outline))
-              : const SizedBox(),
+          message.isLocked ? const Icon(Icons.lock_open) : const SizedBox(),
         ]))));
 
-    return message.isLocked
+    return message.isLocked && !message.isUnlocked
         ? LockedDecorationWidget(message: message)
         : SwipeTo(
             onRightSwipe: () {},
