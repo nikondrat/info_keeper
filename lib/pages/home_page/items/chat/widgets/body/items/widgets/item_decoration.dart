@@ -12,7 +12,6 @@ class ItemDecoration extends StatelessWidget {
   final double elevation;
   final DateTime dateTime;
   final EdgeInsets? padding;
-  final RxBool? isLocked;
   const ItemDecoration(
       {Key? key,
       required this.index,
@@ -20,7 +19,6 @@ class ItemDecoration extends StatelessWidget {
       this.elevation = 0,
       required this.child,
       this.padding,
-      this.isLocked,
       required this.dateTime})
       : super(key: key);
 
@@ -33,7 +31,7 @@ class ItemDecoration extends StatelessWidget {
     String minute =
         dateTime.minute < 10 ? '0${dateTime.minute}' : '${dateTime.minute}';
 
-    Widget body = Obx(() => controller.showDate.value
+    Widget body = controller.showDate.value
         ? Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -50,17 +48,13 @@ class ItemDecoration extends StatelessWidget {
               ),
             ],
           )
-        : child);
-
-    Widget lockedBody = const Center(child: Icon(Icons.lock_outline));
+        : child;
 
     Widget bodyDecoration = Container(
         margin: const EdgeInsets.symmetric(vertical: 2),
         padding: padding ?? const EdgeInsets.all(8),
         decoration: BoxDecoration(
-            color: isLocked?.value != null
-                ? Colors.grey.shade300
-                : messageColors[color ?? defaultColor],
+            color: messageColors[color ?? defaultColor],
             borderRadius: BorderRadius.circular(6)),
 
         // index:
@@ -70,16 +64,15 @@ class ItemDecoration extends StatelessWidget {
         // ))
 
         // body:
-        child: isLocked?.value != null ? lockedBody : body);
+        child: body);
 
     return Material(
-      color: Colors.transparent,
-      elevation: elevation,
-      child: AutoScrollTag(
-          index: index,
-          key: ValueKey(index),
-          controller: controller.autoScrollController,
-          child: bodyDecoration),
-    );
+        color: Colors.transparent,
+        elevation: elevation,
+        child: AutoScrollTag(
+            index: index,
+            key: ValueKey(index),
+            controller: controller.autoScrollController,
+            child: bodyDecoration));
   }
 }

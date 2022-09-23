@@ -7,7 +7,7 @@ import 'package:info_keeper/model/types/home/chat/items/message.dart';
 import 'package:info_keeper/pages/home_page/items/chat/chat_controller.dart';
 import 'package:info_keeper/pages/home_page/items/chat/pages/history/history_page.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/menu/item.dart';
-import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/message.dart';
+import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/message/widgets/in_fullscreen.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/btm_app_bar/btm_app_bar_controller.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/btm_app_bar/widgets/color_selector/color_selector.dart';
 import 'package:info_keeper/widgets/notifications.dart';

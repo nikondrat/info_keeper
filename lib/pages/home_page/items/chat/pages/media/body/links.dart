@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/model/types/home/chat/chat.dart';
 import 'package:info_keeper/model/types/home/chat/items/message.dart';
-import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/message.dart';
+import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/message/message.dart';
 
 class ChatMediaLinks extends StatelessWidget {
   final Chat chat;

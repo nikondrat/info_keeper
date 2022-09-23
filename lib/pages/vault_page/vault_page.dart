@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/message.dart';
+import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/message/message.dart';
 import 'package:info_keeper/pages/home_page/widgets/body/body_item/body_item.dart';
 import 'package:info_keeper/pages/home_page/widgets/btm_bar/btm_bar.dart';
 import 'package:info_keeper/pages/vault_page/vault_controller.dart';
