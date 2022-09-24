@@ -1,9 +1,12 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:info_keeper/model/types/home/chat/items/message.dart';
+import 'package:info_keeper/pages/home_page/items/chat/chat_controller.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/message/widgets/content_text.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/widgets/item_decoration.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/widgets/locked_decoration.dart';
+import 'package:info_keeper/pages/home_page/items/chat/widgets/btm_app_bar/btm_app_bar_controller.dart';
 import 'package:swipe_to/swipe_to.dart';
 
 class MessageWidgetBody extends StatelessWidget {
@@ -19,6 +22,9 @@ class MessageWidgetBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ChatController chatController = Get.find();
+    final BottomAppBarController barController = Get.find();
+
     Widget title = Container(
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
@@ -64,7 +70,15 @@ class MessageWidgetBody extends StatelessWidget {
     return message.isLocked && !message.isUnlocked
         ? LockedDecorationWidget(message: message)
         : SwipeTo(
-            onRightSwipe: () {},
+            onRightSwipe: () {
+              chatController.selectedMessage = message;
+              barController.isEditMessage.value = true;
+              barController.messageController.value =
+                  TextEditingValue(text: message.content);
+              barController.titleController.value =
+                  TextEditingValue(text: message.title);
+              barController.editMessageText.value = message.content;
+            },
             child: ItemDecoration(
                 index: message.location.itemIndex!,
                 color: message.color,

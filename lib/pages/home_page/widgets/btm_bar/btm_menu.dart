@@ -119,10 +119,7 @@ class HomeBottomMenu extends StatelessWidget {
                 onPressed: () {
                   home.isShowBottomMenu.value = false;
                   item.copyWith(isLocked: !item.isLocked);
-                  Get.to(() => VaultPage(
-                        childrens: Controller.to
-                            .all[Controller.to.selectedFolder.value].childrens,
-                      ));
+                  Get.to(() => const VaultPage());
                   // lock();
                 },
                 icon: const Icon(Icons.lock_outline)),

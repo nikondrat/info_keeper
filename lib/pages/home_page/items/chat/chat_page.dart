@@ -31,13 +31,6 @@ class ChatPage extends StatelessWidget {
     Chat chat = homeItem.child;
     controller.homeItem = homeItem;
     RxList messages = chat.messages;
-    RxList<Message> lockedMessages = <Message>[].obs;
-
-    for (int i = 0; i < messages.length; i++) {
-      if (messages[i].type == AllType.chatMessage && messages[i].isLocked) {
-        lockedMessages.add(messages[i]);
-      }
-    }
     controller.refreshPinnedMessages(messages);
 
     // title
@@ -91,9 +84,13 @@ class ChatPage extends StatelessWidget {
       return items;
     }
 
+    List actions() {
+      List actions = [];
+      return actions;
+    }
+
     return Swipe(
-        onSwipeRight: () =>
-            Get.to(() => VaultPage(childrens: lockedMessages, isChat: true)),
+        onSwipeRight: () => Get.to(() => const VaultPage(isChat: true)),
         child: Obx(() => Scaffold(
             resizeToAvoidBottomInset: false,
             appBar: PreferredSize(

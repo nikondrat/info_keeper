@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
+import 'package:info_keeper/model/types/all.dart';
+import 'package:info_keeper/model/types/home/chat/chat.dart';
+import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/message/message.dart';
 import 'package:info_keeper/pages/home_page/widgets/body/body_item/body_item.dart';
 import 'package:info_keeper/pages/home_page/widgets/btm_bar/btm_bar.dart';
@@ -9,13 +12,11 @@ import 'package:info_keeper/pages/vault_page/vault_controller.dart';
 import 'package:info_keeper/pages/vault_page/vault_password.dart';
 
 class VaultPage extends StatelessWidget {
-  final RxList childrens;
   final bool isChat;
 
   const VaultPage({
     Key? key,
     this.isChat = false,
-    required this.childrens,
   }) : super(key: key);
 
   @override
@@ -23,6 +24,23 @@ class VaultPage extends StatelessWidget {
     final VaultController vaultController = Get.put(VaultController());
     final isGridView = true.obs;
     final isUnblocked = false.obs;
+
+    RxList<HomeItem> childrens =
+        Controller.to.all[Controller.to.selectedFolder.value].childrens;
+    Chat? chat;
+
+    RxList homeChildrens = childrens;
+    RxList chatLockedMessages = [].obs;
+
+    if (isChat) {
+      chat = childrens[Controller.to.selectedElementIndex.value].child;
+      for (int i = 0; i < chat!.messages.length; i++) {
+        if (chat.messages[i].type == AllType.chatMessage &&
+            chat.messages[i].isLocked) {
+          chatLockedMessages.add(chat.messages[i]);
+        }
+      }
+    }
 
     return Obx(() => Scaffold(
         appBar: AppBar(
@@ -51,16 +69,17 @@ class VaultPage extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 crossAxisCount: isGridView.value ? 2 : 1,
-                itemCount: childrens.length,
+                itemCount:
+                    isChat ? chatLockedMessages.length : homeChildrens.length,
                 itemBuilder: (context, index) {
-                  return childrens[index].isLocked
+                  return homeChildrens[index].isLocked
                       ? Padding(
                           padding: const EdgeInsets.all(5),
                           child: isChat
                               ? MessageWidget(
-                                  message: childrens[index], searchQuery: '')
+                                  message: chatLockedMessages[index])
                               : HomeBodyItem(
-                                  homeItem: childrens[index],
+                                  homeItem: homeChildrens[index],
                                   homeItemIndex: index,
                                 ),
                         )

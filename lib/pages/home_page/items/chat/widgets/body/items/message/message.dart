@@ -15,7 +15,7 @@ class MessageWidget extends StatelessWidget {
       {super.key,
       required this.message,
       this.elevation = 0,
-      required this.searchQuery});
+      this.searchQuery = ''});
 
   @override
   Widget build(BuildContext context) {

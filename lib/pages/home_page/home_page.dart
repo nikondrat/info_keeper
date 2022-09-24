@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/pages/home_page/widgets/app_bar/app_bar.dart';
 import 'package:info_keeper/pages/home_page/widgets/body/body.dart';
 import 'package:info_keeper/pages/home_page/widgets/btm_bar/btm_bar.dart';
@@ -15,10 +14,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Swipe(
       onSwipeRight: () {
-        Get.to(() => VaultPage(
-              childrens: Controller
-                  .to.all[Controller.to.selectedFolder.value].childrens,
-            ));
+        Get.to(() => const VaultPage());
       },
       child: const Scaffold(
           resizeToAvoidBottomInset: false,
