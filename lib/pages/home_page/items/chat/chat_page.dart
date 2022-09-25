@@ -1,7 +1,9 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/model/types/home/chat/chat.dart';
+import 'package:info_keeper/model/types/home/chat/items/message.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
 import 'package:info_keeper/pages/home_page/items/chat/chat_controller.dart';
@@ -42,6 +44,33 @@ class ChatPage extends StatelessWidget {
             Rect.fromLTRB(0, 0, 0, MediaQuery.of(context).viewInsets.bottom),
         axis: Axis.vertical);
 
+    uniteMessages() {
+      List<Message> selectedMessages = [];
+
+      for (int i = 0; i < messages.length; i++) {
+        if (messages[i].type == AllType.chatMessage &&
+            messages[i].isSelected &&
+            !messages[i].isLocked) {
+          selectedMessages.add(messages[i]);
+        }
+      }
+      StringBuffer stringBuffer = StringBuffer();
+
+      for (Message message in selectedMessages.reversed) {
+        stringBuffer.writeln(message.content);
+      }
+      messages[selectedMessages.last.location.itemIndex!].content =
+          stringBuffer.toString();
+      messages[selectedMessages.last.location.itemIndex!].isSelected = false;
+      selectedMessages.removeLast();
+
+      for (int i = 0; i < selectedMessages.length; i++) {
+        messages.removeAt(messages.indexOf(selectedMessages[i]));
+      }
+      chat.copyWith(messages: messages);
+      controller.uniteMessage.value = false;
+    }
+
     List<PopupMenuItem> popupItems() {
       List<PopupMenuItem> items = [];
 
@@ -81,8 +110,8 @@ class ChatPage extends StatelessWidget {
       return items;
     }
 
-    List<Widget> actions() {
-      List<Widget> actions = [];
+    RxList<Widget> actions() {
+      RxList<Widget> actions = <Widget>[].obs;
 
       Widget titleButton = IconButton(
           splashRadius: 20,
@@ -101,7 +130,14 @@ class ChatPage extends StatelessWidget {
               : null,
           itemBuilder: (context) => popupItems());
 
-      if (!controller.isSearch.value) {
+      Widget uniteButton = IconButton(
+          splashRadius: 20,
+          onPressed: uniteMessages,
+          icon: const Icon(Icons.done));
+
+      if (controller.uniteMessage.value) {
+        actions.add(uniteButton);
+      } else {
         actions.addAll([titleButton, favoritesButton, popupsButton]);
       }
 
@@ -140,6 +176,8 @@ class ChatPage extends StatelessWidget {
                         controller.isSearch.value = !controller.isSearch.value;
                         controller.searchItems.clear();
                         controller.searchController.clear();
+                      } else if (controller.uniteMessage.value) {
+                        controller.uniteMessage.value = false;
                       } else if (home.isSearch.value) {
                         Get.back();
                       } else {

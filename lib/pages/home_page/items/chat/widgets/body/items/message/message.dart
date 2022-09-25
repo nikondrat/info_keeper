@@ -24,23 +24,37 @@ class MessageWidget extends StatelessWidget {
     final Chat chat = chatController.homeItem.child;
     RxList messages = chat.messages;
 
+    unite() {
+      message.isSelected = !message.isSelected;
+      messages[messages.indexOf(message)] = message;
+      chat.copyWith(messages: messages);
+    }
+
     unlock() {
       message.isUnlocked = !message.isUnlocked;
       messages[messages.indexOf(message)] = message;
       chat.copyWith(messages: messages);
     }
 
+    showBottomMenu() {
+      showBarModalBottomSheet(
+          context: context,
+          builder: (context) => MessageMenuWidget(message: message));
+    }
+
+    onTap() {
+      chatController.selectedMessage = message;
+      if (message.isLocked && !message.isUnlocked) {
+        unlock();
+      } else if (chatController.uniteMessage.value) {
+        unite();
+      } else {
+        showBottomMenu();
+      }
+    }
+
     return GestureDetector(
-        onTap: () {
-          chatController.selectedMessage = message;
-          if (message.isLocked && !message.isUnlocked) {
-            unlock();
-          } else {
-            showBarModalBottomSheet(
-                context: context,
-                builder: (context) => MessageMenuWidget(message: message));
-          }
-        },
+        onTap: onTap,
         child: //
             // Text('${message.isPinned}'));
             MessageWidgetBody(message: message, searchQuery: searchQuery));

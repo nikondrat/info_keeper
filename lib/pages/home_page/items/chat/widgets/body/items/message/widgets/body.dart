@@ -82,6 +82,7 @@ class MessageWidgetBody extends StatelessWidget {
             child: ItemDecoration(
                 index: message.location.itemIndex!,
                 color: message.color,
+                isSelected: message.isSelected,
                 elevation: elevation,
                 padding: EdgeInsets.zero,
                 dateTime: message.dateTime,

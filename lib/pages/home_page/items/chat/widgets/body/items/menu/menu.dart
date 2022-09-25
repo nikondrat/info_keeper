@@ -91,8 +91,13 @@ class MessageMenuWidget extends StatelessWidget {
                 }),
             MenuItemWidget(
                 title: 'Unite messages',
+                done: true,
                 icon: const Icon(Icons.forum_outlined),
                 onPressed: () {
+                  chatController.uniteMessage.value = true;
+                  message.isSelected = !message.isSelected;
+                  messages[messages.indexOf(message)] = message;
+                  chat.copyWith(messages: messages);
                   Navigator.pop(context);
                 }),
             MenuItemWidget(
@@ -149,6 +154,7 @@ class MessageMenuWidget extends StatelessWidget {
                 title: 'Move to trash',
                 icon: const Icon(Icons.delete),
                 onPressed: () {
+                  messages.removeAt(messages.indexOf(message));
                   Navigator.pop(context);
                 })
           ],

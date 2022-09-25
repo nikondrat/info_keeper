@@ -32,4 +32,6 @@ class ChatController extends GetxController {
   // body
   final RxBool showDate = false.obs;
   late AutoScrollController autoScrollController;
+
+  RxBool uniteMessage = false.obs;
 }
