@@ -15,7 +15,6 @@ class Message {
   bool isPinned;
   bool isLocked;
   bool isUnlocked;
-  bool isCollapsed;
   List? history;
 
   // write an int variable with the length of the list
@@ -34,7 +33,6 @@ class Message {
       this.isSelected = false,
       this.isPinned = false,
       this.isLocked = false,
-      this.isCollapsed = false,
       this.isUnlocked = false,
       this.history,
       required this.dateTime}) {
@@ -49,7 +47,6 @@ class Message {
         isSelected = json['isSelected'],
         isPinned = json['isPinned'],
         isLocked = json['isLocked'],
-        isCollapsed = json['isCollapsed'],
         isUnlocked = json['isUnlocked'],
         color = json['color'],
         isFavorite = json['isFavorite'],
@@ -63,7 +60,6 @@ class Message {
         'content': content,
         'color': color,
         'isFavorite': isFavorite,
-        'isCollapsed': isCollapsed,
         'isSelected': isSelected,
         'isUnlocked': isUnlocked,
         'isPinned': isPinned,

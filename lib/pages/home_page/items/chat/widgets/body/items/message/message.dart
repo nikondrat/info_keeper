@@ -33,12 +33,16 @@ class MessageWidget extends StatelessWidget {
     return GestureDetector(
         onTap: () {
           chatController.selectedMessage = message;
-          message.isLocked && !message.isUnlocked
-              ? unlock()
-              : showBarModalBottomSheet(
-                  context: context,
-                  builder: (context) => MessageMenuWidget(message: message));
+          if (message.isLocked && !message.isUnlocked) {
+            unlock();
+          } else {
+            showBarModalBottomSheet(
+                context: context,
+                builder: (context) => MessageMenuWidget(message: message));
+          }
         },
-        child: MessageWidgetBody(message: message, searchQuery: searchQuery));
+        child: //
+            // Text('${message.isPinned}'));
+            MessageWidgetBody(message: message, searchQuery: searchQuery));
   }
 }

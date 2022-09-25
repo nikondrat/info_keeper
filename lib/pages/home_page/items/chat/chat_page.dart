@@ -1,9 +1,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/model/types/home/chat/chat.dart';
-import 'package:info_keeper/model/types/home/chat/items/message.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
 import 'package:info_keeper/pages/home_page/items/chat/chat_controller.dart';
@@ -31,7 +29,6 @@ class ChatPage extends StatelessWidget {
     Chat chat = homeItem.child;
     controller.homeItem = homeItem;
     RxList messages = chat.messages;
-    controller.refreshPinnedMessages(messages);
 
     // title
     TextEditingController titleController =
@@ -84,8 +81,30 @@ class ChatPage extends StatelessWidget {
       return items;
     }
 
-    List actions() {
-      List actions = [];
+    List<Widget> actions() {
+      List<Widget> actions = [];
+
+      Widget titleButton = IconButton(
+          splashRadius: 20,
+          onPressed: () => Get.to(() => ChatTitlesPage(chat: chat)),
+          icon: const Icon(Icons.title));
+
+      Widget favoritesButton = IconButton(
+          splashRadius: 20,
+          onPressed: () => Get.to(() => ChatFavoritesPage(chat: chat)),
+          icon: const Icon(Icons.star_outline));
+
+      Widget popupsButton = PopupMenuButton(
+          splashRadius: 20,
+          onSelected: (value) => value == 0
+              ? Get.to(() => ChatMediaPage(homeItem: homeItem))
+              : null,
+          itemBuilder: (context) => popupItems());
+
+      if (!controller.isSearch.value) {
+        actions.addAll([titleButton, favoritesButton, popupsButton]);
+      }
+
       return actions;
     }
 
@@ -95,7 +114,7 @@ class ChatPage extends StatelessWidget {
             resizeToAvoidBottomInset: false,
             appBar: PreferredSize(
                 preferredSize: Size.fromHeight(
-                    controller.pinnedMessages.isNotEmpty
+                    controller.pinnedMessages(messages).isNotEmpty
                         ? 100
                         : kToolbarHeight),
                 child: AppBarWidget(
@@ -108,10 +127,11 @@ class ChatPage extends StatelessWidget {
                             controller.isSearch.value
                         ? 0
                         : 20,
-                    bottom: controller.pinnedMessages.isNotEmpty
-                        ? const PreferredSize(
-                            preferredSize: Size.fromHeight(double.infinity),
-                            child: ChatAppBarBottomWidget())
+                    bottom: controller.pinnedMessages(messages).isNotEmpty
+                        ? PreferredSize(
+                            preferredSize:
+                                const Size.fromHeight(double.infinity),
+                            child: ChatAppBarBottomWidget(messages: messages))
                         : null,
                     controller: titleController,
                     change: controller.changeTitle,
@@ -127,27 +147,7 @@ class ChatPage extends StatelessWidget {
                         Get.back();
                       }
                     },
-                    actions: controller.isSearch.value
-                        ? null
-                        : [
-                            IconButton(
-                                splashRadius: 20,
-                                onPressed: () =>
-                                    Get.to(() => ChatTitlesPage(chat: chat)),
-                                icon: const Icon(Icons.title)),
-                            IconButton(
-                                splashRadius: 20,
-                                onPressed: () =>
-                                    Get.to(() => ChatFavoritesPage(chat: chat)),
-                                icon: const Icon(Icons.star_outline)),
-                            PopupMenuButton(
-                                splashRadius: 20,
-                                onSelected: (value) => value == 0
-                                    ? Get.to(
-                                        () => ChatMediaPage(homeItem: homeItem))
-                                    : null,
-                                itemBuilder: (context) => popupItems())
-                          ],
+                    actions: actions(),
                     focus: titleFocus)),
             body: ChatBody(chat: homeItem.child, pathToImage: pathToImage),
             bottomNavigationBar: !controller.isSearch.value

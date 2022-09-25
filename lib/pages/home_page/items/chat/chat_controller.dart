@@ -15,26 +15,21 @@ class ChatController extends GetxController {
   // title
   final RxBool changeTitle = false.obs;
   final RxBool isSearch = false.obs;
-  RxList<Message> pinnedMessages = <Message>[].obs;
+
+  RxList<Message> pinnedMessages(RxList allMessages) {
+    RxList<Message> pinnedMessages = <Message>[].obs;
+
+    for (int i = 0; i < allMessages.length; i++) {
+      if (allMessages[i].type == AllType.chatMessage &&
+          !allMessages[i].isLocked &&
+          allMessages[i].isPinned) {
+        pinnedMessages.add(allMessages[i]);
+      }
+    }
+    return pinnedMessages;
+  }
 
   // body
   final RxBool showDate = false.obs;
   late AutoScrollController autoScrollController;
-
-  refreshPinnedMessages(RxList messages) {
-    for (int i = 0; i < messages.length; i++) {
-      if (messages[i].type == AllType.chatMessage &&
-          !messages[i].isLocked &&
-          messages[i].isPinned) {
-        pinnedMessages.add(messages[i]);
-      }
-    }
-  }
-
-  // bottom
-
-  //  = AutoScrollController(
-  //    viewportBoundaryGetter: () => Rect.fromLTRB(0, 0, 0, 1),
-  //   axis: Axis.vertical,
-  // );
 }

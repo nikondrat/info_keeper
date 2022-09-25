@@ -111,13 +111,13 @@ class MessageMenuWidget extends StatelessWidget {
                       MessageWidgetInFullScreen(message: message));
                 }),
             MenuItemWidget(
+                done: true,
                 title: message.isPinned ? 'Unpin' : 'Pin',
                 icon: const Icon(Icons.push_pin_outlined),
                 onPressed: () {
                   message.isPinned = !message.isPinned;
                   messages[messages.indexOf(message)] = message;
                   chat.copyWith(messages: messages);
-                  chatController.refreshPinnedMessages(messages);
                   Navigator.pop(context);
                 }),
             MenuItemWidget(

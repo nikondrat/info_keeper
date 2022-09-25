@@ -9,12 +9,14 @@ class ItemDecoration extends StatelessWidget {
   final int index;
   final Widget child;
   final int? color;
+  final bool isSelected;
   final double elevation;
   final DateTime dateTime;
   final EdgeInsets? padding;
   const ItemDecoration(
       {Key? key,
       required this.index,
+      this.isSelected = false,
       this.color,
       this.elevation = 0,
       required this.child,
@@ -54,7 +56,10 @@ class ItemDecoration extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 2),
         padding: padding ?? const EdgeInsets.all(8),
         decoration: BoxDecoration(
-            color: messageColors[color ?? defaultColor],
+            border: isSelected ? Border.all() : null,
+            color: isSelected
+                ? Colors.white
+                : messageColors[color ?? defaultColor],
             borderRadius: BorderRadius.circular(6)),
 
         // index:
