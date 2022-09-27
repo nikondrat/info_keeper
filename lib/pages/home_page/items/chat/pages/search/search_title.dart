@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:info_keeper/model/types/all.dart';
+import 'package:info_keeper/model/types/home/chat/chat_type.dart';
 import 'package:info_keeper/pages/home_page/items/chat/chat_controller.dart';
 
 class ChatSearchTitle extends StatelessWidget {
@@ -14,7 +14,7 @@ class ChatSearchTitle extends StatelessWidget {
     final RxList items = [].obs;
 
     for (int i = 0; i < messages.length; i++) {
-      if (messages[i].type == AllType.chatMessage && !messages[i].isLocked) {
+      if (messages[i].type == ChatType.message && !messages[i].isLocked) {
         items.add(messages[i]);
       }
     }

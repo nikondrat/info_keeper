@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:info_keeper/model/types/all.dart';
+import 'package:info_keeper/model/types/home/chat/chat_type.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/file.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/image.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/message/message.dart';
@@ -19,20 +19,20 @@ class ChatItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     switch (message.type) {
-      case AllType.chatMessage:
+      case ChatType.message:
         return MessageWidget(
             key: Key('${message.location.itemIndex}'),
             message: message,
             elevation: elevation,
             searchQuery: searchQuery);
-      case AllType.chatVoice:
+      case ChatType.voice:
         return ChatVoiceWidget(
             key: Key('${message.location.itemIndex}'),
             voice: message,
             elevation: elevation);
-      case AllType.chatImage:
+      case ChatType.image:
         return ChatImageWidget(image: message, elevation: elevation);
-      case AllType.chatFile:
+      case ChatType.file:
         return ChatFileWidget(file: message, elevation: elevation);
       default:
         return const SizedBox();

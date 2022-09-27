@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/model/types/home/chat/chat.dart';
+import 'package:info_keeper/model/types/home/chat/chat_type.dart';
 import 'package:info_keeper/model/types/home/chat/items/image.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/widgets/scroller.dart';
 
@@ -16,7 +16,7 @@ class ChatMediaBody extends StatelessWidget {
     List<ChatImage> images = [];
 
     for (int i = 0; i < chat.messages.length; i++) {
-      if (chat.messages[i].type == AllType.chatImage) {
+      if (chat.messages[i].type == ChatType.image) {
         images.insert(0, chat.messages[i]);
       }
     }

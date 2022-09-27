@@ -1,10 +1,10 @@
-import 'package:info_keeper/model/types/all.dart';
+import 'package:info_keeper/model/types/home/chat/chat_type.dart';
 import 'package:info_keeper/model/types/item_location.dart';
 import 'package:info_keeper/themes/default/default.dart';
 
 class Message {
   ItemLocation location;
-  AllType type;
+  ChatType type;
   String title;
   String content;
   int color;
@@ -26,7 +26,7 @@ class Message {
   Message(
       {required this.location,
       this.title = '',
-      this.type = AllType.chatMessage,
+      this.type = ChatType.message,
       required this.content,
       this.color = 5,
       this.isFavorite = false,
@@ -40,7 +40,7 @@ class Message {
   }
 
   Message.fromJson(Map<String, dynamic> json)
-      : type = AllType.values.elementAt(json['type']),
+      : type = ChatType.values.elementAt(json['type']),
         location = ItemLocation.fromJson(json['location']),
         title = json['title'],
         content = json['content'],

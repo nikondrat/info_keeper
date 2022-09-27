@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/model/types/home/chat/chat.dart';
+import 'package:info_keeper/model/types/home/chat/chat_type.dart';
 import 'package:info_keeper/model/types/home/chat/items/message.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/message/message.dart';
 
@@ -14,10 +14,10 @@ class ChatMediaLinks extends StatelessWidget {
     List<Message> linkInMessages = [];
 
     for (int i = 0; i < chat.messages.length; i++) {
-      if (chat.messages[i].type == AllType.chatMessage &&
+      if (chat.messages[i].type == ChatType.message &&
               !chat.messages[i].isLocked &&
               chat.messages[i].content.contains(regExp) ||
-          chat.messages[i].type == AllType.chatMessage &&
+          chat.messages[i].type == ChatType.message &&
               !chat.messages[i].isLocked &&
               chat.messages[i].title.contains(regExp)) {
         linkInMessages.insert(0, chat.messages[i]);

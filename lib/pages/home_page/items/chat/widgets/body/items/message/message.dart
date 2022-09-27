@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home/chat/chat.dart';
 import 'package:info_keeper/model/types/home/chat/items/message.dart';
 import 'package:info_keeper/pages/home_page/items/chat/chat_controller.dart';
@@ -24,10 +25,28 @@ class MessageWidget extends StatelessWidget {
     final Chat chat = chatController.homeItem.child;
     RxList messages = chat.messages;
 
+    move() {
+      if (chatController.secondSelectedMessage != null) {
+        int oldIndex =
+            chatController.secondSelectedMessage!.location.itemIndex!;
+        int newIndex = message.location.itemIndex!;
+        if (oldIndex < newIndex) {
+          newIndex -= 1;
+        }
+        Message selectedMessage = messages.removeAt(oldIndex);
+        selectedMessage.isSelected = false;
+        messages.insert(newIndex, selectedMessage);
+
+        chatController.moveMessage.value = false;
+        Controller.to.setData();
+      }
+    }
+
     unite() {
       message.isSelected = !message.isSelected;
       messages[messages.indexOf(message)] = message;
       chat.copyWith(messages: messages);
+      Controller.to.setData();
     }
 
     unlock() {
@@ -44,10 +63,13 @@ class MessageWidget extends StatelessWidget {
 
     onTap() {
       chatController.selectedMessage = message;
+
       if (message.isLocked && !message.isUnlocked) {
         unlock();
       } else if (chatController.uniteMessage.value) {
         unite();
+      } else if (chatController.moveMessage.value) {
+        move();
       } else {
         showBottomMenu();
       }

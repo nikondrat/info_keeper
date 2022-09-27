@@ -1,9 +1,9 @@
-import 'package:info_keeper/model/types/all.dart';
+import 'package:info_keeper/model/types/home/chat/chat_type.dart';
 import 'package:info_keeper/model/types/item_location.dart';
 
 class ChatFile {
   String name;
-  AllType type;
+  ChatType type;
   ItemLocation location;
   String path;
   DateTime dateTime;
@@ -14,14 +14,14 @@ class ChatFile {
       {required this.name,
       required this.path,
       required this.location,
-      this.type = AllType.chatFile,
+      this.type = ChatType.file,
       this.isLocked = false,
       this.isUnlocked = false,
       required this.dateTime});
 
   ChatFile.fromJson(Map<String, dynamic> json)
       : name = json['name'],
-        type = AllType.values.elementAt(json['type']),
+        type = ChatType.values.elementAt(json['type']),
         location = ItemLocation.fromJson(json['location']),
         dateTime = DateTime.parse(json['dateTime']),
         isLocked = json['isLocked'],

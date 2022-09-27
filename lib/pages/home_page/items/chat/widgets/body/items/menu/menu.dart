@@ -102,8 +102,14 @@ class MessageMenuWidget extends StatelessWidget {
                 }),
             MenuItemWidget(
                 title: 'Move message',
+                done: true,
                 icon: const Icon(Icons.drag_handle),
                 onPressed: () {
+                  chatController.moveMessage.value = true;
+                  message.isSelected = !message.isSelected;
+                  messages[messages.indexOf(message)] = message;
+                  chatController.secondSelectedMessage = message;
+                  chat.copyWith(messages: messages);
                   Navigator.pop(context);
                 }),
             MenuItemWidget(

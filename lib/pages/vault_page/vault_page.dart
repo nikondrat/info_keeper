@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/model/types/home/chat/chat.dart';
+import 'package:info_keeper/model/types/home/chat/chat_type.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/message/message.dart';
 import 'package:info_keeper/pages/home_page/widgets/body/body_item/body_item.dart';
@@ -35,7 +35,7 @@ class VaultPage extends StatelessWidget {
     if (isChat) {
       chat = childrens[Controller.to.selectedElementIndex.value].child;
       for (int i = 0; i < chat!.messages.length; i++) {
-        if (chat.messages[i].type == AllType.chatMessage &&
+        if (chat.messages[i].type == ChatType.message &&
             chat.messages[i].isLocked) {
           chatLockedMessages.add(chat.messages[i]);
         }

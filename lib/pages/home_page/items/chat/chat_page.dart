@@ -1,8 +1,8 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:info_keeper/model/types/all.dart';
 import 'package:info_keeper/model/types/home/chat/chat.dart';
+import 'package:info_keeper/model/types/home/chat/chat_type.dart';
 import 'package:info_keeper/model/types/home/chat/items/message.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
@@ -48,7 +48,7 @@ class ChatPage extends StatelessWidget {
       List<Message> selectedMessages = [];
 
       for (int i = 0; i < messages.length; i++) {
-        if (messages[i].type == AllType.chatMessage &&
+        if (messages[i].type == ChatType.message &&
             messages[i].isSelected &&
             !messages[i].isLocked) {
           selectedMessages.add(messages[i]);

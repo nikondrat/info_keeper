@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/all.dart';
+import 'package:info_keeper/model/types/home/chat/chat_type.dart';
 import 'package:info_keeper/model/types/home/chat/items/file.dart';
 import 'package:info_keeper/model/types/home/chat/items/image.dart';
 import 'package:info_keeper/model/types/home/chat/items/message.dart';
@@ -31,23 +31,15 @@ class Chat {
       : type = HomeType.values.elementAt(json['type']),
         messages = (json['messages'] as List<dynamic>)
             .map<dynamic>((dynamic e) {
-              switch (AllType.values.elementAt(e['type'])) {
-                case AllType.chatMessage:
+              switch (ChatType.values.elementAt(e['type'])) {
+                case ChatType.message:
                   return Message.fromJson(e);
-                case AllType.chatVoice:
+                case ChatType.voice:
                   return ChatVoice.fromJson(e);
-                case AllType.chatImage:
+                case ChatType.image:
                   return ChatImage.fromJson(e);
-                case AllType.chatFile:
+                case ChatType.file:
                   return ChatFile.fromJson(e);
-                case AllType.chat:
-                  break;
-                case AllType.storageFile:
-                  break;
-                case AllType.todo:
-                  break;
-                case AllType.audioNote:
-                  break;
               }
             })
             .toList()

@@ -1,13 +1,13 @@
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/all.dart';
+import 'package:info_keeper/model/types/home/chat/chat_type.dart';
 import 'package:info_keeper/model/types/item_location.dart';
 
 class ChatVoice {
   String name;
   String path;
-  AllType type;
+  ChatType type;
   ItemLocation location;
   DateTime dateTime;
   Codec codec;
@@ -17,7 +17,7 @@ class ChatVoice {
   ChatVoice(
       {this.name = '',
       required this.path,
-      this.type = AllType.chatVoice,
+      this.type = ChatType.voice,
       required this.location,
       this.isLocked = false,
       this.isUnlocked = false,
@@ -36,7 +36,7 @@ class ChatVoice {
 
   ChatVoice.fromJson(Map<String, dynamic> json)
       : name = json['name'],
-        type = AllType.values.elementAt(json['type']),
+        type = ChatType.values.elementAt(json['type']),
         location = ItemLocation.fromJson(json['location']),
         dateTime = DateTime.parse(json['dateTime']),
         isLocked = json['isLocked'],

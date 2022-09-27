@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
-import 'package:info_keeper/model/types/all.dart';
-import 'package:info_keeper/pages/home_page/home_widget/home_widget.dart';
-import 'package:info_keeper/pages/home_page/items/old_chat_page/widgets/type/chat_image.dart';
-import 'package:info_keeper/pages/home_page/items/old_chat_page/widgets/type/chat_message.dart';
-import 'package:info_keeper/pages/home_page/items/old_chat_page/widgets/type/chat_file.dart';
-import 'package:info_keeper/pages/home_page/items/old_chat_page/widgets/type/chat_voice.dart';
+import 'package:info_keeper/model/types/home/chat/chat_type.dart';
+import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/file.dart';
+import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/image.dart';
+import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/message/message.dart';
+import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/voice.dart';
+import 'package:info_keeper/pages/home_page/widgets/body/body_item/body_item.dart';
 
 class TrashPage extends StatelessWidget {
   const TrashPage({Key? key}) : super(key: key);
@@ -34,61 +34,37 @@ class TrashPage extends StatelessWidget {
           ],
         ),
         body: LayoutBuilder(
-            builder: (context, constraints) => Obx(() => Controller
-                    .to.trashElements.isNotEmpty
-                ? MasonryGridView.count(
-                    physics: const BouncingScrollPhysics(),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 20),
-                    mainAxisSpacing: 10,
-                    crossAxisSpacing: 10,
-                    crossAxisCount: 2,
-                    itemCount: Controller.to.trashElements.length,
-                    itemBuilder: (context, index) {
-                      switch (Controller.to.trashElements[index].type) {
-                        case AllType.chatVoice:
-                          return ChatVoiceWidget(
-                            index: index,
-                            name: Controller.to.trashElements[index].name,
-                            codec: Controller.to.trashElements[index].codec,
-                            dateTime:
-                                Controller.to.trashElements[index].dateTime,
-                            showDate: false.obs,
-                            isTrash: true,
-                            path: Controller.to.trashElements[index].path,
-                          );
-                        case AllType.chatFile:
-                          return ChatPageFile(
-                              index: index,
-                              name: Controller.to.trashElements[index].name,
-                              path: Controller.to.trashElements[index].path,
-                              isTrash: true,
-                              showDate: false.obs,
-                              dateTime:
-                                  Controller.to.trashElements[index].dateTime);
-                        case AllType.chatMessage:
-                          return MessageWidgetBody(
-                              index: index,
-                              isTrash: true,
-                              dateTime:
-                                  Controller.to.trashElements[index].dateTime,
-                              message: Controller.to.trashElements[index]);
-                        case AllType.chatImage:
-                          return ChatImageWidget(
-                              index: index,
-                              isTrash: true,
-                              path: Controller.to.trashElements[index].path,
-                              dateTime:
-                                  Controller.to.trashElements[index].dateTime,
-                              showDate: false.obs);
-                        default:
-                      }
-                      return HomeWidget(
-                        isTrash: true,
-                        homeItem: Controller.to.trashElements[index],
-                        index: index,
-                      );
-                    })
-                : const SizedBox.shrink())));
+            builder: (context, constraints) => Obx(() =>
+                Controller.to.trashElements.isNotEmpty
+                    ? MasonryGridView.count(
+                        physics: const BouncingScrollPhysics(),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 20),
+                        mainAxisSpacing: 10,
+                        crossAxisSpacing: 10,
+                        crossAxisCount: 2,
+                        itemCount: Controller.to.trashElements.length,
+                        itemBuilder: (context, index) {
+                          switch (Controller.to.trashElements[index].type) {
+                            case ChatType.voice:
+                              return ChatVoiceWidget(
+                                voice: Controller.to.trashElements[index],
+                              );
+                            case ChatType.file:
+                              return ChatFileWidget(
+                                  file: Controller.to.trashElements[index]);
+                            case ChatType.message:
+                              return MessageWidget(
+                                  message: Controller.to.trashElements[index]);
+                            case ChatType.image:
+                              return ChatImageWidget(
+                                  image: Controller.to.trashElements[index]);
+                            default:
+                          }
+                          return HomeBodyItem(
+                              homeItemIndex: index,
+                              homeItem: Controller.to.trashElements[index]);
+                        })
+                    : const SizedBox.shrink())));
   }
 }
