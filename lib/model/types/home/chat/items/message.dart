@@ -42,15 +42,15 @@ class Message {
   Message.fromJson(Map<String, dynamic> json)
       : type = ChatType.values.elementAt(json['type']),
         location = ItemLocation.fromJson(json['location']),
-        title = json['title'],
-        content = json['content'],
-        isSelected = json['isSelected'],
-        isPinned = json['isPinned'],
-        isLocked = json['isLocked'],
-        isUnlocked = json['isUnlocked'],
-        color = json['color'],
-        isFavorite = json['isFavorite'],
-        history = json['history'],
+        title = json['title'] ?? '',
+        content = json['content'] ?? '',
+        isSelected = json['isSelected'] ?? false,
+        isPinned = json['isPinned'] ?? false,
+        isLocked = json['isLocked'] ?? false,
+        isUnlocked = json['isUnlocked'] ?? false,
+        color = json['color'] ?? defaultColor,
+        isFavorite = json['isFavorite'] ?? false,
+        history = json['history'] ?? [],
         dateTime = DateTime.parse(json['dateTime']);
 
   Map<String, dynamic> toJson() => {

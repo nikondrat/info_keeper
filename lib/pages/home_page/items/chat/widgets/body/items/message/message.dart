@@ -12,9 +12,11 @@ class MessageWidget extends StatelessWidget {
   final Message message;
   final String searchQuery;
   final double elevation;
+  final bool isVault;
   const MessageWidget(
       {super.key,
       required this.message,
+      this.isVault = false,
       this.elevation = 0,
       this.searchQuery = ''});
 
@@ -50,9 +52,14 @@ class MessageWidget extends StatelessWidget {
     }
 
     unlock() {
-      message.isUnlocked = !message.isUnlocked;
-      messages[messages.indexOf(message)] = message;
-      chat.copyWith(messages: messages);
+      change() {
+        message.isUnlocked = !message.isUnlocked;
+        messages[messages.indexOf(message)] = message;
+        chat.copyWith(messages: messages);
+      }
+
+      Future.delayed(const Duration(seconds: 40)).whenComplete(() => change());
+      change();
     }
 
     showBottomMenu() {
@@ -64,7 +71,7 @@ class MessageWidget extends StatelessWidget {
     onTap() {
       chatController.selectedMessage = message;
 
-      if (message.isLocked && !message.isUnlocked) {
+      if (message.isLocked && !message.isUnlocked && !isVault) {
         unlock();
       } else if (chatController.uniteMessage.value) {
         unite();
@@ -79,6 +86,7 @@ class MessageWidget extends StatelessWidget {
         onTap: onTap,
         child: //
             // Text('${message.isPinned}'));
-            MessageWidgetBody(message: message, searchQuery: searchQuery));
+            MessageWidgetBody(
+                message: message, searchQuery: searchQuery, isVault: isVault));
   }
 }

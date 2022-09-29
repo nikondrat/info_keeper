@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
 import 'package:info_keeper/pages/home_page/items/widgets/app_bar/widgets/popup_menu.dart';
 import 'package:info_keeper/pages/home_page/widgets/app_bar/search.dart';
+import 'package:info_keeper/pages/trash_page/trash_page.dart';
 
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({super.key});
@@ -20,8 +21,7 @@ class HomeAppBar extends StatelessWidget {
           child: const PopupMenuItemBody(title: 'Search', icon: Icons.search));
 
       PopupMenuItem trash = const PopupMenuItem(
-          value: 0,
-          onTap: null,
+          value: 1,
           child: PopupMenuItemBody(
               title: 'Trash bin', icon: Icons.delete_outline));
 
@@ -44,7 +44,8 @@ class HomeAppBar extends StatelessWidget {
               : PopupMenuButton(
                   splashRadius: 20,
                   icon: const Icon(Icons.menu),
-                  onSelected: (value) => value == 1 ? null : null,
+                  onSelected: (value) =>
+                      value == 1 ? Get.to(() => const TrashPage()) : null,
                   itemBuilder: (context) => popupItems(),
                 ),
           title: home.isSearch.value

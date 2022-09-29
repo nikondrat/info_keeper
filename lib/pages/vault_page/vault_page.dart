@@ -72,18 +72,16 @@ class VaultPage extends StatelessWidget {
                 itemCount:
                     isChat ? chatLockedMessages.length : homeChildrens.length,
                 itemBuilder: (context, index) {
-                  return homeChildrens[index].isLocked
-                      ? Padding(
-                          padding: const EdgeInsets.all(5),
-                          child: isChat
-                              ? MessageWidget(
-                                  message: chatLockedMessages[index])
-                              : HomeBodyItem(
-                                  homeItem: homeChildrens[index],
-                                  homeItemIndex: index,
-                                ),
-                        )
-                      : Container();
+                  return Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: isChat
+                        ? MessageWidget(
+                            message: chatLockedMessages[index], isVault: true)
+                        : HomeBodyItem(
+                            homeItem: homeChildrens[index],
+                            homeItemIndex: index,
+                          ),
+                  );
                 })
             : const VaultPagePasswordWidget(),
         bottomNavigationBar: const HomeBottomBar(isVault: true),

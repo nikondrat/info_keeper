@@ -13,10 +13,12 @@ class MessageWidgetBody extends StatelessWidget {
   final Message message;
   final String searchQuery;
   final double elevation;
+  final bool isVault;
   const MessageWidgetBody(
       {Key? key,
       required this.message,
       this.elevation = 0,
+      this.isVault = false,
       required this.searchQuery})
       : super(key: key);
 
@@ -67,7 +69,7 @@ class MessageWidgetBody extends StatelessWidget {
           message.isLocked ? const Icon(Icons.lock_open) : const SizedBox(),
         ]))));
 
-    return message.isLocked && !message.isUnlocked
+    return message.isLocked && !isVault && !message.isUnlocked
         ? LockedDecorationWidget(message: message)
         : SwipeTo(
             onRightSwipe: () {

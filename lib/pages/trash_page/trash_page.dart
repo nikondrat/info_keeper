@@ -14,6 +14,8 @@ class TrashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    RxList trashElements = Controller.to.trashElements;
+
     return Scaffold(
         appBar: AppBar(
           centerTitle: false,
@@ -33,38 +35,30 @@ class TrashPage extends StatelessWidget {
                 icon: const Icon(Icons.delete_outline))
           ],
         ),
-        body: LayoutBuilder(
-            builder: (context, constraints) => Obx(() =>
-                Controller.to.trashElements.isNotEmpty
-                    ? MasonryGridView.count(
-                        physics: const BouncingScrollPhysics(),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 20),
-                        mainAxisSpacing: 10,
-                        crossAxisSpacing: 10,
-                        crossAxisCount: 2,
-                        itemCount: Controller.to.trashElements.length,
-                        itemBuilder: (context, index) {
-                          switch (Controller.to.trashElements[index].type) {
-                            case ChatType.voice:
-                              return ChatVoiceWidget(
-                                voice: Controller.to.trashElements[index],
-                              );
-                            case ChatType.file:
-                              return ChatFileWidget(
-                                  file: Controller.to.trashElements[index]);
-                            case ChatType.message:
-                              return MessageWidget(
-                                  message: Controller.to.trashElements[index]);
-                            case ChatType.image:
-                              return ChatImageWidget(
-                                  image: Controller.to.trashElements[index]);
-                            default:
-                          }
-                          return HomeBodyItem(
-                              homeItemIndex: index,
-                              homeItem: Controller.to.trashElements[index]);
-                        })
-                    : const SizedBox.shrink())));
+        body: Obx(() => MasonryGridView.count(
+            physics: const BouncingScrollPhysics(),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+            mainAxisSpacing: 10,
+            crossAxisSpacing: 10,
+            crossAxisCount: 2,
+            itemCount: Controller.to.trashElements.length,
+            itemBuilder: (context, index) {
+              switch (trashElements[index].type) {
+                case ChatType.voice:
+                  return ChatVoiceWidget(
+                    voice: trashElements[index],
+                  );
+                case ChatType.file:
+                  return ChatFileWidget(file: trashElements[index]);
+                case ChatType.message:
+                  return MessageWidget(
+                      message: Controller.to.trashElements[index]);
+                case ChatType.image:
+                  return ChatImageWidget(image: trashElements[index]);
+                default:
+              }
+              return HomeBodyItem(
+                  homeItemIndex: index, homeItem: trashElements[index]);
+            })));
   }
 }
