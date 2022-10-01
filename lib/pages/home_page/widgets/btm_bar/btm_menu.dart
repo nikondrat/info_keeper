@@ -59,6 +59,7 @@ class HomeBottomMenu extends StatelessWidget {
 
       PopupMenuItem delete = PopupMenuItem(
           onTap: () {
+            Controller.to.trashElements.add(item);
             Controller.to.all[Controller.to.selectedFolder.value].childrens
                 .remove(item);
             Controller.to.setData();

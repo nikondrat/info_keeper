@@ -14,18 +14,21 @@ class MessageWidgetBody extends StatelessWidget {
   final String searchQuery;
   final double elevation;
   final bool isVault;
+  final bool isTrash;
   const MessageWidgetBody(
       {Key? key,
       required this.message,
       this.elevation = 0,
       this.isVault = false,
-      required this.searchQuery})
+      this.isTrash = false,
+      this.searchQuery = ''})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final ChatController chatController = Get.find();
-    final BottomAppBarController barController = Get.find();
+    final ChatController chatController = Get.put(ChatController());
+    final BottomAppBarController barController =
+        Get.put(BottomAppBarController());
 
     Widget title = Container(
       width: MediaQuery.of(context).size.width,
@@ -69,30 +72,36 @@ class MessageWidgetBody extends StatelessWidget {
           message.isLocked ? const Icon(Icons.lock_open) : const SizedBox(),
         ]))));
 
+    Widget decoration = ItemDecoration(
+        index: message.location.itemIndex!,
+        color: message.color,
+        isSelected: message.isSelected,
+        elevation: elevation,
+        padding: EdgeInsets.zero,
+        dateTime: message.dateTime,
+        isTrash: isTrash,
+        child: message.title.isNotEmpty
+            ? Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [title, content])
+            : content);
+
+    Widget swiper = SwipeTo(
+        onRightSwipe: () {
+          chatController.selectedMessage = message;
+          barController.isEditMessage.value = true;
+          barController.messageController.value =
+              TextEditingValue(text: message.content);
+          barController.titleController.value =
+              TextEditingValue(text: message.title);
+          barController.editMessageText.value = message.content;
+        },
+        child: decoration);
+
     return message.isLocked && !isVault && !message.isUnlocked
         ? LockedDecorationWidget(message: message)
-        : SwipeTo(
-            onRightSwipe: () {
-              chatController.selectedMessage = message;
-              barController.isEditMessage.value = true;
-              barController.messageController.value =
-                  TextEditingValue(text: message.content);
-              barController.titleController.value =
-                  TextEditingValue(text: message.title);
-              barController.editMessageText.value = message.content;
-            },
-            child: ItemDecoration(
-                index: message.location.itemIndex!,
-                color: message.color,
-                isSelected: message.isSelected,
-                elevation: elevation,
-                padding: EdgeInsets.zero,
-                dateTime: message.dateTime,
-                child: message.title.isNotEmpty
-                    ? Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [title, content])
-                    : content),
-          );
+        : isTrash
+            ? decoration
+            : swiper;
   }
 }

@@ -13,6 +13,7 @@ class ItemDecoration extends StatelessWidget {
   final double elevation;
   final DateTime dateTime;
   final EdgeInsets? padding;
+  final bool isTrash;
   const ItemDecoration(
       {Key? key,
       required this.index,
@@ -21,6 +22,7 @@ class ItemDecoration extends StatelessWidget {
       this.elevation = 0,
       required this.child,
       this.padding,
+      this.isTrash = false,
       required this.dateTime})
       : super(key: key);
 
@@ -74,10 +76,12 @@ class ItemDecoration extends StatelessWidget {
     return Material(
         color: Colors.transparent,
         elevation: elevation,
-        child: AutoScrollTag(
-            index: index,
-            key: ValueKey(index),
-            controller: controller.autoScrollController,
-            child: bodyDecoration));
+        child: isTrash
+            ? bodyDecoration
+            : AutoScrollTag(
+                index: index,
+                key: ValueKey(index),
+                controller: controller.autoScrollController,
+                child: bodyDecoration));
   }
 }

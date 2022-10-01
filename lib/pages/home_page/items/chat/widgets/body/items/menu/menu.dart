@@ -2,6 +2,7 @@ import 'package:dismissible_page/dismissible_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home/chat/chat.dart';
 import 'package:info_keeper/model/types/home/chat/items/message.dart';
 import 'package:info_keeper/pages/home_page/items/chat/chat_controller.dart';
@@ -162,6 +163,7 @@ class MessageMenuWidget extends StatelessWidget {
                 title: 'Move to trash',
                 icon: const Icon(Icons.delete),
                 onPressed: () {
+                  Controller.to.trashElements.add(message);
                   messages.removeAt(messages.indexOf(message));
                   Navigator.pop(context);
                 })

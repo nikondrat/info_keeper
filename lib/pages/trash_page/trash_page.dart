@@ -6,6 +6,7 @@ import 'package:info_keeper/model/types/home/chat/chat_type.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/file.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/image.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/message/message.dart';
+import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/message/widgets/body.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/voice.dart';
 import 'package:info_keeper/pages/home_page/widgets/body/body_item/body_item.dart';
 
@@ -51,14 +52,15 @@ class TrashPage extends StatelessWidget {
                 case ChatType.file:
                   return ChatFileWidget(file: trashElements[index]);
                 case ChatType.message:
-                  return MessageWidget(
+                  return MessageWidgetBody(
+                      isTrash: true,
                       message: Controller.to.trashElements[index]);
                 case ChatType.image:
                   return ChatImageWidget(image: trashElements[index]);
                 default:
+                  return HomeBodyItem(
+                      homeItemIndex: index, homeItem: trashElements[index]);
               }
-              return HomeBodyItem(
-                  homeItemIndex: index, homeItem: trashElements[index]);
             })));
   }
 }

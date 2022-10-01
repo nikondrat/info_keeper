@@ -22,7 +22,7 @@ class MessageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ChatController chatController = Get.find();
+    final ChatController chatController = Get.put(ChatController());
 
     final Chat chat = chatController.homeItem.child;
     RxList messages = chat.messages;
