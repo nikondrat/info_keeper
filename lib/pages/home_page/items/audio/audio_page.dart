@@ -6,6 +6,7 @@ import 'package:info_keeper/model/types/home/audio/audio_note.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/model/types/item_location.dart';
 import 'package:info_keeper/pages/home_page/items/widgets/app_bar/app_bar.dart';
+import 'package:info_keeper/themes/widgets/body.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -109,10 +110,9 @@ class _AudioPageState extends State<AudioPage> {
               leadingButtonFunc: () => Get.back(),
               change: changeTitle,
               focus: titleFocus)),
-      body: LayoutBuilder(builder: (context, constraints) {
+      body: BodyWithTheme(body: LayoutBuilder(builder: (context, constraints) {
         double size = 0.14;
         double width = constraints.maxWidth * size;
-        double height = constraints.maxHeight * size;
 
         return ListView(padding: const EdgeInsets.all(20), children: [
           Row(
@@ -123,13 +123,13 @@ class _AudioPageState extends State<AudioPage> {
                       onTap: pauseRecorder,
                       child: Container(
                         width: width,
-                        height: height,
+                        height: width,
                         decoration: const BoxDecoration(
                             shape: BoxShape.circle, color: Colors.red),
                         child: Icon(
                           Icons.pause,
                           color: Colors.white,
-                          size: height * 0.3,
+                          size: width * 0.6,
                         ),
                       ),
                     )
@@ -137,7 +137,7 @@ class _AudioPageState extends State<AudioPage> {
                       onTap: openTheRecorder,
                       child: Container(
                         width: width,
-                        height: height,
+                        height: width,
                         decoration: BoxDecoration(
                             border: Border.all(
                                 color: Colors.red, width: width * 0.3),
@@ -149,20 +149,20 @@ class _AudioPageState extends State<AudioPage> {
                 onTap: closeRecorder,
                 child: Container(
                   width: width,
-                  height: height,
+                  height: width,
                   decoration: BoxDecoration(
                       shape: BoxShape.circle, color: Colors.grey.shade300),
                   child: Icon(
                     Icons.done,
                     color: Colors.grey.shade800,
-                    size: height * 0.3,
+                    size: width * 0.6,
                   ),
                 ),
               )
             ],
           )
         ]);
-      }),
+      })),
       // body: Column(children: [
       //   TextButton(onPressed: record, child: const Text('Start')),
       //   TextButton(onPressed: stopRecorder, child: const Text('Stop')),

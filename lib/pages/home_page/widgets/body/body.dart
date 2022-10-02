@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
 import 'package:info_keeper/pages/home_page/widgets/body/body_item/body_item.dart';
+import 'package:info_keeper/themes/widgets/body.dart';
 
 class HomeBody extends StatelessWidget {
   const HomeBody({Key? key}) : super(key: key);
@@ -12,26 +13,24 @@ class HomeBody extends StatelessWidget {
   Widget build(BuildContext context) {
     HomeController home = Get.put(HomeController());
 
-    return Obx(
-      () => MasonryGridView.count(
-          physics: const BouncingScrollPhysics(),
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-          crossAxisCount: home.isGridView.value ? 2 : 1,
-          itemCount: home.isSearch.value
-              ? home.searchItems.length
-              : Controller.to.all[Controller.to.selectedFolder.value]
-                  .getChildrens()
-                  .length,
-          itemBuilder: (context, homeItemIndex) {
-            return Padding(
-                padding: const EdgeInsets.all(5),
-                child: Obx(() => HomeBodyItem(
-                    homeItem: home.isSearch.value
-                        ? home.searchItems[homeItemIndex]
-                        : Controller.to.all[Controller.to.selectedFolder.value]
-                            .getChildrens()[homeItemIndex],
-                    homeItemIndex: homeItemIndex)));
-          }),
-    );
+    Widget body = Obx(() => MasonryGridView.count(
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        crossAxisCount: home.isGridView.value ? 2 : 1,
+        itemCount: home.isSearch.value
+            ? home.searchItems.length
+            : Controller.to.all[Controller.to.selectedFolder.value]
+                .getChildrens()
+                .length,
+        itemBuilder: (context, homeItemIndex) => Padding(
+            padding: const EdgeInsets.all(5),
+            child: Obx(() => HomeBodyItem(
+                homeItem: home.isSearch.value
+                    ? home.searchItems[homeItemIndex]
+                    : Controller.to.all[Controller.to.selectedFolder.value]
+                        .getChildrens()[homeItemIndex],
+                homeItemIndex: homeItemIndex)))));
+
+    return BodyWithTheme(body: body);
   }
 }

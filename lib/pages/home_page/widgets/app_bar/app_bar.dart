@@ -1,3 +1,4 @@
+import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -5,6 +6,9 @@ import 'package:info_keeper/pages/home_page/home_controller.dart';
 import 'package:info_keeper/pages/home_page/items/widgets/app_bar/widgets/popup_menu.dart';
 import 'package:info_keeper/pages/home_page/widgets/app_bar/search.dart';
 import 'package:info_keeper/pages/trash_page/trash_page.dart';
+import 'package:info_keeper/themes/default/default.dart';
+import 'package:info_keeper/themes/default/default_dark.dart';
+import 'package:info_keeper/themes/theme_controller.dart';
 
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({super.key});
@@ -12,6 +16,10 @@ class HomeAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeController home = Get.find();
+    ThemeController themeController = Get.find();
+    final bool brightness =
+        WidgetsBinding.instance.window.platformBrightness == Brightness.dark;
+    themeController.isDark = brightness.obs;
 
     List<PopupMenuItem> popupItems() {
       List<PopupMenuItem> items = [];
@@ -30,38 +38,53 @@ class HomeAppBar extends StatelessWidget {
       return items;
     }
 
-    return Obx(() => AppBar(
-          titleSpacing: 0,
-          leading: home.isSearch.value
-              ? IconButton(
+    return AppBar(
+        titleSpacing: 0,
+        leading: Obx(() => home.isSearch.value
+            ? IconButton(
+                splashRadius: 20,
+                onPressed: () {
+                  home.isSearch.value = !home.isSearch.value;
+                  home.searchItems.clear();
+                  home.searchController.clear();
+                },
+                icon: const Icon(Icons.arrow_back))
+            : PopupMenuButton(
+                splashRadius: 20,
+                icon: const Icon(Icons.menu),
+                onSelected: (value) =>
+                    value == 1 ? Get.to(() => const TrashPage()) : null,
+                itemBuilder: (context) => popupItems(),
+              )),
+        title: home.isSearch.value
+            ? const HomePageSearch()
+            : const AutoSizeText(
+                'Info Keeper',
+                style: TextStyle(fontSize: 18),
+              ),
+        actions: [
+          ThemeSwitcher(
+              builder: (context) => IconButton(
                   splashRadius: 20,
                   onPressed: () {
-                    home.isSearch.value = !home.isSearch.value;
-                    home.searchItems.clear();
-                    home.searchController.clear();
+                    ThemeSwitcher.of(context).changeTheme(
+                      theme: !themeController.isDark.value
+                          ? defaultDark
+                          : defaultLight,
+                      isReversed: themeController.isDark.value ? true : false,
+                    );
+                    themeController.isDark.value =
+                        !themeController.isDark.value;
                   },
-                  icon: const Icon(Icons.arrow_back))
-              : PopupMenuButton(
-                  splashRadius: 20,
-                  icon: const Icon(Icons.menu),
-                  onSelected: (value) =>
-                      value == 1 ? Get.to(() => const TrashPage()) : null,
-                  itemBuilder: (context) => popupItems(),
-                ),
-          title: home.isSearch.value
-              ? const HomePageSearch()
-              : const AutoSizeText(
-                  'Info Keeper',
-                  style: TextStyle(fontSize: 18),
-                ),
-          actions: [
-            IconButton(
-                splashRadius: 20,
-                onPressed: () => home.isGridView.value = !home.isGridView.value,
-                icon: Obx(() => Icon(
-                    home.isGridView.value ? Icons.list : Icons.grid_view,
-                    size: 26)))
-          ],
-        ));
+                  icon: Icon(themeController.isDark.value
+                      ? Icons.light_mode
+                      : Icons.dark_mode))),
+          IconButton(
+              splashRadius: 20,
+              onPressed: () => home.isGridView.value = !home.isGridView.value,
+              icon: Obx(() => Icon(
+                  home.isGridView.value ? Icons.list : Icons.grid_view,
+                  size: 26)))
+        ]);
   }
 }

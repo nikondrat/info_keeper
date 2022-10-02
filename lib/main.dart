@@ -10,6 +10,7 @@ import 'package:info_keeper/firebase_options.dart';
 import 'package:info_keeper/model/notification_init.dart';
 import 'package:info_keeper/pages/home_page/home_page.dart';
 import 'package:info_keeper/themes/default/default.dart';
+import 'package:info_keeper/themes/default/default_dark.dart';
 import 'model/controller.dart';
 
 void main(List<String> args) async {
@@ -45,8 +46,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isPlatformDark =
+        WidgetsBinding.instance.window.platformBrightness == Brightness.dark;
+    final initTheme = isPlatformDark ? defaultDark : defaultLight;
+
     return ThemeProvider(
-        initTheme: defaultLight,
+        initTheme: initTheme,
         builder: (context, myTheme) => GetMaterialApp(
               defaultTransition: Transition.cupertino,
               debugShowCheckedModeBanner: false,

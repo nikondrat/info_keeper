@@ -1,7 +1,6 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:info_keeper/themes/widgets/body.dart';
 
 class StorageFilePageBody extends StatelessWidget {
   final TextEditingController dataController;
@@ -25,13 +24,6 @@ class StorageFilePageBody extends StatelessWidget {
           contentPadding: EdgeInsets.all(12)),
     );
 
-    return Obx(() => pathToImage.isNotEmpty
-        ? Container(
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: FileImage(File(pathToImage.value)),
-                    fit: BoxFit.cover)),
-            child: body)
-        : body);
+    return BodyWithTheme(body: body, pathToImage: pathToImage.value);
   }
 }

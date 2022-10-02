@@ -1,3 +1,4 @@
+import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -28,6 +29,7 @@ class ChatPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final ChatController controller = Get.put(ChatController());
     final HomeController home = Get.find();
+
     Chat chat = homeItem.child;
     controller.homeItem = homeItem;
     RxList messages = chat.messages;
@@ -146,50 +148,53 @@ class ChatPage extends StatelessWidget {
 
     return Swipe(
         onSwipeRight: () => Get.to(() => const VaultPage(isChat: true)),
-        child: Obx(() => Scaffold(
-            resizeToAvoidBottomInset: false,
-            appBar: PreferredSize(
-                preferredSize: Size.fromHeight(
-                    controller.pinnedMessages(messages).isNotEmpty
-                        ? 100
-                        : kToolbarHeight),
-                child: AppBarWidget(
-                    title: !controller.changeTitle.value
-                        ? controller.isSearch.value
-                            ? ChatSearchTitle(messages: chat.messages)
-                            : Text(titleController.text)
-                        : null,
-                    titleSpacing: controller.changeTitle.value ||
-                            controller.isSearch.value
-                        ? 0
-                        : 20,
-                    bottom: controller.pinnedMessages(messages).isNotEmpty
-                        ? PreferredSize(
-                            preferredSize:
-                                const Size.fromHeight(double.infinity),
-                            child: ChatAppBarBottomWidget(messages: messages))
-                        : null,
-                    controller: titleController,
-                    change: controller.changeTitle,
-                    leadingButtonFunc: () {
-                      if (controller.isSearch.value) {
-                        controller.isSearch.value = !controller.isSearch.value;
-                        controller.searchItems.clear();
-                        controller.searchController.clear();
-                      } else if (controller.uniteMessage.value) {
-                        controller.uniteMessage.value = false;
-                      } else if (home.isSearch.value) {
-                        Get.back();
-                      } else {
-                        homeItem.copyWith(name: titleController.text);
-                        Get.back();
-                      }
-                    },
-                    actions: actions(),
-                    focus: titleFocus)),
-            body: ChatBody(chat: homeItem.child, pathToImage: pathToImage),
-            bottomNavigationBar: !controller.isSearch.value
-                ? ChatBottomAppBar(homeItem: homeItem)
-                : null)));
+        child: ThemeSwitchingArea(
+            child: Obx(() => Scaffold(
+                resizeToAvoidBottomInset: false,
+                appBar: PreferredSize(
+                    preferredSize: Size.fromHeight(
+                        controller.pinnedMessages(messages).isNotEmpty
+                            ? 100
+                            : kToolbarHeight),
+                    child: AppBarWidget(
+                        title: !controller.changeTitle.value
+                            ? controller.isSearch.value
+                                ? ChatSearchTitle(messages: chat.messages)
+                                : Text(titleController.text)
+                            : null,
+                        titleSpacing: controller.changeTitle.value ||
+                                controller.isSearch.value
+                            ? 0
+                            : 20,
+                        bottom: controller.pinnedMessages(messages).isNotEmpty
+                            ? PreferredSize(
+                                preferredSize:
+                                    const Size.fromHeight(double.infinity),
+                                child:
+                                    ChatAppBarBottomWidget(messages: messages))
+                            : null,
+                        controller: titleController,
+                        change: controller.changeTitle,
+                        leadingButtonFunc: () {
+                          if (controller.isSearch.value) {
+                            controller.isSearch.value =
+                                !controller.isSearch.value;
+                            controller.searchItems.clear();
+                            controller.searchController.clear();
+                          } else if (controller.uniteMessage.value) {
+                            controller.uniteMessage.value = false;
+                          } else if (home.isSearch.value) {
+                            Get.back();
+                          } else {
+                            homeItem.copyWith(name: titleController.text);
+                            Get.back();
+                          }
+                        },
+                        actions: actions(),
+                        focus: titleFocus)),
+                body: ChatBody(chat: homeItem.child, pathToImage: pathToImage),
+                bottomNavigationBar: !controller.isSearch.value
+                    ? ChatBottomAppBar(homeItem: homeItem)
+                    : null))));
   }
 }

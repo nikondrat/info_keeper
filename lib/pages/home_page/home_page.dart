@@ -1,3 +1,4 @@
+import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/pages/home_page/widgets/app_bar/app_bar.dart';
@@ -12,19 +13,22 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Swipe(
-      onSwipeRight: () {
-        Get.to(() => const VaultPage());
-      },
-      child: const Scaffold(
-          resizeToAvoidBottomInset: false,
-          appBar: PreferredSize(
-              preferredSize: Size.fromHeight(kToolbarHeight),
-              child: HomeAppBar()),
-          body: HomeBody(),
-          floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-          floatingActionButton: HomeFloatButtons(),
-          bottomNavigationBar: HomeBottomBar()),
+    return ThemeSwitchingArea(
+      child: Swipe(
+        onSwipeRight: () {
+          Get.to(() => const VaultPage());
+        },
+        child: const Scaffold(
+            resizeToAvoidBottomInset: false,
+            appBar: PreferredSize(
+                preferredSize: Size.fromHeight(kToolbarHeight),
+                child: HomeAppBar()),
+            body: HomeBody(),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.endDocked,
+            floatingActionButton: HomeFloatButtons(),
+            bottomNavigationBar: HomeBottomBar()),
+      ),
     );
   }
 }
