@@ -15,14 +15,13 @@ class HomeBottomBar extends StatelessWidget {
     late final HomeController home = Get.put(HomeController());
 
     return BottomAppBar(
-      color: Colors.white,
       child: Container(
           decoration: BoxDecoration(
             border: Border(
               top: BorderSide(
-                width: Platform.isAndroid || Platform.isIOS ? 1 : 0.8,
+                width: Platform.isAndroid || Platform.isIOS ? 0.6 : 0.8,
                 color: Platform.isAndroid || Platform.isIOS
-                    ? Colors.grey.shade300
+                    ? Colors.grey
                     : Colors.black54,
               ),
             ),

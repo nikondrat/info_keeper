@@ -49,8 +49,9 @@ class HomeBodyItemChildBody extends StatelessWidget {
                   onTap: (text) => null,
                   style: const TextStyle(color: Colors.blue)),
             ],
-            style: const TextStyle(
-                fontWeight: FontWeight.bold, color: Colors.black),
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).textTheme.headline6!.color),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),

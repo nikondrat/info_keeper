@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
 import 'package:info_keeper/pages/home_page/widgets/body/body_item/body_item.dart';
-import 'package:info_keeper/themes/widgets/body.dart';
 
 class HomeBody extends StatelessWidget {
   const HomeBody({Key? key}) : super(key: key);
@@ -31,6 +30,6 @@ class HomeBody extends StatelessWidget {
                         .getChildrens()[homeItemIndex],
                 homeItemIndex: homeItemIndex)))));
 
-    return BodyWithTheme(body: body);
+    return body;
   }
 }

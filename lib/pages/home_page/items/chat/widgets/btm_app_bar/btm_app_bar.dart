@@ -19,10 +19,10 @@ class ChatBottomAppBar extends StatelessWidget {
         offset: Offset(0, -1 * MediaQuery.of(context).viewInsets.bottom),
         child: BottomAppBar(
             child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     border: Border(
                         top: BorderSide(
-                  color: Colors.grey.shade300,
+                  color: Colors.grey,
                 ))),
                 child: Column(mainAxisSize: MainAxisSize.min, children: [
                   Obx(() => barController.isEditMessage.value

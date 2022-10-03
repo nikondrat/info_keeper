@@ -68,7 +68,9 @@ class FolderItem extends StatelessWidget {
                                       Navigator.pop(context);
                                       delete.value = !delete.value;
                                     },
-                                    icon: const Icon(Icons.delete_outline),
+                                    icon: const Icon(
+                                      Icons.delete_outline,
+                                    ),
                                     splashRadius: 20,
                                   )
                                 : Container(),

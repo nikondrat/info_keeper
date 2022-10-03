@@ -16,7 +16,7 @@ class HomeAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeController home = Get.find();
-    ThemeController themeController = Get.find();
+    ThemeController themeController = Get.put(ThemeController());
     final bool brightness =
         WidgetsBinding.instance.window.platformBrightness == Brightness.dark;
     themeController.isDark = brightness.obs;

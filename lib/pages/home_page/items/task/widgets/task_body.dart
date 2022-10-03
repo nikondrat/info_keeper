@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/pages/home_page/items/task/widgets/todo.dart';
-import 'package:info_keeper/themes/widgets/body.dart';
 
 class TaskPageBody extends StatelessWidget {
   final HomeItem homeItem;
@@ -10,8 +9,7 @@ class TaskPageBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BodyWithTheme(
-        body: Obx(
+    return Obx(
       () => ListView.builder(
           physics: const BouncingScrollPhysics(),
           itemCount: homeItem.child.todos.length,
@@ -19,6 +17,6 @@ class TaskPageBody extends StatelessWidget {
           itemBuilder: (context, index) {
             return TodoWidget(homeItem: homeItem, index: index);
           }),
-    ));
+    );
   }
 }

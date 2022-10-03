@@ -4,10 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 ThemeData defaultLight = ThemeData(
+    inputDecorationTheme: inputDecorationTheme,
+    primaryColor: Colors.black,
     canvasColor: Colors.white,
     appBarTheme: appBarTheme,
     textButtonTheme: textButtonTheme,
     checkboxTheme: checkboxTheme,
+    bottomAppBarTheme: bottomAppBarTheme,
     floatingActionButtonTheme: floatingActionButtonThemeData);
 
 AppBarTheme appBarTheme = const AppBarTheme(
@@ -21,6 +24,18 @@ AppBarTheme appBarTheme = const AppBarTheme(
         statusBarBrightness: Brightness.dark,
         statusBarIconBrightness: Brightness.dark,
         statusBarColor: Colors.transparent));
+
+InputDecorationTheme inputDecorationTheme = InputDecorationTheme(
+    errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(6),
+        borderSide: const BorderSide(color: Colors.red)),
+    focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
+    enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
+    disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
+    border: OutlineInputBorder(borderRadius: BorderRadius.circular(6)));
+
+BottomAppBarTheme bottomAppBarTheme =
+    const BottomAppBarTheme(color: Colors.white);
 
 TextButtonThemeData textButtonTheme = TextButtonThemeData(
     style: ButtonStyle(

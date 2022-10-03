@@ -48,8 +48,7 @@ class TaskBottomField extends StatelessWidget {
           padding: const EdgeInsets.all(8),
           child: Container(
               decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
-                  borderRadius: BorderRadius.circular(12)),
+                  color: Colors.grey, borderRadius: BorderRadius.circular(12)),
               child: Row(children: [
                 Checkbox(value: false, onChanged: (value) {}),
                 Expanded(
@@ -57,9 +56,11 @@ class TaskBottomField extends StatelessWidget {
                     autofocus: true,
                     controller: todoController,
                     maxLines: 1,
-                    cursorColor: Colors.black,
                     decoration: const InputDecoration(
-                        border: InputBorder.none, hintText: 'Write text'),
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        border: InputBorder.none,
+                        hintText: 'Write text'),
                     onSubmitted: (value) {
                       addTodo();
                     },

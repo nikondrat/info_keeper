@@ -12,17 +12,21 @@ class HomeFolders extends StatelessWidget {
   Widget build(BuildContext context) {
     final RxBool isDelete = false.obs;
 
-    return Column(children: [
+    return Column(mainAxisSize: MainAxisSize.min, children: [
       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         IconButton(
           onPressed: () {
             Navigator.pop(context);
             Get.to(() => const AddFolderPage());
           },
-          icon: const Icon(Icons.add),
+          icon: const Icon(
+            Icons.add,
+          ),
           splashRadius: 20,
         ),
-        const Icon(Icons.folder_copy_outlined),
+        const Icon(
+          Icons.folder_copy_outlined,
+        ),
         IconButton(
           icon: const Icon(Icons.close),
           splashRadius: 20,
@@ -31,6 +35,7 @@ class HomeFolders extends StatelessWidget {
       ]),
       Expanded(
           child: Obx(() => GridView.builder(
+              shrinkWrap: true,
               physics: const BouncingScrollPhysics(),
               padding: const EdgeInsets.all(8),
               itemCount: Controller.to.all.length,

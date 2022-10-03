@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/pages/home_page/widgets/folders/folders.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class HomeBottomNavigation extends StatelessWidget {
   const HomeBottomNavigation({Key? key}) : super(key: key);
@@ -21,11 +22,13 @@ class HomeBottomNavigation extends StatelessWidget {
       Obx(() => Controller.to.selectedFolder.value == 0
           ? IconButton(
               splashRadius: 20,
-              onPressed: () => showModalBottomSheet(
+              onPressed: () => showBarModalBottomSheet(
                   context: context, builder: (context) => const HomeFolders()),
-              icon: const Icon(Icons.folder_copy_outlined))
+              icon: const Icon(
+                Icons.folder_copy_outlined,
+              ))
           : TextButton(
-              onPressed: () => showModalBottomSheet(
+              onPressed: () => showBarModalBottomSheet(
                   context: context, builder: (context) => const HomeFolders()),
               child: Text(
                 Controller.to.all[Controller.to.selectedFolder.value].name,

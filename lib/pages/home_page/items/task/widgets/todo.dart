@@ -50,7 +50,6 @@ class TodoWidget extends StatelessWidget {
                     autocorrect: true,
                     controller: controller,
                     maxLines: 1,
-                    cursorColor: Colors.black,
                     onSubmitted: (value) {
                       if (controller.text.isNotEmpty) {
                         task.todos[index] = Todo(
@@ -61,12 +60,17 @@ class TodoWidget extends StatelessWidget {
                       }
                     },
                     decoration: const InputDecoration(
-                        border: InputBorder.none, hintText: 'Text'),
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        border: InputBorder.none,
+                        hintText: 'Text'),
                   ),
                 )
               : AutoSizeText(
                   task.todos[index].title,
-                  style: const TextStyle(fontSize: 16),
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Theme.of(context).textTheme.headline6!.color),
                 ),
         )
       ],

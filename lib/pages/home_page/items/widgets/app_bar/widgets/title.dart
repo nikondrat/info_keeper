@@ -16,24 +16,14 @@ class TitleWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     TextField titleTextField = TextField(
       controller: controller,
-      cursorColor: Colors.black,
       maxLength: 22,
       focusNode: focusNode,
       onTap: () => change.value = true,
-      decoration: InputDecoration(
-          hintText: 'Write title',
-          contentPadding: const EdgeInsets.symmetric(horizontal: 10),
-          counterText: '',
-          errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(6),
-              borderSide: const BorderSide(color: Colors.red)),
-          focusedBorder:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
-          enabledBorder:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
-          disabledBorder:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(6))),
+      decoration: const InputDecoration(
+        hintText: 'Write title',
+        contentPadding: EdgeInsets.symmetric(horizontal: 10),
+        counterText: '',
+      ),
       onSubmitted: (value) {
         controller.text = value;
         value.isNotEmpty ? change.value = false : null;

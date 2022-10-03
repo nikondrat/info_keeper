@@ -35,7 +35,6 @@ class ChatBottomTextField extends StatelessWidget {
               // autofocus: editMessage.value ? true : false,
               maxLines: null,
               // focusNode: focusNode,
-              cursorColor: Colors.black,
               decoration: const InputDecoration(
                   hintText: 'Write text',
                   contentPadding: EdgeInsets.symmetric(horizontal: 10),

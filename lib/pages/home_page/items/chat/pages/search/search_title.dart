@@ -39,24 +39,13 @@ class ChatSearchTitle extends StatelessWidget {
 
     TextField titleTextField = TextField(
       controller: controller.searchController,
-      cursorColor: Colors.black,
       autofocus: true,
       // focusNode: focusNode,
       // onTap: () => change.value = true,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
           hintText: 'Search',
-          contentPadding: const EdgeInsets.symmetric(horizontal: 10),
-          counterText: '',
-          errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(6),
-              borderSide: const BorderSide(color: Colors.red)),
-          focusedBorder:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
-          enabledBorder:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
-          disabledBorder:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(6))),
+          contentPadding: EdgeInsets.symmetric(horizontal: 10),
+          counterText: ''),
       onEditingComplete: () {
         search(controller.searchController.text);
       },

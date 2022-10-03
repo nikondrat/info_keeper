@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/types/home/chat/chat.dart';
@@ -6,7 +8,6 @@ import 'package:info_keeper/pages/home_page/items/chat/pages/search/search_body.
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/with_time/body_with_time.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/reorderable_body.dart';
 import 'package:info_keeper/themes/theme_controller.dart';
-import 'package:info_keeper/themes/widgets/body.dart';
 
 class ChatBody extends StatelessWidget {
   final Chat chat;
@@ -34,6 +35,14 @@ class ChatBody extends StatelessWidget {
                 : ChatReorderableBody(chat: chat),
           ));
 
-    return BodyWithTheme(body: body, pathToImage: pathToImage.value);
+    return Obx(() => pathToImage.value.isNotEmpty
+        ? Container(
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    isAntiAlias: true,
+                    image: FileImage(File(pathToImage.value)))),
+            child: body)
+        : body);
   }
 }

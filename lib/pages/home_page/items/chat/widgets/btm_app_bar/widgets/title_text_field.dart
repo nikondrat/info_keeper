@@ -11,7 +11,6 @@ class ChatBottomTitleTextField extends StatelessWidget {
       init: BottomAppBarController(),
       builder: (controller) => TextField(
         controller: controller.titleController,
-        cursorColor: Colors.black,
         textInputAction: TextInputAction.send,
         decoration: const InputDecoration(
             hintText: 'Write title',
