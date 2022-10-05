@@ -23,24 +23,14 @@ class HomePageSearch extends StatelessWidget {
 
     TextField titleTextField = TextField(
         controller: home.searchController,
-        cursorColor: Colors.black,
         autofocus: true,
         // focusNode: focusNode,
         // onTap: () => change.value = true,
-        decoration: InputDecoration(
-            hintText: 'Search',
-            contentPadding: const EdgeInsets.symmetric(horizontal: 10),
-            counterText: '',
-            errorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(6),
-                borderSide: const BorderSide(color: Colors.red)),
-            focusedBorder:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
-            enabledBorder:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
-            disabledBorder:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(6))),
+        decoration: const InputDecoration(
+          hintText: 'Search',
+          contentPadding: EdgeInsets.symmetric(horizontal: 10),
+          counterText: '',
+        ),
         onChanged: search);
 
     return titleTextField;

@@ -33,6 +33,8 @@ class StorageFileItem extends StatelessWidget {
               homeItem.child.data,
               maxLines: 6,
               overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                  color: Theme.of(context).textTheme.headline6!.color),
             ),
             titleBuilder:
                 (animationValue, easeInValue, isExpanded, toggleFunction) =>

@@ -20,6 +20,9 @@ class StorageFilePageBody extends StatelessWidget {
       cursorColor: Colors.black,
       decoration: const InputDecoration(
           border: InputBorder.none,
+          focusedBorder: InputBorder.none,
+          disabledBorder: InputBorder.none,
+          enabledBorder: InputBorder.none,
           hintText: 'Text',
           contentPadding: EdgeInsets.all(12)),
     );

@@ -34,21 +34,10 @@ class HomeAlertDialog extends StatelessWidget {
           autofocus: true,
           maxLength: 18,
           controller: controller,
-          cursorColor: Colors.black,
           decoration: InputDecoration(
-              errorText: validate.value ? 'Value Can\'t Be Empty' : null,
-              contentPadding: const EdgeInsets.symmetric(horizontal: 10),
-              errorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(6),
-                  borderSide: const BorderSide(width: 1, color: Colors.red)),
-              focusedBorder:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
-              enabledBorder:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
-              disabledBorder:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
-              border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(6))),
+            errorText: validate.value ? 'Value Can\'t Be Empty' : null,
+            contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+          ),
           onSubmitted: addChat)),
       actions: [
         TextButton(

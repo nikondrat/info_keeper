@@ -38,53 +38,55 @@ class HomeAppBar extends StatelessWidget {
       return items;
     }
 
-    return AppBar(
-        titleSpacing: 0,
-        leading: Obx(() => home.isSearch.value
-            ? IconButton(
-                splashRadius: 20,
-                onPressed: () {
-                  home.isSearch.value = !home.isSearch.value;
-                  home.searchItems.clear();
-                  home.searchController.clear();
-                },
-                icon: const Icon(Icons.arrow_back))
-            : PopupMenuButton(
-                splashRadius: 20,
-                icon: const Icon(Icons.menu),
-                onSelected: (value) =>
-                    value == 1 ? Get.to(() => const TrashPage()) : null,
-                itemBuilder: (context) => popupItems(),
-              )),
-        title: home.isSearch.value
-            ? const HomePageSearch()
-            : const AutoSizeText(
-                'Info Keeper',
-                style: TextStyle(fontSize: 18),
-              ),
-        actions: [
-          ThemeSwitcher(
-              builder: (context) => IconButton(
+    return Obx(() => AppBar(
+            titleSpacing: 0,
+            leading: home.isSearch.value
+                ? IconButton(
+                    splashRadius: 20,
+                    onPressed: () {
+                      home.isSearch.value = !home.isSearch.value;
+                      home.searchItems.clear();
+                      home.searchController.clear();
+                    },
+                    icon: const Icon(Icons.arrow_back))
+                : PopupMenuButton(
+                    splashRadius: 20,
+                    icon: const Icon(Icons.menu),
+                    onSelected: (value) =>
+                        value == 1 ? Get.to(() => const TrashPage()) : null,
+                    itemBuilder: (context) => popupItems(),
+                  ),
+            title: home.isSearch.value
+                ? const HomePageSearch()
+                : const AutoSizeText(
+                    'Info Keeper',
+                    style: TextStyle(fontSize: 18),
+                  ),
+            actions: [
+              ThemeSwitcher(
+                  builder: (context) => IconButton(
+                      splashRadius: 20,
+                      onPressed: () {
+                        ThemeSwitcher.of(context).changeTheme(
+                          theme: !themeController.isDark.value
+                              ? defaultDark
+                              : defaultLight,
+                          isReversed:
+                              themeController.isDark.value ? true : false,
+                        );
+                        themeController.isDark.value =
+                            !themeController.isDark.value;
+                      },
+                      icon: Icon(themeController.isDark.value
+                          ? Icons.light_mode
+                          : Icons.dark_mode))),
+              IconButton(
                   splashRadius: 20,
-                  onPressed: () {
-                    ThemeSwitcher.of(context).changeTheme(
-                      theme: !themeController.isDark.value
-                          ? defaultDark
-                          : defaultLight,
-                      isReversed: themeController.isDark.value ? true : false,
-                    );
-                    themeController.isDark.value =
-                        !themeController.isDark.value;
-                  },
-                  icon: Icon(themeController.isDark.value
-                      ? Icons.light_mode
-                      : Icons.dark_mode))),
-          IconButton(
-              splashRadius: 20,
-              onPressed: () => home.isGridView.value = !home.isGridView.value,
-              icon: Obx(() => Icon(
-                  home.isGridView.value ? Icons.list : Icons.grid_view,
-                  size: 26)))
-        ]);
+                  onPressed: () =>
+                      home.isGridView.value = !home.isGridView.value,
+                  icon: Obx(() => Icon(
+                      home.isGridView.value ? Icons.list : Icons.grid_view,
+                      size: 26)))
+            ]));
   }
 }

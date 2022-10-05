@@ -6,6 +6,8 @@ import 'package:flutter/services.dart';
 Color defaultBlackColor = const Color(0xFF232527);
 
 ThemeData defaultDark = ThemeData(
+    popupMenuTheme: popupMenuThemeData,
+    dialogBackgroundColor: defaultBlackColor,
     inputDecorationTheme: inputDecorationTheme,
     iconTheme: const IconThemeData(color: Colors.white),
     textSelectionTheme: const TextSelectionThemeData(cursorColor: Colors.white),
@@ -18,6 +20,9 @@ ThemeData defaultDark = ThemeData(
     bottomAppBarTheme: bottomAppBarTheme,
     appBarTheme: appBarTheme,
     floatingActionButtonTheme: floatingActionButtonThemeData);
+
+PopupMenuThemeData popupMenuThemeData =
+    PopupMenuThemeData(color: defaultBlackColor);
 
 AppBarTheme appBarTheme = AppBarTheme(
     elevation: 1,
@@ -34,6 +39,7 @@ AppBarTheme appBarTheme = AppBarTheme(
 
 InputDecorationTheme inputDecorationTheme = InputDecorationTheme(
     hintStyle: const TextStyle(color: Colors.white),
+    counterStyle: const TextStyle(color: Colors.white),
     errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(6),
         borderSide: const BorderSide(color: Colors.red)),
