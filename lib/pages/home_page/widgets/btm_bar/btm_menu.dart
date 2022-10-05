@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home_item.dart';
+import 'package:info_keeper/model/types/trash/trash_item.dart';
 import 'package:info_keeper/pages/home_page/home_controller.dart';
 import 'package:info_keeper/pages/home_page/widgets/folders/folders.dart';
 import 'package:info_keeper/pages/home_page/items/widgets/app_bar/widgets/popup_menu.dart';
@@ -59,7 +60,7 @@ class HomeBottomMenu extends StatelessWidget {
 
       PopupMenuItem delete = PopupMenuItem(
           onTap: () {
-            Controller.to.trashElements.add(item);
+            Controller.to.trashElements.add(TrashItem(child: item));
             Controller.to.all[Controller.to.selectedFolder.value].childrens
                 .remove(item);
             Controller.to.setData();

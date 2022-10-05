@@ -13,6 +13,7 @@ import 'package:info_keeper/model/types/folder.dart';
 // import 'package:info_keeper/model/types/home/storage_file/storage_file.dart';
 // import 'package:info_keeper/model/types/home/todo/todo.dart';
 import 'package:info_keeper/model/types/home_item.dart';
+import 'package:info_keeper/model/types/trash/trash_item.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 initData() async {
@@ -35,7 +36,7 @@ initData() async {
     if (prefs.getString('trash')!.isNotEmpty) {
       String stringData = prefs.getString('trash')!;
       Iterable data = jsonDecode(stringData);
-      List items = List.from(data.map((e) => HomeItem.fromJson(e)));
+      List<TrashItem> items = List.from(data.map((e) => TrashItem.fromJson(e)));
       // List items = List.from(data
       //     .map((e) {
       //       switch (AllType.values.elementAt(e['type'])) {

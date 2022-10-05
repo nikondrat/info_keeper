@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home/chat/chat.dart';
 import 'package:info_keeper/model/types/home/chat/items/message.dart';
+import 'package:info_keeper/model/types/trash/trash_item.dart';
 import 'package:info_keeper/pages/home_page/items/chat/chat_controller.dart';
 import 'package:info_keeper/pages/home_page/items/chat/pages/history/history_page.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/menu/item.dart';
@@ -39,7 +40,6 @@ class MessageMenuWidget extends StatelessWidget {
             MenuItemWidget(
                 title: 'Copy',
                 icon: const Icon(Icons.copy),
-                done: true,
                 onPressed: () {
                   Navigator.pop(context);
                   Clipboard.setData(ClipboardData(text: message.content));
@@ -53,7 +53,6 @@ class MessageMenuWidget extends StatelessWidget {
                 }),
             MenuItemWidget(
                 title: 'Edit',
-                done: true,
                 icon: const Icon(Icons.edit_outlined),
                 onPressed: () {
                   barController.isEditMessage.value = true;
@@ -67,7 +66,6 @@ class MessageMenuWidget extends StatelessWidget {
                 }),
             MenuItemWidget(
                 title: 'Highlite',
-                done: true,
                 icon: const Icon(Icons.brush_outlined),
                 onPressed: () {
                   Navigator.pop(context);
@@ -84,7 +82,6 @@ class MessageMenuWidget extends StatelessWidget {
             MenuItemWidget(
                 title: 'Edit history',
                 icon: const Icon(Icons.history),
-                done: true,
                 onPressed: () {
                   Navigator.pop(context);
                   Get.to(
@@ -92,7 +89,6 @@ class MessageMenuWidget extends StatelessWidget {
                 }),
             MenuItemWidget(
                 title: 'Unite messages',
-                done: true,
                 icon: const Icon(Icons.forum_outlined),
                 onPressed: () {
                   chatController.uniteMessage.value = true;
@@ -103,7 +99,6 @@ class MessageMenuWidget extends StatelessWidget {
                 }),
             MenuItemWidget(
                 title: 'Move message',
-                done: true,
                 icon: const Icon(Icons.drag_handle),
                 onPressed: () {
                   chatController.moveMessage.value = true;
@@ -116,14 +111,12 @@ class MessageMenuWidget extends StatelessWidget {
             MenuItemWidget(
                 title: 'Full screen',
                 icon: const Icon(Icons.open_in_full),
-                done: true,
                 onPressed: () {
                   Navigator.pop(context);
                   context.pushTransparentRoute(
                       MessageWidgetInFullScreen(message: message));
                 }),
             MenuItemWidget(
-                done: true,
                 title: message.isPinned ? 'Unpin' : 'Pin',
                 icon: const Icon(Icons.push_pin_outlined),
                 onPressed: () {
@@ -136,7 +129,6 @@ class MessageMenuWidget extends StatelessWidget {
                 title: message.isFavorite
                     ? 'Remove from favorites'
                     : 'Add to favorites',
-                done: true,
                 icon: const Icon(Icons.star_outline),
                 onPressed: () {
                   message.isFavorite = !message.isFavorite;
@@ -146,7 +138,6 @@ class MessageMenuWidget extends StatelessWidget {
                 }),
             MenuItemWidget(
                 title: message.isLocked ? 'Unlock' : 'Lock message',
-                done: true,
                 icon: const Icon(Icons.lock_outline),
                 onPressed: () {
                   message.isLocked = !message.isLocked;
@@ -163,7 +154,8 @@ class MessageMenuWidget extends StatelessWidget {
                 title: 'Move to trash',
                 icon: const Icon(Icons.delete),
                 onPressed: () {
-                  Controller.to.trashElements.add(message);
+                  Controller.to.trashElements
+                      .add(TrashItem(child: message, isMessage: true));
                   messages.removeAt(messages.indexOf(message));
                   Navigator.pop(context);
                 })

@@ -17,49 +17,50 @@ class TrashElement extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => isShowRestoreMenu.value
-        ? Container(
-            padding: const EdgeInsets.symmetric(horizontal: 4),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(6),
-                border: Border.all(color: Colors.grey.shade600)),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  TextButton(
-                      onPressed: () => isShowRestoreMenu.value = false,
-                      child: const Text('Cancel')),
-                  TextButton(
-                      onPressed: () {
-                        isMessage
-                            ? Controller
-                                .to
-                                .all[Controller.to.trashElements[index!]
-                                    .location.inDirectory]
-                                .childrens[Controller
-                                    .to.trashElements[index!].location.index]
-                                .child
-                                .value
-                                .messages
-                                .insert(
-                                    Controller.to.trashElements[index!].location
-                                        .selectedMessageIndex,
-                                    Controller.to.trashElements[index!])
-                            : Controller
-                                .to
-                                .all[Controller.to.trashElements[index!]
-                                    .location.inDirectory]
-                                .childrens
-                                .insert(
-                                    Controller.to.trashElements[index!].location
-                                        .index,
-                                    Controller.to.trashElements[index!]);
-                        Controller.to.trashElements.removeAt(index!);
-                        Controller.to.setData();
-                      },
-                      child: const Text('Restore'))
-                ]),
-          )
-        : child);
+    return Container();
+    // return Obx(() => isShowRestoreMenu.value
+    //     ? Container(
+    //         padding: const EdgeInsets.symmetric(horizontal: 4),
+    //         decoration: BoxDecoration(
+    //             borderRadius: BorderRadius.circular(6),
+    //             border: Border.all(color: Colors.grey.shade600)),
+    //         child: Row(
+    //             mainAxisAlignment: MainAxisAlignment.spaceAround,
+    //             children: [
+    //               TextButton(
+    //                   onPressed: () => isShowRestoreMenu.value = false,
+    //                   child: const Text('Cancel')),
+    //               TextButton(
+    //                   onPressed: () {
+    //                     isMessage
+    //                         ? Controller
+    //                             .to
+    //                             .all[Controller.to.trashElements[index!]
+    //                                 .location.inDirectory]
+    //                             .childrens[Controller
+    //                                 .to.trashElements[index!].location.index]
+    //                             .child
+    //                             .value
+    //                             .messages
+    //                             .insert(
+    //                                 Controller.to.trashElements[index!].location
+    //                                     .selectedMessageIndex,
+    //                                 Controller.to.trashElements[index!])
+    //                         : Controller
+    //                             .to
+    //                             .all[Controller.to.trashElements[index!]
+    //                                 .location.inDirectory]
+    //                             .childrens
+    //                             .insert(
+    //                                 Controller.to.trashElements[index!].location
+    //                                     .index,
+    //                                 Controller.to.trashElements[index!]);
+    //                     Controller.to.trashElements.removeAt(index!);
+    //                     Controller.to.setData();
+    //                   },
+    //                   child: const Text('Restore'))
+    //             ]),
+    //       )
+    //     : child);
   }
 }

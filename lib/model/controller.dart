@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/types/folder.dart';
 import 'package:info_keeper/model/types/home_item.dart';
+import 'package:info_keeper/model/types/trash/trash_item.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Controller extends GetxController {
@@ -19,7 +20,7 @@ class Controller extends GetxController {
     Folder(name: 'Main screen', childrens: <HomeItem>[].obs),
   ].obs;
 
-  RxList trashElements = [].obs;
+  RxList<TrashItem> trashElements = <TrashItem>[].obs;
 
   void setData() async {
     final prefs = await SharedPreferences.getInstance();

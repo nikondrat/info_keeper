@@ -3,8 +3,10 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home/chat/chat_type.dart';
+import 'package:info_keeper/model/types/trash/trash_item.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/file.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/image.dart';
+import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/message/message.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/message/widgets/body.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/voice.dart';
 import 'package:info_keeper/pages/home_page/widgets/body/body_item/body_item.dart';
@@ -14,7 +16,7 @@ class TrashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    RxList trashElements = Controller.to.trashElements;
+    RxList<TrashItem> trashElements = Controller.to.trashElements;
 
     return Scaffold(
         appBar: AppBar(
@@ -40,26 +42,29 @@ class TrashPage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             mainAxisSpacing: 10,
             crossAxisSpacing: 10,
-            crossAxisCount: 2,
+            crossAxisCount: 1,
             itemCount: Controller.to.trashElements.length,
             itemBuilder: (context, index) {
-              switch (trashElements[index].type) {
-                case ChatType.voice:
-                  return ChatVoiceWidget(
-                    voice: trashElements[index],
-                  );
-                case ChatType.file:
-                  return ChatFileWidget(file: trashElements[index]);
-                case ChatType.message:
-                  return MessageWidgetBody(
-                      isTrash: true,
-                      message: Controller.to.trashElements[index]);
-                case ChatType.image:
-                  return ChatImageWidget(image: trashElements[index]);
-                default:
-                  return HomeBodyItem(
-                      homeItemIndex: index, homeItem: trashElements[index]);
+              if (!trashElements[index].isMessage) {
+                return HomeBodyItem(
+                    homeItemIndex: index, homeItem: trashElements[index].child);
+              } else {
+                switch (trashElements[index].child.type) {
+                  case ChatType.voice:
+                    return ChatVoiceWidget(
+                      voice: trashElements[index].child,
+                    );
+                  case ChatType.file:
+                    return ChatFileWidget(file: trashElements[index].child);
+                  case ChatType.message:
+                    return MessageWidgetBody(
+                        isTrash: true,
+                        message: Controller.to.trashElements[index].child);
+                  case ChatType.image:
+                    return ChatImageWidget(image: trashElements[index].child);
+                }
               }
+              return const SizedBox();
             })));
   }
 }
