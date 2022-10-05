@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:info_keeper/model/controller.dart';
 
 class TrashElement extends StatelessWidget {
   final RxBool isShowRestoreMenu;

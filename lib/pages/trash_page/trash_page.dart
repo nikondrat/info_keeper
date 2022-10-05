@@ -6,7 +6,6 @@ import 'package:info_keeper/model/types/home/chat/chat_type.dart';
 import 'package:info_keeper/model/types/trash/trash_item.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/file.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/image.dart';
-import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/message/message.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/message/widgets/body.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/voice.dart';
 import 'package:info_keeper/pages/home_page/widgets/body/body_item/body_item.dart';
