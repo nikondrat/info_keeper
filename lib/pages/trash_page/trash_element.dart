@@ -1,65 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:info_keeper/model/controller.dart';
 
 class TrashElement extends StatelessWidget {
-  final RxBool isShowRestoreMenu;
-  final int? index;
+  final int index;
   final Widget child;
+  final dynamic data;
   final bool isMessage;
   const TrashElement(
       {Key? key,
-      required this.isShowRestoreMenu,
+      required this.index,
       required this.child,
-      this.isMessage = false,
-      this.index})
+      required this.data,
+      this.isMessage = false})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container();
-    // return Obx(() => isShowRestoreMenu.value
-    //     ? Container(
-    //         padding: const EdgeInsets.symmetric(horizontal: 4),
-    //         decoration: BoxDecoration(
-    //             borderRadius: BorderRadius.circular(6),
-    //             border: Border.all(color: Colors.grey.shade600)),
-    //         child: Row(
-    //             mainAxisAlignment: MainAxisAlignment.spaceAround,
-    //             children: [
-    //               TextButton(
-    //                   onPressed: () => isShowRestoreMenu.value = false,
-    //                   child: const Text('Cancel')),
-    //               TextButton(
-    //                   onPressed: () {
-    //                     isMessage
-    //                         ? Controller
-    //                             .to
-    //                             .all[Controller.to.trashElements[index!]
-    //                                 .location.inDirectory]
-    //                             .childrens[Controller
-    //                                 .to.trashElements[index!].location.index]
-    //                             .child
-    //                             .value
-    //                             .messages
-    //                             .insert(
-    //                                 Controller.to.trashElements[index!].location
-    //                                     .selectedMessageIndex,
-    //                                 Controller.to.trashElements[index!])
-    //                         : Controller
-    //                             .to
-    //                             .all[Controller.to.trashElements[index!]
-    //                                 .location.inDirectory]
-    //                             .childrens
-    //                             .insert(
-    //                                 Controller.to.trashElements[index!].location
-    //                                     .index,
-    //                                 Controller.to.trashElements[index!]);
-    //                     Controller.to.trashElements.removeAt(index!);
-    //                     Controller.to.setData();
-    //                   },
-    //                   child: const Text('Restore'))
-    //             ]),
-    //       )
-    //     : child);
+    final RxBool isShowRestoreMenu = false.obs;
+
+    return Obx(() => isShowRestoreMenu.value
+        ? Container(
+            padding: const EdgeInsets.symmetric(horizontal: 4),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(6),
+                border: Border.all(color: Colors.grey.shade600)),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  TextButton(
+                      onPressed: () => isShowRestoreMenu.value = false,
+                      child: const Text('Cancel')),
+                  TextButton(
+                      onPressed: () {
+                        isMessage
+                            ? Controller.to.all[data.location.inDirectory]
+                                .childrens[data.location.index].child.messages
+                                .insert(data.location.itemIndex, data)
+                            : Controller
+                                .to.all[data.location.inDirectory].childrens
+                                .insert(data.location.index, data);
+                        Controller.to.trashElements.removeAt(index);
+                        Controller.to.setData();
+                      },
+                      child: const Text('Restore'))
+                ]),
+          )
+        : GestureDetector(
+            onLongPress: () =>
+                isShowRestoreMenu.value = !isShowRestoreMenu.value,
+            child: child));
   }
 }

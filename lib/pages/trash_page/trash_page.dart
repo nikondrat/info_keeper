@@ -8,7 +8,9 @@ import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/file.d
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/image.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/message/widgets/body.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/voice.dart';
-import 'package:info_keeper/pages/home_page/widgets/body/body_item/body_item.dart';
+import 'package:info_keeper/pages/home_page/widgets/body/body_item/body_item_child_body.dart';
+import 'package:info_keeper/pages/home_page/widgets/body/body_item/body_item_decoration.dart';
+import 'package:info_keeper/pages/trash_page/trash_element.dart';
 
 class TrashPage extends StatelessWidget {
   const TrashPage({Key? key}) : super(key: key);
@@ -44,26 +46,38 @@ class TrashPage extends StatelessWidget {
             crossAxisCount: 1,
             itemCount: Controller.to.trashElements.length,
             itemBuilder: (context, index) {
-              if (!trashElements[index].isMessage) {
-                return HomeBodyItem(
-                    homeItemIndex: index, homeItem: trashElements[index].child);
-              } else {
-                switch (trashElements[index].child.type) {
-                  case ChatType.voice:
-                    return ChatVoiceWidget(
-                      voice: trashElements[index].child,
-                    );
-                  case ChatType.file:
-                    return ChatFileWidget(file: trashElements[index].child);
-                  case ChatType.message:
-                    return MessageWidgetBody(
-                        isTrash: true,
-                        message: Controller.to.trashElements[index].child);
-                  case ChatType.image:
-                    return ChatImageWidget(image: trashElements[index].child);
+              getType() {
+                if (!trashElements[index].isMessage) {
+                  return BodyItemDecoration(
+                      homeItem: trashElements[index].child,
+                      child: HomeBodyItemChildBody(
+                        homeItem: trashElements[index].child,
+                        term: '',
+                      ));
+                } else {
+                  switch (trashElements[index].child.type) {
+                    case ChatType.voice:
+                      return ChatVoiceWidget(
+                        voice: trashElements[index].child,
+                      );
+                    case ChatType.file:
+                      return ChatFileWidget(file: trashElements[index].child);
+                    case ChatType.message:
+                      return MessageWidgetBody(
+                          isTrash: true,
+                          message: Controller.to.trashElements[index].child);
+                    case ChatType.image:
+                      return ChatImageWidget(image: trashElements[index].child);
+                  }
                 }
+                return const SizedBox();
               }
-              return const SizedBox();
+
+              return TrashElement(
+                  index: index,
+                  isMessage: trashElements[index].isMessage,
+                  data: trashElements[index].child,
+                  child: getType());
             })));
   }
 }
