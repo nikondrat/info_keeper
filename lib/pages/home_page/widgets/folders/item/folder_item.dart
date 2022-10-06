@@ -52,12 +52,22 @@ class FolderItem extends StatelessWidget {
                                     folder.name,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(fontSize: 18),
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .headline6!
+                                            .color),
                                   ),
                                   Expanded(
                                       child: AutoSizeText(
                                     '${folder.childrens.length} ${folder.childrens.length == 1 ? 'object' : 'objects'}',
-                                    style: const TextStyle(fontSize: 14),
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .headline6!
+                                            .color),
                                   ))
                                 ])),
                             delete.value && index != 0
