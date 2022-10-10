@@ -24,8 +24,6 @@ class HomePageSearch extends StatelessWidget {
     TextField titleTextField = TextField(
         controller: home.searchController,
         autofocus: true,
-        // focusNode: focusNode,
-        // onTap: () => change.value = true,
         decoration: const InputDecoration(
           hintText: 'Search',
           contentPadding: EdgeInsets.symmetric(horizontal: 10),

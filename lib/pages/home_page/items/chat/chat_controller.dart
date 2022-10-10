@@ -17,6 +17,8 @@ class ChatController extends GetxController {
   final RxBool changeTitle = false.obs;
   final RxBool isSearch = false.obs;
 
+  final RxBool isVault = false.obs;
+
   RxList<Message> pinnedMessages(RxList allMessages) {
     RxList<Message> pinnedMessages = <Message>[].obs;
 

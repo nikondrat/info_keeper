@@ -29,15 +29,20 @@ class VaultPage extends StatelessWidget {
         Controller.to.all[Controller.to.selectedFolder.value].childrens;
     Chat? chat;
 
-    RxList homeChildrens = childrens;
-    RxList chatLockedMessages = [].obs;
+    RxList lockedItems = [].obs;
 
     if (isChat) {
       chat = childrens[Controller.to.selectedElementIndex.value].child;
       for (int i = 0; i < chat!.messages.length; i++) {
         if (chat.messages[i].type == ChatType.message &&
             chat.messages[i].isLocked) {
-          chatLockedMessages.add(chat.messages[i]);
+          lockedItems.add(chat.messages[i]);
+        }
+      }
+    } else {
+      for (var item in childrens) {
+        if (item.isLocked) {
+          lockedItems.add(item);
         }
       }
     }
@@ -69,16 +74,15 @@ class VaultPage extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 crossAxisCount: isGridView.value ? 2 : 1,
-                itemCount:
-                    isChat ? chatLockedMessages.length : homeChildrens.length,
+                itemCount: lockedItems.length,
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.all(5),
                     child: isChat
                         ? MessageWidget(
-                            message: chatLockedMessages[index], isVault: true)
+                            message: lockedItems[index], isVault: true)
                         : HomeBodyItem(
-                            homeItem: homeChildrens[index],
+                            homeItem: lockedItems[index],
                             homeItemIndex: index,
                           ),
                   );
