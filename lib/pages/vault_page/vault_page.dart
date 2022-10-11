@@ -5,6 +5,7 @@ import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home/chat/chat.dart';
 import 'package:info_keeper/model/types/home/chat/chat_type.dart';
 import 'package:info_keeper/model/types/home_item.dart';
+import 'package:info_keeper/pages/home_page/items/chat/chat_controller.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/message/message.dart';
 import 'package:info_keeper/pages/home_page/widgets/body/body_item/body_item.dart';
 import 'package:info_keeper/pages/home_page/widgets/btm_bar/btm_bar.dart';
@@ -64,7 +65,11 @@ class VaultPage extends StatelessWidget {
               : null,
           leading: IconButton(
               splashRadius: 20,
-              onPressed: () => Get.back(),
+              onPressed: () {
+                ChatController chatController = Get.put(ChatController());
+                isChat ? chatController.isVault.value = false : null;
+                Get.back();
+              },
               icon: const Icon(Icons.arrow_back)),
           title: const Text('Vault'),
         ),

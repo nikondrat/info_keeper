@@ -86,7 +86,7 @@ class HomeAppBar extends StatelessWidget {
                       home.isGridView.value = !home.isGridView.value,
                   icon: Obx(() => Icon(
                       home.isGridView.value ? Icons.list : Icons.grid_view,
-                      size: 26)))
+                      size: 28)))
             ]));
   }
 }

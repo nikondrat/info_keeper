@@ -117,12 +117,18 @@ class ChatPage extends StatelessWidget {
 
       Widget titleButton = IconButton(
           splashRadius: 20,
-          onPressed: () => Get.to(() => ChatTitlesPage(chat: chat)),
+          onPressed: () {
+            controller.isTitlesPage.value = true;
+            Get.to(() => ChatTitlesPage(chat: chat));
+          },
           icon: const Icon(Icons.title));
 
       Widget favoritesButton = IconButton(
           splashRadius: 20,
-          onPressed: () => Get.to(() => ChatFavoritesPage(chat: chat)),
+          onPressed: () {
+            controller.isFavoritesPage.value = true;
+            Get.to(() => ChatFavoritesPage(chat: chat));
+          },
           icon: const Icon(Icons.star_outline));
 
       Widget popupsButton = PopupMenuButton(
@@ -147,7 +153,11 @@ class ChatPage extends StatelessWidget {
     }
 
     return Swipe(
-        onSwipeRight: () => Get.to(() => const VaultPage(isChat: true)),
+        onSwipeRight: () {
+          ChatController chatController = Get.find();
+          chatController.isVault.value = true;
+          Get.to(() => const VaultPage(isChat: true));
+        },
         child: ThemeSwitchingArea(
             child: Obx(() => Scaffold(
                 resizeToAvoidBottomInset: false,

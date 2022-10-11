@@ -56,7 +56,10 @@ class ChatAppBarBottomWidget extends StatelessWidget {
         trailing: IconButton(
             splashRadius: 20,
             onPressed: pinnedMessages.length > 1
-                ? () => Get.to(() => const ChatPinnedMessages())
+                ? () {
+                    controller.isPinnedMessagesPage.value = true;
+                    Get.to(() => const ChatPinnedMessages());
+                  }
                 : () {
                     pinnedMessage.value.isPinned =
                         !pinnedMessage.value.isPinned;

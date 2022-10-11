@@ -55,13 +55,14 @@ class ChatBottomTextField extends StatelessWidget {
                 controller.update();
               }),
         )),
-        controller.textFieldIsEmpty.value &&
+        Obx(() => !controller.isEditMessage.value &&
+                controller.textFieldIsEmpty.value &&
                 (Platform.isAndroid || Platform.isIOS)
             ? Row(children: [
                 ChatBottomFileSelectorButton(homeItem: homeItem),
                 ChatBottomRecorder(homeItem: homeItem)
               ])
-            : ChatBottomSendButton(homeItem: homeItem)
+            : ChatBottomSendButton(homeItem: homeItem))
       ]),
     );
   }

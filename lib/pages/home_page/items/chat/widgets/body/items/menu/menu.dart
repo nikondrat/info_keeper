@@ -163,20 +163,30 @@ class MessageMenuWidget extends StatelessWidget {
             Navigator.pop(context);
           });
 
-      children.addAll([
-        copy,
-        edit,
-        highlite,
-        history,
-        unite,
-        move,
-        inFull,
-        pin,
-        favorites,
-        lock,
-        notifications,
-        trash
-      ]);
+      if (chatController.isVault.value) {
+        children.addAll([copy, highlite, history, inFull, lock, trash]);
+      } else if (chatController.isPinnedMessagesPage.value) {
+        children.addAll([copy, highlite, history, inFull, pin]);
+      } else if (chatController.isTitlesPage.value) {
+        children.addAll([copy, history, inFull, pin]);
+      } else if (chatController.isFavoritesPage.value) {
+        children.addAll([copy, history, inFull, pin, favorites]);
+      } else {
+        children.addAll([
+          copy,
+          edit,
+          highlite,
+          history,
+          unite,
+          move,
+          inFull,
+          pin,
+          favorites,
+          lock,
+          notifications,
+          trash
+        ]);
+      }
 
       return children;
     }

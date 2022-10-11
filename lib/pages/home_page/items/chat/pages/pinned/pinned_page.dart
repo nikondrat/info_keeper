@@ -14,7 +14,10 @@ class ChatPinnedMessages extends StatelessWidget {
         appBar: AppBar(
             leading: IconButton(
                 splashRadius: 20,
-                onPressed: () => Get.back(),
+                onPressed: () {
+                  controller.isPinnedMessagesPage.value = false;
+                  Get.back();
+                },
                 icon: const Icon(Icons.arrow_back))),
         body: Obx(() => ListView.builder(
             itemCount: controller

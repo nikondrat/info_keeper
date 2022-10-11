@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:info_keeper/model/types/home/chat/chat.dart';
 import 'package:info_keeper/model/types/home/chat/chat_type.dart';
 import 'package:info_keeper/model/types/home/chat/items/message.dart';
+import 'package:info_keeper/pages/home_page/items/chat/chat_controller.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/item.dart';
 
 class ChatFavoritesPage extends StatelessWidget {
@@ -26,7 +27,11 @@ class ChatFavoritesPage extends StatelessWidget {
       appBar: AppBar(
           leading: IconButton(
               splashRadius: 20,
-              onPressed: () => Get.back(),
+              onPressed: () {
+                ChatController chatController = Get.find();
+                chatController.isFavoritesPage.value = false;
+                Get.back();
+              },
               icon: const Icon(Icons.arrow_back))),
       body: ListView.builder(
           itemCount: favorites.length,
