@@ -17,7 +17,6 @@ class StorageFilePageBody extends StatelessWidget {
       controller: dataController,
       maxLines: null,
       expands: true,
-      cursorColor: Colors.black,
       decoration: const InputDecoration(
           border: InputBorder.none,
           focusedBorder: InputBorder.none,

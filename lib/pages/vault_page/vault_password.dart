@@ -19,26 +19,33 @@ class VaultPagePasswordWidget extends StatelessWidget {
                     title: 'Repeat password', isRepeatPasswordWidget: true)
                 : const SizedBox(),
             Controller.to.password.isEmpty
-                ? const ListTile(
+                ? ListTile(
                     style: ListTileStyle.drawer,
                     minLeadingWidth: 0,
-                    leading: Icon(
+                    leading: const Icon(
                       Icons.info_outline,
                       color: Colors.blue,
                     ),
                     title: AutoSizeText(
-                        'The vault is available by swiping the screen to the right.'),
+                      'The vault is available by swiping the screen to the right.',
+                      style: TextStyle(
+                          color: Theme.of(context).textTheme.headline6!.color),
+                    ),
                   )
                 : const SizedBox(),
             Controller.to.password.isEmpty
-                ? const ListTile(
+                ? ListTile(
                     style: ListTileStyle.drawer,
                     minLeadingWidth: 0,
-                    leading: Icon(
+                    leading: const Icon(
                       Icons.error_outline,
                       color: Colors.orange,
                     ),
-                    title: AutoSizeText('The password cannot be restored.'),
+                    title: AutoSizeText(
+                      'The password cannot be restored.',
+                      style: TextStyle(
+                          color: Theme.of(context).textTheme.headline6!.color),
+                    ),
                   )
                 : const SizedBox()
           ],
@@ -94,16 +101,22 @@ class VaultPagePasswordWidgetBody extends StatelessWidget {
               },
               autofocus: true,
               obscuringCharacter: '*',
-              cursorColor: Colors.black,
               obscureText: !isVisible.value,
               decoration: InputDecoration(
                   suffixIcon: IconButton(
-                      color: Colors.black,
                       splashRadius: 20,
                       onPressed: () => isVisible.value = !isVisible.value,
                       icon: isVisible.value
-                          ? const Icon(Icons.visibility_off_outlined)
-                          : const Icon(Icons.visibility_outlined)),
+                          ? Icon(
+                              Icons.visibility_off_outlined,
+                              color:
+                                  Theme.of(context).textTheme.headline6!.color,
+                            )
+                          : Icon(Icons.visibility_outlined,
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .headline6!
+                                  .color)),
                   errorText: error(),
                   contentPadding: const EdgeInsets.symmetric(horizontal: 10),
                   errorBorder: OutlineInputBorder(

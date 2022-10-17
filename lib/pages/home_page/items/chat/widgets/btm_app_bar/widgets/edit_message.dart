@@ -13,15 +13,19 @@ class BottomAppBarEditMessageWidget extends StatelessWidget {
     return ListTile(
       minVerticalPadding: 0,
       visualDensity: VisualDensity.compact,
-      title: const AutoSizeText('Edit'),
+      title: AutoSizeText(
+        'Edit',
+        style: TextStyle(color: Theme.of(context).textTheme.headline6!.color),
+      ),
       subtitle: AutoSizeText(
         barController.editMessageText.value,
         maxLines: 1,
-        style: const TextStyle(color: Colors.black),
+        style: TextStyle(color: Theme.of(context).textTheme.headline4!.color),
         textAlign: TextAlign.justify,
       ),
       style: ListTileStyle.drawer,
-      leading: const Icon(Icons.edit_outlined),
+      leading: Icon(Icons.edit_outlined,
+          color: Theme.of(context).textTheme.headline4!.color),
       trailing: IconButton(
           splashRadius: 20,
           onPressed: () {
@@ -31,7 +35,8 @@ class BottomAppBarEditMessageWidget extends StatelessWidget {
             FocusScope.of(context).unfocus();
             barController.textFieldIsEmpty.value = true;
           },
-          icon: const Icon(Icons.close)),
+          icon: Icon(Icons.close,
+              color: Theme.of(context).textTheme.headline6!.color)),
     );
   }
 }

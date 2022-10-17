@@ -37,7 +37,7 @@ class ChatAppBarBottomWidget extends StatelessWidget {
         leading: VerticalDivider(
           width: 20,
           thickness: 2,
-          color: Colors.grey.shade700,
+          color: Theme.of(context).textTheme.headline4!.color,
         ),
         title: AutoSizeText(
           pinnedMessages[index.value].title.isNotEmpty
@@ -45,13 +45,17 @@ class ChatAppBarBottomWidget extends StatelessWidget {
               : 'Pinned Message',
           overflow: TextOverflow.ellipsis,
           maxLines: 1,
-          style: const TextStyle(fontSize: 14),
+          style: TextStyle(
+              fontSize: 14,
+              color: Theme.of(context).textTheme.headline6!.color),
         ),
         subtitle: AutoSizeText(
           pinnedMessages[index.value].content,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: const TextStyle(fontSize: 14),
+          style: TextStyle(
+              fontSize: 14,
+              color: Theme.of(context).textTheme.headline4!.color),
         ),
         trailing: IconButton(
             splashRadius: 20,
@@ -71,6 +75,6 @@ class ChatAppBarBottomWidget extends StatelessWidget {
                 pinnedMessages.length > 1
                     ? Icons.article_outlined
                     : Icons.close,
-                color: Colors.grey.shade700))));
+                color: Theme.of(context).textTheme.headline4!.color))));
   }
 }

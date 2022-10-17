@@ -10,10 +10,7 @@ ThemeData defaultDark = ThemeData(
     dialogBackgroundColor: defaultBlackColor,
     inputDecorationTheme: inputDecorationTheme,
     iconTheme: const IconThemeData(color: Colors.white),
-    textSelectionTheme: const TextSelectionThemeData(cursorColor: Colors.white),
-    textTheme: const TextTheme(
-        headline6: TextStyle(color: Colors.white),
-        subtitle1: TextStyle(color: Colors.white)),
+    textTheme: textTheme,
     primaryColor: Colors.white,
     textButtonTheme: textButtonTheme,
     canvasColor: defaultBlackColor,
@@ -21,8 +18,16 @@ ThemeData defaultDark = ThemeData(
     appBarTheme: appBarTheme,
     floatingActionButtonTheme: floatingActionButtonThemeData);
 
-PopupMenuThemeData popupMenuThemeData =
-    PopupMenuThemeData(color: defaultBlackColor);
+TextTheme textTheme = TextTheme(
+    subtitle2: const TextStyle(color: Colors.white),
+    bodyText2: const TextStyle(color: Colors.white),
+    headline6: const TextStyle(color: Colors.white),
+    headline5: const TextStyle(color: Colors.white),
+    headline4: TextStyle(color: Colors.grey.shade400),
+    subtitle1: const TextStyle(color: Colors.white));
+
+PopupMenuThemeData popupMenuThemeData = PopupMenuThemeData(
+    color: defaultBlackColor, shape: Border.all(color: Colors.white));
 
 AppBarTheme appBarTheme = AppBarTheme(
     elevation: 1,
