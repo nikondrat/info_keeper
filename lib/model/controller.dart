@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/types/folder.dart';
 import 'package:info_keeper/model/types/home_item.dart';
@@ -11,6 +11,8 @@ class Controller extends GetxController {
 
   var selectedElementIndex = 0.obs;
   var selectedFolder = 0.obs;
+  bool isDark =
+      WidgetsBinding.instance.window.platformBrightness == Brightness.dark;
 
   int firstSelectedMessage = -1;
 
@@ -27,6 +29,7 @@ class Controller extends GetxController {
 
     // print(jsonEncode(all));
 
+    await prefs.setBool('isDark', isDark);
     await prefs.setString('all', jsonEncode(all));
     await prefs.setString('trash', jsonEncode(trashElements));
     await prefs.setString('password', password.value);

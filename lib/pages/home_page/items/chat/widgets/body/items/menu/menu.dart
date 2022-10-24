@@ -68,10 +68,6 @@ class MessageMenuWidget extends StatelessWidget {
             showBarModalBottomSheet(
                 context: context,
                 elevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                barrierColor: Colors.transparent,
                 builder: (context) => ChatBottomAppBarColorSelector(
                     chat: chat, message: message));
           });

@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/model/types/home/storage_file/storage_file.dart';
+import 'package:info_keeper/model/types/trash/trash_item.dart';
 import 'package:info_keeper/pages/home_page/items/storage_file/storage_history_page.dart';
 import 'package:info_keeper/pages/home_page/items/storage_file/widgets/storage_file_body.dart';
 import 'package:info_keeper/pages/home_page/items/widgets/app_bar/app_bar.dart';
@@ -92,10 +93,10 @@ class StorageFilePage extends StatelessWidget {
       PopupMenuItem trash = PopupMenuItem(
           onTap: () {
             Get.back();
-            Controller.to.delete(Controller
-                .to
-                .all[Controller.to.selectedFolder.value]
-                .childrens[Controller.to.selectedElementIndex.value]);
+            Controller.to.trashElements.add(TrashItem(child: homeItem));
+            Controller.to.all[Controller.to.selectedFolder.value].childrens
+                .remove(homeItem);
+            Controller.to.setData();
             Controller.to.setData();
           },
           child: const PopupMenuItemBody(
@@ -125,8 +126,17 @@ class StorageFilePage extends StatelessWidget {
                       history: storageFile.history,
                       pathToImage: pathToImage.value);
                 } else {
-                  Controller.to.all[homeItem.location.inDirectory].childrens
-                      .removeAt(homeItem.location.index);
+                  if (data.value.text.isNotEmpty || title.text.isNotEmpty) {
+                    homeItem.copyWith(
+                        name: title.text,
+                        child: storageFile.copyWith(
+                            data: data.text,
+                            history: storageFile.history,
+                            pathToImage: pathToImage.value));
+                  } else {
+                    Controller.to.all[homeItem.location.inDirectory].childrens
+                        .removeAt(homeItem.location.index);
+                  }
                 }
                 Get.back();
               },

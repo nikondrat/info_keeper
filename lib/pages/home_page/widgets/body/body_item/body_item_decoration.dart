@@ -20,7 +20,7 @@ class BodyItemDecoration extends StatelessWidget {
               color: homeItem.isAnimated
                   ? const Color(0xFFB9DFBB)
                   : Colors.grey.shade600,
-              width: homeItem.isAnimated ? 1.4 : 1)),
+              width: 1)),
       child: child,
     );
   }

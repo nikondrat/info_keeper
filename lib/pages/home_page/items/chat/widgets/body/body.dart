@@ -7,7 +7,6 @@ import 'package:info_keeper/pages/home_page/items/chat/chat_controller.dart';
 import 'package:info_keeper/pages/home_page/items/chat/pages/search/search_body.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/with_time/body_with_time.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/reorderable_body.dart';
-import 'package:info_keeper/themes/theme_controller.dart';
 
 class ChatBody extends StatelessWidget {
   final Chat chat;
@@ -21,10 +20,6 @@ class ChatBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ChatController chatController = Get.find();
-    ThemeController themeController = Get.find();
-    final bool brightness =
-        WidgetsBinding.instance.window.platformBrightness == Brightness.dark;
-    themeController.isDark = brightness.obs;
 
     Widget body = Obx(() => chatController.isSearch.value
         ? const ChatSearchBody()

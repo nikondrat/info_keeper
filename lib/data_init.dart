@@ -29,6 +29,11 @@ initData() async {
       Controller.to.all = folders.obs;
     }
   }
+  if (prefs.getBool('isDark') == null) {
+    prefs.setBool('isDark', false);
+  } else {
+    Controller.to.isDark = prefs.getBool('isDark')!;
+  }
   if (prefs.getString('trash') == null) {
     prefs.setString('trash', '');
   } else {

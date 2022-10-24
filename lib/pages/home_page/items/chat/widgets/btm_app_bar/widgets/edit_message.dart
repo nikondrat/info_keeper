@@ -10,33 +10,35 @@ class BottomAppBarEditMessageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final BottomAppBarController barController = Get.find();
 
-    return ListTile(
-      minVerticalPadding: 0,
-      visualDensity: VisualDensity.compact,
-      title: AutoSizeText(
-        'Edit',
-        style: TextStyle(color: Theme.of(context).textTheme.headline6!.color),
-      ),
-      subtitle: AutoSizeText(
-        barController.editMessageText.value,
-        maxLines: 1,
-        style: TextStyle(color: Theme.of(context).textTheme.headline4!.color),
-        textAlign: TextAlign.justify,
-      ),
-      style: ListTileStyle.drawer,
-      leading: Icon(Icons.edit_outlined,
-          color: Theme.of(context).textTheme.headline4!.color),
-      trailing: IconButton(
-          splashRadius: 20,
-          onPressed: () {
-            barController.isEditMessage.value = false;
-            barController.titleController.clear();
-            barController.messageController.clear();
-            FocusScope.of(context).unfocus();
-            barController.textFieldIsEmpty.value = true;
-          },
-          icon: Icon(Icons.close,
-              color: Theme.of(context).textTheme.headline6!.color)),
-    );
+    return Obx(() => ListTile(
+          minVerticalPadding: 0,
+          visualDensity: VisualDensity.compact,
+          title: AutoSizeText(
+            'Edit',
+            style:
+                TextStyle(color: Theme.of(context).textTheme.headline6!.color),
+          ),
+          subtitle: AutoSizeText(
+            barController.editMessageText.value,
+            maxLines: 1,
+            style:
+                TextStyle(color: Theme.of(context).textTheme.headline4!.color),
+            textAlign: TextAlign.justify,
+          ),
+          style: ListTileStyle.drawer,
+          leading: Icon(Icons.edit_outlined,
+              color: Theme.of(context).textTheme.headline4!.color),
+          trailing: IconButton(
+              splashRadius: 20,
+              onPressed: () {
+                barController.isEditMessage.value = false;
+                barController.titleController.clear();
+                barController.messageController.clear();
+                FocusScope.of(context).unfocus();
+                barController.textFieldIsEmpty.value = true;
+              },
+              icon: Icon(Icons.close,
+                  color: Theme.of(context).textTheme.headline6!.color)),
+        ));
   }
 }
