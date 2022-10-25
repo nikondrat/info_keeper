@@ -161,7 +161,7 @@ class StorageFilePage extends StatelessWidget {
                     onSelected: (value) {
                       if (value == 0) {
                         Get.to(() => StorageFileHistory(
-                              historyElements: storageFile.history!,
+                              storageFile: storageFile,
                               dataController: data,
                             ));
                       }

@@ -12,6 +12,7 @@ import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/menu/i
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/message/widgets/in_fullscreen.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/btm_app_bar/btm_app_bar_controller.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/btm_app_bar/widgets/color_selector/color_selector.dart';
+import 'package:info_keeper/pages/vault_page/vault_page.dart';
 import 'package:info_keeper/widgets/notifications.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
@@ -137,11 +138,12 @@ class MessageMenuWidget extends StatelessWidget {
           title: message.isLocked ? 'Unlock' : 'Lock message',
           icon: const Icon(Icons.lock_outline),
           onPressed: () {
-            message.isLocked = !message.isLocked;
-            message.isUnlocked = false;
-            messages[messages.indexOf(message)] = message;
-            chat.copyWith(messages: messages);
             Navigator.pop(context);
+            Get.to(() => VaultPage(isChat: true, item: message));
+            // message.isLocked = !message.isLocked;
+            // message.isUnlocked = false;
+            // messages[messages.indexOf(message)] = message;
+            // chat.copyWith(messages: messages);
           });
 
       var notifications = Notifications(

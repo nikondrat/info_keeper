@@ -14,9 +14,11 @@ import 'package:info_keeper/pages/vault_page/vault_password.dart';
 
 class VaultPage extends StatelessWidget {
   final bool isChat;
+  final dynamic item;
 
   const VaultPage({
     Key? key,
+    this.item,
     this.isChat = false,
   }) : super(key: key);
 
@@ -24,34 +26,54 @@ class VaultPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final VaultController vaultController = Get.put(VaultController());
     final isGridView = true.obs;
-    final isUnblocked = false.obs;
 
     RxList<HomeItem> childrens =
         Controller.to.all[Controller.to.selectedFolder.value].childrens;
-    Chat? chat;
 
     RxList lockedItems = [].obs;
 
-    if (isChat) {
-      chat = childrens[Controller.to.selectedElementIndex.value].child;
-      for (int i = 0; i < chat!.messages.length; i++) {
-        if (chat.messages[i].type == ChatType.message &&
-            chat.messages[i].isLocked) {
-          lockedItems.add(chat.messages[i]);
+    getLockedItems() {
+      if (isChat) {
+        Chat? chat;
+        chat = childrens[Controller.to.selectedElementIndex.value].child;
+        for (int i = 0; i < chat!.messages.length; i++) {
+          if (chat.messages[i].type == ChatType.message &&
+              chat.messages[i].isLocked) {
+            lockedItems.add(chat.messages[i]);
+          }
+        }
+      } else {
+        for (var item in childrens) {
+          if (item.isLocked) {
+            lockedItems.add(item);
+          }
         }
       }
-    } else {
-      for (var item in childrens) {
-        if (item.isLocked) {
-          lockedItems.add(item);
+    }
+
+    getLockedItems();
+
+    passwordIsNotNull() {
+      if (item != null) {
+        if (isChat) {
+          final ChatController chatController = Get.find();
+          final Chat chat = chatController.homeItem.child;
+          RxList messages = chat.messages;
+          item.isLocked = !item.isLocked;
+          item.isUnlocked = false;
+          messages[messages.indexOf(item)] = item;
+          chat.copyWith(messages: messages);
+        } else {
+          item.copyWith(isLocked: !item.isLocked);
         }
       }
+      vaultController.isUnblocked.value = true;
     }
 
     return Obx(() => Scaffold(
         appBar: AppBar(
           centerTitle: false,
-          actions: isUnblocked.value
+          actions: vaultController.isUnblocked.value
               ? [
                   IconButton(
                     onPressed: () {
@@ -73,7 +95,7 @@ class VaultPage extends StatelessWidget {
               icon: const Icon(Icons.arrow_back)),
           title: const Text('Vault'),
         ),
-        body: isUnblocked.value
+        body: vaultController.isUnblocked.value
             ? MasonryGridView.count(
                 physics: const BouncingScrollPhysics(),
                 padding:
@@ -94,47 +116,10 @@ class VaultPage extends StatelessWidget {
                 })
             : const VaultPagePasswordWidget(),
         bottomNavigationBar: const HomeBottomBar(isVault: true),
-        floatingActionButton: isUnblocked.value
+        floatingActionButton: vaultController.isUnblocked.value
             ? null
             : FloatingActionButton(
                 onPressed: () {
-                  // messageFunc() {
-                  //   List messages = Controller
-                  //       .to
-                  //       .all[Controller.to.selectedFolder.value]
-                  //       .childrens[Controller.to.selectedElementIndex.value]
-                  //       .child
-                  //       .value
-                  //       .messages;
-                  //   if (passwordController.text ==
-                  //       repeatPasswordController.text) {
-                  //     messages[selectedElement.value].isLocked =
-                  //         !messages[selectedElement.value].isLocked;
-
-                  //     messages[selectedElement.value].isUnlocked = true;
-
-                  //     Controller.to.password = passwordController.text.obs;
-                  //     Controller.to.change(ChatItem(messages: messages.obs));
-                  //   }
-                  //   if (passwordController.text ==
-                  //       Controller.to.password.value) {
-                  //     messages[selectedElement.value].isUnlocked = true;
-
-                  //     messages[selectedElement.value].isLocked =
-                  //         !messages[selectedElement.value].isLocked;
-                  //     isUnblocked.value = true;
-                  //     Controller.to.change(ChatItem(messages: messages.obs));
-                  //   }
-                  //   if (messages[selectedElement.value].isUnlocked) {
-                  //     const Duration(minutes: 2).delay().then((value) {
-                  //       messages[selectedElement.value].isLocked = true;
-                  //       messages[selectedElement.value].isUnlocked = false;
-                  //       Controller.to.change(ChatItem(messages: messages.obs));
-                  //     });
-                  //   }
-                  //   Get.back();
-                  // }
-
                   if (vaultController.passwordController.text ==
                       vaultController.repeatPasswordController.text) {
                     Controller.to.password =
@@ -143,11 +128,12 @@ class VaultPage extends StatelessWidget {
                     if (Controller.to.password.isEmpty) {
                       Get.back();
                     } else {
-                      isUnblocked.value = true;
+                      passwordIsNotNull();
+                      getLockedItems();
                     }
                   } else if (vaultController.passwordController.text ==
                       Controller.to.password.value) {
-                    isUnblocked.value = true;
+                    passwordIsNotNull();
                   }
                 },
                 backgroundColor: Colors.blue,

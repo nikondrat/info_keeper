@@ -1,6 +1,7 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:info_keeper/model/types/home/chat/chat.dart';
 import 'package:info_keeper/model/types/home/chat/items/message.dart';
 import 'package:info_keeper/pages/home_page/items/chat/chat_controller.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/message/widgets/content_text.dart';
@@ -69,7 +70,19 @@ class MessageWidgetBody extends StatelessWidget {
                       color: Colors.grey),
                   child: const Icon(Icons.star, color: Colors.yellowAccent))
               : const SizedBox(),
-          message.isLocked ? const Icon(Icons.lock_open) : const SizedBox(),
+          message.isLocked
+              ? GestureDetector(
+                  onTap: () {
+                    final ChatController chatController = Get.find();
+                    final Chat chat = chatController.homeItem.child;
+                    RxList messages = chat.messages;
+
+                    message.isUnlocked = !message.isUnlocked;
+                    messages[messages.indexOf(message)] = message;
+                    chat.copyWith(messages: messages);
+                  },
+                  child: const Icon(Icons.lock_open, color: Colors.black))
+              : const SizedBox(),
         ]))));
 
     Widget decoration = ItemDecoration(

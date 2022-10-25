@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:info_keeper/model/types/home/storage_file/storage_file.dart';
 
 class StorageFileHistory extends StatelessWidget {
-  final List historyElements;
+  final StorageFile storageFile;
   final TextEditingController? dataController;
+
   const StorageFileHistory(
-      {Key? key, required this.historyElements, this.dataController})
+      {Key? key, required this.storageFile, this.dataController})
       : super(key: key);
 
   @override
@@ -21,7 +23,7 @@ class StorageFileHistory extends StatelessWidget {
       body: ListView.builder(
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.all(20),
-          itemCount: historyElements.length,
+          itemCount: storageFile.history!.length,
           itemBuilder: (context, index) => Container(
                 margin: const EdgeInsets.only(bottom: 4),
                 padding: const EdgeInsets.all(8),
@@ -30,10 +32,15 @@ class StorageFileHistory extends StatelessWidget {
                     border: Border.all(color: Colors.grey.shade600, width: 1)),
                 child: GestureDetector(
                     onTap: () {
-                      dataController!.text = historyElements[index];
+                      if (dataController!.text.isNotEmpty &&
+                          !storageFile.history!
+                              .contains(dataController!.text)) {
+                        storageFile.history!.add(dataController!.text);
+                      }
+                      dataController!.text = storageFile.history![index];
                       Get.back();
                     },
-                    child: Text(historyElements[index])),
+                    child: Text(storageFile.history![index])),
               )),
     );
   }

@@ -120,8 +120,12 @@ class HomeBottomMenu extends StatelessWidget {
                 splashRadius: 20,
                 onPressed: () {
                   home.isShowBottomMenu.value = false;
-                  item.copyWith(isLocked: !item.isLocked);
-                  Get.to(() => const VaultPage());
+                  Get.to(() => VaultPage(item: item));
+                  // final VaultController vaultController =
+                  //     Get.put(VaultController());
+                  // if (vaultController.isUnblocked.value) {
+                  //   item.copyWith(isLocked: !item.isLocked);
+                  // }
                   // lock();
                 },
                 icon: const Icon(Icons.lock_outline)),

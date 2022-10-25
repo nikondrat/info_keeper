@@ -12,7 +12,7 @@ class LockedDecorationWidget extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
           color: Colors.grey.shade300, borderRadius: BorderRadius.circular(6)),
-      child: const Center(child: Icon(Icons.lock_outline)),
+      child: const Center(child: Icon(Icons.lock_outline, color: Colors.black)),
     );
   }
 }
