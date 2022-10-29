@@ -25,8 +25,10 @@ class HomeBodyItemGesture extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        home.isShowDialMenu.value = false;
         home.isShowBottomMenu.value = false;
+        if (home.isShowDialMenu.value) {
+          home.toggle();
+        }
         Controller.to.selectedElementIndex.value = homeItemIndex;
         switch (homeItem.child.type) {
           case HomeType.chat:

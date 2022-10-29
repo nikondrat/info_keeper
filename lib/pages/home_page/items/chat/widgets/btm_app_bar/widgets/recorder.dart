@@ -49,7 +49,7 @@ class ChatBottomRecorder extends StatelessWidget {
                   index: homeItem.location.index,
                   itemIndex: messages.length),
               dateTime: DateTime.now()));
-      homeItem.child.copyWith(messages: messages);
+      homeItem.child.changeAndSave(messages: messages);
     }
 
     return Obx(() => IconButton(

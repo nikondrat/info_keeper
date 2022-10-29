@@ -23,12 +23,14 @@ class HomeBody extends StatelessWidget {
                 .length,
         itemBuilder: (context, homeItemIndex) => Padding(
             padding: const EdgeInsets.all(5),
-            child: Obx(() => HomeBodyItem(
-                homeItem: home.isSearch.value
-                    ? home.searchItems[homeItemIndex]
-                    : Controller.to.all[Controller.to.selectedFolder.value]
-                        .getChildrens()[homeItemIndex],
-                homeItemIndex: homeItemIndex)))));
+            child: Obx(
+              () => HomeBodyItem(
+                  homeItem: home.isSearch.value
+                      ? home.searchItems[homeItemIndex]
+                      : Controller.to.all[Controller.to.selectedFolder.value]
+                          .getChildrens()[homeItemIndex],
+                  homeItemIndex: homeItemIndex),
+            ))));
 
     return body;
   }

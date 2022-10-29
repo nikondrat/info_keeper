@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 Color defaultBlackColor = const Color(0xFF232527);
+Color secondBlackColor = const Color(0xFF1b1c1d);
 
 ThemeData defaultDark = ThemeData(
     popupMenuTheme: popupMenuThemeData,
@@ -33,7 +34,7 @@ AppBarTheme appBarTheme = AppBarTheme(
     elevation: 1,
     shadowColor: Colors.grey,
     centerTitle: true,
-    backgroundColor: defaultBlackColor,
+    backgroundColor: secondBlackColor,
     iconTheme: const IconThemeData(color: Colors.white),
     titleTextStyle: const TextStyle(
         color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
@@ -60,7 +61,7 @@ InputDecorationTheme inputDecorationTheme = InputDecorationTheme(
     border: OutlineInputBorder(borderRadius: BorderRadius.circular(6)));
 
 BottomAppBarTheme bottomAppBarTheme =
-    BottomAppBarTheme(color: defaultBlackColor);
+    BottomAppBarTheme(color: secondBlackColor);
 
 TextButtonThemeData textButtonTheme = TextButtonThemeData(
     style: ButtonStyle(
@@ -75,7 +76,7 @@ FloatingActionButtonThemeData floatingActionButtonThemeData =
         focusElevation: 0,
         hoverElevation: 0,
         highlightElevation: 0,
-        backgroundColor: defaultBlackColor,
+        backgroundColor: secondBlackColor,
         foregroundColor: Colors.white,
         shape: RoundedRectangleBorder(
             side: BorderSide(

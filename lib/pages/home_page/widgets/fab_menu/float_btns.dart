@@ -32,6 +32,7 @@ class _HomeFloatButtonsState extends State<HomeFloatButtons>
       duration: const Duration(milliseconds: 250),
       vsync: this,
     );
+    home.controller = controller;
     super.initState();
   }
 

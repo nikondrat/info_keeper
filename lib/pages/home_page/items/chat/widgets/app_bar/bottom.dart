@@ -69,7 +69,7 @@ class ChatAppBarBottomWidget extends StatelessWidget {
                         !pinnedMessage.value.isPinned;
                     messages[pinnedMessage.value.location.itemIndex!] =
                         pinnedMessage.value;
-                    controller.homeItem.child.copyWith(messages: messages);
+                    controller.homeItem.child.changeAndSave(messages: messages);
                   },
             icon: Icon(
                 pinnedMessages.length > 1

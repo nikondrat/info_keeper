@@ -36,6 +36,26 @@ class HomeItem {
     bool? isAnimated,
     bool? isDublicated,
     ItemLocation? location,
+  }) =>
+      HomeItem(
+          name: name ?? this.name,
+          isLink: isLink ?? this.isLink,
+          isLocked: isLocked ?? this.isLocked,
+          isPinned: isPinned ?? this.isPinned,
+          isAnimated: isAnimated ?? this.isAnimated,
+          isDublicated: isDublicated ?? this.isDublicated,
+          child: child ?? this.child,
+          location: location ?? this.location);
+
+  changeAndSave({
+    String? name,
+    dynamic child,
+    bool? isLink,
+    bool? isLocked,
+    bool? isPinned,
+    bool? isAnimated,
+    bool? isDublicated,
+    ItemLocation? location,
   }) {
     HomeItem homeItem = HomeItem(
         name: name ?? this.name,

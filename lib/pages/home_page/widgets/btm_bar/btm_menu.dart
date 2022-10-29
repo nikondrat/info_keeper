@@ -31,6 +31,9 @@ class HomeBottomMenu extends StatelessWidget {
 
       PopupMenuItem dublicate = PopupMenuItem(
           onTap: () {
+            final dublicatedItem = item.copyWith(isDublicated: true);
+            childrens.add(dublicatedItem);
+            home.isShowBottomMenu.value = false;
             // HomeItem dublicatedItem = HomeItem(
             //     isDublicated: true,
             //     child: item,
@@ -90,7 +93,7 @@ class HomeBottomMenu extends StatelessWidget {
             IconButton(
                 splashRadius: 20,
                 onPressed: () {
-                  item.copyWith(isPinned: !item.isPinned);
+                  item.changeAndSave(isPinned: !item.isPinned);
                   Controller
                       .to.all[Controller.to.selectedFolder.value].childrens
                       .sort((a, b) => a.isPinned ? 0 : 1);
@@ -101,7 +104,7 @@ class HomeBottomMenu extends StatelessWidget {
             IconButton(
               splashRadius: 20,
               onPressed: () {
-                item.copyWith(isAnimated: !item.isAnimated);
+                item.changeAndSave(isAnimated: !item.isAnimated);
                 home.isShowBottomMenu.value = false;
               },
               icon: const Icon(

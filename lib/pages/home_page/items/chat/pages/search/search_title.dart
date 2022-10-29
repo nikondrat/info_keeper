@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/types/home/chat/chat_type.dart';
+import 'package:info_keeper/model/types/home/chat/items/message.dart';
 import 'package:info_keeper/pages/home_page/items/chat/chat_controller.dart';
 
 class ChatSearchTitle extends StatelessWidget {
@@ -9,21 +10,23 @@ class ChatSearchTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ChatController controller = Get.find();
+    ChatController controller = Get.find();
 
     search(String text) {
       controller.searchItems.clear();
       for (var item in messages) {
         if (item.type == ChatType.message) {
-          if (item.title.toLowerCase().contains(text) ||
-              item.content.toLowerCase().contains(text) && !item.isLocked) {
-            return controller.searchItems.add(item);
+          Message message = item;
+          if (message.title.toLowerCase().contains(text) ||
+              message.content.toLowerCase().contains(text) &&
+                  !message.isLocked) {
+            controller.searchItems.add(message);
           }
-        } else {
-          controller.searchItems.clear();
         }
       }
-      controller.searchItems.clear();
+      if (text.isEmpty) {
+        controller.searchItems.clear();
+      }
     }
 
     TextField titleTextField = TextField(

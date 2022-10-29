@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:info_keeper/model/types/home_item.dart';
 
 class HomeController extends GetxController {
+  late AnimationController controller;
   // search
   final RxBool isSearch = false.obs;
   TextEditingController searchController = TextEditingController();
@@ -12,4 +13,13 @@ class HomeController extends GetxController {
 
   final RxBool isShowDialMenu = false.obs;
   final RxBool isShowBottomMenu = false.obs;
+
+  void toggle() {
+    isShowDialMenu.value = !isShowDialMenu.value;
+    if (isShowDialMenu.value) {
+      controller.forward();
+    } else {
+      controller.reverse();
+    }
+  }
 }

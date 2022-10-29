@@ -41,7 +41,7 @@ class TaskPage extends StatelessWidget {
                 IconButton(
                     splashRadius: 20,
                     onPressed: () {
-                      homeItem.copyWith(name: titleController.text);
+                      homeItem.changeAndSave(name: titleController.text);
                       Get.back();
                     },
                     icon: Icon(change ? Icons.done : Icons.add))

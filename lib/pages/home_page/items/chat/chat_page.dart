@@ -196,7 +196,7 @@ class ChatPage extends StatelessWidget {
                           } else if (home.isSearch.value) {
                             Get.back();
                           } else {
-                            homeItem.copyWith(name: titleController.text);
+                            homeItem.changeAndSave(name: titleController.text);
                             Get.back();
                           }
                         },

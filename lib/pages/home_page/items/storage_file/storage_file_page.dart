@@ -127,7 +127,7 @@ class StorageFilePage extends StatelessWidget {
                       pathToImage: pathToImage.value);
                 } else {
                   if (data.value.text.isNotEmpty || title.text.isNotEmpty) {
-                    homeItem.copyWith(
+                    homeItem.changeAndSave(
                         name: title.text,
                         child: storageFile.copyWith(
                             data: data.text,
@@ -147,7 +147,7 @@ class StorageFilePage extends StatelessWidget {
                       if (data.text.isNotEmpty) {
                         storageFile.history!.add(data.text);
                       }
-                      homeItem.copyWith(
+                      homeItem.changeAndSave(
                           name: title.text,
                           child: storageFile.copyWith(
                               data: data.text,
