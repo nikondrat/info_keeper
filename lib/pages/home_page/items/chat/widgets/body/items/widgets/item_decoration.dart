@@ -28,7 +28,7 @@ class ItemDecoration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ChatController controller = Get.find();
+    final ChatController controller = Get.put(ChatController());
 
     String hour = dateTime.hour < 10 ? '0${dateTime.hour}' : '${dateTime.hour}';
 
@@ -46,8 +46,10 @@ class ItemDecoration extends StatelessWidget {
                   padding != null
                       ? Padding(
                           padding: const EdgeInsets.all(8),
-                          child: AutoSizeText('$hour:$minute'))
-                      : AutoSizeText('$hour:$minute')
+                          child: AutoSizeText('$hour:$minute',
+                              style: Theme.of(context).textTheme.bodyText1))
+                      : AutoSizeText('$hour:$minute',
+                          style: Theme.of(context).textTheme.bodyText1)
                 ],
               ),
             ],

@@ -64,7 +64,7 @@ class VaultPage extends StatelessWidget {
           messages[messages.indexOf(item)] = item;
           chat.copyWith(messages: messages);
         } else {
-          item.changeAndSave(isLocked: !item.isLocked);
+          item.copyWith(isLocked: !item.isLocked);
         }
       }
       vaultController.isUnblocked.value = true;

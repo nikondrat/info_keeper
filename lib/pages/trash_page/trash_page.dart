@@ -56,18 +56,19 @@ class TrashPage extends StatelessWidget {
                       ));
                 } else {
                   switch (trashElements[index].child.type) {
-                    case ChatType.voice:
-                      return ChatVoiceWidget(
-                        voice: trashElements[index].child,
-                      );
-                    case ChatType.file:
-                      return ChatFileWidget(file: trashElements[index].child);
                     case ChatType.message:
                       return MessageWidgetBody(
                           isTrash: true,
                           message: Controller.to.trashElements[index].child);
                     case ChatType.image:
                       return ChatImageWidget(image: trashElements[index].child);
+                    case ChatType.voice:
+                      return ChatVoiceWidget(
+                        isTrash: true,
+                        voice: trashElements[index].child,
+                      );
+                    case ChatType.file:
+                      return ChatFileWidget(file: trashElements[index].child);
                   }
                 }
                 return const SizedBox();

@@ -41,7 +41,7 @@ class ChatBodySeparator extends StatelessWidget {
                           borderRadius: BorderRadius.circular(6)),
                       child: AutoSizeText(
                           '${dateTime.day} ${months[dateTime.month]} $year',
-                          style: const TextStyle(fontWeight: FontWeight.bold))))
+                          style: Theme.of(context).textTheme.bodyText1)))
             ]));
   }
 }

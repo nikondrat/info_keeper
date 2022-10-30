@@ -45,8 +45,8 @@ class _ChatMediaPageState extends State<ChatMediaPage>
               controller: tabController,
               physics: const NeverScrollableScrollPhysics(),
               unselectedLabelColor: Colors.grey,
-              labelColor: Colors.black,
-              indicatorColor: Colors.black54,
+              labelColor: Theme.of(context).textTheme.headline6!.color,
+              indicatorColor: Theme.of(context).textTheme.headline6!.color,
               tabs: const [
                 Tab(text: 'Media'),
                 Tab(text: 'Files'),

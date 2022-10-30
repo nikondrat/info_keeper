@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -36,7 +37,8 @@ class ChatMessageHistoryPage extends StatelessWidget {
               child: ItemDecoration(
                   index: index,
                   dateTime: DateTime.now(),
-                  child: Text(history[index])),
+                  child: AutoSizeText(history[index],
+                      style: Theme.of(context).textTheme.bodyText1)),
             );
           }),
     );

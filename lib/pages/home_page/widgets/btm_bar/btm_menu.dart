@@ -93,7 +93,7 @@ class HomeBottomMenu extends StatelessWidget {
             IconButton(
                 splashRadius: 20,
                 onPressed: () {
-                  item.changeAndSave(isPinned: !item.isPinned);
+                  item.copyWith(isPinned: !item.isPinned);
                   Controller
                       .to.all[Controller.to.selectedFolder.value].childrens
                       .sort((a, b) => a.isPinned ? 0 : 1);
@@ -104,7 +104,7 @@ class HomeBottomMenu extends StatelessWidget {
             IconButton(
               splashRadius: 20,
               onPressed: () {
-                item.changeAndSave(isAnimated: !item.isAnimated);
+                item.copyWith(isAnimated: !item.isAnimated);
                 home.isShowBottomMenu.value = false;
               },
               icon: const Icon(
