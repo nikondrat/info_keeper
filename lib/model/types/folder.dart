@@ -20,6 +20,17 @@ class Folder {
     return list;
   }
 
+  List getVaultChildrens() {
+    List list = [];
+
+    for (int i = 0; i < childrens.length; i++) {
+      if (childrens[i].isLocked) {
+        list.add(childrens[i]);
+      }
+    }
+    return list;
+  }
+
   Folder.fromJson(Map<String, dynamic> json)
       : name = json['name'],
         childrens = (json['childrens'] as List)

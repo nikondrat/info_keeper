@@ -6,6 +6,7 @@ import 'package:info_keeper/model/types/home/chat/items/message.dart';
 import 'package:info_keeper/pages/home_page/items/chat/chat_controller.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/message/widgets/body.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/menu/menu.dart';
+import 'package:info_keeper/pages/vault_page/vault_page.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class MessageWidget extends StatelessWidget {
@@ -53,9 +54,10 @@ class MessageWidget extends StatelessWidget {
 
     unlock() {
       change() {
-        message.isUnlocked = !message.isUnlocked;
-        messages[messages.indexOf(message)] = message;
-        chat.copyWith(messages: messages);
+        Get.to(() => const VaultPage(isChat: true));
+        // message.isUnlocked = !message.isUnlocked;
+        // messages[messages.indexOf(message)] = message;
+        // chat.copyWith(messages: messages);
       }
 
       Future.delayed(const Duration(seconds: 40)).whenComplete(() => change());

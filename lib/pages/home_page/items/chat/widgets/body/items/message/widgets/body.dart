@@ -50,7 +50,8 @@ class MessageWidgetBody extends StatelessWidget {
               ? Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ExpandableButton(
-                    child: const Icon(Icons.close_fullscreen),
+                    child:
+                        const Icon(Icons.close_fullscreen, color: Colors.black),
                   ),
                 )
               : const SizedBox(),

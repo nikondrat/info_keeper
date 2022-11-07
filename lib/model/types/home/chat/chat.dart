@@ -27,6 +27,17 @@ class Chat {
     return Controller.to.setData();
   }
 
+  List getVaultChildrens() {
+    List list = [];
+
+    for (int i = 0; i < messages.length; i++) {
+      if (messages[i].isLocked) {
+        list.add(messages[i]);
+      }
+    }
+    return list;
+  }
+
   Chat.fromJson(Map<String, dynamic> json)
       : type = HomeType.values.elementAt(json['type']),
         messages = (json['messages'] as List<dynamic>)

@@ -122,14 +122,10 @@ class HomeBottomMenu extends StatelessWidget {
             IconButton(
                 splashRadius: 20,
                 onPressed: () {
+                  isVault
+                      ? item.copyWith(isLocked: !item.isLocked)
+                      : Get.to(() => VaultPage(item: item));
                   home.isShowBottomMenu.value = false;
-                  Get.to(() => VaultPage(item: item));
-                  // final VaultController vaultController =
-                  //     Get.put(VaultController());
-                  // if (vaultController.isUnblocked.value) {
-                  //   item.copyWith(isLocked: !item.isLocked);
-                  // }
-                  // lock();
                 },
                 icon: const Icon(Icons.lock_outline)),
             PopupMenuButton(

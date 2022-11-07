@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/controller.dart';
+import 'package:info_keeper/model/types/folder.dart';
 import 'package:info_keeper/model/types/home/chat/chat.dart';
-import 'package:info_keeper/model/types/home/chat/chat_type.dart';
-import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/pages/home_page/items/chat/chat_controller.dart';
 import 'package:info_keeper/pages/home_page/items/chat/widgets/body/items/message/message.dart';
 import 'package:info_keeper/pages/home_page/widgets/body/body_item/body_item.dart';
@@ -27,31 +26,33 @@ class VaultPage extends StatelessWidget {
     final VaultController vaultController = Get.put(VaultController());
     final isGridView = true.obs;
 
-    RxList<HomeItem> childrens =
-        Controller.to.all[Controller.to.selectedFolder.value].childrens;
+    Folder folder = Controller.to.all[Controller.to.selectedFolder.value];
 
-    RxList lockedItems = [].obs;
+    // RxList<HomeItem> childrens =
+    //     Controller.to.all[Controller.to.selectedFolder.value].childrens;
 
-    getLockedItems() {
-      if (isChat) {
-        Chat? chat;
-        chat = childrens[Controller.to.selectedElementIndex.value].child;
-        for (int i = 0; i < chat!.messages.length; i++) {
-          if (chat.messages[i].type == ChatType.message &&
-              chat.messages[i].isLocked) {
-            lockedItems.add(chat.messages[i]);
-          }
-        }
-      } else {
-        for (var item in childrens) {
-          if (item.isLocked) {
-            lockedItems.add(item);
-          }
-        }
-      }
-    }
+    // RxList lockedItems = [].obs;
 
-    getLockedItems();
+    // getLockedItems() {
+    //   if (isChat) {
+    //     Chat? chat;
+    //     chat = childrens[Controller.to.selectedElementIndex.value].child;
+    //     for (int i = 0; i < chat!.messages.length; i++) {
+    //       if (chat.messages[i].type == ChatType.message &&
+    //           chat.messages[i].isLocked) {
+    //         lockedItems.add(chat.messages[i]);
+    //       }
+    //     }
+    //   } else {
+    //     for (var item in childrens) {
+    //       if (item.isLocked) {
+    //         lockedItems.add(item);
+    //       }
+    //     }
+    //   }
+    // }
+
+    // getLockedItems();
 
     passwordIsNotNull() {
       if (item != null) {
@@ -59,6 +60,7 @@ class VaultPage extends StatelessWidget {
           final ChatController chatController = Get.find();
           final Chat chat = chatController.homeItem.child;
           RxList messages = chat.messages;
+          Get.back();
           item.isLocked = !item.isLocked;
           item.isUnlocked = false;
           messages[messages.indexOf(item)] = item;
@@ -101,15 +103,25 @@ class VaultPage extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 crossAxisCount: isGridView.value ? 2 : 1,
-                itemCount: lockedItems.length,
+                itemCount: isChat
+                    ? folder.childrens[Controller.to.selectedElementIndex.value]
+                        .child
+                        .getVaultChildrens()
+                        .length
+                    : folder.getVaultChildrens().length,
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.all(5),
                     child: isChat
                         ? MessageWidget(
-                            message: lockedItems[index], isVault: true)
+                            message: folder
+                                .childrens[
+                                    Controller.to.selectedElementIndex.value]
+                                .child
+                                .getVaultChildrens()[index],
+                            isVault: true)
                         : HomeBodyItem(
-                            homeItem: lockedItems[index],
+                            homeItem: folder.getVaultChildrens()[index],
                             homeItemIndex: index,
                           ),
                   );
@@ -129,7 +141,7 @@ class VaultPage extends StatelessWidget {
                       Get.back();
                     } else {
                       passwordIsNotNull();
-                      getLockedItems();
+                      // getLockedItems();
                     }
                   } else if (vaultController.passwordController.text ==
                       Controller.to.password.value) {
