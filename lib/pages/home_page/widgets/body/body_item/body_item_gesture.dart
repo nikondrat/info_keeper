@@ -46,6 +46,7 @@ class HomeBodyItemGesture extends StatelessWidget {
         }
       },
       onLongPress: () {
+        print(homeItemIndex);
         home.isShowDialMenu.value = false;
         home.isShowBottomMenu.value = true;
         Controller.to.selectedElementIndex.value = homeItemIndex;

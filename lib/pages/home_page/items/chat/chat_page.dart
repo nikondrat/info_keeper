@@ -197,8 +197,9 @@ class ChatPage extends StatelessWidget {
                             Get.back();
                           } else if (controller.changeTitle.value) {
                             homeItem.copyWith(name: titleController.text);
+                          } else {
+                            Get.back();
                           }
-                          Get.back();
                         },
                         actions: actions(),
                         focus: titleFocus)),

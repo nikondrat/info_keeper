@@ -61,8 +61,8 @@ class VaultPage extends StatelessWidget {
           final Chat chat = chatController.homeItem.child;
           RxList messages = chat.messages;
           Get.back();
-          item.isLocked = !item.isLocked;
-          item.isUnlocked = false;
+          item.isLocked = item.isUnlocked && item.isLocked ? false : true;
+          item.isUnlocked = !item.isUnlocked;
           messages[messages.indexOf(item)] = item;
           chat.copyWith(messages: messages);
         } else {

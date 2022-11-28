@@ -53,11 +53,11 @@ class MessageWidget extends StatelessWidget {
     }
 
     unlock() {
+      Get.to(() => VaultPage(isChat: true, item: message));
       change() {
-        Get.to(() => const VaultPage(isChat: true));
-        // message.isUnlocked = !message.isUnlocked;
-        // messages[messages.indexOf(message)] = message;
-        // chat.copyWith(messages: messages);
+        message.isUnlocked = false;
+        messages[messages.indexOf(message)] = message;
+        chat.copyWith(messages: messages);
       }
 
       Future.delayed(const Duration(seconds: 40)).whenComplete(() => change());

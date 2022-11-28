@@ -25,9 +25,9 @@ class ChatBody extends StatelessWidget {
         ? const ChatSearchBody()
         : Transform.translate(
             offset: Offset(0, -1 * MediaQuery.of(context).viewInsets.bottom),
-            child: chatController.showDate.value
+            child: Obx(() => chatController.showDate.value
                 ? ChatBodyWithTime(chat: chat)
-                : ChatReorderableBody(chat: chat),
+                : ChatReorderableBody(chat: chat)),
           ));
 
     return Obx(() => pathToImage.value.isNotEmpty

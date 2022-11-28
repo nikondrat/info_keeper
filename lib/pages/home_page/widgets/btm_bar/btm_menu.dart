@@ -29,37 +29,37 @@ class HomeBottomMenu extends StatelessWidget {
           child: const PopupMenuItemBody(
               title: 'Add to folder', icon: Icons.folder_copy_outlined));
 
-      PopupMenuItem dublicate = PopupMenuItem(
-          onTap: () {
-            final dublicatedItem = item.copyWith(isDublicated: true);
-            childrens.add(dublicatedItem);
-            home.isShowBottomMenu.value = false;
-            // HomeItem dublicatedItem = HomeItem(
-            //     isDublicated: true,
-            //     child: item,
-            //     location: ItemLocation(
-            //         inDirectory: Controller.to.selectedFolder.value,
-            //         index: Controller.to.selectedElementIndex.value));
-            // HomeItem dublicatedItem = item.copyWith(
-            //     isDublicated: true,
-            //     location: ItemLocation(
-            //         inDirectory: Controller.to.selectedFolder.value,
-            //         index: Controller.to.selectedElementIndex.value));
+      // PopupMenuItem dublicate = PopupMenuItem(
+      //     onTap: () {
+      //       final dublicatedItem = item.copyWith(isDublicated: true);
+      //       childrens.add(dublicatedItem);
+      //       home.isShowBottomMenu.value = false;
+      // HomeItem dublicatedItem = HomeItem(
+      //     isDublicated: true,
+      //     child: item,
+      //     location: ItemLocation(
+      //         inDirectory: Controller.to.selectedFolder.value,
+      //         index: Controller.to.selectedElementIndex.value));
+      // HomeItem dublicatedItem = item.copyWith(
+      //     isDublicated: true,
+      //     location: ItemLocation(
+      //         inDirectory: Controller.to.selectedFolder.value,
+      //         index: Controller.to.selectedElementIndex.value));
 
-            // Controller.to.all[Controller.to.selectedFolder.value].childrens
-            //     .add(dublicatedItem);
+      // Controller.to.all[Controller.to.selectedFolder.value].childrens
+      //     .add(dublicatedItem);
 
-            // dublicatedItem.location.index = Controller
-            //     .to.all[Controller.to.selectedFolder.value].childrens.length;
-            // dublicatedItem.isDublicated = true;
+      // dublicatedItem.location.index = Controller
+      //     .to.all[Controller.to.selectedFolder.value].childrens.length;
+      // dublicatedItem.isDublicated = true;
 
-            // Controller.to.all[Controller.to.selectedFolder.value].childrens
-            //     .add(dublicatedItem);
-            // Controller.to.selectedElementIndex =
-            //     dublicatedItem.location.index.obs;
-          },
-          child: const PopupMenuItemBody(
-              title: 'Dublicate', icon: Icons.content_copy));
+      // Controller.to.all[Controller.to.selectedFolder.value].childrens
+      //     .add(dublicatedItem);
+      // Controller.to.selectedElementIndex =
+      //     dublicatedItem.location.index.obs;
+      // },
+      // child: const PopupMenuItemBody(
+      //     title: 'Dublicate', icon: Icons.content_copy));
 
       PopupMenuItem delete = PopupMenuItem(
           onTap: () {
@@ -72,9 +72,7 @@ class HomeBottomMenu extends StatelessWidget {
           child: const PopupMenuItemBody(
               title: 'Move to trash', icon: Icons.delete_outline));
 
-      isVault
-          ? items.addAll([dublicate, delete])
-          : items.addAll([folder, dublicate, delete]);
+      isVault ? items.addAll([delete]) : items.addAll([folder, delete]);
 
       return items;
     }
@@ -135,7 +133,7 @@ class HomeBottomMenu extends StatelessWidget {
                         context: context,
                         builder: (context) => const HomeFolders(isSelect: true))
                     : null,
-                offset: Offset(0, isVault ? -120 : -170),
+                offset: Offset(0, isVault ? -70 : -120),
                 itemBuilder: (context) => popupItems())
             // PopupMenuButton(
             //     splashRadius: 20,

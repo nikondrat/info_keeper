@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:info_keeper/model/controller.dart';
 import 'package:info_keeper/model/types/home/task/task.dart';
 import 'package:info_keeper/model/types/home/task/todo.dart';
 
@@ -48,7 +49,10 @@ class TaskBottomField extends StatelessWidget {
           padding: const EdgeInsets.all(8),
           child: Container(
               decoration: BoxDecoration(
-                  color: Colors.grey, borderRadius: BorderRadius.circular(12)),
+                  color: Controller.to.isDark
+                      ? Colors.grey.shade700
+                      : Colors.grey.shade300,
+                  borderRadius: BorderRadius.circular(12)),
               child: Row(children: [
                 Checkbox(value: false, onChanged: (value) {}),
                 Expanded(

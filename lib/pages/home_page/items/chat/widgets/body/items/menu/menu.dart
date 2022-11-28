@@ -169,6 +169,8 @@ class MessageMenuWidget extends StatelessWidget {
         children.addAll([copy, history, inFull, pin]);
       } else if (chatController.isFavoritesPage.value) {
         children.addAll([copy, history, inFull, pin, favorites]);
+      } else if (chatController.isSearch.value) {
+        children.addAll([copy, trash]);
       } else {
         children.addAll([
           copy,
