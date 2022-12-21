@@ -140,6 +140,7 @@ class MessageMenuWidget extends StatelessWidget {
           onPressed: () {
             Navigator.pop(context);
             Get.to(() => VaultPage(isChat: true, item: message));
+
             // message.isLocked = !message.isLocked;
             // message.isUnlocked = false;
             // messages[messages.indexOf(message)] = message;

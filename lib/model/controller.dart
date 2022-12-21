@@ -2,7 +2,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/types/folder.dart';
+import 'package:info_keeper/model/types/home/chat/chat.dart';
+import 'package:info_keeper/model/types/home/storage_file/storage_file.dart';
+import 'package:info_keeper/model/types/home/task/task.dart';
+import 'package:info_keeper/model/types/home/task/todo.dart';
 import 'package:info_keeper/model/types/home_item.dart';
+import 'package:info_keeper/model/types/item_location.dart';
 import 'package:info_keeper/model/types/trash/trash_item.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,10 +21,25 @@ class Controller extends GetxController {
 
   int firstSelectedMessage = -1;
 
-  var password = ''.obs;
+  var password = 'nikita'.obs;
 
   RxList<Folder> all = [
-    Folder(name: 'Main screen', childrens: <HomeItem>[].obs),
+    Folder(
+        name: 'Main screen',
+        childrens: <HomeItem>[
+          HomeItem(
+              name: 'Chat',
+              child: Chat(messages: [].obs),
+              location: ItemLocation(inDirectory: 0, index: 0)),
+          HomeItem(
+              name: 'StorageFile',
+              child: StorageFile(data: 'Hello'),
+              location: ItemLocation(inDirectory: 0, index: 1)),
+          HomeItem(
+              name: 'Task',
+              child: Task(todos: <Todo>[Todo(title: 'GG')].obs),
+              location: ItemLocation(inDirectory: 0, index: 2)),
+        ].obs),
   ].obs;
 
   RxList<TrashItem> trashElements = <TrashItem>[].obs;

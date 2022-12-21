@@ -9,27 +9,22 @@ class Folder {
     required this.childrens,
   });
 
-  List getChildrens() {
-    List list = [];
+  // List getChildrens({bool isVault = false}) {
+  //   List list = [];
 
-    for (int i = 0; i < childrens.length; i++) {
-      if (!childrens[i].isLocked) {
-        list.add(childrens[i]);
-      }
-    }
-    return list;
-  }
-
-  List getVaultChildrens() {
-    List list = [];
-
-    for (int i = 0; i < childrens.length; i++) {
-      if (childrens[i].isLocked) {
-        list.add(childrens[i]);
-      }
-    }
-    return list;
-  }
+  //   for (int i = 0; i < childrens.length; i++) {
+  //     if (isVault) {
+  //       if (childrens[i].isLocked) {
+  //         list.add(childrens[i]);
+  //       }
+  //     } else {
+  //       if (!childrens[i].isLocked) {
+  //         list.add(childrens[i]);
+  //       }
+  //     }
+  //   }
+  //   return list;
+  // }
 
   Folder.fromJson(Map<String, dynamic> json)
       : name = json['name'],

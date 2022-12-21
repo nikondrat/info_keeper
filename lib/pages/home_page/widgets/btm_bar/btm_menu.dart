@@ -16,9 +16,9 @@ class HomeBottomMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     late final HomeController home = Get.find();
-    final List childrens =
+    final List items =
         Controller.to.all[Controller.to.selectedFolder.value].childrens;
-    final HomeItem item = childrens[Controller.to.selectedElementIndex.value];
+    final HomeItem item = items[Controller.to.selectedElementIndex.value];
 
     List<PopupMenuItem> popupItems() {
       List<PopupMenuItem> items = [];
@@ -121,7 +121,7 @@ class HomeBottomMenu extends StatelessWidget {
                 splashRadius: 20,
                 onPressed: () {
                   isVault
-                      ? item.copyWith(isLocked: !item.isLocked)
+                      ? {item.copyWith(isLocked: !item.isLocked), Get.back()}
                       : Get.to(() => VaultPage(item: item));
                   home.isShowBottomMenu.value = false;
                 },

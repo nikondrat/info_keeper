@@ -18,14 +18,14 @@ class StorageFileItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(
-          dividerColor: Colors.transparent,
-          splashFactory: NoSplash.splashFactory,
-          highlightColor: Colors.transparent),
-      child: HomeBodyItemGesture(
-        homeItemIndex: homeItemIndex,
-        homeItem: homeItem,
+    return HomeBodyItemGesture(
+      homeItemIndex: homeItemIndex,
+      homeItem: homeItem,
+      child: Theme(
+        data: Theme.of(context).copyWith(
+            dividerColor: Colors.transparent,
+            splashFactory: NoSplash.splashFactory,
+            highlightColor: Colors.transparent),
         child: BodyItemDecoration(
           homeItem: homeItem,
           child: ExpansionWidget(

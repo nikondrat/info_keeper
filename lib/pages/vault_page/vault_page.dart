@@ -28,32 +28,6 @@ class VaultPage extends StatelessWidget {
 
     Folder folder = Controller.to.all[Controller.to.selectedFolder.value];
 
-    // RxList<HomeItem> childrens =
-    //     Controller.to.all[Controller.to.selectedFolder.value].childrens;
-
-    // RxList lockedItems = [].obs;
-
-    // getLockedItems() {
-    //   if (isChat) {
-    //     Chat? chat;
-    //     chat = childrens[Controller.to.selectedElementIndex.value].child;
-    //     for (int i = 0; i < chat!.messages.length; i++) {
-    //       if (chat.messages[i].type == ChatType.message &&
-    //           chat.messages[i].isLocked) {
-    //         lockedItems.add(chat.messages[i]);
-    //       }
-    //     }
-    //   } else {
-    //     for (var item in childrens) {
-    //       if (item.isLocked) {
-    //         lockedItems.add(item);
-    //       }
-    //     }
-    //   }
-    // }
-
-    // getLockedItems();
-
     passwordIsNotNull() {
       if (item != null) {
         if (isChat) {
@@ -69,6 +43,7 @@ class VaultPage extends StatelessWidget {
           item.copyWith(isLocked: !item.isLocked);
         }
       }
+
       vaultController.isUnblocked.value = true;
     }
 
@@ -97,7 +72,7 @@ class VaultPage extends StatelessWidget {
               icon: const Icon(Icons.arrow_back)),
           title: const Text('Vault'),
         ),
-        body: vaultController.isUnblocked.value
+        body: Obx(() => vaultController.isUnblocked.value
             ? MasonryGridView.count(
                 physics: const BouncingScrollPhysics(),
                 padding:
@@ -105,28 +80,38 @@ class VaultPage extends StatelessWidget {
                 crossAxisCount: isGridView.value ? 2 : 1,
                 itemCount: isChat
                     ? folder.childrens[Controller.to.selectedElementIndex.value]
-                        .child
-                        .getVaultChildrens()
-                        .length
-                    : folder.getVaultChildrens().length,
+                        .child.messages.length
+                    : folder.childrens.length,
                 itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: isChat
-                        ? MessageWidget(
+                  if (isChat) {
+                    return !folder
+                            .childrens[Controller.to.selectedElementIndex.value]
+                            .child
+                            .messages[index]
+                            .isLocked
+                        ? const SizedBox()
+                        : MessageWidget(
                             message: folder
                                 .childrens[
                                     Controller.to.selectedElementIndex.value]
                                 .child
-                                .getVaultChildrens()[index],
-                            isVault: true)
-                        : HomeBodyItem(
-                            homeItem: folder.getVaultChildrens()[index],
-                            homeItemIndex: index,
-                          ),
-                  );
+                                .messages[index],
+                            isVault: true);
+                  }
+
+                  return !folder.childrens[index].isLocked
+                      ? const SizedBox()
+                      : Padding(
+                          padding: const EdgeInsets.all(5),
+                          child: folder.childrens[index].isLocked
+                              ? HomeBodyItem(
+                                  homeItem: folder.childrens[index],
+                                  homeItemIndex: index,
+                                )
+                              : const SizedBox(),
+                        );
                 })
-            : const VaultPagePasswordWidget(),
+            : const VaultPagePasswordWidget()),
         bottomNavigationBar: const HomeBottomBar(isVault: true),
         floatingActionButton: vaultController.isUnblocked.value
             ? null
