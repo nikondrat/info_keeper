@@ -21,26 +21,10 @@ class Controller extends GetxController {
 
   int firstSelectedMessage = -1;
 
-  var password = 'nikita'.obs;
+  var password = ''.obs;
 
-  RxList<Folder> all = [
-    Folder(
-        name: 'Main screen',
-        childrens: <HomeItem>[
-          HomeItem(
-              name: 'Chat',
-              child: Chat(messages: [].obs),
-              location: ItemLocation(inDirectory: 0, index: 0)),
-          HomeItem(
-              name: 'StorageFile',
-              child: StorageFile(data: 'Hello'),
-              location: ItemLocation(inDirectory: 0, index: 1)),
-          HomeItem(
-              name: 'Task',
-              child: Task(todos: <Todo>[Todo(title: 'GG')].obs),
-              location: ItemLocation(inDirectory: 0, index: 2)),
-        ].obs),
-  ].obs;
+  RxList<Folder> all =
+      <Folder>[Folder(name: 'Main screen', childrens: <HomeItem>[].obs)].obs;
 
   RxList<TrashItem> trashElements = <TrashItem>[].obs;
 
