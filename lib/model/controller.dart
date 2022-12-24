@@ -1,8 +1,11 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:info_keeper/model/types/folder.dart';
+import 'package:info_keeper/model/types/home/chat/chat.dart';
 import 'package:info_keeper/model/types/home_item.dart';
+import 'package:info_keeper/model/types/item_location.dart';
 import 'package:info_keeper/model/types/trash/trash_item.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -18,8 +21,19 @@ class Controller extends GetxController {
 
   var password = ''.obs;
 
-  RxList<Folder> all =
-      <Folder>[Folder(name: 'Main screen', childrens: <HomeItem>[].obs)].obs;
+  RxList<Folder> all = kDebugMode
+      ? <Folder>[
+          Folder(
+              name: 'Main screen',
+              childrens: <HomeItem>[
+                HomeItem(
+                    name: 'GG',
+                    child: Chat(messages: [].obs),
+                    location: ItemLocation(inDirectory: 0, index: 0))
+              ].obs),
+          Folder(name: 'Second screen', childrens: <HomeItem>[].obs)
+        ].obs
+      : <Folder>[Folder(name: 'Main screen', childrens: <HomeItem>[].obs)].obs;
 
   RxList<TrashItem> trashElements = <TrashItem>[].obs;
 

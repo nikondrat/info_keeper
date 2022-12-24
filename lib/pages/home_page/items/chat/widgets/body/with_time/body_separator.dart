@@ -8,7 +8,6 @@ class ChatBodySeparator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var months = [
-      'December',
       'January',
       'February',
       'March',
@@ -20,6 +19,7 @@ class ChatBodySeparator extends StatelessWidget {
       'September',
       'October',
       'November',
+      'December',
     ];
 
     String year =
@@ -40,7 +40,7 @@ class ChatBodySeparator extends StatelessWidget {
                           color: Colors.grey.shade300,
                           borderRadius: BorderRadius.circular(6)),
                       child: AutoSizeText(
-                          '${dateTime.day} ${months[dateTime.month]} $year',
+                          '${dateTime.day} ${months[dateTime.month - 1]} $year',
                           style: Theme.of(context).textTheme.bodyText1)))
             ]));
   }

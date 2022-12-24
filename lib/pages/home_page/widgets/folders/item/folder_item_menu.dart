@@ -14,16 +14,9 @@ class FolderItemMenu extends StatelessWidget {
             child: TextButton(
                 onPressed: () {
                   var data = Controller
-                      .to
-                      .all[Controller.to.selectedFolder.value]
-                      .childrens[Controller.to.selectedElementIndex.value];
-                  Controller
                       .to.all[Controller.to.selectedFolder.value].childrens
                       .removeAt(Controller.to.selectedElementIndex.value);
-                  Controller.to.selectedFolder.value = index;
-                  Controller
-                      .to.all[Controller.to.selectedFolder.value].childrens
-                      .add(data);
+                  Controller.to.all[index].childrens.add(data);
                   Controller.to.selectedFolder.value = index;
                   Navigator.pop(context);
                 },

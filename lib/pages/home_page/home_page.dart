@@ -14,16 +14,22 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    HomeController home = Get.put(HomeController());
     return ThemeSwitchingArea(
       child: Swipe(
         onSwipeRight: () {
           Get.to(() => const VaultPage());
+          if (home.isShowBottomMenu.value) {
+            home.isShowBottomMenu.value = false;
+          }
         },
         child: GestureDetector(
           onTap: () {
-            HomeController home = Get.put(HomeController());
             if (home.isShowDialMenu.value) {
               home.toggle();
+            }
+            if (home.isShowBottomMenu.value) {
+              home.isShowBottomMenu.value = false;
             }
           },
           child: const Scaffold(
