@@ -25,6 +25,7 @@ class ChatTitlesPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+          title: const Text('Titled'),
           leading: IconButton(
               splashRadius: 20,
               onPressed: () {

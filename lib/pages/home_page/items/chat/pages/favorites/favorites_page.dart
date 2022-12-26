@@ -25,6 +25,7 @@ class ChatFavoritesPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+          title: const Text('Favorites'),
           leading: IconButton(
               splashRadius: 20,
               onPressed: () {

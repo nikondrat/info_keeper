@@ -78,7 +78,12 @@ class MessageWidgetBody extends StatelessWidget {
                     final Chat chat = chatController.homeItem.child;
                     RxList messages = chat.messages;
 
-                    message.isUnlocked = !message.isUnlocked;
+                    if (isVault) {
+                      message.isLocked = !message.isLocked;
+                    } else {
+                      message.isUnlocked = !message.isUnlocked;
+                    }
+
                     messages[messages.indexOf(message)] = message;
                     chat.copyWith(messages: messages);
                   },

@@ -86,9 +86,7 @@ class MessageWidget extends StatelessWidget {
 
     return GestureDetector(
         onTap: onTap,
-        child: //
-            // Text('${message.isPinned}'));
-            MessageWidgetBody(
-                message: message, searchQuery: searchQuery, isVault: isVault));
+        child: MessageWidgetBody(
+            message: message, searchQuery: searchQuery, isVault: isVault));
   }
 }
