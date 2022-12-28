@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:info_keeper/model/types/home_item.dart';
 import 'package:info_keeper/pages/home_page/items/widgets/app_bar/widgets/title.dart';
 
 class AppBarWidget extends StatelessWidget {
+  final HomeItem? homeItem;
   final TextEditingController controller;
   final double titleSpacing;
   final bool centerTitle;
@@ -15,6 +17,7 @@ class AppBarWidget extends StatelessWidget {
   final PreferredSizeWidget? bottom;
   const AppBarWidget(
       {super.key,
+      this.homeItem,
       this.titleSpacing = 0,
       this.leading,
       required this.controller,
@@ -57,6 +60,9 @@ class AppBarWidget extends StatelessWidget {
                           change.value = !change.value;
                           focus.unfocus();
                           defaultText = controller.text;
+                          if (homeItem != null) {
+                            homeItem!.copyWith(name: defaultText);
+                          }
                         }
                       },
                       icon: const Icon(Icons.done))

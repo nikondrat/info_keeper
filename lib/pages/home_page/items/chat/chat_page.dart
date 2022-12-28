@@ -28,6 +28,10 @@ class ChatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ChatController controller = Get.put(ChatController());
+    controller.isFavoritesPage.value = false;
+    controller.isTitlesPage.value = false;
+    controller.isPinnedMessagesPage.value = false;
+    controller.isVault.value = false;
     final HomeController home = Get.find();
 
     Chat chat = homeItem.child;
@@ -167,6 +171,7 @@ class ChatPage extends StatelessWidget {
                             ? 100
                             : kToolbarHeight),
                     child: AppBarWidget(
+                        homeItem: homeItem,
                         title: !controller.changeTitle.value
                             ? controller.isSearch.value
                                 ? ChatSearchTitle(messages: chat.messages)
