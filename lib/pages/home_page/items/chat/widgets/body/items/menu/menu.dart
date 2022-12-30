@@ -139,12 +139,14 @@ class MessageMenuWidget extends StatelessWidget {
           icon: const Icon(Icons.lock_outline),
           onPressed: () {
             Navigator.pop(context);
-            Get.to(() => VaultPage(isChat: true, item: message));
-
-            // message.isLocked = !message.isLocked;
-            // message.isUnlocked = false;
-            // messages[messages.indexOf(message)] = message;
-            // chat.copyWith(messages: messages);
+            if (!chatController.isVault.value) {
+              Get.to(() => VaultPage(isChat: true, item: message));
+            } else {
+              message.isLocked = !message.isLocked;
+              message.isUnlocked = false;
+              messages[messages.indexOf(message)] = message;
+              chat.copyWith(messages: messages);
+            }
           });
 
       var notifications = Notifications(

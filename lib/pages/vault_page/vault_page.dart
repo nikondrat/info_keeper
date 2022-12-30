@@ -88,7 +88,13 @@ class VaultPage extends StatelessWidget {
                       physics: const BouncingScrollPhysics(),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 10, vertical: 10),
-                      crossAxisCount: isGridView.value ? 2 : 1,
+                      crossAxisCount: isChat
+                          ? isGridView.value
+                              ? 1
+                              : 2
+                          : isGridView.value
+                              ? 2
+                              : 1,
                       itemCount: isChat
                           ? folder
                               .childrens[
@@ -106,13 +112,17 @@ class VaultPage extends StatelessWidget {
                                   .messages[index]
                                   .isLocked
                               ? const SizedBox()
-                              : MessageWidget(
-                                  message: folder
-                                      .childrens[Controller
-                                          .to.selectedElementIndex.value]
-                                      .child
-                                      .messages[index],
-                                  isVault: true);
+                              : Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 5, vertical: 3),
+                                  child: MessageWidget(
+                                      message: folder
+                                          .childrens[Controller
+                                              .to.selectedElementIndex.value]
+                                          .child
+                                          .messages[index],
+                                      isVault: true),
+                                );
                         }
 
                         return !folder.childrens[index].isLocked

@@ -16,12 +16,14 @@ class MessageWidgetBody extends StatelessWidget {
   final double elevation;
   final bool isVault;
   final bool isTrash;
+  final bool inFullscreen;
   const MessageWidgetBody(
       {Key? key,
       required this.message,
       this.elevation = 0,
       this.isVault = false,
       this.isTrash = false,
+      this.inFullscreen = false,
       this.searchQuery = ''})
       : super(key: key);
 
@@ -119,7 +121,7 @@ class MessageWidgetBody extends StatelessWidget {
 
     return message.isLocked && !isVault && !message.isUnlocked
         ? LockedDecorationWidget(message: message)
-        : isTrash
+        : isTrash || inFullscreen
             ? decoration
             : swiper;
   }

@@ -18,6 +18,9 @@ class MessageWidgetInFullScreen extends StatelessWidget {
         startingOpacity: 0.6,
         child: GestureDetector(
             onTap: () => Navigator.pop(context),
-            child: MessageWidgetBody(message: message, searchQuery: '')));
+            child: MessageWidgetBody(
+              message: message,
+              inFullscreen: true,
+            )));
   }
 }
