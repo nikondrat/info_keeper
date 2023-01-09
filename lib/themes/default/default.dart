@@ -59,12 +59,11 @@ FloatingActionButtonThemeData floatingActionButtonThemeData =
         highlightElevation: 0,
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
-        shape: RoundedRectangleBorder(
+        shape: CircleBorder(
             side: BorderSide(
                 color: Platform.isAndroid || Platform.isIOS
                     ? Colors.grey.shade300
-                    : Colors.black54),
-            borderRadius: BorderRadius.circular(50)));
+                    : Colors.black54)));
 
 int defaultColor = 5;
 

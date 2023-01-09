@@ -11,6 +11,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  # bussines model
+  provider: ^6.0.5
+
+  # ui
+  flutter_expandable_fab: ^1.6.1
+
+
+
   get: ^4.6.5
   intl: ^0.17.0
   file_picker: ^3.0.4
@@ -43,6 +52,7 @@ dependencies:
   # audio_wave: ^0.1.4
   expandable: ^5.0.1
   # loading_animation_widget: ^1.2.0+3
+
 
 dev_dependencies:
   flutter_test:
