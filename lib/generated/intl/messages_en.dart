@@ -27,6 +27,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "app_name": MessageLookupByLibrary.simpleMessage("Info Keeper"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "create": MessageLookupByLibrary.simpleMessage("Create"),
-        "main_screen_title": MessageLookupByLibrary.simpleMessage("Main screen")
+        "main_screen_title":
+            MessageLookupByLibrary.simpleMessage("Main screen"),
+        "write_text": MessageLookupByLibrary.simpleMessage("Write text...")
       };
 }

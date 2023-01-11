@@ -6,6 +6,7 @@ import 'package:info_keeper/app/models/home/chat.dart';
 import 'package:info_keeper/app/models/home/home_item.dart';
 import 'package:info_keeper/app/providers/home_provider.dart';
 import 'package:info_keeper/app/values/values.dart';
+import 'package:info_keeper/app/widgets/home/folder_item.dart';
 import 'package:info_keeper/app/widgets/home/home_item.dart';
 import 'package:info_keeper/generated/l10n.dart';
 import 'package:provider/provider.dart';
@@ -58,12 +59,10 @@ class _BottomBar extends StatelessWidget {
     HomeProvider model = Provider.of(context);
     bool isMainFolder = model.selectedFolder == 0;
 
-    Row menu = Row(children: [
+    Row itemMenu = Row(children: [
       IconButton(
           splashRadius: 20,
-          onPressed: () {
-            model.menuIsOpen = false;
-          },
+          onPressed: () => model.menuIsOpen = false,
           icon: const Icon(Icons.close)),
       Row(children: [
         IconButton(
@@ -71,12 +70,9 @@ class _BottomBar extends StatelessWidget {
             onPressed: () {},
             icon: const Icon(Icons.push_pin_outlined)),
         IconButton(
-          splashRadius: 20,
-          onPressed: () => model.setItemAnimation(),
-          icon: const Icon(
-            Icons.local_fire_department_outlined,
-          ),
-        ),
+            splashRadius: 20,
+            onPressed: () => model.setItemAnimation(),
+            icon: const Icon(Icons.local_fire_department_outlined)),
         IconButton(
             splashRadius: 20,
             onPressed: () {},
@@ -84,37 +80,33 @@ class _BottomBar extends StatelessWidget {
       ])
     ]);
 
-    return BottomAppBar(
-      child: model.menuIsOpen
-          ? menu
-          : Row(
-              mainAxisAlignment: isMainFolder
-                  ? MainAxisAlignment.center
-                  : MainAxisAlignment.spaceBetween,
-              children: [
-                isMainFolder
-                    ? const SizedBox.shrink()
-                    : IconButton(
-                        onPressed: () {},
-                        splashRadius: 20,
-                        icon: const Icon(Icons.home_outlined)),
-                IconButton(
-                    onPressed: () {
-                      showModalBottomSheet(
-                          context: context,
-                          shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.vertical(
-                                  top: Radius.circular(kDefaultRadius * 3))),
-                          builder: (context) => const _Folders());
-                    },
-                    splashRadius: 20,
-                    icon: const Icon(Icons.folder_copy_outlined)),
-                isMainFolder
-                    ? const SizedBox.shrink()
-                    : const SizedBox(width: 50)
-              ],
-            ),
+    Row btmNav = Row(
+      mainAxisAlignment: isMainFolder
+          ? MainAxisAlignment.center
+          : MainAxisAlignment.spaceBetween,
+      children: [
+        isMainFolder
+            ? const SizedBox.shrink()
+            : IconButton(
+                onPressed: () {},
+                splashRadius: 20,
+                icon: const Icon(Icons.home_outlined)),
+        IconButton(
+            onPressed: () {
+              showModalBottomSheet(
+                  context: context,
+                  shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(kDefaultRadius * 3))),
+                  builder: (context) => const _Folders());
+            },
+            splashRadius: 20,
+            icon: const Icon(Icons.folder_copy_outlined)),
+        isMainFolder ? const SizedBox.shrink() : const SizedBox(width: 50)
+      ],
     );
+
+    return BottomAppBar(child: model.menuIsOpen ? itemMenu : btmNav);
   }
 }
 
@@ -130,19 +122,14 @@ class _Folders extends StatelessWidget {
             Navigator.pop(context);
             // Get.to(() => const AddFolderPage());
           },
-          icon: const Icon(
-            Icons.add,
-          ),
+          icon: const Icon(Icons.add),
           splashRadius: 20,
         ),
-        const Icon(
-          Icons.folder_copy_outlined,
-        ),
+        const Icon(Icons.folder_copy_outlined),
         IconButton(
-          icon: const Icon(Icons.close),
-          splashRadius: 20,
-          onPressed: () => Navigator.pop(context),
-        )
+            icon: const Icon(Icons.close),
+            splashRadius: 20,
+            onPressed: () => Navigator.pop(context))
       ]),
       Expanded(
           child: GridView.builder(
@@ -150,14 +137,15 @@ class _Folders extends StatelessWidget {
               physics: const BouncingScrollPhysics(),
               padding: const EdgeInsets.all(8),
               itemCount: context.watch<HomeProvider>().all.length,
-              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                  childAspectRatio: MediaQuery.of(context).size.height * 0.0022,
+              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                  // childAspectRatio: MediaQuery.of(context).size.height * 0.0022,
                   maxCrossAxisExtent: 200,
                   mainAxisSpacing: 8,
                   crossAxisSpacing: 8),
-              itemBuilder: (context, index) => Text(
-                    context.watch<HomeProvider>().all[index].title,
-                  )))
+              itemBuilder: (context, index) => FolderItemWidget(
+                  folder: context.watch<HomeProvider>().folders[index])
+              // Text(context.watch<HomeProvider>().folderName[index])
+              ))
     ]);
   }
 }

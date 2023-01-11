@@ -99,6 +99,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Write text...`
+  String get write_text {
+    return Intl.message(
+      'Write text...',
+      name: 'write_text',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

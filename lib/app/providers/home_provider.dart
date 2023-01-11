@@ -46,6 +46,8 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  UnmodifiableListView<Folder> get folders => UnmodifiableListView(_folders);
+
   UnmodifiableListView<HomeItem> get all =>
       UnmodifiableListView(_folders[_selectedFolder].children);
   void addChild(dynamic child) {

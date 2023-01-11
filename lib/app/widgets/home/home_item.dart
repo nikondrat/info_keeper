@@ -44,7 +44,9 @@ class _Gesture extends StatelessWidget {
             Navigator.push(
                 context,
                 CupertinoPageRoute(
-                    builder: (context) => ChatView(homeItem: homeItem)));
+                    builder: (context) => const ChatView(
+                        // homeItem: homeItem
+                        )));
             break;
           case HomeItemType.storageFile:
           case HomeItemType.task:
