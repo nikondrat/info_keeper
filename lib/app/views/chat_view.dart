@@ -18,7 +18,7 @@ class ChatView extends StatelessWidget {
           child: Scaffold(
             resizeToAvoidBottomInset: false,
             appBar: AppBar(),
-            body: _Body(),
+            body: const _Body(),
           )),
     );
   }
