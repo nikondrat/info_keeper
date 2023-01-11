@@ -6,6 +6,7 @@ import 'package:info_keeper/app/providers/home_provider.dart';
 import 'package:info_keeper/app/views/home_view.dart';
 import 'package:info_keeper/data_init.dart';
 import 'package:info_keeper/generated/l10n.dart';
+import 'package:info_keeper/pages/home_page/home_page.dart';
 import 'package:info_keeper/themes/default/default.dart';
 import 'package:info_keeper/themes/default/default_dark.dart';
 import 'package:provider/provider.dart';

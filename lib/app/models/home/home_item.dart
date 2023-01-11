@@ -1,4 +1,9 @@
-import 'package:info_keeper/app/models/home/home_type.dart';
+enum HomeItemType {
+  chat,
+  storageFile,
+  task,
+  audioNote,
+}
 
 class HomeItem {
   int index;
@@ -61,9 +66,7 @@ class HomeItemValues {
     this.isPinned = isPinned;
   }
 
-  void setItAnimated(bool isAnimated) {
-    this.isAnimated = isAnimated;
-  }
+  void setItAnimated() => isAnimated = !isAnimated;
 
   void setItDublicated(bool isDublicated) {
     this.isDublicated = isDublicated;

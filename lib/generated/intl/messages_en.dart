@@ -26,6 +26,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Enter chat name"),
         "app_name": MessageLookupByLibrary.simpleMessage("Info Keeper"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
-        "create": MessageLookupByLibrary.simpleMessage("Create")
+        "create": MessageLookupByLibrary.simpleMessage("Create"),
+        "main_screen_title": MessageLookupByLibrary.simpleMessage("Main screen")
       };
 }

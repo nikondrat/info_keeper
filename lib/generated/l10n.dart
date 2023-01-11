@@ -80,6 +80,16 @@ class S {
     );
   }
 
+  /// `Main screen`
+  String get main_screen_title {
+    return Intl.message(
+      'Main screen',
+      name: 'main_screen_title',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Enter chat name`
   String get add_chat_title {
     return Intl.message(

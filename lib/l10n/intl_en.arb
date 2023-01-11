@@ -2,5 +2,6 @@
     "app_name": "Info Keeper",
     "cancel": "Cancel",
     "create": "Create",
+    "main_screen_title":"Main screen",
     "add_chat_title": "Enter chat name"
 }

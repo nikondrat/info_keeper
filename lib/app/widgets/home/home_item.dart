@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:info_keeper/app/models/home/home_item.dart';
-import 'package:info_keeper/app/models/home/home_type.dart';
 import 'package:info_keeper/app/providers/home_provider.dart';
 import 'package:info_keeper/app/values/values.dart';
 import 'package:info_keeper/app/views/chat_view.dart';
@@ -30,10 +29,15 @@ class _Gesture extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    HomeProvider model = Provider.of(context);
+
     return GestureDetector(
+      onLongPress: () {
+        model.menuIsOpen = true;
+        model.selectedItem = homeItem.index;
+      },
       onTap: () {
-        Provider.of<HomeProvider>(context, listen: false)
-            .openCloseFab(close: true);
+        model.openCloseFab(close: true);
 
         switch (homeItem.child.type) {
           case HomeItemType.chat:
@@ -61,7 +65,7 @@ class _Decoration extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         padding: const EdgeInsets.all(kDefaultPadding),
-        margin: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+        margin: const EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(kDefaultRadius),
             border: Border.all(

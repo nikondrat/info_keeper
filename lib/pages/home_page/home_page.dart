@@ -15,34 +15,32 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeController home = Get.put(HomeController());
-    return ThemeSwitchingArea(
-      child: Swipe(
-        onSwipeRight: () {
-          Get.to(() => const VaultPage());
+    return Swipe(
+      onSwipeRight: () {
+        Get.to(() => const VaultPage());
+        if (home.isShowBottomMenu.value) {
+          home.isShowBottomMenu.value = false;
+        }
+      },
+      child: GestureDetector(
+        onTap: () {
+          if (home.isShowDialMenu.value) {
+            home.toggle();
+          }
           if (home.isShowBottomMenu.value) {
             home.isShowBottomMenu.value = false;
           }
         },
-        child: GestureDetector(
-          onTap: () {
-            if (home.isShowDialMenu.value) {
-              home.toggle();
-            }
-            if (home.isShowBottomMenu.value) {
-              home.isShowBottomMenu.value = false;
-            }
-          },
-          child: const Scaffold(
-              resizeToAvoidBottomInset: false,
-              appBar: PreferredSize(
-                  preferredSize: Size.fromHeight(kToolbarHeight),
-                  child: HomeAppBar()),
-              body: HomeBody(),
-              floatingActionButtonLocation:
-                  FloatingActionButtonLocation.endDocked,
-              floatingActionButton: HomeFloatButtons(),
-              bottomNavigationBar: HomeBottomBar()),
-        ),
+        child: const Scaffold(
+            resizeToAvoidBottomInset: false,
+            appBar: PreferredSize(
+                preferredSize: Size.fromHeight(kToolbarHeight),
+                child: HomeAppBar()),
+            body: HomeBody(),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.endDocked,
+            floatingActionButton: HomeFloatButtons(),
+            bottomNavigationBar: HomeBottomBar()),
       ),
     );
   }

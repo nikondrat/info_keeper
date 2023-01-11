@@ -1,4 +1,4 @@
-import 'package:info_keeper/app/models/home/home_type.dart';
+import 'package:info_keeper/app/models/home/home_item.dart';
 
 class Chat {
   HomeItemType type;
